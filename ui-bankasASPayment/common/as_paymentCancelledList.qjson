@@ -1,0 +1,1754 @@
+let pjson = {
+	"pJson": [
+		{
+			"T": "Messaging",
+			"P": {
+				"ID": {
+					"H": "PageComp",
+					"T": "prop"
+				},
+				"triggerOnRestored": {
+					"H": "false",
+					"T": "prop"
+				},
+				"externalEvents": {
+					"H": "[{name='itemSelected', params=[]},\r\n{name='clickContinueButton', params=[]}]",
+					"T": "prop",
+					"HL": "QS"
+				}
+			},
+			"E": {
+				"paymentCancelledListInfo": {
+					"H": "debugger;\n\nquick.MM.trigger('setConsumerAndScreenInfo')\n\ncomponents.dt_policyPaymentList.items = [];\n\nconst serviceRequest: IRequest = {\n  url: '/api/wrapperclient/getPaidInstallmentList',\n  http: 'POST',\n  data: {\n    getPaidInstallmentRequest: {\n      customerNumber: (<any>quick.containerServices).getCustomerContext()?.customerNumber,\n      customerName:   (<any>quick.containerServices).getCustomerContext()?.customerName + ' ' + (<any>quick.containerServices).getCustomerContext()?.customerSurname\n    }\n  },\n  onFail: 'empty',\n  onSuccess: 'empty',\n  responseField: 'empty',\n  blockRender: false\n};\n\nquick.Request.async(serviceRequest)?.then((resp) => {\n  const list = resp.data.getPaidInstallmentResponse.paidInstallmentList || [];\n  const flatList: any[] = [];\n\n  for (let i = 0; i < list.length; i++) {\n    const item = list[i];\n\n    const paymentTypeRaw = (item.paymentType || '').toUpperCase();\n    const accBranch = Number(item?.accountNumber?.branchCode);\n    const accNumber = Number(item?.accountNumber?.number);\n    const hasAccountInfo = paymentTypeRaw === 'ACCOUNT' && accBranch > 0 && accNumber > 0;\n\n    const paymentTypeDisplay =\n      paymentTypeRaw === 'ACCOUNT'\n        ? (hasAccountInfo ? 'Cari Hesap' : 'Nakit')\n        : paymentTypeRaw === 'CCARD'\n        ? 'Kredi Kartı'\n        : paymentTypeRaw === 'IMCCARD'\n        ? 'İmece Kart'\n        : (item.paymentType || '');\n\n\n    let accountOrCardNo = '';                                           \n    if (paymentTypeRaw === 'ACCOUNT' && hasAccountInfo) {                \n      accountOrCardNo = `${accBranch}-${accNumber}`;                     \n    } else if (paymentTypeRaw === 'CCARD' || 'IMCCARD') {\n      accountOrCardNo = item.creditCardNumber || '';                            \n    } \n\n    flatList.push({\n      id: i + 1,\n\n      policyNumber: item.policyNumber?.policyNo + '/' + item.policyNumber?.renewalNo,\n      dueDate: item.installmentDate,\n      insuranceTypeName: item.insuranceTypeName,\n      debitOrCredit: ((item.installmentType || '').toUpperCase() === 'REFUND') ? 'Alacak' : 'Borç',\n      //\n      bankRefId : item.bankRefId,\n      paymentType: paymentTypeDisplay,\n      paymentTypeRaw: paymentTypeRaw,\n      accountInfo: item.accountNumber || null,\n\n      creditCardNumber: accountOrCardNo,                               \n      //creditCardNumber: item.creditCardNumber,\n      \n      amount: Math.abs(Number(item.amount.amount.amount)) + '' + item.amount.amount.currencyCode.code,\n\n      paymentId: item.paymentId || '',\n      installmentId: item.installmentId || '',\n      installmentDate: item.installmentDate || '',\n      transactionId: item.transactionId || '',\n      orderId: item.orderId,\n      customerName:(<any>quick.containerServices).getCustomerContext()?.customerName\n                  + (<any>quick.containerServices).getCustomerContext()?.customerSurname,\n      customerNumber: (<any>quick.containerServices).getCustomerContext()?.customerNumber,\n      firmType: item.firmType,\n      insuranceType: item.insuranceType\n    });\n  }\n\n  components.dt_policyPaymentList.items = flatList;\n  quick.store.set('$getPaidInstallmentData', flatList);\n});",
+					"C": true,
+					"HL": "TS"
+				},
+				"PostRender": {
+					"H": "quick.MM.trigger('paymentCancelledListInfo');",
+					"TO": 1,
+					"HL": "TS"
+				},
+				"setConsumerAndScreenInfo": {
+					"H": "debugger;\r\n\r\nquick.store.set('$customConsumerCode', 'TANE.BAHOME');\r\nquick.store.set('$customScreenName', 'TANE.BAHOME');",
+					"C": true,
+					"HL": "TS"
+				}
+			},
+			"C": {},
+			"_Editor": {
+				"eID": "EdtrComp_1"
+			},
+			"O": {
+				"cType": "child",
+				"layout": {
+					"dOpt": {
+						"xs": [
+							"sp:pt-0",
+							"sp:pl-0",
+							"sp:pr-0",
+							"sp:pb-0"
+						]
+					},
+					"class": "pt-0 pl-0 pr-0 pb-0"
+				}
+			},
+			"S": {
+				"xs-xl": {
+					"pageBackgroundColor": "#ffffff",
+					"statusBarColor": "#ffffff"
+				}
+			}
+		},
+		{
+			"T": "VContainer",
+			"P": {
+				"ID": {
+					"H": "VContainerComp",
+					"T": "prop"
+				},
+				"class": {
+					"H": "'container container--fluid'",
+					"T": "class"
+				},
+				"visible": {
+					"H": "true",
+					"T": "prop"
+				},
+				"eager": {
+					"H": "true",
+					"T": "prop"
+				}
+			},
+			"E": {},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "VCard",
+							"P": {
+								"ID": {
+									"H": "EdtrComp_276",
+									"T": "prop"
+								},
+								"color": {
+									"H": "'white'",
+									"T": "prop"
+								},
+								"visible": {
+									"H": "true",
+									"T": "prop"
+								}
+							},
+							"E": {},
+							"C": {
+								"default": {
+									"c": [
+										{
+											"T": "VRow",
+											"P": {
+												"ID": {
+													"H": "EdtrComp_6",
+													"T": "prop"
+												}
+											},
+											"E": {},
+											"C": {
+												"default": {
+													"c": [
+														{
+															"T": "VCol",
+															"C": {
+																"default": {
+																	"c": [
+																		{
+																			"T": "VRow",
+																			"P": {
+																				"ID": {
+																					"H": "VRowComp",
+																					"T": "prop"
+																				}
+																			},
+																			"E": {},
+																			"C": {
+																				"default": {
+																					"c": [
+																						{
+																							"T": "VCol",
+																							"C": {
+																								"default": {
+																									"c": [
+																										{
+																											"T": "VDataTable",
+																											"P": {
+																												"ID": {
+																													"H": "dt_policyPaymentList",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"footerProps": {
+																													"H": "{showFirstLastPage = true,\nfirstIcon = 'mdi-arrow-collapse-left',\nlastIcon = 'mdi-arrow-collapse-right',\nprevIcon = 'mdi-minus',\nnextIcon = 'mdi-plus'}",
+																													"T": "prop"
+																												},
+																												"headers": {
+																													"H": "[{ text = 'Poliçe No / Yenileme No', value= 'policyNumber',filterable= true },\n{ text = 'Vade', value= 'dueDate', filterable= true },\n{ text = 'Sigorta Türü', value= 'insuranceTypeName', filterable= true },\n{ text = 'Borç / Alacak', value= 'debitOrCredit', filterable= true },\n{ text = 'Ödeme Şekli', value= 'paymentType', filterable= true },\n{ text = 'Hesap No/ Kart No', value= 'creditCardNumber', filterable= true },\n{ text = 'Tutar', value= 'amount',filterable= true }]",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"itemsPerPage": {
+																													"H": "10",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"mobileBreakpoint": {
+																													"H": "600",
+																													"T": "prop"
+																												},
+																												"visible": {
+																													"H": "true",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"hideDefaultFooter": {
+																													"H": "true",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"disablePagination": {
+																													"H": "false",
+																													"T": "prop"
+																												},
+																												"noDataText": {
+																													"H": "'Listelenecek Veri Yok.'",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"hideDefaultHeader": {
+																													"H": "false",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"fixedHeader": {
+																													"H": "true",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"dense": {
+																													"H": "true",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"disableSort": {
+																													"H": "false",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"dark": {
+																													"H": "false",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"itemKey": {
+																													"H": "'id'",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"disableFiltering": {
+																													"H": "false",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"items": {
+																													"H": "[]",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"showSelect": {
+																													"H": "true",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"singleSelect": {
+																													"H": "true",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"singleExpand": {
+																													"H": "false",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"showExpand": {
+																													"H": "false",
+																													"T": "prop",
+																													"HL": "QS"
+																												}
+																											},
+																											"E": {
+																												"item-selected": {
+																													"H": "debugger;\r\nlet selected = rowObj.item\r\nrowObj.item.selected = rowObj.value\r\nif (rowObj.item.selected == false) {\r\n    components.btn_createOrder.visible = false;\r\n} else {\r\n    quick.store.set('$getPaidInstallmentData', selected)\r\n    components.btn_createOrder.visible = true;\r\n\r\n}\r\n",
+																													"P": "rowObj:IVDataTableItemSelect",
+																													"HL": "TS"
+																												}
+																											},
+																											"C": {
+																												"item.selected": {
+																													"c": [
+																														{
+																															"T": "VCheckbox",
+																															"P": {
+																																"ID": {
+																																	"H": "EdtrComp_46",
+																																	"T": "prop"
+																																},
+																																"color": {
+																																	"H": "'primary'",
+																																	"T": "prop"
+																																},
+																																"hideDetails": {
+																																	"H": "false",
+																																	"T": "prop"
+																																},
+																																"label": {
+																																	"H": "''",
+																																	"T": "prop",
+																																	"HL": "QS"
+																																},
+																																"visible": {
+																																	"H": "true",
+																																	"T": "prop"
+																																}
+																															},
+																															"E": {},
+																															"C": {},
+																															"_Editor": {
+																																"eID": "EdtrComp_46"
+																															},
+																															"O": {
+																																"cType": "slot"
+																															}
+																														}
+																													],
+																													"cType": "scopedSlot"
+																												}
+																											},
+																											"_Editor": {
+																												"eID": "EdtrComp_25"
+																											},
+																											"S": {
+																												"xs-xl": {
+																													"marginLeft": "",
+																													"marginRight": "",
+																													"marginBottom": "",
+																													"marginTop": "",
+																													"paddingTop": "",
+																													"paddingBottom": "",
+																													"paddingLeft": "",
+																													"paddingRight": "",
+																													"width": "",
+																													"height": "",
+																													"maxWidth": "",
+																													"maxHeight": "",
+																													"minWidth": "",
+																													"minHeight": "",
+																													"unlink": "false",
+																													"unlinkMax": "false",
+																													"unlinkMin": "false",
+																													"isSizeCollapsed": "false",
+																													"dense": "",
+																													"headerFontColor": "#686868",
+																													"headerFontFamily": "Roboto",
+																													"headerFontSize": "12px",
+																													"headerFontStyle": "normal",
+																													"headerFontWeight": "400",
+																													"headerCombinedFont": "Roboto-Regular",
+																													"headerThemeFont": "Custom",
+																													"footerText": "#686868",
+																													"footerFontFamily": "Roboto",
+																													"footerFontSize": "12px",
+																													"footerFontStyle": "normal",
+																													"footerFontWeight": "400",
+																													"footerCombinedFont": "Roboto-Regular",
+																													"footerThemeFont": "Custom",
+																													"textColor": "#010101",
+																													"itemFontFamily": "Roboto",
+																													"itemFontSize": "14px",
+																													"itemFontStyle": "normal",
+																													"itemFontWeight": "400",
+																													"itemsCombinedFont": "Roboto-Regular",
+																													"itemsThemeFont": "Custom",
+																													"backgroundColor": "#ffffff",
+																													"hoverColor": "#ffffff",
+																													"footerColor": "#FFFFFF",
+																													"headerColor": "#FFFFFF",
+																													"selectedBackground": "#FFFFFF",
+																													"expandedContent": "#010101",
+																													"lineColor": "#0000001f",
+																													"lineSize": "1",
+																													"boxShadow": "",
+																													"boxSizing": "",
+																													"borderTopStyle": "solid",
+																													"borderRightStyle": "solid",
+																													"borderBottomStyle": "solid",
+																													"borderLeftStyle": "solid",
+																													"borderTopLeftRadius": "4px",
+																													"borderTopRightRadius": "4px",
+																													"borderBottomLeftRadius": "4px",
+																													"borderBottomRightRadius": "4px",
+																													"borderTopWidth": "1px",
+																													"borderRightWidth": "1px",
+																													"borderBottomWidth": "1px",
+																													"borderLeftWidth": "1px",
+																													"defaultBorderColor": "#0000001f",
+																													"sides": "Top,Right,Bottom,Left"
+																												}
+																											},
+																											"O": {
+																												"cType": "scopedSlot"
+																											}
+																										}
+																									],
+																									"cType": "slot"
+																								}
+																							},
+																							"E": {},
+																							"P": {
+																								"ID": {
+																									"H": "VColComp",
+																									"T": "prop"
+																								}
+																							},
+																							"_Editor": {
+																								"eID": "EdtrComp_3"
+																							},
+																							"O": {
+																								"cType": "slot",
+																								"layout": {
+																									"dOpt": {
+																										"xs": []
+																									},
+																									"class": ""
+																								}
+																							},
+																							"S": {
+																								"xs-xl": {
+																									"col": "",
+																									"flexDirection": "column",
+																									"alignItems": "",
+																									"justifyContent": "",
+																									"marginLeft": "",
+																									"marginRight": "",
+																									"marginBottom": "",
+																									"marginTop": "",
+																									"paddingTop": "12px",
+																									"paddingBottom": "12px",
+																									"paddingLeft": "12px",
+																									"paddingRight": "12px",
+																									"backgroundColor": "#ffffff",
+																									"boxShadow": ""
+																								}
+																							}
+																						}
+																					],
+																					"cType": "slot"
+																				}
+																			},
+																			"_Editor": {
+																				"eID": "EdtrComp_4"
+																			},
+																			"O": {
+																				"cType": "slot"
+																			},
+																			"S": {
+																				"xs-xl": {
+																					"marginLeft": "0px",
+																					"marginRight": "0px",
+																					"marginBottom": "0px",
+																					"marginTop": "0px",
+																					"paddingTop": "",
+																					"paddingBottom": "",
+																					"paddingLeft": "",
+																					"paddingRight": "",
+																					"width": "",
+																					"height": "",
+																					"backgroundColor": "#ffffff",
+																					"boxShadow": ""
+																				}
+																			}
+																		}
+																	],
+																	"cType": "slot"
+																}
+															},
+															"E": {},
+															"P": {
+																"ID": {
+																	"H": "EdtrComp_7",
+																	"T": "prop"
+																}
+															},
+															"_Editor": {
+																"eID": "EdtrComp_7"
+															},
+															"O": {
+																"cType": "slot",
+																"layout": {
+																	"dOpt": {
+																		"xs": []
+																	},
+																	"class": ""
+																}
+															},
+															"S": {
+																"xs-xl": {
+																	"col": "",
+																	"flexDirection": "column",
+																	"alignItems": "",
+																	"justifyContent": "",
+																	"marginLeft": "",
+																	"marginRight": "",
+																	"marginBottom": "",
+																	"marginTop": "",
+																	"paddingTop": "12px",
+																	"paddingBottom": "12px",
+																	"paddingLeft": "12px",
+																	"paddingRight": "12px",
+																	"backgroundColor": "",
+																	"boxShadow": "",
+																	"boxSizing": "",
+																	"borderTopStyle": "",
+																	"borderRightStyle": "",
+																	"borderBottomStyle": "",
+																	"borderLeftStyle": "",
+																	"borderTopLeftRadius": "",
+																	"borderTopRightRadius": "",
+																	"borderBottomLeftRadius": "",
+																	"borderBottomRightRadius": "",
+																	"borderTopWidth": "",
+																	"borderRightWidth": "",
+																	"borderBottomWidth": "",
+																	"borderLeftWidth": "",
+																	"defaultBorderColor": "",
+																	"sides": ""
+																}
+															}
+														}
+													],
+													"cType": "slot"
+												}
+											},
+											"_Editor": {
+												"eID": "EdtrComp_6"
+											},
+											"S": {
+												"xs-xl": {
+													"marginLeft": "0px",
+													"marginRight": "0px",
+													"marginBottom": "0px",
+													"marginTop": "0px",
+													"paddingTop": "",
+													"paddingBottom": "",
+													"paddingLeft": "",
+													"paddingRight": "",
+													"width": "",
+													"height": "",
+													"maxWidth": "",
+													"maxHeight": "",
+													"minWidth": "",
+													"minHeight": "",
+													"unlink": "false",
+													"unlinkMax": "false",
+													"unlinkMin": "false",
+													"isSizeCollapsed": "false",
+													"backgroundColor": "",
+													"boxShadow": "",
+													"boxSizing": "",
+													"borderTopStyle": "",
+													"borderRightStyle": "",
+													"borderBottomStyle": "",
+													"borderLeftStyle": "",
+													"borderTopLeftRadius": "",
+													"borderTopRightRadius": "",
+													"borderBottomLeftRadius": "",
+													"borderBottomRightRadius": "",
+													"borderTopWidth": "",
+													"borderRightWidth": "",
+													"borderBottomWidth": "",
+													"borderLeftWidth": "",
+													"defaultBorderColor": "",
+													"sides": ""
+												}
+											},
+											"O": {
+												"cType": "slot"
+											}
+										}
+									],
+									"cType": "slot"
+								}
+							},
+							"_Editor": {
+								"eID": "EdtrComp_276"
+							},
+							"O": {
+								"cType": "slot"
+							}
+						}
+					],
+					"cType": "slot"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_5"
+			},
+			"O": {
+				"cType": "slot",
+				"layout": {
+					"dOpt": {
+						"xs": [
+							"sp:pl-0",
+							"sp:pt-0",
+							"sp:pr-0",
+							"sp:pb-0",
+							"sp:mt-0",
+							"sp:ml-0",
+							"sp:mr-0",
+							"sp:mb-0"
+						]
+					},
+					"class": "pl-0 pt-0 pr-0 pb-0 mt-0 ml-0 mr-0 mb-0"
+				}
+			},
+			"S": {
+				"xs-xl": {
+					"marginLeft": "",
+					"marginRight": "",
+					"marginBottom": "",
+					"marginTop": "",
+					"paddingTop": "12px",
+					"paddingBottom": "12px",
+					"paddingLeft": "12px",
+					"paddingRight": "12px",
+					"width": "",
+					"height": "",
+					"backgroundColor": "#ffffff",
+					"boxShadow": ""
+				}
+			}
+		},
+		{
+			"T": "VRow",
+			"P": {
+				"ID": {
+					"H": "EdtrComp_2",
+					"T": "prop"
+				}
+			},
+			"E": {},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "VCol",
+							"C": {
+								"default": {
+									"c": [
+										{
+											"T": "VBtn",
+											"P": {
+												"ID": {
+													"H": "btn_createOrder",
+													"T": "prop",
+													"HL": "QS"
+												},
+												"depressed": {
+													"H": "true",
+													"T": "prop"
+												},
+												"visible": {
+													"H": "false",
+													"T": "prop",
+													"HL": "QS"
+												},
+												"DiscardSettings": {
+													"H": "true",
+													"T": "prop"
+												},
+												"color": {
+													"H": "'#2171DC'",
+													"T": "prop"
+												},
+												"dark": {
+													"H": "true",
+													"T": "prop"
+												},
+												"height": {
+													"H": "'40px'",
+													"T": "prop",
+													"HL": "QS"
+												},
+												"rounded": {
+													"H": "true",
+													"T": "prop"
+												}
+											},
+											"E": {
+												"click": {
+													"H": "quick.parent.events.clickContinueButton()",
+													"P": "mouseEvent:unknown | undefined",
+													"HL": "TS"
+												}
+											},
+											"C": {
+												"default": {
+													"c": [
+														{
+															"T": "QLabel",
+															"C": {},
+															"E": {},
+															"P": {
+																"ID": {
+																	"H": "EdtrComp_16",
+																	"T": "prop"
+																},
+																"text": {
+																	"H": "'Devam'",
+																	"T": "prop",
+																	"HL": "QS"
+																}
+															},
+															"_Editor": {
+																"eID": "EdtrComp_16"
+															},
+															"O": {
+																"cType": "child",
+																"layout": {
+																	"dOpt": {
+																		"xs": [
+																			"tt:text-body-1",
+																			"te:font-weight-regular"
+																		]
+																	},
+																	"class": "text-body-1 font-weight-regular"
+																}
+															},
+															"S": {
+																"xs-xl": {
+																	"marginTop": "",
+																	"marginRight": "",
+																	"marginBottom": "",
+																	"marginLeft": "",
+																	"paddingTop": "",
+																	"paddingRight": "",
+																	"paddingBottom": "",
+																	"paddingLeft": "",
+																	"fontColor": "#000000",
+																	"fontFamily": "Roboto",
+																	"fontSize": "16px",
+																	"fontStyle": "normal",
+																	"fontWeight": "400",
+																	"combinedFont": "Roboto-Regular",
+																	"ThemeFont": "Custom",
+																	"lineHeight": "20px"
+																}
+															}
+														}
+													],
+													"cType": "slot"
+												}
+											},
+											"_Editor": {
+												"eID": "EdtrComp_15"
+											},
+											"S": {
+												"xs-xl": {
+													"marginTop": "",
+													"marginRight": "10px",
+													"marginBottom": "",
+													"marginLeft": "",
+													"paddingTop": "",
+													"paddingRight": "16px",
+													"paddingBottom": "",
+													"paddingLeft": "16px",
+													"width": "",
+													"height": "",
+													"maxWidth": "",
+													"maxHeight": "",
+													"minWidth": "",
+													"minHeight": "",
+													"unlink": "false",
+													"unlinkMax": "false",
+													"unlinkMin": "false",
+													"isSizeCollapsed": "false",
+													"fontColor": "#ffffff",
+													"fontFamily": "Roboto",
+													"fontSize": "16px",
+													"fontStyle": "normal",
+													"fontWeight": "400",
+													"combinedFont": "Roboto-Regular",
+													"ThemeFont": "Custom",
+													"lineHeight": "20px",
+													"backgroundColor": "#1976D2",
+													"disabledBackgroundColor": "rgba(0,0,0,.12)",
+													"boxShadow": "",
+													"boxSizing": "",
+													"borderTopStyle": "solid",
+													"borderRightStyle": "solid",
+													"borderBottomStyle": "solid",
+													"borderLeftStyle": "solid",
+													"borderTopLeftRadius": "4px",
+													"borderTopRightRadius": "4px",
+													"borderBottomLeftRadius": "4px",
+													"borderBottomRightRadius": "4px",
+													"borderTopWidth": "0px",
+													"borderRightWidth": "0px",
+													"borderBottomWidth": "0px",
+													"borderLeftWidth": "0px",
+													"defaultBorderColor": "",
+													"sides": "Top,Right,Bottom,Left"
+												}
+											},
+											"SC": {
+												"fontColor": {
+													"VIcon": "iconColor",
+													"QLabel": "fontColor"
+												},
+												"fontStyle": {
+													"QLabel": "fontStyle"
+												},
+												"fontSize": {
+													"QLabel": "fontSize"
+												},
+												"fontFamily": {
+													"QLabel": "fontFamily"
+												},
+												"fontWeight": {
+													"QLabel": "fontWeight"
+												},
+												"combinedFont": {
+													"QLabel": "combinedFont"
+												},
+												"lineHeight": {
+													"QLabel": "lineHeight"
+												},
+												"bacgroundColor": {
+													"VIcon": "backgroundColor"
+												}
+											},
+											"O": {
+												"cType": "slot",
+												"layout": {
+													"dOpt": {
+														"xs": [
+															"sp:mr-1"
+														]
+													},
+													"class": "mr-1"
+												}
+											}
+										}
+									],
+									"cType": "slot"
+								}
+							},
+							"E": {},
+							"P": {
+								"ID": {
+									"H": "EdtrComp_14",
+									"T": "prop"
+								}
+							},
+							"_Editor": {
+								"eID": "EdtrComp_14"
+							},
+							"O": {
+								"cType": "slot",
+								"layout": {
+									"dOpt": {
+										"xs": [
+											"d:d-flex",
+											"sp:pr-3",
+											"sp:pl-3",
+											"sp:pb-3",
+											"sp:pt-3",
+											"j:justify-end"
+										]
+									},
+									"class": "d-flex pr-3 pl-3 pb-3 pt-3 justify-end"
+								}
+							},
+							"S": {
+								"xs-xl": {
+									"col": "",
+									"flexDirection": "column",
+									"alignItems": "",
+									"justifyContent": "",
+									"marginLeft": "",
+									"marginRight": "",
+									"marginBottom": "",
+									"marginTop": "",
+									"paddingTop": "12px",
+									"paddingBottom": "12px",
+									"paddingLeft": "12px",
+									"paddingRight": "12px",
+									"backgroundColor": "#ffffff",
+									"boxShadow": ""
+								}
+							}
+						}
+					],
+					"cType": "slot"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_2"
+			},
+			"O": {
+				"cType": "slot"
+			}
+		}
+	],
+	"cJson": [
+		{
+			"T": "Messaging",
+			"P": {
+				"ID": {
+					"H": "PageComp",
+					"T": "prop"
+				},
+				"triggerOnRestored": {
+					"H": "╬false╩╩",
+					"T": "prop"
+				},
+				"externalEvents": {
+					"H": "╬[]╠{}╠=╣name╩╠'itemSelected'╩╩╠=╣params╩╠[]╩╩╩╠{}╠=╣name╩╠'clickContinueButton'╩╩╠=╣params╩╠[]╩╩╩╩╩",
+					"T": "prop",
+					"HL": "QS"
+				}
+			},
+			"E": {
+				"paymentCancelledListInfo": {
+					"H": "var _a, _b, _c, _d;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nquick.MM.trigger('setConsumerAndScreenInfo');\r\ncomponents.dt_policyPaymentList.items = [];\r\nvar serviceRequest = {\r\n    url: '/api/wrapperclient/getPaidInstallmentList',\r\n    http: 'POST',\r\n    data: {\r\n        getPaidInstallmentRequest: {\r\n            customerNumber: (_a = quick.containerServices.getCustomerContext()) === null || _a === void 0 ? void 0 : _a.customerNumber,\r\n            customerName: ((_b = quick.containerServices.getCustomerContext()) === null || _b === void 0 ? void 0 : _b.customerName) + ' ' + ((_c = quick.containerServices.getCustomerContext()) === null || _c === void 0 ? void 0 : _c.customerSurname)\r\n        }\r\n    },\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false\r\n};\r\n(_d = quick.Request.async(serviceRequest)) === null || _d === void 0 ? void 0 : _d.then(function (resp) {\r\n    var _a, _b, _c, _d, _e, _f, _g;\r\n    var list = resp.data.getPaidInstallmentResponse.paidInstallmentList || [];\r\n    var flatList = [];\r\n    for (var i = 0; i < list.length; i++) {\r\n        var item = list[i];\r\n        var paymentTypeRaw = (item.paymentType || '').toUpperCase();\r\n        var accBranch = Number((_a = item === null || item === void 0 ? void 0 : item.accountNumber) === null || _a === void 0 ? void 0 : _a.branchCode);\r\n        var accNumber = Number((_b = item === null || item === void 0 ? void 0 : item.accountNumber) === null || _b === void 0 ? void 0 : _b.number);\r\n        var hasAccountInfo = paymentTypeRaw === 'ACCOUNT' && accBranch > 0 && accNumber > 0;\r\n        var paymentTypeDisplay = paymentTypeRaw === 'ACCOUNT'\r\n            ? (hasAccountInfo ? 'Cari Hesap' : 'Nakit')\r\n            : paymentTypeRaw === 'CCARD'\r\n                ? 'Kredi Kartı'\r\n                : paymentTypeRaw === 'IMCCARD'\r\n                    ? 'İmece Kart'\r\n                    : (item.paymentType || '');\r\n        var accountOrCardNo = '';\r\n        if (paymentTypeRaw === 'ACCOUNT' && hasAccountInfo) {\r\n            accountOrCardNo = accBranch + \"-\" + accNumber;\r\n        }\r\n        else if (paymentTypeRaw === 'CCARD' || 'IMCCARD') {\r\n            accountOrCardNo = item.creditCardNumber || '';\r\n        }\r\n        flatList.push({\r\n            id: i + 1,\r\n            policyNumber: ((_c = item.policyNumber) === null || _c === void 0 ? void 0 : _c.policyNo) + '/' + ((_d = item.policyNumber) === null || _d === void 0 ? void 0 : _d.renewalNo),\r\n            dueDate: item.installmentDate,\r\n            insuranceTypeName: item.insuranceTypeName,\r\n            debitOrCredit: ((item.installmentType || '').toUpperCase() === 'REFUND') ? 'Alacak' : 'Borç',\r\n            //\r\n            bankRefId: item.bankRefId,\r\n            paymentType: paymentTypeDisplay,\r\n            paymentTypeRaw: paymentTypeRaw,\r\n            accountInfo: item.accountNumber || null,\r\n            creditCardNumber: accountOrCardNo,\r\n            //creditCardNumber: item.creditCardNumber,\r\n            amount: Math.abs(Number(item.amount.amount.amount)) + '' + item.amount.amount.currencyCode.code,\r\n            paymentId: item.paymentId || '',\r\n            installmentId: item.installmentId || '',\r\n            installmentDate: item.installmentDate || '',\r\n            transactionId: item.transactionId || '',\r\n            orderId: item.orderId,\r\n            customerName: ((_e = quick.containerServices.getCustomerContext()) === null || _e === void 0 ? void 0 : _e.customerName)\r\n                + ((_f = quick.containerServices.getCustomerContext()) === null || _f === void 0 ? void 0 : _f.customerSurname),\r\n            customerNumber: (_g = quick.containerServices.getCustomerContext()) === null || _g === void 0 ? void 0 : _g.customerNumber,\r\n            firmType: item.firmType,\r\n            insuranceType: item.insuranceType\r\n        });\r\n    }\r\n    components.dt_policyPaymentList.items = flatList;\r\n    quick.store.set('$getPaidInstallmentData', flatList);\r\n});\r\n",
+					"C": true,
+					"HL": "JS"
+				},
+				"PostRender": {
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nquick.MM.trigger('paymentCancelledListInfo');\r\n",
+					"TO": 1,
+					"HL": "JS"
+				},
+				"setConsumerAndScreenInfo": {
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nquick.store.set('$customConsumerCode', 'TANE.BAHOME');\r\nquick.store.set('$customScreenName', 'TANE.BAHOME');\r\n",
+					"C": true,
+					"HL": "JS"
+				}
+			},
+			"C": {},
+			"_Editor": {
+				"eID": "EdtrComp_1"
+			},
+			"O": {
+				"cType": "child",
+				"layout": {
+					"dOpt": {
+						"xs": [
+							"sp:pt-0",
+							"sp:pl-0",
+							"sp:pr-0",
+							"sp:pb-0"
+						]
+					},
+					"class": "pt-0 pl-0 pr-0 pb-0"
+				},
+				"compDomClasses": "newDropBorder"
+			},
+			"S": {
+				"xs-xl": {
+					"pageBackgroundColor": "#ffffff",
+					"statusBarColor": "#ffffff"
+				}
+			}
+		},
+		{
+			"T": "VContainer",
+			"P": {
+				"ID": {
+					"H": "VContainerComp",
+					"T": "prop"
+				},
+				"class": {
+					"H": "╬'container container--fluid'╩╩",
+					"T": "class"
+				},
+				"visible": {
+					"H": "╬true╩╩",
+					"T": "prop"
+				},
+				"eager": {
+					"H": "╬true╩╩",
+					"T": "prop"
+				}
+			},
+			"E": {},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "VCard",
+							"P": {
+								"ID": {
+									"H": "EdtrComp_276",
+									"T": "prop"
+								},
+								"color": {
+									"H": "╬'white'╩╩",
+									"T": "prop"
+								},
+								"visible": {
+									"H": "╬true╩╩",
+									"T": "prop"
+								}
+							},
+							"E": {},
+							"C": {
+								"default": {
+									"c": [
+										{
+											"T": "VRow",
+											"P": {
+												"ID": {
+													"H": "EdtrComp_6",
+													"T": "prop"
+												}
+											},
+											"E": {},
+											"C": {
+												"default": {
+													"c": [
+														{
+															"T": "VCol",
+															"C": {
+																"default": {
+																	"c": [
+																		{
+																			"T": "VRow",
+																			"P": {
+																				"ID": {
+																					"H": "VRowComp",
+																					"T": "prop"
+																				}
+																			},
+																			"E": {},
+																			"C": {
+																				"default": {
+																					"c": [
+																						{
+																							"T": "VCol",
+																							"C": {
+																								"default": {
+																									"c": [
+																										{
+																											"T": "VDataTable",
+																											"P": {
+																												"ID": {
+																													"H": "dt_policyPaymentList",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"footerProps": {
+																													"H": "╬{}╠=╣showFirstLastPage╩╠true╩╩╠=╣firstIcon╩╠'mdi-arrow-collapse-left'╩╩╠=╣lastIcon╩╠'mdi-arrow-collapse-right'╩╩╠=╣prevIcon╩╠'mdi-minus'╩╩╠=╣nextIcon╩╠'mdi-plus'╩╩╩╩",
+																													"T": "prop"
+																												},
+																												"headers": {
+																													"H": "╬[]╠{}╠=╣text╩╠'Poliçe No / Yenileme No'╩╩╠=╣value╩╠'policyNumber'╩╩╠=╣filterable╩╠true╩╩╩╠{}╠=╣text╩╠'Vade'╩╩╠=╣value╩╠'dueDate'╩╩╠=╣filterable╩╠true╩╩╩╠{}╠=╣text╩╠'Sigorta Türü'╩╩╠=╣value╩╠'insuranceTypeName'╩╩╠=╣filterable╩╠true╩╩╩╠{}╠=╣text╩╠'Borç / Alacak'╩╩╠=╣value╩╠'debitOrCredit'╩╩╠=╣filterable╩╠true╩╩╩╠{}╠=╣text╩╠'Ödeme Şekli'╩╩╠=╣value╩╠'paymentType'╩╩╠=╣filterable╩╠true╩╩╩╠{}╠=╣text╩╠'Hesap No/ Kart No'╩╩╠=╣value╩╠'creditCardNumber'╩╩╠=╣filterable╩╠true╩╩╩╠{}╠=╣text╩╠'Tutar'╩╩╠=╣value╩╠'amount'╩╩╠=╣filterable╩╠true╩╩╩╩╩",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"itemsPerPage": {
+																													"H": "╬10╩╩",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"mobileBreakpoint": {
+																													"H": "╬600╩╩",
+																													"T": "prop"
+																												},
+																												"visible": {
+																													"H": "╬true╩╩",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"hideDefaultFooter": {
+																													"H": "╬true╩╩",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"disablePagination": {
+																													"H": "╬false╩╩",
+																													"T": "prop"
+																												},
+																												"noDataText": {
+																													"H": "╬'Listelenecek Veri Yok.'╩╩",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"hideDefaultHeader": {
+																													"H": "╬false╩╩",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"fixedHeader": {
+																													"H": "╬true╩╩",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"dense": {
+																													"H": "╬true╩╩",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"disableSort": {
+																													"H": "╬false╩╩",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"dark": {
+																													"H": "╬false╩╩",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"itemKey": {
+																													"H": "╬'id'╩╩",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"disableFiltering": {
+																													"H": "╬false╩╩",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"items": {
+																													"H": "╬[]╩╩",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"showSelect": {
+																													"H": "╬true╩╩",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"singleSelect": {
+																													"H": "╬true╩╩",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"singleExpand": {
+																													"H": "╬false╩╩",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"showExpand": {
+																													"H": "╬false╩╩",
+																													"T": "prop",
+																													"HL": "QS"
+																												}
+																											},
+																											"E": {
+																												"item-selected": {
+																													"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\ndebugger;\r\nvar selected = rowObj.item;\r\nrowObj.item.selected = rowObj.value;\r\nif (rowObj.item.selected == false) {\r\n    components.btn_createOrder.visible = false;\r\n}\r\nelse {\r\n    quick.store.set('$getPaidInstallmentData', selected);\r\n    components.btn_createOrder.visible = true;\r\n}\r\n",
+																													"P": "rowObj:IVDataTableItemSelect",
+																													"HL": "JS"
+																												}
+																											},
+																											"C": {
+																												"item.selected": {
+																													"c": [
+																														{
+																															"T": "VCheckbox",
+																															"P": {
+																																"ID": {
+																																	"H": "EdtrComp_46",
+																																	"T": "prop"
+																																},
+																																"color": {
+																																	"H": "╬'primary'╩╩",
+																																	"T": "prop"
+																																},
+																																"hideDetails": {
+																																	"H": "╬false╩╩",
+																																	"T": "prop"
+																																},
+																																"label": {
+																																	"H": "╬''╩╩",
+																																	"T": "prop",
+																																	"HL": "QS"
+																																},
+																																"visible": {
+																																	"H": "╬true╩╩",
+																																	"T": "prop"
+																																}
+																															},
+																															"E": {},
+																															"C": {},
+																															"_Editor": {
+																																"eID": "EdtrComp_46"
+																															},
+																															"O": {
+																																"cType": "slot"
+																															}
+																														}
+																													],
+																													"cType": "scopedSlot"
+																												}
+																											},
+																											"_Editor": {
+																												"eID": "EdtrComp_25"
+																											},
+																											"S": {
+																												"xs-xl": {
+																													"marginLeft": "",
+																													"marginRight": "",
+																													"marginBottom": "",
+																													"marginTop": "",
+																													"paddingTop": "",
+																													"paddingBottom": "",
+																													"paddingLeft": "",
+																													"paddingRight": "",
+																													"width": "",
+																													"height": "",
+																													"maxWidth": "",
+																													"maxHeight": "",
+																													"minWidth": "",
+																													"minHeight": "",
+																													"unlink": "false",
+																													"unlinkMax": "false",
+																													"unlinkMin": "false",
+																													"isSizeCollapsed": "false",
+																													"dense": "",
+																													"headerFontColor": "#686868",
+																													"headerFontFamily": "Roboto",
+																													"headerFontSize": "12px",
+																													"headerFontStyle": "normal",
+																													"headerFontWeight": "400",
+																													"headerCombinedFont": "Roboto-Regular",
+																													"headerThemeFont": "Custom",
+																													"footerText": "#686868",
+																													"footerFontFamily": "Roboto",
+																													"footerFontSize": "12px",
+																													"footerFontStyle": "normal",
+																													"footerFontWeight": "400",
+																													"footerCombinedFont": "Roboto-Regular",
+																													"footerThemeFont": "Custom",
+																													"textColor": "#010101",
+																													"itemFontFamily": "Roboto",
+																													"itemFontSize": "14px",
+																													"itemFontStyle": "normal",
+																													"itemFontWeight": "400",
+																													"itemsCombinedFont": "Roboto-Regular",
+																													"itemsThemeFont": "Custom",
+																													"backgroundColor": "#ffffff",
+																													"hoverColor": "#ffffff",
+																													"footerColor": "#FFFFFF",
+																													"headerColor": "#FFFFFF",
+																													"selectedBackground": "#FFFFFF",
+																													"expandedContent": "#010101",
+																													"lineColor": "#0000001f",
+																													"lineSize": "1",
+																													"boxShadow": "",
+																													"boxSizing": "",
+																													"borderTopStyle": "solid",
+																													"borderRightStyle": "solid",
+																													"borderBottomStyle": "solid",
+																													"borderLeftStyle": "solid",
+																													"borderTopLeftRadius": "4px",
+																													"borderTopRightRadius": "4px",
+																													"borderBottomLeftRadius": "4px",
+																													"borderBottomRightRadius": "4px",
+																													"borderTopWidth": "1px",
+																													"borderRightWidth": "1px",
+																													"borderBottomWidth": "1px",
+																													"borderLeftWidth": "1px",
+																													"defaultBorderColor": "#0000001f",
+																													"sides": "Top,Right,Bottom,Left"
+																												}
+																											},
+																											"O": {
+																												"cType": "scopedSlot",
+																												"compDomClasses": "v-data-table v-data-table--dense v-data-table--fixed-header theme--light newDropBorder"
+																											}
+																										}
+																									],
+																									"cType": "slot"
+																								}
+																							},
+																							"E": {},
+																							"P": {
+																								"ID": {
+																									"H": "VColComp",
+																									"T": "prop"
+																								}
+																							},
+																							"_Editor": {
+																								"eID": "EdtrComp_3"
+																							},
+																							"O": {
+																								"cType": "slot",
+																								"layout": {
+																									"dOpt": {
+																										"xs": []
+																									},
+																									"class": ""
+																								},
+																								"compDomClasses": "col pb-0 newDropBorder"
+																							},
+																							"S": {
+																								"xs-xl": {
+																									"col": "",
+																									"flexDirection": "column",
+																									"alignItems": "",
+																									"justifyContent": "",
+																									"marginLeft": "",
+																									"marginRight": "",
+																									"marginBottom": "",
+																									"marginTop": "",
+																									"paddingTop": "12px",
+																									"paddingBottom": "12px",
+																									"paddingLeft": "12px",
+																									"paddingRight": "12px",
+																									"backgroundColor": "#ffffff",
+																									"boxShadow": ""
+																								}
+																							}
+																						}
+																					],
+																					"cType": "slot"
+																				}
+																			},
+																			"_Editor": {
+																				"eID": "EdtrComp_4"
+																			},
+																			"O": {
+																				"cType": "slot",
+																				"compDomClasses": "row newDropBorder"
+																			},
+																			"S": {
+																				"xs-xl": {
+																					"marginLeft": "0px",
+																					"marginRight": "0px",
+																					"marginBottom": "0px",
+																					"marginTop": "0px",
+																					"paddingTop": "",
+																					"paddingBottom": "",
+																					"paddingLeft": "",
+																					"paddingRight": "",
+																					"width": "",
+																					"height": "",
+																					"backgroundColor": "#ffffff",
+																					"boxShadow": ""
+																				}
+																			}
+																		}
+																	],
+																	"cType": "slot"
+																}
+															},
+															"E": {},
+															"P": {
+																"ID": {
+																	"H": "EdtrComp_7",
+																	"T": "prop"
+																}
+															},
+															"_Editor": {
+																"eID": "EdtrComp_7"
+															},
+															"O": {
+																"cType": "slot",
+																"layout": {
+																	"dOpt": {
+																		"xs": []
+																	},
+																	"class": ""
+																},
+																"compDomClasses": "col pb-0 newDropBorder"
+															},
+															"S": {
+																"xs-xl": {
+																	"col": "",
+																	"flexDirection": "column",
+																	"alignItems": "",
+																	"justifyContent": "",
+																	"marginLeft": "",
+																	"marginRight": "",
+																	"marginBottom": "",
+																	"marginTop": "",
+																	"paddingTop": "12px",
+																	"paddingBottom": "12px",
+																	"paddingLeft": "12px",
+																	"paddingRight": "12px",
+																	"backgroundColor": "",
+																	"boxShadow": "",
+																	"boxSizing": "",
+																	"borderTopStyle": "",
+																	"borderRightStyle": "",
+																	"borderBottomStyle": "",
+																	"borderLeftStyle": "",
+																	"borderTopLeftRadius": "",
+																	"borderTopRightRadius": "",
+																	"borderBottomLeftRadius": "",
+																	"borderBottomRightRadius": "",
+																	"borderTopWidth": "",
+																	"borderRightWidth": "",
+																	"borderBottomWidth": "",
+																	"borderLeftWidth": "",
+																	"defaultBorderColor": "",
+																	"sides": ""
+																}
+															}
+														}
+													],
+													"cType": "slot"
+												}
+											},
+											"_Editor": {
+												"eID": "EdtrComp_6"
+											},
+											"S": {
+												"xs-xl": {
+													"marginLeft": "0px",
+													"marginRight": "0px",
+													"marginBottom": "0px",
+													"marginTop": "0px",
+													"paddingTop": "",
+													"paddingBottom": "",
+													"paddingLeft": "",
+													"paddingRight": "",
+													"width": "",
+													"height": "",
+													"maxWidth": "",
+													"maxHeight": "",
+													"minWidth": "",
+													"minHeight": "",
+													"unlink": "false",
+													"unlinkMax": "false",
+													"unlinkMin": "false",
+													"isSizeCollapsed": "false",
+													"backgroundColor": "",
+													"boxShadow": "",
+													"boxSizing": "",
+													"borderTopStyle": "",
+													"borderRightStyle": "",
+													"borderBottomStyle": "",
+													"borderLeftStyle": "",
+													"borderTopLeftRadius": "",
+													"borderTopRightRadius": "",
+													"borderBottomLeftRadius": "",
+													"borderBottomRightRadius": "",
+													"borderTopWidth": "",
+													"borderRightWidth": "",
+													"borderBottomWidth": "",
+													"borderLeftWidth": "",
+													"defaultBorderColor": "",
+													"sides": ""
+												}
+											},
+											"O": {
+												"cType": "slot",
+												"compDomClasses": "row newDropBorder"
+											}
+										}
+									],
+									"cType": "slot"
+								}
+							},
+							"_Editor": {
+								"eID": "EdtrComp_276"
+							},
+							"O": {
+								"cType": "slot",
+								"compDomClasses": "v-card v-sheet theme--light white newDropBorder"
+							}
+						}
+					],
+					"cType": "slot"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_5"
+			},
+			"O": {
+				"cType": "slot",
+				"layout": {
+					"dOpt": {
+						"xs": [
+							"sp:pl-0",
+							"sp:pt-0",
+							"sp:pr-0",
+							"sp:pb-0",
+							"sp:mt-0",
+							"sp:ml-0",
+							"sp:mr-0",
+							"sp:mb-0"
+						]
+					},
+					"class": "pl-0 pt-0 pr-0 pb-0 mt-0 ml-0 mr-0 mb-0"
+				},
+				"compDomClasses": "container container--fluid pl-0 pt-0 pr-0 pb-0 mt-0 ml-0 mr-0 mb-0 newDropBorder"
+			},
+			"S": {
+				"xs-xl": {
+					"marginLeft": "",
+					"marginRight": "",
+					"marginBottom": "",
+					"marginTop": "",
+					"paddingTop": "12px",
+					"paddingBottom": "12px",
+					"paddingLeft": "12px",
+					"paddingRight": "12px",
+					"width": "",
+					"height": "",
+					"backgroundColor": "#ffffff",
+					"boxShadow": ""
+				}
+			}
+		},
+		{
+			"T": "VRow",
+			"P": {
+				"ID": {
+					"H": "EdtrComp_2",
+					"T": "prop"
+				}
+			},
+			"E": {},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "VCol",
+							"C": {
+								"default": {
+									"c": [
+										{
+											"T": "VBtn",
+											"P": {
+												"ID": {
+													"H": "btn_createOrder",
+													"T": "prop",
+													"HL": "QS"
+												},
+												"depressed": {
+													"H": "╬true╩╩",
+													"T": "prop"
+												},
+												"visible": {
+													"H": "╬false╩╩",
+													"T": "prop",
+													"HL": "QS"
+												},
+												"DiscardSettings": {
+													"H": "╬true╩╩",
+													"T": "prop"
+												},
+												"color": {
+													"H": "╬'#2171DC'╩╩",
+													"T": "prop"
+												},
+												"dark": {
+													"H": "╬true╩╩",
+													"T": "prop"
+												},
+												"height": {
+													"H": "╬'40px'╩╩",
+													"T": "prop",
+													"HL": "QS"
+												},
+												"rounded": {
+													"H": "╬true╩╩",
+													"T": "prop"
+												}
+											},
+											"E": {
+												"click": {
+													"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\nquick.parent.events.clickContinueButton();\r\n",
+													"P": "mouseEvent:unknown | undefined",
+													"HL": "JS"
+												}
+											},
+											"C": {
+												"default": {
+													"c": [
+														{
+															"T": "QLabel",
+															"C": {},
+															"E": {},
+															"P": {
+																"ID": {
+																	"H": "EdtrComp_16",
+																	"T": "prop"
+																},
+																"text": {
+																	"H": "╬'Devam'╩╩",
+																	"T": "prop",
+																	"HL": "QS"
+																}
+															},
+															"_Editor": {
+																"eID": "EdtrComp_16"
+															},
+															"O": {
+																"cType": "child",
+																"layout": {
+																	"dOpt": {
+																		"xs": [
+																			"tt:text-body-1",
+																			"te:font-weight-regular"
+																		]
+																	},
+																	"class": "text-body-1 font-weight-regular"
+																},
+																"compDomClasses": "q-label text-body-1 font-weight-regular newDropBorder"
+															},
+															"S": {
+																"xs-xl": {
+																	"marginTop": "",
+																	"marginRight": "",
+																	"marginBottom": "",
+																	"marginLeft": "",
+																	"paddingTop": "",
+																	"paddingRight": "",
+																	"paddingBottom": "",
+																	"paddingLeft": "",
+																	"fontColor": "#000000",
+																	"fontFamily": "Roboto",
+																	"fontSize": "16px",
+																	"fontStyle": "normal",
+																	"fontWeight": "400",
+																	"combinedFont": "Roboto-Regular",
+																	"ThemeFont": "Custom",
+																	"lineHeight": "20px"
+																}
+															}
+														}
+													],
+													"cType": "slot"
+												}
+											},
+											"_Editor": {
+												"eID": "EdtrComp_15"
+											},
+											"S": {
+												"xs-xl": {
+													"marginTop": "",
+													"marginRight": "10px",
+													"marginBottom": "",
+													"marginLeft": "",
+													"paddingTop": "",
+													"paddingRight": "16px",
+													"paddingBottom": "",
+													"paddingLeft": "16px",
+													"width": "",
+													"height": "",
+													"maxWidth": "",
+													"maxHeight": "",
+													"minWidth": "",
+													"minHeight": "",
+													"unlink": "false",
+													"unlinkMax": "false",
+													"unlinkMin": "false",
+													"isSizeCollapsed": "false",
+													"fontColor": "#ffffff",
+													"fontFamily": "Roboto",
+													"fontSize": "16px",
+													"fontStyle": "normal",
+													"fontWeight": "400",
+													"combinedFont": "Roboto-Regular",
+													"ThemeFont": "Custom",
+													"lineHeight": "20px",
+													"backgroundColor": "#1976D2",
+													"disabledBackgroundColor": "rgba(0,0,0,.12)",
+													"boxShadow": "",
+													"boxSizing": "",
+													"borderTopStyle": "solid",
+													"borderRightStyle": "solid",
+													"borderBottomStyle": "solid",
+													"borderLeftStyle": "solid",
+													"borderTopLeftRadius": "4px",
+													"borderTopRightRadius": "4px",
+													"borderBottomLeftRadius": "4px",
+													"borderBottomRightRadius": "4px",
+													"borderTopWidth": "0px",
+													"borderRightWidth": "0px",
+													"borderBottomWidth": "0px",
+													"borderLeftWidth": "0px",
+													"defaultBorderColor": "",
+													"sides": "Top,Right,Bottom,Left"
+												}
+											},
+											"SC": {
+												"fontColor": {
+													"VIcon": "iconColor",
+													"QLabel": "fontColor"
+												},
+												"fontStyle": {
+													"QLabel": "fontStyle"
+												},
+												"fontSize": {
+													"QLabel": "fontSize"
+												},
+												"fontFamily": {
+													"QLabel": "fontFamily"
+												},
+												"fontWeight": {
+													"QLabel": "fontWeight"
+												},
+												"combinedFont": {
+													"QLabel": "combinedFont"
+												},
+												"lineHeight": {
+													"QLabel": "lineHeight"
+												},
+												"bacgroundColor": {
+													"VIcon": "backgroundColor"
+												}
+											},
+											"O": {
+												"cType": "slot",
+												"layout": {
+													"dOpt": {
+														"xs": [
+															"sp:mr-1"
+														]
+													},
+													"class": "mr-1"
+												},
+												"compDomClasses": "v-btn v-btn--depressed v-btn--rounded theme--dark v-size--default mr-1 newDropBorder"
+											}
+										}
+									],
+									"cType": "slot"
+								}
+							},
+							"E": {},
+							"P": {
+								"ID": {
+									"H": "EdtrComp_14",
+									"T": "prop"
+								}
+							},
+							"_Editor": {
+								"eID": "EdtrComp_14"
+							},
+							"O": {
+								"cType": "slot",
+								"layout": {
+									"dOpt": {
+										"xs": [
+											"d:d-flex",
+											"sp:pr-3",
+											"sp:pl-3",
+											"sp:pb-3",
+											"sp:pt-3",
+											"j:justify-end"
+										]
+									},
+									"class": "d-flex pr-3 pl-3 pb-3 pt-3 justify-end"
+								},
+								"compDomClasses": "col d-flex pr-3 pl-3 pb-3 pt-3 justify-end pb-0 newDropBorder"
+							},
+							"S": {
+								"xs-xl": {
+									"col": "",
+									"flexDirection": "column",
+									"alignItems": "",
+									"justifyContent": "",
+									"marginLeft": "",
+									"marginRight": "",
+									"marginBottom": "",
+									"marginTop": "",
+									"paddingTop": "12px",
+									"paddingBottom": "12px",
+									"paddingLeft": "12px",
+									"paddingRight": "12px",
+									"backgroundColor": "#ffffff",
+									"boxShadow": ""
+								}
+							}
+						}
+					],
+					"cType": "slot"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_2"
+			},
+			"O": {
+				"cType": "slot",
+				"compDomClasses": "row newDropBorder"
+			}
+		}
+	],
+	"lrids": {},
+	"clrids": {},
+	"opt": {}
+};
+export default pjson

@@ -1,0 +1,708 @@
+let pjson = {
+	"pJson": [
+		{
+			"T": "Messaging",
+			"P": {
+				"ID": {
+					"H": "PageComp",
+					"T": "prop"
+				},
+				"triggerOnRestored": {
+					"H": "false",
+					"T": "prop"
+				},
+				"externalProps": {
+					"H": "['closable']",
+					"T": "prop"
+				}
+			},
+			"E": {
+				"open": {
+					"H": "components.dialog.qValue = true;",
+					"C": true,
+					"EV": true,
+					"HL": "TS"
+				},
+				"close": {
+					"H": "components.dialog.qValue = false;",
+					"C": true,
+					"EV": true,
+					"HL": "TS"
+				},
+				"PostRender": {
+					"H": "let closable = quick?.parent?.props?.closable ?? false;\r\nlet persistent = !closable;\r\n\r\ncomponents.dialog.persistent = persistent;",
+					"TO": 1,
+					"HL": "TS"
+				}
+			},
+			"C": {},
+			"_Editor": {
+				"eID": "EdtrComp_1"
+			},
+			"O": {
+				"cType": "child"
+			},
+			"S": {
+				"xs-xl": {
+					"pageBackgroundColor": "#ffffff",
+					"statusBarColor": "#ffffff"
+				}
+			}
+		},
+		{
+			"T": "VDialog",
+			"P": {
+				"ID": {
+					"H": "dialog",
+					"T": "prop"
+				},
+				"visible": {
+					"H": "true",
+					"T": "prop"
+				},
+				"DiscardSettings": {
+					"H": "true",
+					"T": "prop"
+				},
+				"openOnHover": {
+					"H": "true",
+					"T": "prop"
+				}
+			},
+			"E": {
+				"click:outside": {
+					"H": "let closable = quick?.parent?.props?.closable ?? false;\r\n\r\nif (closable) {\r\n    components.dialog.qValue = false;\r\n}",
+					"HL": "TS"
+				}
+			},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "VRow",
+							"P": {
+								"ID": {
+									"H": "EdtrComp_11",
+									"T": "prop"
+								},
+								"DiscardSettings": {
+									"H": "true",
+									"T": "prop"
+								},
+								"class": {
+									"H": "'align-center'",
+									"T": "class"
+								}
+							},
+							"E": {},
+							"C": {
+								"default": {
+									"c": [
+										{
+											"T": "VCol",
+											"C": {
+												"default": {
+													"c": [
+														{
+															"T": "VProgressCircular",
+															"P": {
+																"ID": {
+																	"H": "EdtrComp_4",
+																	"T": "prop"
+																},
+																"visible": {
+																	"H": "true",
+																	"T": "prop"
+																},
+																"indeterminate": {
+																	"H": "true",
+																	"T": "prop"
+																},
+																"DiscardSettings": {
+																	"H": "true",
+																	"T": "prop"
+																}
+															},
+															"E": {},
+															"C": {
+																"default": {
+																	"c": [
+																		{
+																			"T": "Ghost",
+																			"P": {
+																				"ID": {
+																					"H": "EdtrComp_5",
+																					"T": "prop"
+																				}
+																			},
+																			"E": {},
+																			"C": {},
+																			"_Editor": {
+																				"eID": "EdtrComp_5"
+																			},
+																			"O": {
+																				"cType": "child"
+																			}
+																		}
+																	],
+																	"cType": "slot"
+																}
+															},
+															"_Editor": {
+																"eID": "EdtrComp_4"
+															},
+															"S": {
+																"xs-xl": {
+																	"marginLeft": "",
+																	"marginRight": "",
+																	"marginBottom": "",
+																	"marginTop": "",
+																	"paddingTop": "",
+																	"paddingBottom": "",
+																	"paddingLeft": "",
+																	"paddingRight": "",
+																	"width": "50px",
+																	"height": "50px",
+																	"maxWidth": "50px",
+																	"maxHeight": "50px",
+																	"minWidth": "50px",
+																	"minHeight": "50px",
+																	"unlink": "false",
+																	"unlinkMax": "false",
+																	"unlinkMin": "false",
+																	"isSizeCollapsed": "false",
+																	"overlayStrokeWidth": "5.714285714285714",
+																	"underlayStrokeWidth": "5.714285714285714",
+																	"overlayColor": "rgb(25, 118, 210)",
+																	"underlayColor": "#ffffff00",
+																	"indeterminateColor": "rgb(25, 118, 210)",
+																	"backgroundColor": "#ffffff00",
+																	"boxShadow": "",
+																	"boxSizing": "",
+																	"borderTopStyle": "",
+																	"borderRightStyle": "",
+																	"borderBottomStyle": "",
+																	"borderLeftStyle": "",
+																	"borderTopLeftRadius": "",
+																	"borderTopRightRadius": "",
+																	"borderBottomLeftRadius": "",
+																	"borderBottomRightRadius": "",
+																	"borderTopWidth": "",
+																	"borderRightWidth": "",
+																	"borderBottomWidth": "",
+																	"borderLeftWidth": "",
+																	"defaultBorderColor": "",
+																	"sides": ""
+																}
+															},
+															"O": {
+																"cType": "slot"
+															}
+														}
+													],
+													"cType": "slot"
+												}
+											},
+											"E": {},
+											"P": {
+												"ID": {
+													"H": "EdtrComp_14",
+													"T": "prop"
+												},
+												"DiscardSettings": {
+													"H": "true",
+													"T": "prop"
+												}
+											},
+											"_Editor": {
+												"eID": "EdtrComp_14"
+											},
+											"O": {
+												"cType": "slot",
+												"layout": {
+													"dOpt": {
+														"xs": [
+															"d:d-flex",
+															"fd:flex-column"
+														]
+													},
+													"class": "d-flex flex-column"
+												}
+											},
+											"S": {
+												"xs-xl": {
+													"col": "",
+													"flexDirection": "column",
+													"alignItems": "center",
+													"justifyContent": "center",
+													"marginLeft": "",
+													"marginRight": "",
+													"marginBottom": "",
+													"marginTop": "",
+													"paddingTop": "12px",
+													"paddingBottom": "12px",
+													"paddingLeft": "12px",
+													"paddingRight": "12px",
+													"backgroundColor": "",
+													"boxShadow": "",
+													"boxSizing": "",
+													"borderTopStyle": "",
+													"borderRightStyle": "",
+													"borderBottomStyle": "",
+													"borderLeftStyle": "",
+													"borderTopLeftRadius": "",
+													"borderTopRightRadius": "",
+													"borderBottomLeftRadius": "",
+													"borderBottomRightRadius": "",
+													"borderTopWidth": "",
+													"borderRightWidth": "",
+													"borderBottomWidth": "",
+													"borderLeftWidth": "",
+													"defaultBorderColor": "",
+													"sides": ""
+												}
+											}
+										}
+									],
+									"cType": "slot"
+								}
+							},
+							"_Editor": {
+								"eID": "EdtrComp_11"
+							},
+							"S": {
+								"xs-xl": {
+									"marginLeft": "0px",
+									"marginRight": "0px",
+									"marginBottom": "0px",
+									"marginTop": "0px",
+									"paddingTop": "",
+									"paddingBottom": "",
+									"paddingLeft": "",
+									"paddingRight": "",
+									"width": "",
+									"height": "",
+									"minWidth": "",
+									"minHeight": "",
+									"unlink": "false",
+									"unlinkMax": "false",
+									"unlinkMin": "false",
+									"isSizeCollapsed": "false",
+									"backgroundColor": "",
+									"boxShadow": "",
+									"boxSizing": "",
+									"borderTopStyle": "",
+									"borderRightStyle": "",
+									"borderBottomStyle": "",
+									"borderLeftStyle": "",
+									"borderTopLeftRadius": "",
+									"borderTopRightRadius": "",
+									"borderBottomLeftRadius": "",
+									"borderBottomRightRadius": "",
+									"borderTopWidth": "",
+									"borderRightWidth": "",
+									"borderBottomWidth": "",
+									"borderLeftWidth": "",
+									"defaultBorderColor": "",
+									"sides": ""
+								}
+							},
+							"O": {
+								"cType": "slot"
+							}
+						}
+					],
+					"cType": "slot"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_2"
+			},
+			"S": {
+				"xs-xl": {
+					"marginTop": "",
+					"marginRight": "",
+					"marginBottom": "",
+					"marginLeft": "",
+					"paddingTop": "0px",
+					"paddingRight": "0px",
+					"paddingBottom": "0px",
+					"paddingLeft": "0px",
+					"width": "",
+					"height": "",
+					"minHeight": "",
+					"unlink": "false",
+					"unlinkMax": "false",
+					"unlinkMin": "false",
+					"isSizeCollapsed": "false",
+					"backgroundColor": "#ffffff00",
+					"boxShadow": "0px 0px 0px 0px #00000000,0px 0px 0px 0px #00000000,0px 0px 0px 0px #00000000,0px 0px 0px 0px #00000000",
+					"maxWidth": "100px",
+					"maxHeight": "100px"
+				}
+			},
+			"O": {
+				"cType": "slot"
+			}
+		}
+	],
+	"cJson": [
+		{
+			"T": "Messaging",
+			"P": {
+				"ID": {
+					"H": "PageComp",
+					"T": "prop"
+				},
+				"triggerOnRestored": {
+					"H": "╬false╩╩",
+					"T": "prop"
+				},
+				"externalProps": {
+					"H": "╬[]╠'closable'╩╩╩",
+					"T": "prop"
+				}
+			},
+			"E": {
+				"open": {
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ncomponents.dialog.qValue = true;\r\n",
+					"C": true,
+					"EV": true,
+					"HL": "JS"
+				},
+				"close": {
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ncomponents.dialog.qValue = false;\r\n",
+					"C": true,
+					"EV": true,
+					"HL": "JS"
+				},
+				"PostRender": {
+					"H": "var _a, _b, _c;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nvar closable = (_c = (_b = (_a = quick === null || quick === void 0 ? void 0 : quick.parent) === null || _a === void 0 ? void 0 : _a.props) === null || _b === void 0 ? void 0 : _b.closable) !== null && _c !== void 0 ? _c : false;\r\nvar persistent = !closable;\r\ncomponents.dialog.persistent = persistent;\r\n",
+					"TO": 1,
+					"HL": "JS"
+				}
+			},
+			"C": {},
+			"_Editor": {
+				"eID": "EdtrComp_1"
+			},
+			"O": {
+				"cType": "child",
+				"compDomClasses": "newDropBorder"
+			},
+			"S": {
+				"xs-xl": {
+					"pageBackgroundColor": "#ffffff",
+					"statusBarColor": "#ffffff"
+				}
+			}
+		},
+		{
+			"T": "VDialog",
+			"P": {
+				"ID": {
+					"H": "dialog",
+					"T": "prop"
+				},
+				"visible": {
+					"H": "╬true╩╩",
+					"T": "prop"
+				},
+				"DiscardSettings": {
+					"H": "╬true╩╩",
+					"T": "prop"
+				},
+				"openOnHover": {
+					"H": "╬true╩╩",
+					"T": "prop"
+				}
+			},
+			"E": {
+				"click:outside": {
+					"H": "var _a, _b, _c;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nvar closable = (_c = (_b = (_a = quick === null || quick === void 0 ? void 0 : quick.parent) === null || _a === void 0 ? void 0 : _a.props) === null || _b === void 0 ? void 0 : _b.closable) !== null && _c !== void 0 ? _c : false;\r\nif (closable) {\r\n    components.dialog.qValue = false;\r\n}\r\n",
+					"HL": "JS"
+				}
+			},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "VRow",
+							"P": {
+								"ID": {
+									"H": "EdtrComp_11",
+									"T": "prop"
+								},
+								"DiscardSettings": {
+									"H": "╬true╩╩",
+									"T": "prop"
+								},
+								"class": {
+									"H": "╬'align-center'╩╩",
+									"T": "class"
+								}
+							},
+							"E": {},
+							"C": {
+								"default": {
+									"c": [
+										{
+											"T": "VCol",
+											"C": {
+												"default": {
+													"c": [
+														{
+															"T": "VProgressCircular",
+															"P": {
+																"ID": {
+																	"H": "EdtrComp_4",
+																	"T": "prop"
+																},
+																"visible": {
+																	"H": "╬true╩╩",
+																	"T": "prop"
+																},
+																"indeterminate": {
+																	"H": "╬true╩╩",
+																	"T": "prop"
+																},
+																"DiscardSettings": {
+																	"H": "╬true╩╩",
+																	"T": "prop"
+																}
+															},
+															"E": {},
+															"C": {
+																"default": {
+																	"c": [
+																		{
+																			"T": "Ghost",
+																			"P": {
+																				"ID": {
+																					"H": "EdtrComp_5",
+																					"T": "prop"
+																				}
+																			},
+																			"E": {},
+																			"C": {},
+																			"_Editor": {
+																				"eID": "EdtrComp_5"
+																			},
+																			"O": {
+																				"cType": "child",
+																				"compDomClasses": "editor-ghost-comp"
+																			}
+																		}
+																	],
+																	"cType": "slot"
+																}
+															},
+															"_Editor": {
+																"eID": "EdtrComp_4"
+															},
+															"S": {
+																"xs-xl": {
+																	"marginLeft": "",
+																	"marginRight": "",
+																	"marginBottom": "",
+																	"marginTop": "",
+																	"paddingTop": "",
+																	"paddingBottom": "",
+																	"paddingLeft": "",
+																	"paddingRight": "",
+																	"width": "50px",
+																	"height": "50px",
+																	"maxWidth": "50px",
+																	"maxHeight": "50px",
+																	"minWidth": "50px",
+																	"minHeight": "50px",
+																	"unlink": "false",
+																	"unlinkMax": "false",
+																	"unlinkMin": "false",
+																	"isSizeCollapsed": "false",
+																	"overlayStrokeWidth": "5.714285714285714",
+																	"underlayStrokeWidth": "5.714285714285714",
+																	"overlayColor": "rgb(25, 118, 210)",
+																	"underlayColor": "#ffffff00",
+																	"indeterminateColor": "rgb(25, 118, 210)",
+																	"backgroundColor": "#ffffff00",
+																	"boxShadow": "",
+																	"boxSizing": "",
+																	"borderTopStyle": "",
+																	"borderRightStyle": "",
+																	"borderBottomStyle": "",
+																	"borderLeftStyle": "",
+																	"borderTopLeftRadius": "",
+																	"borderTopRightRadius": "",
+																	"borderBottomLeftRadius": "",
+																	"borderBottomRightRadius": "",
+																	"borderTopWidth": "",
+																	"borderRightWidth": "",
+																	"borderBottomWidth": "",
+																	"borderLeftWidth": "",
+																	"defaultBorderColor": "",
+																	"sides": ""
+																}
+															},
+															"O": {
+																"cType": "slot",
+																"compDomClasses": "v-progress-circular v-progress-circular--indeterminate"
+															}
+														}
+													],
+													"cType": "slot"
+												}
+											},
+											"E": {},
+											"P": {
+												"ID": {
+													"H": "EdtrComp_14",
+													"T": "prop"
+												},
+												"DiscardSettings": {
+													"H": "╬true╩╩",
+													"T": "prop"
+												}
+											},
+											"_Editor": {
+												"eID": "EdtrComp_14"
+											},
+											"O": {
+												"cType": "slot",
+												"layout": {
+													"dOpt": {
+														"xs": [
+															"d:d-flex",
+															"fd:flex-column"
+														]
+													},
+													"class": "d-flex flex-column"
+												},
+												"compDomClasses": "col d-flex flex-column"
+											},
+											"S": {
+												"xs-xl": {
+													"col": "",
+													"flexDirection": "column",
+													"alignItems": "center",
+													"justifyContent": "center",
+													"marginLeft": "",
+													"marginRight": "",
+													"marginBottom": "",
+													"marginTop": "",
+													"paddingTop": "12px",
+													"paddingBottom": "12px",
+													"paddingLeft": "12px",
+													"paddingRight": "12px",
+													"backgroundColor": "",
+													"boxShadow": "",
+													"boxSizing": "",
+													"borderTopStyle": "",
+													"borderRightStyle": "",
+													"borderBottomStyle": "",
+													"borderLeftStyle": "",
+													"borderTopLeftRadius": "",
+													"borderTopRightRadius": "",
+													"borderBottomLeftRadius": "",
+													"borderBottomRightRadius": "",
+													"borderTopWidth": "",
+													"borderRightWidth": "",
+													"borderBottomWidth": "",
+													"borderLeftWidth": "",
+													"defaultBorderColor": "",
+													"sides": ""
+												}
+											}
+										}
+									],
+									"cType": "slot"
+								}
+							},
+							"_Editor": {
+								"eID": "EdtrComp_11"
+							},
+							"S": {
+								"xs-xl": {
+									"marginLeft": "0px",
+									"marginRight": "0px",
+									"marginBottom": "0px",
+									"marginTop": "0px",
+									"paddingTop": "",
+									"paddingBottom": "",
+									"paddingLeft": "",
+									"paddingRight": "",
+									"width": "",
+									"height": "",
+									"minWidth": "",
+									"minHeight": "",
+									"unlink": "false",
+									"unlinkMax": "false",
+									"unlinkMin": "false",
+									"isSizeCollapsed": "false",
+									"backgroundColor": "",
+									"boxShadow": "",
+									"boxSizing": "",
+									"borderTopStyle": "",
+									"borderRightStyle": "",
+									"borderBottomStyle": "",
+									"borderLeftStyle": "",
+									"borderTopLeftRadius": "",
+									"borderTopRightRadius": "",
+									"borderBottomLeftRadius": "",
+									"borderBottomRightRadius": "",
+									"borderTopWidth": "",
+									"borderRightWidth": "",
+									"borderBottomWidth": "",
+									"borderLeftWidth": "",
+									"defaultBorderColor": "",
+									"sides": ""
+								}
+							},
+							"O": {
+								"cType": "slot",
+								"compDomClasses": "row align-center"
+							}
+						}
+					],
+					"cType": "slot"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_2"
+			},
+			"S": {
+				"xs-xl": {
+					"marginTop": "",
+					"marginRight": "",
+					"marginBottom": "",
+					"marginLeft": "",
+					"paddingTop": "0px",
+					"paddingRight": "0px",
+					"paddingBottom": "0px",
+					"paddingLeft": "0px",
+					"width": "",
+					"height": "",
+					"minHeight": "",
+					"unlink": "false",
+					"unlinkMax": "false",
+					"unlinkMin": "false",
+					"isSizeCollapsed": "false",
+					"backgroundColor": "#ffffff00",
+					"boxShadow": "0px 0px 0px 0px #00000000,0px 0px 0px 0px #00000000,0px 0px 0px 0px #00000000,0px 0px 0px 0px #00000000",
+					"maxWidth": "100px",
+					"maxHeight": "100px"
+				}
+			},
+			"O": {
+				"cType": "slot",
+				"compDomClasses": "newDropBorder"
+			}
+		}
+	],
+	"lrids": {},
+	"clrids": {},
+	"opt": {
+		"V": 2.2
+	}
+};
+export default pjson

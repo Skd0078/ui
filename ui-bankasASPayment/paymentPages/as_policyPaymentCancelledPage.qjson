@@ -1,0 +1,425 @@
+let pjson = {
+	"pJson": [
+		{
+			"T": "Messaging",
+			"P": {
+				"ID": {
+					"H": "PageComp",
+					"T": "prop"
+				},
+				"triggerOnRestored": {
+					"H": "false",
+					"T": "prop"
+				}
+			},
+			"E": {},
+			"C": {},
+			"_Editor": {
+				"eID": "EdtrComp_1"
+			},
+			"O": {
+				"cType": "child"
+			},
+			"S": {
+				"xs-xl": {
+					"pageBackgroundColor": "#ffffff",
+					"statusBarColor": "#ffffff"
+				}
+			}
+		},
+		{
+			"T": "CustomComponent",
+			"P": {
+				"ID": {
+					"H": "EdtrComp_2",
+					"T": "prop"
+				},
+				"QJsonPath": {
+					"H": "'/static/ui-bankasASPayment/common/as_paymentCancelledList.qjson'",
+					"T": "prop",
+					"HL": "QS"
+				}
+			},
+			"E": {
+				"clickContinueButton": {
+					"H": "//visible ayarla\r\ncomponents.EdtrComp_2.visible = false;\r\ncomponents.EdtrComp_6.visible = false;\r\ncomponents.EdtrComp_4.visible = true;\r\ncomponents.EdtrComp_4.setItems();",
+					"C": true,
+					"HL": "TS"
+				}
+			},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "Ghost",
+							"P": {
+								"ID": {
+									"H": "EdtrComp_3",
+									"T": "prop"
+								}
+							},
+							"E": {},
+							"C": {},
+							"_Editor": {
+								"eID": "EdtrComp_3"
+							},
+							"O": {
+								"cType": "child"
+							}
+						}
+					],
+					"cType": "child"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_2"
+			},
+			"O": {
+				"cType": "child",
+				"dynProps": true
+			}
+		},
+		{
+			"T": "CustomComponent",
+			"P": {
+				"ID": {
+					"H": "EdtrComp_4",
+					"T": "prop"
+				},
+				"QJsonPath": {
+					"H": "'/static/ui-bankasASPayment/common/as_paymentCancelledListDetails.qjson'",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"visible": {
+					"H": "false",
+					"T": "prop",
+					"HL": "QS"
+				}
+			},
+			"E": {
+				"clickBackButton": {
+					"H": "//visible ayarla\r\ncomponents.EdtrComp_4.visible = false;\r\ncomponents.EdtrComp_2.visible = true;\r\n\r\n",
+					"C": true,
+					"HL": "TS"
+				},
+				"cancelSuccess": {
+					"H": "//visible ayarla\r\n//components.EdtrComp_2.visible = false;\r\ncomponents.EdtrComp_4.visible = false;\r\ncomponents.EdtrComp_6.visible = true;\r\ncomponents.EdtrComp_6.setItems();",
+					"C": true,
+					"HL": "TS"
+				}
+			},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "Ghost",
+							"P": {
+								"ID": {
+									"H": "EdtrComp_5",
+									"T": "prop"
+								}
+							},
+							"E": {},
+							"C": {},
+							"_Editor": {
+								"eID": "EdtrComp_5"
+							},
+							"O": {
+								"cType": "child"
+							}
+						}
+					],
+					"cType": "child"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_4"
+			},
+			"O": {
+				"cType": "child",
+				"dynProps": true
+			}
+		},
+		{
+			"T": "CustomComponent",
+			"P": {
+				"ID": {
+					"H": "EdtrComp_6",
+					"T": "prop"
+				},
+				"QJsonPath": {
+					"H": "'/static/ui-bankasASPayment/common/as_paymentCancelledListResults.qjson'",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"visible": {
+					"H": "false",
+					"T": "prop",
+					"HL": "QS"
+				}
+			},
+			"E": {
+				"clickBackButton": {
+					"H": "//visible ayarla\r\ncomponents.EdtrComp_6.visible = false;\r\ncomponents.EdtrComp_2.visible = true;\r\n\r\n",
+					"C": true,
+					"HL": "TS"
+				},
+				"clickReceiptButton": {
+					"H": "debugger;\r\nlet siid = quick.store.get('$eventSourceId');\r\nquick.containerServices.extensions.showVoucherPopUp('date=' + Date.now() + '&siid=' + siid);\r\n",
+					"C": true,
+					"HL": "TS"
+				}
+			},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "Ghost",
+							"P": {
+								"ID": {
+									"H": "EdtrComp_7",
+									"T": "prop"
+								}
+							},
+							"E": {},
+							"C": {},
+							"_Editor": {
+								"eID": "EdtrComp_7"
+							},
+							"O": {
+								"cType": "child"
+							}
+						}
+					],
+					"cType": "child"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_6"
+			},
+			"O": {
+				"cType": "child",
+				"dynProps": true
+			}
+		}
+	],
+	"cJson": [
+		{
+			"T": "Messaging",
+			"P": {
+				"ID": {
+					"H": "PageComp",
+					"T": "prop"
+				},
+				"triggerOnRestored": {
+					"H": "╬false╩╩",
+					"T": "prop"
+				}
+			},
+			"E": {},
+			"C": {},
+			"_Editor": {
+				"eID": "EdtrComp_1"
+			},
+			"O": {
+				"cType": "child",
+				"compDomClasses": "newDropBorder"
+			},
+			"S": {
+				"xs-xl": {
+					"pageBackgroundColor": "#ffffff",
+					"statusBarColor": "#ffffff"
+				}
+			}
+		},
+		{
+			"T": "CustomComponent",
+			"P": {
+				"ID": {
+					"H": "EdtrComp_2",
+					"T": "prop"
+				},
+				"QJsonPath": {
+					"H": "╬'/static/ui-bankasASPayment/common/as_paymentCancelledList.qjson'╩╩",
+					"T": "prop",
+					"HL": "QS"
+				}
+			},
+			"E": {
+				"clickContinueButton": {
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n; //visible ayarla\r\ncomponents.EdtrComp_2.visible = false;\r\ncomponents.EdtrComp_6.visible = false;\r\ncomponents.EdtrComp_4.visible = true;\r\ncomponents.EdtrComp_4.setItems();\r\n",
+					"C": true,
+					"HL": "JS"
+				}
+			},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "Ghost",
+							"P": {
+								"ID": {
+									"H": "EdtrComp_3",
+									"T": "prop"
+								}
+							},
+							"E": {},
+							"C": {},
+							"_Editor": {
+								"eID": "EdtrComp_3"
+							},
+							"O": {
+								"cType": "child",
+								"compDomClasses": "editor-ghost-comp"
+							}
+						}
+					],
+					"cType": "child"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_2"
+			},
+			"O": {
+				"cType": "child",
+				"dynProps": true,
+				"compDomClasses": "newDropBorder"
+			}
+		},
+		{
+			"T": "CustomComponent",
+			"P": {
+				"ID": {
+					"H": "EdtrComp_4",
+					"T": "prop"
+				},
+				"QJsonPath": {
+					"H": "╬'/static/ui-bankasASPayment/common/as_paymentCancelledListDetails.qjson'╩╩",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"visible": {
+					"H": "╬false╩╩",
+					"T": "prop",
+					"HL": "QS"
+				}
+			},
+			"E": {
+				"clickBackButton": {
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n; //visible ayarla\r\ncomponents.EdtrComp_4.visible = false;\r\ncomponents.EdtrComp_2.visible = true;\r\n",
+					"C": true,
+					"HL": "JS"
+				},
+				"cancelSuccess": {
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n; //visible ayarla\r\n//components.EdtrComp_2.visible = false;\r\ncomponents.EdtrComp_4.visible = false;\r\ncomponents.EdtrComp_6.visible = true;\r\ncomponents.EdtrComp_6.setItems();\r\n",
+					"C": true,
+					"HL": "JS"
+				}
+			},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "Ghost",
+							"P": {
+								"ID": {
+									"H": "EdtrComp_5",
+									"T": "prop"
+								}
+							},
+							"E": {},
+							"C": {},
+							"_Editor": {
+								"eID": "EdtrComp_5"
+							},
+							"O": {
+								"cType": "child",
+								"compDomClasses": "editor-ghost-comp"
+							}
+						}
+					],
+					"cType": "child"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_4"
+			},
+			"O": {
+				"cType": "child",
+				"dynProps": true,
+				"compDomClasses": "newDropBorder"
+			}
+		},
+		{
+			"T": "CustomComponent",
+			"P": {
+				"ID": {
+					"H": "EdtrComp_6",
+					"T": "prop"
+				},
+				"QJsonPath": {
+					"H": "╬'/static/ui-bankasASPayment/common/as_paymentCancelledListResults.qjson'╩╩",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"visible": {
+					"H": "╬false╩╩",
+					"T": "prop",
+					"HL": "QS"
+				}
+			},
+			"E": {
+				"clickBackButton": {
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n; //visible ayarla\r\ncomponents.EdtrComp_6.visible = false;\r\ncomponents.EdtrComp_2.visible = true;\r\n",
+					"C": true,
+					"HL": "JS"
+				},
+				"clickReceiptButton": {
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nvar siid = quick.store.get('$eventSourceId');\r\nquick.containerServices.extensions.showVoucherPopUp('date=' + Date.now() + '&siid=' + siid);\r\n",
+					"C": true,
+					"HL": "JS"
+				}
+			},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "Ghost",
+							"P": {
+								"ID": {
+									"H": "EdtrComp_7",
+									"T": "prop"
+								}
+							},
+							"E": {},
+							"C": {},
+							"_Editor": {
+								"eID": "EdtrComp_7"
+							},
+							"O": {
+								"cType": "child",
+								"compDomClasses": "editor-ghost-comp"
+							}
+						}
+					],
+					"cType": "child"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_6"
+			},
+			"O": {
+				"cType": "child",
+				"dynProps": true,
+				"compDomClasses": "newDropBorder"
+			}
+		}
+	],
+	"lrids": {},
+	"clrids": {},
+	"opt": {
+		"V": 2.2
+	}
+};
+export default pjson

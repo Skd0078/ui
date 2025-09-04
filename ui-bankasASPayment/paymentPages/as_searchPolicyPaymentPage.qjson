@@ -1,0 +1,549 @@
+let pjson = {
+	"pJson": [
+		{
+			"T": "Messaging",
+			"P": {
+				"ID": {
+					"H": "PageComp",
+					"T": "prop"
+				},
+				"triggerOnRestored": {
+					"H": "false",
+					"T": "prop"
+				}
+			},
+			"E": {},
+			"C": {},
+			"_Editor": {
+				"eID": "EdtrComp_1"
+			},
+			"O": {
+				"cType": "child"
+			},
+			"S": {
+				"xs-xl": {
+					"pageBackgroundColor": "#ffffff",
+					"statusBarColor": "#ffffff"
+				}
+			}
+		},
+		{
+			"T": "CustomComponent",
+			"P": {
+				"ID": {
+					"H": "as_searchPolicyPayment",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"QJsonPath": {
+					"H": "'/static/ui-bankasASPayment/common/as_searchPolicyPayment.qjson'",
+					"T": "prop",
+					"HL": "QS"
+				}
+			},
+			"E": {
+				"searchClickEvent": {
+					"H": "components.as_policyPaymentResultList.visible = true;\r\ncomponents.as_paymentPlanList.visible = false;\r\ncomponents.as_policyPayment.visible = false;\r\n\r\n\r\ncomponents.as_policyPaymentResultList.setItems();",
+					"C": true,
+					"HL": "TS"
+				},
+				"searchFailEvent": {
+					"H": "components.as_policyPaymentResultList.visible = false;\r\n",
+					"C": true,
+					"HL": "TS"
+				}
+			},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "Ghost",
+							"P": {
+								"ID": {
+									"H": "EdtrComp_3",
+									"T": "prop"
+								}
+							},
+							"E": {},
+							"C": {},
+							"_Editor": {
+								"eID": "EdtrComp_3"
+							},
+							"O": {
+								"cType": "child"
+							}
+						}
+					],
+					"cType": "child"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_2"
+			},
+			"O": {
+				"cType": "child",
+				"dynProps": true
+			}
+		},
+		{
+			"T": "CustomComponent",
+			"P": {
+				"ID": {
+					"H": "as_policyPaymentResultList",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"QJsonPath": {
+					"H": "'/static/ui-bankasASPayment/common/as_policyPaymentResultList.qjson'",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"visible": {
+					"H": "false",
+					"T": "prop",
+					"HL": "QS"
+				}
+			},
+			"E": {
+				"clickListPaymentPlan": {
+					"H": "components.as_paymentPlanList.visible = true;\r\ncomponents.as_paymentPlanList.setItems();",
+					"C": true,
+					"HL": "TS"
+				},
+				"itemUnselected": {
+					"H": "components.as_paymentPlanList.visible = false;\r\ncomponents.as_policyPayment.visible = false;\r\n",
+					"C": true,
+					"HL": "TS"
+				}
+			},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "Ghost",
+							"P": {
+								"ID": {
+									"H": "EdtrComp_5",
+									"T": "prop"
+								}
+							},
+							"E": {},
+							"C": {},
+							"_Editor": {
+								"eID": "EdtrComp_5"
+							},
+							"O": {
+								"cType": "child"
+							}
+						}
+					],
+					"cType": "child"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_4"
+			},
+			"O": {
+				"cType": "child",
+				"dynProps": true
+			}
+		},
+		{
+			"T": "CustomComponent",
+			"P": {
+				"ID": {
+					"H": "as_paymentPlanList",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"QJsonPath": {
+					"H": "'/static/ui-bankasASPayment/common/as_paymentPlanList.qjson'",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"visible": {
+					"H": "false",
+					"T": "prop",
+					"HL": "QS"
+				}
+			},
+			"E": {
+				"clickContinueButton": {
+					"H": "debugger;\r\ncomponents.as_policyPayment.visible = true;\r\ncomponents.as_policyPayment.setItems();\r\ncomponents.as_searchPolicyPayment.visible = false;\r\ncomponents.as_policyPaymentResultList.visible = false;\r\ncomponents.as_paymentPlanList.visible = false;",
+					"C": true,
+					"HL": "TS"
+				}
+			},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "Ghost",
+							"P": {
+								"ID": {
+									"H": "EdtrComp_9",
+									"T": "prop"
+								}
+							},
+							"E": {},
+							"C": {},
+							"_Editor": {
+								"eID": "EdtrComp_9"
+							},
+							"O": {
+								"cType": "child"
+							}
+						}
+					],
+					"cType": "child"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_8"
+			},
+			"O": {
+				"cType": "child",
+				"dynProps": true
+			}
+		},
+		{
+			"T": "CustomComponent",
+			"P": {
+				"ID": {
+					"H": "as_policyPayment",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"QJsonPath": {
+					"H": "'/static/ui-bankasASPayment/common/as_policyPayment.qjson'",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"visible": {
+					"H": "false",
+					"T": "prop",
+					"HL": "QS"
+				}
+			},
+			"E": {
+				"backButtonClick": {
+					"H": "components.as_searchPolicyPayment.visible = true;\r\ncomponents.as_policyPaymentResultList.visible = true;\r\ncomponents.as_paymentPlanList.visible = true;\r\ncomponents.as_policyPayment.visible = false;\r\n",
+					"C": true,
+					"HL": "TS"
+				}
+			},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "Ghost",
+							"P": {
+								"ID": {
+									"H": "EdtrComp_7",
+									"T": "prop"
+								}
+							},
+							"E": {},
+							"C": {},
+							"_Editor": {
+								"eID": "EdtrComp_7"
+							},
+							"O": {
+								"cType": "child"
+							}
+						}
+					],
+					"cType": "child"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_6"
+			},
+			"O": {
+				"cType": "child",
+				"dynProps": true
+			}
+		}
+	],
+	"cJson": [
+		{
+			"T": "Messaging",
+			"P": {
+				"ID": {
+					"H": "PageComp",
+					"T": "prop"
+				},
+				"triggerOnRestored": {
+					"H": "╬false╩╩",
+					"T": "prop"
+				}
+			},
+			"E": {},
+			"C": {},
+			"_Editor": {
+				"eID": "EdtrComp_1"
+			},
+			"O": {
+				"cType": "child",
+				"compDomClasses": "newDropBorder"
+			},
+			"S": {
+				"xs-xl": {
+					"pageBackgroundColor": "#ffffff",
+					"statusBarColor": "#ffffff"
+				}
+			}
+		},
+		{
+			"T": "CustomComponent",
+			"P": {
+				"ID": {
+					"H": "as_searchPolicyPayment",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"QJsonPath": {
+					"H": "╬'/static/ui-bankasASPayment/common/as_searchPolicyPayment.qjson'╩╩",
+					"T": "prop",
+					"HL": "QS"
+				}
+			},
+			"E": {
+				"searchClickEvent": {
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ncomponents.as_policyPaymentResultList.visible = true;\r\ncomponents.as_paymentPlanList.visible = false;\r\ncomponents.as_policyPayment.visible = false;\r\ncomponents.as_policyPaymentResultList.setItems();\r\n",
+					"C": true,
+					"HL": "JS"
+				},
+				"searchFailEvent": {
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ncomponents.as_policyPaymentResultList.visible = false;\r\n",
+					"C": true,
+					"HL": "JS"
+				}
+			},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "Ghost",
+							"P": {
+								"ID": {
+									"H": "EdtrComp_3",
+									"T": "prop"
+								}
+							},
+							"E": {},
+							"C": {},
+							"_Editor": {
+								"eID": "EdtrComp_3"
+							},
+							"O": {
+								"cType": "child",
+								"compDomClasses": "editor-ghost-comp"
+							}
+						}
+					],
+					"cType": "child"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_2"
+			},
+			"O": {
+				"cType": "child",
+				"dynProps": true,
+				"compDomClasses": "newDropBorder"
+			}
+		},
+		{
+			"T": "CustomComponent",
+			"P": {
+				"ID": {
+					"H": "as_policyPaymentResultList",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"QJsonPath": {
+					"H": "╬'/static/ui-bankasASPayment/common/as_policyPaymentResultList.qjson'╩╩",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"visible": {
+					"H": "╬false╩╩",
+					"T": "prop",
+					"HL": "QS"
+				}
+			},
+			"E": {
+				"clickListPaymentPlan": {
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ncomponents.as_paymentPlanList.visible = true;\r\ncomponents.as_paymentPlanList.setItems();\r\n",
+					"C": true,
+					"HL": "JS"
+				},
+				"itemUnselected": {
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ncomponents.as_paymentPlanList.visible = false;\r\ncomponents.as_policyPayment.visible = false;\r\n",
+					"C": true,
+					"HL": "JS"
+				}
+			},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "Ghost",
+							"P": {
+								"ID": {
+									"H": "EdtrComp_5",
+									"T": "prop"
+								}
+							},
+							"E": {},
+							"C": {},
+							"_Editor": {
+								"eID": "EdtrComp_5"
+							},
+							"O": {
+								"cType": "child",
+								"compDomClasses": "editor-ghost-comp"
+							}
+						}
+					],
+					"cType": "child"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_4"
+			},
+			"O": {
+				"cType": "child",
+				"dynProps": true,
+				"compDomClasses": "newDropBorder"
+			}
+		},
+		{
+			"T": "CustomComponent",
+			"P": {
+				"ID": {
+					"H": "as_paymentPlanList",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"QJsonPath": {
+					"H": "╬'/static/ui-bankasASPayment/common/as_paymentPlanList.qjson'╩╩",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"visible": {
+					"H": "╬false╩╩",
+					"T": "prop",
+					"HL": "QS"
+				}
+			},
+			"E": {
+				"clickContinueButton": {
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\ncomponents.as_policyPayment.visible = true;\r\ncomponents.as_policyPayment.setItems();\r\ncomponents.as_searchPolicyPayment.visible = false;\r\ncomponents.as_policyPaymentResultList.visible = false;\r\ncomponents.as_paymentPlanList.visible = false;\r\n",
+					"C": true,
+					"HL": "JS"
+				}
+			},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "Ghost",
+							"P": {
+								"ID": {
+									"H": "EdtrComp_9",
+									"T": "prop"
+								}
+							},
+							"E": {},
+							"C": {},
+							"_Editor": {
+								"eID": "EdtrComp_9"
+							},
+							"O": {
+								"cType": "child",
+								"compDomClasses": "editor-ghost-comp"
+							}
+						}
+					],
+					"cType": "child"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_8"
+			},
+			"O": {
+				"cType": "child",
+				"dynProps": true,
+				"compDomClasses": ""
+			}
+		},
+		{
+			"T": "CustomComponent",
+			"P": {
+				"ID": {
+					"H": "as_policyPayment",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"QJsonPath": {
+					"H": "╬'/static/ui-bankasASPayment/common/as_policyPayment.qjson'╩╩",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"visible": {
+					"H": "╬false╩╩",
+					"T": "prop",
+					"HL": "QS"
+				}
+			},
+			"E": {
+				"backButtonClick": {
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ncomponents.as_searchPolicyPayment.visible = true;\r\ncomponents.as_policyPaymentResultList.visible = true;\r\ncomponents.as_paymentPlanList.visible = true;\r\ncomponents.as_policyPayment.visible = false;\r\n",
+					"C": true,
+					"HL": "JS"
+				}
+			},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "Ghost",
+							"P": {
+								"ID": {
+									"H": "EdtrComp_7",
+									"T": "prop"
+								}
+							},
+							"E": {},
+							"C": {},
+							"_Editor": {
+								"eID": "EdtrComp_7"
+							},
+							"O": {
+								"cType": "child",
+								"compDomClasses": "editor-ghost-comp"
+							}
+						}
+					],
+					"cType": "child"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_6"
+			},
+			"O": {
+				"cType": "child",
+				"dynProps": true,
+				"compDomClasses": ""
+			}
+		}
+	],
+	"lrids": {},
+	"clrids": {},
+	"opt": {
+		"V": 2.2
+	}
+};
+export default pjson

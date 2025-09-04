@@ -1,0 +1,1973 @@
+let pjson = {
+	"pJson": [
+		{
+			"T": "Messaging",
+			"P": {
+				"ID": {
+					"H": "PageComp",
+					"T": "prop"
+				},
+				"triggerOnRestored": {
+					"H": "false",
+					"T": "prop"
+				},
+				"externalProps": {
+					"H": "[]",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"externalEvents": {
+					"H": "[{name='clickContinueButton', params=[]},\r\n{name='setItems', params=[]}]",
+					"T": "prop",
+					"HL": "QS"
+				}
+			},
+			"E": {
+				"setItems": {
+					"H": "debugger;\r\nlet paymentPlanList = quick.store.get('$paymentPlanListResponse').retrievePaymentPlanDTO.installmentInfoList;\r\nlet vauto_debtorCreditorValue = quick.store.get('$vauto_debtorCreditor');\r\n\r\nfor (let i = 0; i < paymentPlanList.length; i++) {\r\n    paymentPlanList[i].id = i + 1;\r\n    if (vauto_debtorCreditorValue = 'DEBIT') {\r\n        paymentPlanList[i].debitOrCredit = \"Borç\"\r\n    } else {\r\n        paymentPlanList[i].debitOrCredit = \"Alacak\"\r\n    }\r\n    paymentPlanList[i].amountText = paymentPlanList[i].amount.amount.amount + \" \" + paymentPlanList[i].amount.amount.currencyCode.code;\r\n    paymentPlanList[i].tlAmountText = paymentPlanList[i].amount.amountTL.amount + \" \" + paymentPlanList[i].amount.amount.currencyCode.code;\r\n\r\n}\r\ncomponents.dt_paymentPlanList.items = paymentPlanList;\r\n",
+					"C": true,
+					"EV": true,
+					"HL": "TS"
+				},
+				"setConsumerAndScreenInfo": {
+					"H": "debugger;\r\n\r\nquick.store.set('$customConsumerCode', 'TANE.BANKASUR');\r\nquick.store.set('$customScreenName', 'TANE.BANKASUR');",
+					"C": true,
+					"HL": "TS"
+				}
+			},
+			"C": {},
+			"_Editor": {
+				"eID": "EdtrComp_1"
+			},
+			"O": {
+				"cType": "child",
+				"layout": {
+					"dOpt": {
+						"xs": [
+							"sp:pt-0",
+							"sp:pl-0",
+							"sp:pr-0",
+							"sp:pb-0"
+						]
+					},
+					"class": "pt-0 pl-0 pr-0 pb-0"
+				}
+			},
+			"S": {
+				"xs-xl": {
+					"pageBackgroundColor": "#ffffff",
+					"statusBarColor": "#ffffff"
+				}
+			}
+		},
+		{
+			"T": "VContainer",
+			"P": {
+				"ID": {
+					"H": "VContainerComp",
+					"T": "prop"
+				},
+				"class": {
+					"H": "'container container--fluid'",
+					"T": "class"
+				},
+				"visible": {
+					"H": "true",
+					"T": "prop"
+				},
+				"eager": {
+					"H": "true",
+					"T": "prop"
+				}
+			},
+			"E": {},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "VCard",
+							"P": {
+								"ID": {
+									"H": "EdtrComp_276",
+									"T": "prop"
+								},
+								"color": {
+									"H": "'white'",
+									"T": "prop"
+								},
+								"visible": {
+									"H": "true",
+									"T": "prop"
+								}
+							},
+							"E": {},
+							"C": {
+								"default": {
+									"c": [
+										{
+											"T": "VRow",
+											"P": {
+												"ID": {
+													"H": "EdtrComp_6",
+													"T": "prop"
+												}
+											},
+											"E": {},
+											"C": {
+												"default": {
+													"c": [
+														{
+															"T": "VCol",
+															"C": {
+																"default": {
+																	"c": [
+																		{
+																			"T": "VRow",
+																			"P": {
+																				"ID": {
+																					"H": "VRowComp",
+																					"T": "prop"
+																				}
+																			},
+																			"E": {},
+																			"C": {
+																				"default": {
+																					"c": [
+																						{
+																							"T": "VCol",
+																							"C": {
+																								"default": {
+																									"c": [
+																										{
+																											"T": "VDataTable",
+																											"P": {
+																												"ID": {
+																													"H": "dt_paymentPlanList",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"footerProps": {
+																													"H": "{showFirstLastPage = true,\nfirstIcon = 'mdi-arrow-collapse-left',\nlastIcon = 'mdi-arrow-collapse-right',\nprevIcon = 'mdi-minus',\nnextIcon = 'mdi-plus'}",
+																													"T": "prop"
+																												},
+																												"headers": {
+																													"H": "[{ text = 'Taksit Tarihi', value= 'installmentDate',filterable= true },\n{ text = 'Borç/Alacak', value= 'debitOrCredit', filterable= true },\n{ text = 'Tutar', value= 'amountText', filterable= true },\n{ text = 'Tutar TL', value= 'tlAmountText', filterable= true }]",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"itemsPerPage": {
+																													"H": "10",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"mobileBreakpoint": {
+																													"H": "600",
+																													"T": "prop"
+																												},
+																												"visible": {
+																													"H": "true",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"hideDefaultFooter": {
+																													"H": "false",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"disablePagination": {
+																													"H": "false",
+																													"T": "prop"
+																												},
+																												"noDataText": {
+																													"H": "'Uygun Ödeme Bulunmamaktadır.'",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"hideDefaultHeader": {
+																													"H": "false",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"fixedHeader": {
+																													"H": "true",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"dense": {
+																													"H": "true",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"disableSort": {
+																													"H": "false",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"dark": {
+																													"H": "false",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"itemKey": {
+																													"H": "'id'",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"disableFiltering": {
+																													"H": "false",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"items": {
+																													"H": "[]",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"caption": {
+																													"H": "'Ödeme Planı Listesi'",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"showSelect": {
+																													"H": "true",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"singleSelect": {
+																													"H": "true",
+																													"T": "prop",
+																													"HL": "QS"
+																												}
+																											},
+																											"E": {
+																												"item-selected": {
+																													"H": "debugger;\r\nquick.store.set('$paymentPlan', null);\r\nrowObj.item.selected = rowObj.value\r\nif (rowObj.item.selected == false) {\r\n    components.btn_continue.visible = false;\r\n} else {\r\n    quick.store.set('$paymentPlan', rowObj.item)\r\n    components.btn_continue.visible = true;\r\n}\r\n",
+																													"P": "rowObj:IVDataTableItemSelect",
+																													"HL": "TS"
+																												},
+																												"click:row": {
+																													"H": "debugger;\r\n(<any>components.dt_paymentPlanList).select(row.item);\r\nquick.store.set('$paymentPlan', row.item);\r\ncomponents.btn_continue.visible = true;",
+																													"P": "index:any,row:IVDataTableClickRow",
+																													"HL": "TS"
+																												}
+																											},
+																											"C": {
+																												"item.selected": {
+																													"c": [
+																														{
+																															"T": "VCheckbox",
+																															"P": {
+																																"ID": {
+																																	"H": "EdtrComp_46",
+																																	"T": "prop"
+																																},
+																																"color": {
+																																	"H": "'primary'",
+																																	"T": "prop"
+																																},
+																																"hideDetails": {
+																																	"H": "false",
+																																	"T": "prop"
+																																},
+																																"label": {
+																																	"H": "''",
+																																	"T": "prop",
+																																	"HL": "QS"
+																																},
+																																"visible": {
+																																	"H": "true",
+																																	"T": "prop"
+																																}
+																															},
+																															"E": {},
+																															"C": {},
+																															"_Editor": {
+																																"eID": "EdtrComp_46"
+																															},
+																															"O": {
+																																"cType": "slot"
+																															}
+																														}
+																													],
+																													"cType": "scopedSlot"
+																												}
+																											},
+																											"_Editor": {
+																												"eID": "EdtrComp_25"
+																											},
+																											"S": {
+																												"xs-xl": {
+																													"marginLeft": "",
+																													"marginRight": "",
+																													"marginBottom": "",
+																													"marginTop": "",
+																													"paddingTop": "",
+																													"paddingBottom": "",
+																													"paddingLeft": "",
+																													"paddingRight": "",
+																													"width": "",
+																													"height": "",
+																													"maxWidth": "",
+																													"maxHeight": "",
+																													"minWidth": "",
+																													"minHeight": "",
+																													"unlink": "false",
+																													"unlinkMax": "false",
+																													"unlinkMin": "false",
+																													"isSizeCollapsed": "false",
+																													"dense": "",
+																													"headerFontColor": "#686868",
+																													"headerFontFamily": "Roboto",
+																													"headerFontSize": "12px",
+																													"headerFontStyle": "normal",
+																													"headerFontWeight": "400",
+																													"headerCombinedFont": "Roboto-Regular",
+																													"headerThemeFont": "Custom",
+																													"footerText": "#686868",
+																													"footerFontFamily": "Roboto",
+																													"footerFontSize": "12px",
+																													"footerFontStyle": "normal",
+																													"footerFontWeight": "400",
+																													"footerCombinedFont": "Roboto-Regular",
+																													"footerThemeFont": "Custom",
+																													"textColor": "#010101",
+																													"itemFontFamily": "Roboto",
+																													"itemFontSize": "14px",
+																													"itemFontStyle": "normal",
+																													"itemFontWeight": "400",
+																													"itemsCombinedFont": "Roboto-Regular",
+																													"itemsThemeFont": "Custom",
+																													"backgroundColor": "#ffffff",
+																													"hoverColor": "#ffffff",
+																													"footerColor": "#FFFFFF",
+																													"headerColor": "#FFFFFF",
+																													"selectedBackground": "#FFFFFF",
+																													"expandedContent": "#010101",
+																													"lineColor": "#0000001f",
+																													"lineSize": "1",
+																													"boxShadow": "",
+																													"boxSizing": "",
+																													"borderTopStyle": "solid",
+																													"borderRightStyle": "solid",
+																													"borderBottomStyle": "solid",
+																													"borderLeftStyle": "solid",
+																													"borderTopLeftRadius": "4px",
+																													"borderTopRightRadius": "4px",
+																													"borderBottomLeftRadius": "4px",
+																													"borderBottomRightRadius": "4px",
+																													"borderTopWidth": "1px",
+																													"borderRightWidth": "1px",
+																													"borderBottomWidth": "1px",
+																													"borderLeftWidth": "1px",
+																													"defaultBorderColor": "#0000001f",
+																													"sides": "Top,Right,Bottom,Left"
+																												}
+																											},
+																											"O": {
+																												"cType": "scopedSlot"
+																											}
+																										}
+																									],
+																									"cType": "slot"
+																								}
+																							},
+																							"E": {},
+																							"P": {
+																								"ID": {
+																									"H": "VColComp",
+																									"T": "prop"
+																								}
+																							},
+																							"_Editor": {
+																								"eID": "EdtrComp_3"
+																							},
+																							"O": {
+																								"cType": "slot",
+																								"layout": {
+																									"dOpt": {
+																										"xs": []
+																									},
+																									"class": ""
+																								}
+																							},
+																							"S": {
+																								"xs-xl": {
+																									"col": "",
+																									"flexDirection": "column",
+																									"alignItems": "",
+																									"justifyContent": "",
+																									"marginLeft": "",
+																									"marginRight": "",
+																									"marginBottom": "",
+																									"marginTop": "",
+																									"paddingTop": "12px",
+																									"paddingBottom": "12px",
+																									"paddingLeft": "12px",
+																									"paddingRight": "12px",
+																									"backgroundColor": "#ffffff",
+																									"boxShadow": ""
+																								}
+																							}
+																						}
+																					],
+																					"cType": "slot"
+																				}
+																			},
+																			"_Editor": {
+																				"eID": "EdtrComp_4"
+																			},
+																			"O": {
+																				"cType": "slot"
+																			},
+																			"S": {
+																				"xs-xl": {
+																					"marginLeft": "0px",
+																					"marginRight": "0px",
+																					"marginBottom": "0px",
+																					"marginTop": "0px",
+																					"paddingTop": "",
+																					"paddingBottom": "",
+																					"paddingLeft": "",
+																					"paddingRight": "",
+																					"width": "",
+																					"height": "",
+																					"backgroundColor": "#ffffff",
+																					"boxShadow": ""
+																				}
+																			}
+																		}
+																	],
+																	"cType": "slot"
+																}
+															},
+															"E": {},
+															"P": {
+																"ID": {
+																	"H": "EdtrComp_7",
+																	"T": "prop"
+																}
+															},
+															"_Editor": {
+																"eID": "EdtrComp_7"
+															},
+															"O": {
+																"cType": "slot",
+																"layout": {
+																	"dOpt": {
+																		"xs": []
+																	},
+																	"class": ""
+																}
+															},
+															"S": {
+																"xs-xl": {
+																	"col": "",
+																	"flexDirection": "column",
+																	"alignItems": "",
+																	"justifyContent": "",
+																	"marginLeft": "",
+																	"marginRight": "",
+																	"marginBottom": "",
+																	"marginTop": "",
+																	"paddingTop": "12px",
+																	"paddingBottom": "12px",
+																	"paddingLeft": "12px",
+																	"paddingRight": "12px",
+																	"backgroundColor": "",
+																	"boxShadow": "",
+																	"boxSizing": "",
+																	"borderTopStyle": "",
+																	"borderRightStyle": "",
+																	"borderBottomStyle": "",
+																	"borderLeftStyle": "",
+																	"borderTopLeftRadius": "",
+																	"borderTopRightRadius": "",
+																	"borderBottomLeftRadius": "",
+																	"borderBottomRightRadius": "",
+																	"borderTopWidth": "",
+																	"borderRightWidth": "",
+																	"borderBottomWidth": "",
+																	"borderLeftWidth": "",
+																	"defaultBorderColor": "",
+																	"sides": ""
+																}
+															}
+														}
+													],
+													"cType": "slot"
+												}
+											},
+											"_Editor": {
+												"eID": "EdtrComp_6"
+											},
+											"S": {
+												"xs-xl": {
+													"marginLeft": "0px",
+													"marginRight": "0px",
+													"marginBottom": "0px",
+													"marginTop": "0px",
+													"paddingTop": "",
+													"paddingBottom": "",
+													"paddingLeft": "",
+													"paddingRight": "",
+													"width": "",
+													"height": "",
+													"maxWidth": "",
+													"maxHeight": "",
+													"minWidth": "",
+													"minHeight": "",
+													"unlink": "false",
+													"unlinkMax": "false",
+													"unlinkMin": "false",
+													"isSizeCollapsed": "false",
+													"backgroundColor": "",
+													"boxShadow": "",
+													"boxSizing": "",
+													"borderTopStyle": "",
+													"borderRightStyle": "",
+													"borderBottomStyle": "",
+													"borderLeftStyle": "",
+													"borderTopLeftRadius": "",
+													"borderTopRightRadius": "",
+													"borderBottomLeftRadius": "",
+													"borderBottomRightRadius": "",
+													"borderTopWidth": "",
+													"borderRightWidth": "",
+													"borderBottomWidth": "",
+													"borderLeftWidth": "",
+													"defaultBorderColor": "",
+													"sides": ""
+												}
+											},
+											"O": {
+												"cType": "slot"
+											}
+										}
+									],
+									"cType": "slot"
+								}
+							},
+							"_Editor": {
+								"eID": "EdtrComp_276"
+							},
+							"O": {
+								"cType": "slot"
+							}
+						}
+					],
+					"cType": "slot"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_5"
+			},
+			"O": {
+				"cType": "slot",
+				"layout": {
+					"dOpt": {
+						"xs": [
+							"sp:pl-0",
+							"sp:pt-0",
+							"sp:pr-0",
+							"sp:pb-0",
+							"sp:mt-0",
+							"sp:ml-0",
+							"sp:mr-0",
+							"sp:mb-0"
+						]
+					},
+					"class": "pl-0 pt-0 pr-0 pb-0 mt-0 ml-0 mr-0 mb-0"
+				}
+			},
+			"S": {
+				"xs-xl": {
+					"marginLeft": "",
+					"marginRight": "",
+					"marginBottom": "",
+					"marginTop": "",
+					"paddingTop": "12px",
+					"paddingBottom": "12px",
+					"paddingLeft": "12px",
+					"paddingRight": "12px",
+					"width": "",
+					"height": "",
+					"backgroundColor": "#ffffff",
+					"boxShadow": ""
+				}
+			}
+		},
+		{
+			"T": "VRow",
+			"P": {
+				"ID": {
+					"H": "EdtrComp_2",
+					"T": "prop"
+				}
+			},
+			"E": {},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "VCol",
+							"C": {
+								"default": {
+									"c": [
+										{
+											"T": "VBtn",
+											"P": {
+												"ID": {
+													"H": "btn_continue",
+													"T": "prop",
+													"HL": "QS"
+												},
+												"depressed": {
+													"H": "true",
+													"T": "prop"
+												},
+												"visible": {
+													"H": "false",
+													"T": "prop",
+													"HL": "QS"
+												},
+												"DiscardSettings": {
+													"H": "true",
+													"T": "prop"
+												},
+												"color": {
+													"H": "'#2171DC'",
+													"T": "prop"
+												},
+												"dark": {
+													"H": "true",
+													"T": "prop"
+												},
+												"height": {
+													"H": "'40px'",
+													"T": "prop",
+													"HL": "QS"
+												},
+												"rounded": {
+													"H": "true",
+													"T": "prop"
+												}
+											},
+											"E": {
+												"click": {
+													"H": "debugger;\r\nlet payment = quick.store.get('$paymentPlan');\r\nlet policy = quick.store.get('$policyPayment');\r\nif (payment.id != 1) {\r\n    (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: \"Erken tarihli taksitlerin önce kapatılması gerekmektedir.\" } });\r\n    components.as_alertCustomComp.open();\r\n} else if (payment.amount.amount.amount == 0) {\r\n    (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: \"Vade tutarı 0'dan farklı olmalıdır.\" } });\r\n    components.as_alertCustomComp.open();\r\n} else {\r\n    let request =\r\n    {\r\n        \"policyInfo\": {\r\n            \"policyNo\": {\r\n                \"policyNo\": policy.policyNumber,\r\n                \"renewalNo\": policy.renewalNumber\r\n            },\r\n            \"insuranceType\": \"HOME\",\r\n            \"amount\": {\r\n                \"amount\": {\r\n                    \"amount\": Math.abs(payment.amount.amount.amount),\r\n                    \"currencyCode\": {\r\n                        \"code\": payment.amount.amount.currencyCode.code\r\n                    }\r\n                },\r\n                \"amountTL\": {\r\n                    \"amount\": Math.abs(payment.amount.amountTL.amount),\r\n                    \"currencyCode\": {\r\n                        \"code\": payment.amount.amountTL.currencyCode.code\r\n                    }\r\n                },\r\n                \"dueDate\": payment.installmentDate,\r\n                \"policyStartDate\": policy.policyStartDate,\r\n                \"policyEndDate\": policy.policyEndDate,\r\n                \"installmentId\": payment.installmentId,\r\n                \"policyOwnerName\": policy.name\r\n            }\r\n        }\r\n    }\r\n\r\n    components.as_loadingCustomComp.open();\r\n    quick.MM.trigger('setConsumerAndScreenInfo');\r\n    let serviceRequest: IRequest = {\r\n        url: '/api/wrapperclient/savePolicyInstallmentInfo',\r\n        http: 'POST',\r\n        data: request,\r\n        onFail: 'empty',\r\n        onSuccess: 'empty',\r\n        responseField: 'empty',\r\n        blockRender: false,\r\n    }\r\n\r\n    quick.Request.async(serviceRequest)?.then((resp) => {\r\n        quick.EM.trace(resp?.data);\r\n        quick.parent.events.clickContinueButton();\r\n        components.as_loadingCustomComp.close();\r\n        quick.store.set(\"$savePolicyInstallmentInfoResponse\", resp.data);\r\n    })\r\n        .catch((err) => {\r\n            components.as_loadingCustomComp.close();\r\n            let errorMessage = err?.response?.data?.responseMessage ?? 'Bir hata oluştu.';\r\n            (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n            components.as_alertCustomComp.open();\r\n        });\r\n\r\n}\r\n",
+													"P": "mouseEvent:unknown | undefined",
+													"HL": "TS"
+												}
+											},
+											"C": {
+												"default": {
+													"c": [
+														{
+															"T": "QLabel",
+															"C": {},
+															"E": {},
+															"P": {
+																"ID": {
+																	"H": "EdtrComp_16",
+																	"T": "prop"
+																},
+																"text": {
+																	"H": "'Devam'",
+																	"T": "prop",
+																	"HL": "QS"
+																}
+															},
+															"_Editor": {
+																"eID": "EdtrComp_16"
+															},
+															"O": {
+																"cType": "child",
+																"layout": {
+																	"dOpt": {
+																		"xs": [
+																			"tt:text-body-1",
+																			"te:font-weight-regular"
+																		]
+																	},
+																	"class": "text-body-1 font-weight-regular"
+																}
+															},
+															"S": {
+																"xs-xl": {
+																	"marginTop": "",
+																	"marginRight": "",
+																	"marginBottom": "",
+																	"marginLeft": "",
+																	"paddingTop": "",
+																	"paddingRight": "",
+																	"paddingBottom": "",
+																	"paddingLeft": "",
+																	"fontColor": "#000000",
+																	"fontFamily": "Roboto",
+																	"fontSize": "16px",
+																	"fontStyle": "normal",
+																	"fontWeight": "400",
+																	"combinedFont": "Roboto-Regular",
+																	"ThemeFont": "Custom",
+																	"lineHeight": "20px"
+																}
+															}
+														}
+													],
+													"cType": "slot"
+												}
+											},
+											"_Editor": {
+												"eID": "EdtrComp_15"
+											},
+											"S": {
+												"xs-xl": {
+													"marginTop": "",
+													"marginRight": "10px",
+													"marginBottom": "",
+													"marginLeft": "",
+													"paddingTop": "",
+													"paddingRight": "16px",
+													"paddingBottom": "",
+													"paddingLeft": "16px",
+													"width": "",
+													"height": "",
+													"maxWidth": "",
+													"maxHeight": "",
+													"minWidth": "",
+													"minHeight": "",
+													"unlink": "false",
+													"unlinkMax": "false",
+													"unlinkMin": "false",
+													"isSizeCollapsed": "false",
+													"fontColor": "#ffffff",
+													"fontFamily": "Roboto",
+													"fontSize": "16px",
+													"fontStyle": "normal",
+													"fontWeight": "400",
+													"combinedFont": "Roboto-Regular",
+													"ThemeFont": "Custom",
+													"lineHeight": "20px",
+													"backgroundColor": "#1976D2",
+													"disabledBackgroundColor": "rgba(0,0,0,.12)",
+													"boxShadow": "",
+													"boxSizing": "",
+													"borderTopStyle": "solid",
+													"borderRightStyle": "solid",
+													"borderBottomStyle": "solid",
+													"borderLeftStyle": "solid",
+													"borderTopLeftRadius": "4px",
+													"borderTopRightRadius": "4px",
+													"borderBottomLeftRadius": "4px",
+													"borderBottomRightRadius": "4px",
+													"borderTopWidth": "0px",
+													"borderRightWidth": "0px",
+													"borderBottomWidth": "0px",
+													"borderLeftWidth": "0px",
+													"defaultBorderColor": "",
+													"sides": "Top,Right,Bottom,Left"
+												}
+											},
+											"SC": {
+												"fontColor": {
+													"VIcon": "iconColor",
+													"QLabel": "fontColor"
+												},
+												"fontStyle": {
+													"QLabel": "fontStyle"
+												},
+												"fontSize": {
+													"QLabel": "fontSize"
+												},
+												"fontFamily": {
+													"QLabel": "fontFamily"
+												},
+												"fontWeight": {
+													"QLabel": "fontWeight"
+												},
+												"combinedFont": {
+													"QLabel": "combinedFont"
+												},
+												"lineHeight": {
+													"QLabel": "lineHeight"
+												},
+												"bacgroundColor": {
+													"VIcon": "backgroundColor"
+												}
+											},
+											"O": {
+												"cType": "slot",
+												"layout": {
+													"dOpt": {
+														"xs": [
+															"sp:mr-1"
+														]
+													},
+													"class": "mr-1"
+												}
+											}
+										}
+									],
+									"cType": "slot"
+								}
+							},
+							"E": {},
+							"P": {
+								"ID": {
+									"H": "EdtrComp_14",
+									"T": "prop"
+								}
+							},
+							"_Editor": {
+								"eID": "EdtrComp_14"
+							},
+							"O": {
+								"cType": "slot",
+								"layout": {
+									"dOpt": {
+										"xs": [
+											"d:d-flex",
+											"sp:pr-3",
+											"sp:pl-3",
+											"sp:pb-3",
+											"sp:pt-3",
+											"j:justify-end"
+										]
+									},
+									"class": "d-flex pr-3 pl-3 pb-3 pt-3 justify-end"
+								}
+							},
+							"S": {
+								"xs-xl": {
+									"col": "",
+									"flexDirection": "column",
+									"alignItems": "",
+									"justifyContent": "",
+									"marginLeft": "",
+									"marginRight": "",
+									"marginBottom": "",
+									"marginTop": "",
+									"paddingTop": "12px",
+									"paddingBottom": "12px",
+									"paddingLeft": "12px",
+									"paddingRight": "12px",
+									"backgroundColor": "#ffffff",
+									"boxShadow": ""
+								}
+							}
+						}
+					],
+					"cType": "slot"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_2"
+			},
+			"O": {
+				"cType": "slot"
+			}
+		},
+		{
+			"T": "CustomComponent",
+			"P": {
+				"ID": {
+					"H": "as_loadingCustomComp",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"QJsonPath": {
+					"H": "'/static/ui-bankasASPayment/common/as_loadingCustomComp.qjson'",
+					"T": "prop",
+					"HL": "QS"
+				}
+			},
+			"E": {},
+			"C": {
+				"default": {
+					"c": [],
+					"cType": "child"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_17"
+			},
+			"O": {
+				"cType": "child",
+				"dynProps": true
+			}
+		},
+		{
+			"T": "CustomComponent",
+			"P": {
+				"ID": {
+					"H": "as_alertCustomComp",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"QJsonPath": {
+					"H": "'/static/ui-bankasASPayment/common/as_alertCustomComp.qjson'",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"alertType": {
+					"H": "'error'",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"lbl_700_1_visible": {
+					"H": "true",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"lbl_700_1": {
+					"H": "true",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"lbl_btn_1": {
+					"H": "'Tamam'",
+					"T": "prop",
+					"HL": "QS"
+				}
+			},
+			"E": {
+				"clickOutsideEvent": {
+					"H": "components.as_alertCustomComp.close();",
+					"C": true,
+					"HL": "TS"
+				},
+				"btn1ClickEvent": {
+					"H": "components.as_alertCustomComp.close();",
+					"C": true,
+					"HL": "TS"
+				}
+			},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "Ghost",
+							"P": {
+								"ID": {
+									"H": "EdtrComp_19",
+									"T": "prop"
+								}
+							},
+							"E": {},
+							"C": {},
+							"_Editor": {
+								"eID": "EdtrComp_19"
+							},
+							"O": {
+								"cType": "child"
+							}
+						}
+					],
+					"cType": "child"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_18"
+			},
+			"O": {
+				"cType": "child",
+				"dynProps": true
+			}
+		}
+	],
+	"cJson": [
+		{
+			"T": "Messaging",
+			"P": {
+				"ID": {
+					"H": "PageComp",
+					"T": "prop"
+				},
+				"triggerOnRestored": {
+					"H": "╬false╩╩",
+					"T": "prop"
+				},
+				"externalProps": {
+					"H": "╬[]╩╩",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"externalEvents": {
+					"H": "╬[]╠{}╠=╣name╩╠'clickContinueButton'╩╩╠=╣params╩╠[]╩╩╩╠{}╠=╣name╩╠'setItems'╩╩╠=╣params╩╠[]╩╩╩╩╩",
+					"T": "prop",
+					"HL": "QS"
+				}
+			},
+			"E": {
+				"setItems": {
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nvar paymentPlanList = quick.store.get('$paymentPlanListResponse').retrievePaymentPlanDTO.installmentInfoList;\r\nvar vauto_debtorCreditorValue = quick.store.get('$vauto_debtorCreditor');\r\nfor (var i = 0; i < paymentPlanList.length; i++) {\r\n    paymentPlanList[i].id = i + 1;\r\n    if (vauto_debtorCreditorValue = 'DEBIT') {\r\n        paymentPlanList[i].debitOrCredit = \"Borç\";\r\n    }\r\n    else {\r\n        paymentPlanList[i].debitOrCredit = \"Alacak\";\r\n    }\r\n    paymentPlanList[i].amountText = paymentPlanList[i].amount.amount.amount + \" \" + paymentPlanList[i].amount.amount.currencyCode.code;\r\n    paymentPlanList[i].tlAmountText = paymentPlanList[i].amount.amountTL.amount + \" \" + paymentPlanList[i].amount.amount.currencyCode.code;\r\n}\r\ncomponents.dt_paymentPlanList.items = paymentPlanList;\r\n",
+					"C": true,
+					"EV": true,
+					"HL": "JS"
+				},
+				"setConsumerAndScreenInfo": {
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nquick.store.set('$customConsumerCode', 'TANE.BANKASUR');\r\nquick.store.set('$customScreenName', 'TANE.BANKASUR');\r\n",
+					"C": true,
+					"HL": "JS"
+				}
+			},
+			"C": {},
+			"_Editor": {
+				"eID": "EdtrComp_1"
+			},
+			"O": {
+				"cType": "child",
+				"layout": {
+					"dOpt": {
+						"xs": [
+							"sp:pt-0",
+							"sp:pl-0",
+							"sp:pr-0",
+							"sp:pb-0"
+						]
+					},
+					"class": "pt-0 pl-0 pr-0 pb-0"
+				},
+				"compDomClasses": "newDropBorder"
+			},
+			"S": {
+				"xs-xl": {
+					"pageBackgroundColor": "#ffffff",
+					"statusBarColor": "#ffffff"
+				}
+			}
+		},
+		{
+			"T": "VContainer",
+			"P": {
+				"ID": {
+					"H": "VContainerComp",
+					"T": "prop"
+				},
+				"class": {
+					"H": "╬'container container--fluid'╩╩",
+					"T": "class"
+				},
+				"visible": {
+					"H": "╬true╩╩",
+					"T": "prop"
+				},
+				"eager": {
+					"H": "╬true╩╩",
+					"T": "prop"
+				}
+			},
+			"E": {},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "VCard",
+							"P": {
+								"ID": {
+									"H": "EdtrComp_276",
+									"T": "prop"
+								},
+								"color": {
+									"H": "╬'white'╩╩",
+									"T": "prop"
+								},
+								"visible": {
+									"H": "╬true╩╩",
+									"T": "prop"
+								}
+							},
+							"E": {},
+							"C": {
+								"default": {
+									"c": [
+										{
+											"T": "VRow",
+											"P": {
+												"ID": {
+													"H": "EdtrComp_6",
+													"T": "prop"
+												}
+											},
+											"E": {},
+											"C": {
+												"default": {
+													"c": [
+														{
+															"T": "VCol",
+															"C": {
+																"default": {
+																	"c": [
+																		{
+																			"T": "VRow",
+																			"P": {
+																				"ID": {
+																					"H": "VRowComp",
+																					"T": "prop"
+																				}
+																			},
+																			"E": {},
+																			"C": {
+																				"default": {
+																					"c": [
+																						{
+																							"T": "VCol",
+																							"C": {
+																								"default": {
+																									"c": [
+																										{
+																											"T": "VDataTable",
+																											"P": {
+																												"ID": {
+																													"H": "dt_paymentPlanList",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"footerProps": {
+																													"H": "╬{}╠=╣showFirstLastPage╩╠true╩╩╠=╣firstIcon╩╠'mdi-arrow-collapse-left'╩╩╠=╣lastIcon╩╠'mdi-arrow-collapse-right'╩╩╠=╣prevIcon╩╠'mdi-minus'╩╩╠=╣nextIcon╩╠'mdi-plus'╩╩╩╩",
+																													"T": "prop"
+																												},
+																												"headers": {
+																													"H": "╬[]╠{}╠=╣text╩╠'Taksit Tarihi'╩╩╠=╣value╩╠'installmentDate'╩╩╠=╣filterable╩╠true╩╩╩╠{}╠=╣text╩╠'Borç/Alacak'╩╩╠=╣value╩╠'debitOrCredit'╩╩╠=╣filterable╩╠true╩╩╩╠{}╠=╣text╩╠'Tutar'╩╩╠=╣value╩╠'amountText'╩╩╠=╣filterable╩╠true╩╩╩╠{}╠=╣text╩╠'Tutar TL'╩╩╠=╣value╩╠'tlAmountText'╩╩╠=╣filterable╩╠true╩╩╩╩╩",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"itemsPerPage": {
+																													"H": "╬10╩╩",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"mobileBreakpoint": {
+																													"H": "╬600╩╩",
+																													"T": "prop"
+																												},
+																												"visible": {
+																													"H": "╬true╩╩",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"hideDefaultFooter": {
+																													"H": "╬false╩╩",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"disablePagination": {
+																													"H": "╬false╩╩",
+																													"T": "prop"
+																												},
+																												"noDataText": {
+																													"H": "╬'Uygun Ödeme Bulunmamaktadır.'╩╩",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"hideDefaultHeader": {
+																													"H": "╬false╩╩",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"fixedHeader": {
+																													"H": "╬true╩╩",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"dense": {
+																													"H": "╬true╩╩",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"disableSort": {
+																													"H": "╬false╩╩",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"dark": {
+																													"H": "╬false╩╩",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"itemKey": {
+																													"H": "╬'id'╩╩",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"disableFiltering": {
+																													"H": "╬false╩╩",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"items": {
+																													"H": "╬[]╩╩",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"caption": {
+																													"H": "╬'Ödeme Planı Listesi'╩╩",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"showSelect": {
+																													"H": "╬true╩╩",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"singleSelect": {
+																													"H": "╬true╩╩",
+																													"T": "prop",
+																													"HL": "QS"
+																												}
+																											},
+																											"E": {
+																												"item-selected": {
+																													"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\ndebugger;\r\nquick.store.set('$paymentPlan', null);\r\nrowObj.item.selected = rowObj.value;\r\nif (rowObj.item.selected == false) {\r\n    components.btn_continue.visible = false;\r\n}\r\nelse {\r\n    quick.store.set('$paymentPlan', rowObj.item);\r\n    components.btn_continue.visible = true;\r\n}\r\n",
+																													"P": "rowObj:IVDataTableItemSelect",
+																													"HL": "JS"
+																												},
+																												"click:row": {
+																													"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\ndebugger;\r\ncomponents.dt_paymentPlanList.select(row.item);\r\nquick.store.set('$paymentPlan', row.item);\r\ncomponents.btn_continue.visible = true;\r\n",
+																													"P": "index:any,row:IVDataTableClickRow",
+																													"HL": "JS"
+																												}
+																											},
+																											"C": {
+																												"item.selected": {
+																													"c": [
+																														{
+																															"T": "VCheckbox",
+																															"P": {
+																																"ID": {
+																																	"H": "EdtrComp_46",
+																																	"T": "prop"
+																																},
+																																"color": {
+																																	"H": "╬'primary'╩╩",
+																																	"T": "prop"
+																																},
+																																"hideDetails": {
+																																	"H": "╬false╩╩",
+																																	"T": "prop"
+																																},
+																																"label": {
+																																	"H": "╬''╩╩",
+																																	"T": "prop",
+																																	"HL": "QS"
+																																},
+																																"visible": {
+																																	"H": "╬true╩╩",
+																																	"T": "prop"
+																																}
+																															},
+																															"E": {},
+																															"C": {},
+																															"_Editor": {
+																																"eID": "EdtrComp_46"
+																															},
+																															"O": {
+																																"cType": "slot"
+																															}
+																														}
+																													],
+																													"cType": "scopedSlot"
+																												}
+																											},
+																											"_Editor": {
+																												"eID": "EdtrComp_25"
+																											},
+																											"S": {
+																												"xs-xl": {
+																													"marginLeft": "",
+																													"marginRight": "",
+																													"marginBottom": "",
+																													"marginTop": "",
+																													"paddingTop": "",
+																													"paddingBottom": "",
+																													"paddingLeft": "",
+																													"paddingRight": "",
+																													"width": "",
+																													"height": "",
+																													"maxWidth": "",
+																													"maxHeight": "",
+																													"minWidth": "",
+																													"minHeight": "",
+																													"unlink": "false",
+																													"unlinkMax": "false",
+																													"unlinkMin": "false",
+																													"isSizeCollapsed": "false",
+																													"dense": "",
+																													"headerFontColor": "#686868",
+																													"headerFontFamily": "Roboto",
+																													"headerFontSize": "12px",
+																													"headerFontStyle": "normal",
+																													"headerFontWeight": "400",
+																													"headerCombinedFont": "Roboto-Regular",
+																													"headerThemeFont": "Custom",
+																													"footerText": "#686868",
+																													"footerFontFamily": "Roboto",
+																													"footerFontSize": "12px",
+																													"footerFontStyle": "normal",
+																													"footerFontWeight": "400",
+																													"footerCombinedFont": "Roboto-Regular",
+																													"footerThemeFont": "Custom",
+																													"textColor": "#010101",
+																													"itemFontFamily": "Roboto",
+																													"itemFontSize": "14px",
+																													"itemFontStyle": "normal",
+																													"itemFontWeight": "400",
+																													"itemsCombinedFont": "Roboto-Regular",
+																													"itemsThemeFont": "Custom",
+																													"backgroundColor": "#ffffff",
+																													"hoverColor": "#ffffff",
+																													"footerColor": "#FFFFFF",
+																													"headerColor": "#FFFFFF",
+																													"selectedBackground": "#FFFFFF",
+																													"expandedContent": "#010101",
+																													"lineColor": "#0000001f",
+																													"lineSize": "1",
+																													"boxShadow": "",
+																													"boxSizing": "",
+																													"borderTopStyle": "solid",
+																													"borderRightStyle": "solid",
+																													"borderBottomStyle": "solid",
+																													"borderLeftStyle": "solid",
+																													"borderTopLeftRadius": "4px",
+																													"borderTopRightRadius": "4px",
+																													"borderBottomLeftRadius": "4px",
+																													"borderBottomRightRadius": "4px",
+																													"borderTopWidth": "1px",
+																													"borderRightWidth": "1px",
+																													"borderBottomWidth": "1px",
+																													"borderLeftWidth": "1px",
+																													"defaultBorderColor": "#0000001f",
+																													"sides": "Top,Right,Bottom,Left"
+																												}
+																											},
+																											"O": {
+																												"cType": "scopedSlot",
+																												"compDomClasses": "v-data-table v-data-table--dense v-data-table--fixed-header v-data-table--has-bottom theme--light newDropBorder"
+																											}
+																										}
+																									],
+																									"cType": "slot"
+																								}
+																							},
+																							"E": {},
+																							"P": {
+																								"ID": {
+																									"H": "VColComp",
+																									"T": "prop"
+																								}
+																							},
+																							"_Editor": {
+																								"eID": "EdtrComp_3"
+																							},
+																							"O": {
+																								"cType": "slot",
+																								"layout": {
+																									"dOpt": {
+																										"xs": []
+																									},
+																									"class": ""
+																								},
+																								"compDomClasses": "col pb-0 newDropBorder"
+																							},
+																							"S": {
+																								"xs-xl": {
+																									"col": "",
+																									"flexDirection": "column",
+																									"alignItems": "",
+																									"justifyContent": "",
+																									"marginLeft": "",
+																									"marginRight": "",
+																									"marginBottom": "",
+																									"marginTop": "",
+																									"paddingTop": "12px",
+																									"paddingBottom": "12px",
+																									"paddingLeft": "12px",
+																									"paddingRight": "12px",
+																									"backgroundColor": "#ffffff",
+																									"boxShadow": ""
+																								}
+																							}
+																						}
+																					],
+																					"cType": "slot"
+																				}
+																			},
+																			"_Editor": {
+																				"eID": "EdtrComp_4"
+																			},
+																			"O": {
+																				"cType": "slot",
+																				"compDomClasses": "row newDropBorder"
+																			},
+																			"S": {
+																				"xs-xl": {
+																					"marginLeft": "0px",
+																					"marginRight": "0px",
+																					"marginBottom": "0px",
+																					"marginTop": "0px",
+																					"paddingTop": "",
+																					"paddingBottom": "",
+																					"paddingLeft": "",
+																					"paddingRight": "",
+																					"width": "",
+																					"height": "",
+																					"backgroundColor": "#ffffff",
+																					"boxShadow": ""
+																				}
+																			}
+																		}
+																	],
+																	"cType": "slot"
+																}
+															},
+															"E": {},
+															"P": {
+																"ID": {
+																	"H": "EdtrComp_7",
+																	"T": "prop"
+																}
+															},
+															"_Editor": {
+																"eID": "EdtrComp_7"
+															},
+															"O": {
+																"cType": "slot",
+																"layout": {
+																	"dOpt": {
+																		"xs": []
+																	},
+																	"class": ""
+																},
+																"compDomClasses": "col pb-0 newDropBorder"
+															},
+															"S": {
+																"xs-xl": {
+																	"col": "",
+																	"flexDirection": "column",
+																	"alignItems": "",
+																	"justifyContent": "",
+																	"marginLeft": "",
+																	"marginRight": "",
+																	"marginBottom": "",
+																	"marginTop": "",
+																	"paddingTop": "12px",
+																	"paddingBottom": "12px",
+																	"paddingLeft": "12px",
+																	"paddingRight": "12px",
+																	"backgroundColor": "",
+																	"boxShadow": "",
+																	"boxSizing": "",
+																	"borderTopStyle": "",
+																	"borderRightStyle": "",
+																	"borderBottomStyle": "",
+																	"borderLeftStyle": "",
+																	"borderTopLeftRadius": "",
+																	"borderTopRightRadius": "",
+																	"borderBottomLeftRadius": "",
+																	"borderBottomRightRadius": "",
+																	"borderTopWidth": "",
+																	"borderRightWidth": "",
+																	"borderBottomWidth": "",
+																	"borderLeftWidth": "",
+																	"defaultBorderColor": "",
+																	"sides": ""
+																}
+															}
+														}
+													],
+													"cType": "slot"
+												}
+											},
+											"_Editor": {
+												"eID": "EdtrComp_6"
+											},
+											"S": {
+												"xs-xl": {
+													"marginLeft": "0px",
+													"marginRight": "0px",
+													"marginBottom": "0px",
+													"marginTop": "0px",
+													"paddingTop": "",
+													"paddingBottom": "",
+													"paddingLeft": "",
+													"paddingRight": "",
+													"width": "",
+													"height": "",
+													"maxWidth": "",
+													"maxHeight": "",
+													"minWidth": "",
+													"minHeight": "",
+													"unlink": "false",
+													"unlinkMax": "false",
+													"unlinkMin": "false",
+													"isSizeCollapsed": "false",
+													"backgroundColor": "",
+													"boxShadow": "",
+													"boxSizing": "",
+													"borderTopStyle": "",
+													"borderRightStyle": "",
+													"borderBottomStyle": "",
+													"borderLeftStyle": "",
+													"borderTopLeftRadius": "",
+													"borderTopRightRadius": "",
+													"borderBottomLeftRadius": "",
+													"borderBottomRightRadius": "",
+													"borderTopWidth": "",
+													"borderRightWidth": "",
+													"borderBottomWidth": "",
+													"borderLeftWidth": "",
+													"defaultBorderColor": "",
+													"sides": ""
+												}
+											},
+											"O": {
+												"cType": "slot",
+												"compDomClasses": "row newDropBorder"
+											}
+										}
+									],
+									"cType": "slot"
+								}
+							},
+							"_Editor": {
+								"eID": "EdtrComp_276"
+							},
+							"O": {
+								"cType": "slot",
+								"compDomClasses": "v-card v-sheet theme--light white newDropBorder"
+							}
+						}
+					],
+					"cType": "slot"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_5"
+			},
+			"O": {
+				"cType": "slot",
+				"layout": {
+					"dOpt": {
+						"xs": [
+							"sp:pl-0",
+							"sp:pt-0",
+							"sp:pr-0",
+							"sp:pb-0",
+							"sp:mt-0",
+							"sp:ml-0",
+							"sp:mr-0",
+							"sp:mb-0"
+						]
+					},
+					"class": "pl-0 pt-0 pr-0 pb-0 mt-0 ml-0 mr-0 mb-0"
+				},
+				"compDomClasses": "container container--fluid pl-0 pt-0 pr-0 pb-0 mt-0 ml-0 mr-0 mb-0 newDropBorder"
+			},
+			"S": {
+				"xs-xl": {
+					"marginLeft": "",
+					"marginRight": "",
+					"marginBottom": "",
+					"marginTop": "",
+					"paddingTop": "12px",
+					"paddingBottom": "12px",
+					"paddingLeft": "12px",
+					"paddingRight": "12px",
+					"width": "",
+					"height": "",
+					"backgroundColor": "#ffffff",
+					"boxShadow": ""
+				}
+			}
+		},
+		{
+			"T": "VRow",
+			"P": {
+				"ID": {
+					"H": "EdtrComp_2",
+					"T": "prop"
+				}
+			},
+			"E": {},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "VCol",
+							"C": {
+								"default": {
+									"c": [
+										{
+											"T": "VBtn",
+											"P": {
+												"ID": {
+													"H": "btn_continue",
+													"T": "prop",
+													"HL": "QS"
+												},
+												"depressed": {
+													"H": "╬true╩╩",
+													"T": "prop"
+												},
+												"visible": {
+													"H": "╬false╩╩",
+													"T": "prop",
+													"HL": "QS"
+												},
+												"DiscardSettings": {
+													"H": "╬true╩╩",
+													"T": "prop"
+												},
+												"color": {
+													"H": "╬'#2171DC'╩╩",
+													"T": "prop"
+												},
+												"dark": {
+													"H": "╬true╩╩",
+													"T": "prop"
+												},
+												"height": {
+													"H": "╬'40px'╩╩",
+													"T": "prop",
+													"HL": "QS"
+												},
+												"rounded": {
+													"H": "╬true╩╩",
+													"T": "prop"
+												}
+											},
+											"E": {
+												"click": {
+													"H": "var _a;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\ndebugger;\r\nvar payment = quick.store.get('$paymentPlan');\r\nvar policy = quick.store.get('$policyPayment');\r\nif (payment.id != 1) {\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: \"Erken tarihli taksitlerin önce kapatılması gerekmektedir.\" } });\r\n    components.as_alertCustomComp.open();\r\n}\r\nelse if (payment.amount.amount.amount == 0) {\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: \"Vade tutarı 0'dan farklı olmalıdır.\" } });\r\n    components.as_alertCustomComp.open();\r\n}\r\nelse {\r\n    var request = {\r\n        \"policyInfo\": {\r\n            \"policyNo\": {\r\n                \"policyNo\": policy.policyNumber,\r\n                \"renewalNo\": policy.renewalNumber\r\n            },\r\n            \"insuranceType\": \"HOME\",\r\n            \"amount\": {\r\n                \"amount\": {\r\n                    \"amount\": Math.abs(payment.amount.amount.amount),\r\n                    \"currencyCode\": {\r\n                        \"code\": payment.amount.amount.currencyCode.code\r\n                    }\r\n                },\r\n                \"amountTL\": {\r\n                    \"amount\": Math.abs(payment.amount.amountTL.amount),\r\n                    \"currencyCode\": {\r\n                        \"code\": payment.amount.amountTL.currencyCode.code\r\n                    }\r\n                },\r\n                \"dueDate\": payment.installmentDate,\r\n                \"policyStartDate\": policy.policyStartDate,\r\n                \"policyEndDate\": policy.policyEndDate,\r\n                \"installmentId\": payment.installmentId,\r\n                \"policyOwnerName\": policy.name\r\n            }\r\n        }\r\n    };\r\n    components.as_loadingCustomComp.open();\r\n    quick.MM.trigger('setConsumerAndScreenInfo');\r\n    var serviceRequest = {\r\n        url: '/api/wrapperclient/savePolicyInstallmentInfo',\r\n        http: 'POST',\r\n        data: request,\r\n        onFail: 'empty',\r\n        onSuccess: 'empty',\r\n        responseField: 'empty',\r\n        blockRender: false,\r\n    };\r\n    (_a = quick.Request.async(serviceRequest)) === null || _a === void 0 ? void 0 : _a.then(function (resp) {\r\n        quick.EM.trace(resp === null || resp === void 0 ? void 0 : resp.data);\r\n        quick.parent.events.clickContinueButton();\r\n        components.as_loadingCustomComp.close();\r\n        quick.store.set(\"$savePolicyInstallmentInfoResponse\", resp.data);\r\n    }).catch(function (err) {\r\n        var _a, _b, _c;\r\n        components.as_loadingCustomComp.close();\r\n        var errorMessage = (_c = (_b = (_a = err === null || err === void 0 ? void 0 : err.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.responseMessage) !== null && _c !== void 0 ? _c : 'Bir hata oluştu.';\r\n        components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n        components.as_alertCustomComp.open();\r\n    });\r\n}\r\n",
+													"P": "mouseEvent:unknown | undefined",
+													"HL": "JS"
+												}
+											},
+											"C": {
+												"default": {
+													"c": [
+														{
+															"T": "QLabel",
+															"C": {},
+															"E": {},
+															"P": {
+																"ID": {
+																	"H": "EdtrComp_16",
+																	"T": "prop"
+																},
+																"text": {
+																	"H": "╬'Devam'╩╩",
+																	"T": "prop",
+																	"HL": "QS"
+																}
+															},
+															"_Editor": {
+																"eID": "EdtrComp_16"
+															},
+															"O": {
+																"cType": "child",
+																"layout": {
+																	"dOpt": {
+																		"xs": [
+																			"tt:text-body-1",
+																			"te:font-weight-regular"
+																		]
+																	},
+																	"class": "text-body-1 font-weight-regular"
+																},
+																"compDomClasses": "q-label text-body-1 font-weight-regular newDropBorder"
+															},
+															"S": {
+																"xs-xl": {
+																	"marginTop": "",
+																	"marginRight": "",
+																	"marginBottom": "",
+																	"marginLeft": "",
+																	"paddingTop": "",
+																	"paddingRight": "",
+																	"paddingBottom": "",
+																	"paddingLeft": "",
+																	"fontColor": "#000000",
+																	"fontFamily": "Roboto",
+																	"fontSize": "16px",
+																	"fontStyle": "normal",
+																	"fontWeight": "400",
+																	"combinedFont": "Roboto-Regular",
+																	"ThemeFont": "Custom",
+																	"lineHeight": "20px"
+																}
+															}
+														}
+													],
+													"cType": "slot"
+												}
+											},
+											"_Editor": {
+												"eID": "EdtrComp_15"
+											},
+											"S": {
+												"xs-xl": {
+													"marginTop": "",
+													"marginRight": "10px",
+													"marginBottom": "",
+													"marginLeft": "",
+													"paddingTop": "",
+													"paddingRight": "16px",
+													"paddingBottom": "",
+													"paddingLeft": "16px",
+													"width": "",
+													"height": "",
+													"maxWidth": "",
+													"maxHeight": "",
+													"minWidth": "",
+													"minHeight": "",
+													"unlink": "false",
+													"unlinkMax": "false",
+													"unlinkMin": "false",
+													"isSizeCollapsed": "false",
+													"fontColor": "#ffffff",
+													"fontFamily": "Roboto",
+													"fontSize": "16px",
+													"fontStyle": "normal",
+													"fontWeight": "400",
+													"combinedFont": "Roboto-Regular",
+													"ThemeFont": "Custom",
+													"lineHeight": "20px",
+													"backgroundColor": "#1976D2",
+													"disabledBackgroundColor": "rgba(0,0,0,.12)",
+													"boxShadow": "",
+													"boxSizing": "",
+													"borderTopStyle": "solid",
+													"borderRightStyle": "solid",
+													"borderBottomStyle": "solid",
+													"borderLeftStyle": "solid",
+													"borderTopLeftRadius": "4px",
+													"borderTopRightRadius": "4px",
+													"borderBottomLeftRadius": "4px",
+													"borderBottomRightRadius": "4px",
+													"borderTopWidth": "0px",
+													"borderRightWidth": "0px",
+													"borderBottomWidth": "0px",
+													"borderLeftWidth": "0px",
+													"defaultBorderColor": "",
+													"sides": "Top,Right,Bottom,Left"
+												}
+											},
+											"SC": {
+												"fontColor": {
+													"VIcon": "iconColor",
+													"QLabel": "fontColor"
+												},
+												"fontStyle": {
+													"QLabel": "fontStyle"
+												},
+												"fontSize": {
+													"QLabel": "fontSize"
+												},
+												"fontFamily": {
+													"QLabel": "fontFamily"
+												},
+												"fontWeight": {
+													"QLabel": "fontWeight"
+												},
+												"combinedFont": {
+													"QLabel": "combinedFont"
+												},
+												"lineHeight": {
+													"QLabel": "lineHeight"
+												},
+												"bacgroundColor": {
+													"VIcon": "backgroundColor"
+												}
+											},
+											"O": {
+												"cType": "slot",
+												"layout": {
+													"dOpt": {
+														"xs": [
+															"sp:mr-1"
+														]
+													},
+													"class": "mr-1"
+												},
+												"compDomClasses": "v-btn v-btn--depressed v-btn--rounded theme--dark v-size--default mr-1 newDropBorder"
+											}
+										}
+									],
+									"cType": "slot"
+								}
+							},
+							"E": {},
+							"P": {
+								"ID": {
+									"H": "EdtrComp_14",
+									"T": "prop"
+								}
+							},
+							"_Editor": {
+								"eID": "EdtrComp_14"
+							},
+							"O": {
+								"cType": "slot",
+								"layout": {
+									"dOpt": {
+										"xs": [
+											"d:d-flex",
+											"sp:pr-3",
+											"sp:pl-3",
+											"sp:pb-3",
+											"sp:pt-3",
+											"j:justify-end"
+										]
+									},
+									"class": "d-flex pr-3 pl-3 pb-3 pt-3 justify-end"
+								},
+								"compDomClasses": "col d-flex pr-3 pl-3 pb-3 pt-3 justify-end pb-0 newDropBorder"
+							},
+							"S": {
+								"xs-xl": {
+									"col": "",
+									"flexDirection": "column",
+									"alignItems": "",
+									"justifyContent": "",
+									"marginLeft": "",
+									"marginRight": "",
+									"marginBottom": "",
+									"marginTop": "",
+									"paddingTop": "12px",
+									"paddingBottom": "12px",
+									"paddingLeft": "12px",
+									"paddingRight": "12px",
+									"backgroundColor": "#ffffff",
+									"boxShadow": ""
+								}
+							}
+						}
+					],
+					"cType": "slot"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_2"
+			},
+			"O": {
+				"cType": "slot",
+				"compDomClasses": "row newDropBorder"
+			}
+		},
+		{
+			"T": "CustomComponent",
+			"P": {
+				"ID": {
+					"H": "as_loadingCustomComp",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"QJsonPath": {
+					"H": "╬'/static/ui-bankasASPayment/common/as_loadingCustomComp.qjson'╩╩",
+					"T": "prop",
+					"HL": "QS"
+				}
+			},
+			"E": {},
+			"C": {
+				"default": {
+					"c": [],
+					"cType": "child"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_17"
+			},
+			"O": {
+				"cType": "child",
+				"dynProps": true,
+				"compDomClasses": "newDropBorder"
+			}
+		},
+		{
+			"T": "CustomComponent",
+			"P": {
+				"ID": {
+					"H": "as_alertCustomComp",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"QJsonPath": {
+					"H": "╬'/static/ui-bankasASPayment/common/as_alertCustomComp.qjson'╩╩",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"alertType": {
+					"H": "╬'error'╩╩",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"lbl_700_1_visible": {
+					"H": "╬true╩╩",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"lbl_700_1": {
+					"H": "╬true╩╩",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"lbl_btn_1": {
+					"H": "╬'Tamam'╩╩",
+					"T": "prop",
+					"HL": "QS"
+				}
+			},
+			"E": {
+				"clickOutsideEvent": {
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ncomponents.as_alertCustomComp.close();\r\n",
+					"C": true,
+					"HL": "JS"
+				},
+				"btn1ClickEvent": {
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ncomponents.as_alertCustomComp.close();\r\n",
+					"C": true,
+					"HL": "JS"
+				}
+			},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "Ghost",
+							"P": {
+								"ID": {
+									"H": "EdtrComp_19",
+									"T": "prop"
+								}
+							},
+							"E": {},
+							"C": {},
+							"_Editor": {
+								"eID": "EdtrComp_19"
+							},
+							"O": {
+								"cType": "child",
+								"compDomClasses": "editor-ghost-comp"
+							}
+						}
+					],
+					"cType": "child"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_18"
+			},
+			"O": {
+				"cType": "child",
+				"dynProps": true,
+				"compDomClasses": "newDropBorder"
+			}
+		}
+	],
+	"lrids": {},
+	"clrids": {},
+	"opt": {}
+};
+export default pjson
