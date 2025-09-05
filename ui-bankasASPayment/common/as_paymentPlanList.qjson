@@ -24,7 +24,7 @@ let pjson = {
 			},
 			"E": {
 				"setItems": {
-					"H": "debugger;\r\nlet paymentPlanList = quick.store.get('$paymentPlanListResponse').retrievePaymentPlanDTO.installmentInfoList;\r\nlet vauto_debtorCreditorValue = quick.store.get('$vauto_debtorCreditor');\r\n\r\nfor (let i = 0; i < paymentPlanList.length; i++) {\r\n    paymentPlanList[i].id = i + 1;\r\n    if (vauto_debtorCreditorValue = 'DEBIT') {\r\n        paymentPlanList[i].debitOrCredit = \"Borç\"\r\n    } else {\r\n        paymentPlanList[i].debitOrCredit = \"Alacak\"\r\n    }\r\n    paymentPlanList[i].amountText = paymentPlanList[i].amount.amount.amount + \" \" + paymentPlanList[i].amount.amount.currencyCode.code;\r\n    paymentPlanList[i].tlAmountText = paymentPlanList[i].amount.amountTL.amount + \" \" + paymentPlanList[i].amount.amount.currencyCode.code;\r\n\r\n}\r\ncomponents.dt_paymentPlanList.items = paymentPlanList;\r\n",
+					"H": "debugger;\r\nlet paymentPlanList = quick.store.get('$paymentPlanListResponse').retrievePaymentPlanDTO.installmentInfoList;\r\nlet vauto_debtorCreditorValue = quick.store.get('$vauto_debtorCreditor');\r\n\r\nfor (let i = 0; i < paymentPlanList.length; i++) {\r\n    paymentPlanList[i].id = i + 1;\r\n    if (vauto_debtorCreditorValue = 'debit') {\r\n        paymentPlanList[i].debitOrCredit = \"Borç\"\r\n    } else {\r\n        paymentPlanList[i].debitOrCredit = \"Alacak\"\r\n    }\r\n    paymentPlanList[i].amountText = quick.Quick.toMoney(Math.abs(quick.Quick.toDecimal(paymentPlanList[i].amount.amount.amount))) + \" \" + paymentPlanList[i].amount.amount.currencyCode.code;\r\n    paymentPlanList[i].tlAmountText = quick.Quick.toMoney(Math.abs(quick.Quick.toDecimal(paymentPlanList[i].amount.amount.amount))) + \" \" + paymentPlanList[i].amount.amount.currencyCode.code;\r\n    paymentPlanList[i].installmentDateFormatted = paymentPlanList[i].installmentDate?.split('-').reverse().join('.');\r\n}\r\ncomponents.dt_paymentPlanList.items = paymentPlanList;\r\n",
 					"C": true,
 					"EV": true,
 					"HL": "TS"
@@ -151,7 +151,7 @@ let pjson = {
 																													"T": "prop"
 																												},
 																												"headers": {
-																													"H": "[{ text = 'Taksit Tarihi', value= 'installmentDate',filterable= true },\n{ text = 'Borç/Alacak', value= 'debitOrCredit', filterable= true },\n{ text = 'Tutar', value= 'amountText', filterable= true },\n{ text = 'Tutar TL', value= 'tlAmountText', filterable= true }]",
+																													"H": "[{ text = 'Taksit Tarihi', value= 'installmentDateFormatted',filterable= true },\n{ text = 'Borç/Alacak', value= 'debitOrCredit', filterable= true },\n{ text = 'Tutar', value= 'amountText', filterable= true },\n{ text = 'Tutar TL', value= 'tlAmountText', filterable= true }]",
 																													"T": "prop",
 																													"HL": "QS"
 																												},
@@ -1000,7 +1000,7 @@ let pjson = {
 			},
 			"E": {
 				"setItems": {
-					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nvar paymentPlanList = quick.store.get('$paymentPlanListResponse').retrievePaymentPlanDTO.installmentInfoList;\r\nvar vauto_debtorCreditorValue = quick.store.get('$vauto_debtorCreditor');\r\nfor (var i = 0; i < paymentPlanList.length; i++) {\r\n    paymentPlanList[i].id = i + 1;\r\n    if (vauto_debtorCreditorValue = 'DEBIT') {\r\n        paymentPlanList[i].debitOrCredit = \"Borç\";\r\n    }\r\n    else {\r\n        paymentPlanList[i].debitOrCredit = \"Alacak\";\r\n    }\r\n    paymentPlanList[i].amountText = paymentPlanList[i].amount.amount.amount + \" \" + paymentPlanList[i].amount.amount.currencyCode.code;\r\n    paymentPlanList[i].tlAmountText = paymentPlanList[i].amount.amountTL.amount + \" \" + paymentPlanList[i].amount.amount.currencyCode.code;\r\n}\r\ncomponents.dt_paymentPlanList.items = paymentPlanList;\r\n",
+					"H": "var _a;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nvar paymentPlanList = quick.store.get('$paymentPlanListResponse').retrievePaymentPlanDTO.installmentInfoList;\r\nvar vauto_debtorCreditorValue = quick.store.get('$vauto_debtorCreditor');\r\nfor (var i = 0; i < paymentPlanList.length; i++) {\r\n    paymentPlanList[i].id = i + 1;\r\n    if (vauto_debtorCreditorValue = 'debit') {\r\n        paymentPlanList[i].debitOrCredit = \"Borç\";\r\n    }\r\n    else {\r\n        paymentPlanList[i].debitOrCredit = \"Alacak\";\r\n    }\r\n    paymentPlanList[i].amountText = quick.Quick.toMoney(Math.abs(quick.Quick.toDecimal(paymentPlanList[i].amount.amount.amount))) + \" \" + paymentPlanList[i].amount.amount.currencyCode.code;\r\n    paymentPlanList[i].tlAmountText = quick.Quick.toMoney(Math.abs(quick.Quick.toDecimal(paymentPlanList[i].amount.amount.amount))) + \" \" + paymentPlanList[i].amount.amount.currencyCode.code;\r\n    paymentPlanList[i].installmentDateFormatted = (_a = paymentPlanList[i].installmentDate) === null || _a === void 0 ? void 0 : _a.split('-').reverse().join('.');\r\n}\r\ncomponents.dt_paymentPlanList.items = paymentPlanList;\r\n",
 					"C": true,
 					"EV": true,
 					"HL": "JS"
@@ -1128,7 +1128,7 @@ let pjson = {
 																													"T": "prop"
 																												},
 																												"headers": {
-																													"H": "╬[]╠{}╠=╣text╩╠'Taksit Tarihi'╩╩╠=╣value╩╠'installmentDate'╩╩╠=╣filterable╩╠true╩╩╩╠{}╠=╣text╩╠'Borç/Alacak'╩╩╠=╣value╩╠'debitOrCredit'╩╩╠=╣filterable╩╠true╩╩╩╠{}╠=╣text╩╠'Tutar'╩╩╠=╣value╩╠'amountText'╩╩╠=╣filterable╩╠true╩╩╩╠{}╠=╣text╩╠'Tutar TL'╩╩╠=╣value╩╠'tlAmountText'╩╩╠=╣filterable╩╠true╩╩╩╩╩",
+																													"H": "╬[]╠{}╠=╣text╩╠'Taksit Tarihi'╩╩╠=╣value╩╠'installmentDateFormatted'╩╩╠=╣filterable╩╠true╩╩╩╠{}╠=╣text╩╠'Borç/Alacak'╩╩╠=╣value╩╠'debitOrCredit'╩╩╠=╣filterable╩╠true╩╩╩╠{}╠=╣text╩╠'Tutar'╩╩╠=╣value╩╠'amountText'╩╩╠=╣filterable╩╠true╩╩╩╠{}╠=╣text╩╠'Tutar TL'╩╩╠=╣value╩╠'tlAmountText'╩╩╠=╣filterable╩╠true╩╩╩╩╩",
 																													"T": "prop",
 																													"HL": "QS"
 																												},
