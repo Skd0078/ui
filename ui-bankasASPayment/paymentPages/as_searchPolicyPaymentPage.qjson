@@ -48,7 +48,7 @@ let pjson = {
 					"HL": "TS"
 				},
 				"searchFailEvent": {
-					"H": "components.as_policyPaymentResultList.visible = false;\r\n",
+					"H": "components.as_policyPaymentResultList.visible = false;\r\ncomponents.as_paymentPlanList.visible = false;",
 					"C": true,
 					"HL": "TS"
 				}
@@ -315,7 +315,7 @@ let pjson = {
 					"HL": "JS"
 				},
 				"searchFailEvent": {
-					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ncomponents.as_policyPaymentResultList.visible = false;\r\n",
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ncomponents.as_policyPaymentResultList.visible = false;\r\ncomponents.as_paymentPlanList.visible = false;\r\n",
 					"C": true,
 					"HL": "JS"
 				}
