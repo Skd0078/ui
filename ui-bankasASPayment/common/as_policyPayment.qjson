@@ -2902,7 +2902,7 @@ let pjson = {
 																					},
 																					"class": "pl-3 pt-3 pr-3 pb-3"
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded pl-3 pt-3 pr-3 pb-3 pt-0 undefined"
+																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded pl-3 pt-3 pr-3 pb-3 pt-0 undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -3030,7 +3030,7 @@ let pjson = {
 																					},
 																					"class": "pl-3 pt-3 pr-3 pb-3"
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded pl-3 pt-3 pr-3 pb-3 pt-0 undefined"
+																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded pl-3 pt-3 pr-3 pb-3 pt-0 undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -3517,7 +3517,7 @@ let pjson = {
 																					},
 																					"class": "pt-3 pl-3 pb-3 pr-3"
 																				},
-																				"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete pt-3 pl-3 pb-3 pr-3 undefined"
+																				"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete pt-3 pl-3 pb-3 pr-3 undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -3712,7 +3712,7 @@ let pjson = {
 																					},
 																					"class": "pt-3 pr-3 pb-3 pl-3"
 																				},
-																				"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete pt-3 pr-3 pb-3 pl-3 undefined"
+																				"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete pt-3 pr-3 pb-3 pl-3 undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -4002,7 +4002,7 @@ let pjson = {
 																					},
 																					"class": "pt-3 pr-3 pb-3 pl-3"
 																				},
-																				"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete pt-3 pr-3 pb-3 pl-3 undefined"
+																				"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete pt-3 pr-3 pb-3 pl-3 undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -4169,7 +4169,7 @@ let pjson = {
 																					},
 																					"class": "pl-3 pt-3 pr-3 pb-3"
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded pl-3 pt-3 pr-3 pb-3 pt-0 undefined"
+																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded pl-3 pt-3 pr-3 pb-3 pt-0 undefined newDropBorder"
 																			}
 																		}
 																	],
