@@ -24,7 +24,7 @@ let pjson = {
 			},
 			"E": {
 				"setItems": {
-					"H": "debugger;\r\n\r\nconst raw = quick.store.get('$getPaidInstallmentData');\r\n\r\nconst selected = Array.isArray(raw)\r\n  ? (raw.find((x:any) => x?.selected) || raw[0] || null)\r\n  : (raw || null);\r\n\r\ncomponents.dt_policyPaymentList.items = selected ? [selected] : [];\r\n\r\nconst ac = quick.store.get('$auto_debtorCreditor');\r\nif (selected) {\r\n  if (ac === 'debit') {\r\n    selected.debitAmount = selected.amount;\r\n  } else {\r\n    selected.creditAmount = selected.amount;\r\n  }\r\n}\r\n\r\nconst pol = (selected?.policyNumber || '').split('/');\r\ncomponents.txtPolicyNo.qValue        = pol[0] || '';\r\ncomponents.txtPolicyNo2.qValue       = pol[1] || '';\r\ncomponents.comboOdenecekTutar.qValue = selected?.amount || '';\r\n\r\nconst pRaw = (selected?.paymentTypeRaw || selected?.paymentType || '').toUpperCase();\r\nconst isCash  = (pRaw === 'ACCOUNT' && !(selected?.accountInfo?.branchCode > 0 && selected?.accountInfo?.number > 0));\r\nconst isCari  = (pRaw === 'ACCOUNT' &&  (selected?.accountInfo?.branchCode > 0 && selected?.accountInfo?.number > 0));\r\nconst isCcard = (pRaw === 'CCARD' || pRaw === 'IMCCARD');\r\n\r\ncomponents.comboOdemeSekli.qValue = isCash ? 'Nakit' : (isCari ? 'Cari Hesap' : (isCcard ? 'Kredi Kartı' : (selected?.paymentType || '')));\r\n\r\nconst lblKkn = components.EdtrComp_94;   \r\nconst cmbKkn = components.comboKkn;      \r\n\r\nif (isCash) {\r\n  lblKkn.visible = false;                            \r\n  cmbKkn.visible = false;                           \r\n  cmbKkn.qValue  = '';                                \r\n\r\n} else if (isCcard) {\r\n \r\n  lblKkn.visible = true;                            \r\n  cmbKkn.visible = true;                        \r\n  //(lblKkn as any).setLabelText?.({ labelData: { name: (lblKkn as any).qId || 'lbl_cc', text: 'Kredi Kartı Numarası :' } });\r\n  lblKkn.text = 'Kredi Kartı Numarası : '\r\n  cmbKkn.qValue = selected?.creditCardNumber || ''; \r\n\r\n} else if (isCari) {\r\n  lblKkn.visible = true;                             \r\n  cmbKkn.visible = true;                             \r\n  //(lblKkn as any).setLabelText?.({ labelData: { name: (lblKkn as any).qId || 'lbl_acc', text: 'Hesap Numarası :' } });\r\n  lblKkn.text = 'Hesap Numarası :'\r\n\r\n  const br = Number(selected?.accountInfo?.branchCode) || 0;\r\n  const no = Number(selected?.accountInfo?.number)     || 0;\r\n  cmbKkn.qValue = (br && no) ? `${br}-${no}` : '';     \r\n}",
+					"H": "debugger;\r\n\r\nconst raw = quick.store.get('$getPaidInstallmentData');\r\n\r\nconst selected = Array.isArray(raw)\r\n  ? (raw.find((x:any) => x?.selected) || raw[0] || null)\r\n  : (raw || null);\r\n\r\ncomponents.dt_policyPaymentList.items = selected ? [selected] : [];\r\n\r\nconst ac = quick.store.get('$auto_debtorCreditor');\r\nif (selected) {\r\n  if (ac === 'debit') {\r\n    selected.debitAmount = selected.amount;\r\n  } else {\r\n    selected.creditAmount = selected.amount;\r\n  }\r\n}\r\n\r\nconst pol = (selected?.policyNumber || '').split('/');\r\ncomponents.txtPolicyNo.qValue        = pol[0] || '';\r\ncomponents.txtPolicyNo2.qValue       = pol[1] || '';\r\ncomponents.comboOdenecekTutar.qValue = selected?.amount || '';\r\n\r\nconst pRaw = (selected?.paymentTypeRaw || selected?.paymentType || '').toUpperCase();\r\nconst isCash  = (pRaw === 'ACCOUNT' && !(selected?.accountInfo?.branchCode > 0 && selected?.accountInfo?.number > 0));\r\nconst isCari  = (pRaw === 'ACCOUNT' &&  (selected?.accountInfo?.branchCode > 0 && selected?.accountInfo?.number > 0));\r\nconst isCcard = (pRaw === 'CCARD' || pRaw === 'IMCCARD');\r\n\r\ncomponents.comboOdemeSekli.qValue = isCash ? 'Nakit' : (isCari ? 'Cari Hesap' : (isCcard ? 'Kredi Kartı' : (selected?.paymentType || '')));\r\n\r\nconst lblKkn = components.EdtrComp_94;   \r\nconst cmbKkn = components.comboKkn;      \r\n\r\nif (isCash) {\r\n  lblKkn.visible = false;                            \r\n  cmbKkn.visible = false;                           \r\n  cmbKkn.qValue  = '';                                \r\n\r\n} else if (isCcard) {\r\n  lblKkn.visible = true;                            \r\n  cmbKkn.visible = true;                        \r\n  lblKkn.text = 'Kredi Kartı Numarası : ';\r\n  \r\n\r\n  cmbKkn.qValue = selected?.creditCardNumberForList || selected?.creditCardNumber || ''; \r\n\r\n} else if (isCari) {\r\n  lblKkn.visible = true;                             \r\n  cmbKkn.visible = true;                             \r\n  lblKkn.text = 'Hesap Numarası :';\r\n\r\n  const br = Number(selected?.accountInfo?.branchCode) || 0;\r\n  const no = Number(selected?.accountInfo?.number)     || 0;\r\n  cmbKkn.qValue = (br && no) ? `${br}-${no}` : '';     \r\n}",
 					"C": true,
 					"EV": true,
 					"HL": "TS"
@@ -35,7 +35,7 @@ let pjson = {
 					"HL": "TS"
 				},
 				"pc_cancelPaymentStart": {
-					"H": "debugger;\r\n\r\nquick.MM.trigger('setConsumerAndScreenInfo');\r\n\r\nconst si = quick.store.get('$getPaidInstallmentData') || [];\r\nconst rawAmt       = (si.amount || '').toString().trim();\r\nconst amountParsed = parseFloat(rawAmt.replace(/[^\\d.,-]/g, '').replace(',', '.')) || 0;\r\nconst currencyCode = (rawAmt.match(/[A-Z]{2,3}$/)?.[0]) || 'TRY';\r\nconst [policyNo, renewalNo] = (si.policyNumber || '').split('/');\r\n\r\nconst paymentTypeRaw = (si.paymentTypeRaw || si.paymentType || '').toUpperCase();\r\nconst accBranch = Number(si.accountInfo?.branchCode ?? si.accountNumber?.branchCode ?? 0);\r\nconst accNumber = Number(si.accountInfo?.number     ?? si.accountNumber?.number     ?? si.accountNumber ?? 0);\r\nconst hasAccountInfo = paymentTypeRaw === 'ACCOUNT' && accBranch > 0 && accNumber > 0;\r\n\r\nlet cancelPaymentType;\r\nif (paymentTypeRaw === 'CCARD' || paymentTypeRaw === 'CREDIT_CARD') {\r\n  cancelPaymentType = 'CREDIT_CARD';\r\n} else if (paymentTypeRaw === 'ACCOUNT') {\r\n  cancelPaymentType = hasAccountInfo ? 'ACCOUNT' : 'CASH';\r\n} \r\n  // else if (paymentTypeRaw === 'IMCCARD'){\r\n  // cancelPaymentType = 'IMCCARD';\r\n  // }\r\n  else {\r\n  cancelPaymentType = paymentTypeRaw || 'ACCOUNT';\r\n}\r\n\r\nconst cancelRequest: IRequest = {\r\n  url: '/api/wrapperclient/cancelPaymentRecord',\r\n  http: 'POST',\r\n  data: {\r\n    policyNumber: { policyNo, renewalNo },\r\n    installmentInfoList: [\r\n      {\r\n        amount: {\r\n          amount: {\r\n            amount: amountParsed,\r\n            currencyCode: { code: currencyCode }\r\n          },\r\n          amountTL: {\r\n            amount: amountParsed,\r\n            currencyCode: { code: currencyCode }\r\n          }\r\n        },\r\n        bankRefId:         si.bankRefId, \r\n        installmentDate:   si.dueDate,   \r\n        installmentId:     si.installmentId,\r\n        installmentStatus: 'PAID',\r\n        paymentId:         si.paymentId,\r\n        required:          false,\r\n        transactionId:     si.transactionId ,//|| si.paymentId,\r\n        paymentType:       cancelPaymentType \r\n      }\r\n    ]\r\n  },\r\n  responseField: '',\r\n  blockRender: true,\r\n  onSuccess: 'cancelSuccessAlert',\r\n  onFail: 'cancelFailAlert'\r\n};\r\n\r\nquick.Request.async(cancelRequest);",
+					"H": "debugger;\r\n\r\nquick.MM.trigger('setConsumerAndScreenInfo');\r\n\r\nconst si = quick.store.get('$getPaidInstallmentData') || [];\r\nconst rawAmt       = (si.amount || '').toString().trim();\r\nconst amountParsed = parseFloat(rawAmt.replace(/[^\\d.,-]/g, '').replace(',', '.')) || 0;\r\nconst currencyCode = (rawAmt.match(/[A-Z]{2,3}$/)?.[0]) || 'TRY';\r\nconst [policyNo, renewalNo] = (si.policyNumber || '').split('/');\r\n\r\nconst paymentTypeRaw = (si.paymentTypeRaw || si.paymentType || '').toUpperCase();\r\nconst accBranch = Number(si.accountInfo?.branchCode ?? si.accountNumber?.branchCode ?? 0);\r\nconst accNumber = Number(si.accountInfo?.number     ?? si.accountNumber?.number     ?? si.accountNumber ?? 0);\r\nconst hasAccountInfo = paymentTypeRaw === 'ACCOUNT' && accBranch > 0 && accNumber > 0;\r\n\r\nlet cancelPaymentType;\r\nif (paymentTypeRaw === 'CCARD' || paymentTypeRaw === 'CREDIT_CARD') {\r\n  cancelPaymentType = 'CREDIT_CARD';\r\n} else if (paymentTypeRaw === 'ACCOUNT') {\r\n  cancelPaymentType = hasAccountInfo ? 'ACCOUNT' : 'CASH';\r\n} \r\n  // else if (paymentTypeRaw === 'IMCCARD'){\r\n  // cancelPaymentType = 'IMCCARD';\r\n  // }\r\n  else {\r\n  cancelPaymentType = paymentTypeRaw || 'ACCOUNT';\r\n}\r\n\r\nconst cancelRequest: IRequest = {\r\n  url: '/api/wrapperclient/cancelPaymentRecord',\r\n  http: 'POST',\r\n  data: {\r\n    policyNumber: { policyNo, renewalNo },\r\n    installmentInfoList: [\r\n      {\r\n        amount: {\r\n          amount: {\r\n            amount: amountParsed,\r\n            currencyCode: { code: currencyCode }\r\n          },\r\n          amountTL: {\r\n            amount: amountParsed,\r\n            currencyCode: { code: currencyCode }\r\n          }\r\n        },\r\n        bankRefId:         si.bankRefId, \r\n        installmentDate:   si.originalDueDate,  //dueDate \r\n        installmentId:     si.installmentId,\r\n        installmentStatus: 'PAID',\r\n        paymentId:         si.paymentId,\r\n        required:          false,\r\n        transactionId:     si.transactionId ,//|| si.paymentId,\r\n        paymentType:       cancelPaymentType \r\n      }\r\n    ]\r\n  },\r\n  responseField: '',\r\n  blockRender: true,\r\n  onSuccess: 'cancelSuccessAlert',\r\n  onFail: 'cancelFailAlert'\r\n};\r\n\r\nquick.Request.async(cancelRequest);",
 					"C": true,
 					"HL": "TS"
 				},
@@ -1161,10 +1161,10 @@ let pjson = {
 																	"dOpt": {
 																		"xs": [
 																			"d:d-flex",
-																			"c:col-3"
+																			"c:col-4"
 																		]
 																	},
-																	"class": "d-flex col-3"
+																	"class": "d-flex col-4"
 																}
 															},
 															"S": {
@@ -1416,10 +1416,10 @@ let pjson = {
 																	"dOpt": {
 																		"xs": [
 																			"d:d-flex",
-																			"c:col-3"
+																			"c:col-4"
 																		]
 																	},
-																	"class": "d-flex col-3"
+																	"class": "d-flex col-4"
 																}
 															},
 															"S": {
@@ -1671,10 +1671,10 @@ let pjson = {
 																	"dOpt": {
 																		"xs": [
 																			"d:d-flex",
-																			"c:col-3"
+																			"c:col-4"
 																		]
 																	},
-																	"class": "d-flex col-3"
+																	"class": "d-flex col-4"
 																}
 															},
 															"S": {
@@ -2567,7 +2567,7 @@ let pjson = {
 			},
 			"E": {
 				"setItems": {
-					"H": "var _a, _b, _c, _d, _e, _f;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nvar raw = quick.store.get('$getPaidInstallmentData');\r\nvar selected = Array.isArray(raw)\r\n    ? (raw.find(function (x) { return x === null || x === void 0 ? void 0 : x.selected; }) || raw[0] || null)\r\n    : (raw || null);\r\ncomponents.dt_policyPaymentList.items = selected ? [selected] : [];\r\nvar ac = quick.store.get('$auto_debtorCreditor');\r\nif (selected) {\r\n    if (ac === 'debit') {\r\n        selected.debitAmount = selected.amount;\r\n    }\r\n    else {\r\n        selected.creditAmount = selected.amount;\r\n    }\r\n}\r\nvar pol = ((selected === null || selected === void 0 ? void 0 : selected.policyNumber) || '').split('/');\r\ncomponents.txtPolicyNo.qValue = pol[0] || '';\r\ncomponents.txtPolicyNo2.qValue = pol[1] || '';\r\ncomponents.comboOdenecekTutar.qValue = (selected === null || selected === void 0 ? void 0 : selected.amount) || '';\r\nvar pRaw = ((selected === null || selected === void 0 ? void 0 : selected.paymentTypeRaw) || (selected === null || selected === void 0 ? void 0 : selected.paymentType) || '').toUpperCase();\r\nvar isCash = (pRaw === 'ACCOUNT' && !(((_a = selected === null || selected === void 0 ? void 0 : selected.accountInfo) === null || _a === void 0 ? void 0 : _a.branchCode) > 0 && ((_b = selected === null || selected === void 0 ? void 0 : selected.accountInfo) === null || _b === void 0 ? void 0 : _b.number) > 0));\r\nvar isCari = (pRaw === 'ACCOUNT' && (((_c = selected === null || selected === void 0 ? void 0 : selected.accountInfo) === null || _c === void 0 ? void 0 : _c.branchCode) > 0 && ((_d = selected === null || selected === void 0 ? void 0 : selected.accountInfo) === null || _d === void 0 ? void 0 : _d.number) > 0));\r\nvar isCcard = (pRaw === 'CCARD' || pRaw === 'IMCCARD');\r\ncomponents.comboOdemeSekli.qValue = isCash ? 'Nakit' : (isCari ? 'Cari Hesap' : (isCcard ? 'Kredi Kartı' : ((selected === null || selected === void 0 ? void 0 : selected.paymentType) || '')));\r\nvar lblKkn = components.EdtrComp_94;\r\nvar cmbKkn = components.comboKkn;\r\nif (isCash) {\r\n    lblKkn.visible = false;\r\n    cmbKkn.visible = false;\r\n    cmbKkn.qValue = '';\r\n}\r\nelse if (isCcard) {\r\n    lblKkn.visible = true;\r\n    cmbKkn.visible = true;\r\n    //(lblKkn as any).setLabelText?.({ labelData: { name: (lblKkn as any).qId || 'lbl_cc', text: 'Kredi Kartı Numarası :' } });\r\n    lblKkn.text = 'Kredi Kartı Numarası : ';\r\n    cmbKkn.qValue = (selected === null || selected === void 0 ? void 0 : selected.creditCardNumber) || '';\r\n}\r\nelse if (isCari) {\r\n    lblKkn.visible = true;\r\n    cmbKkn.visible = true;\r\n    //(lblKkn as any).setLabelText?.({ labelData: { name: (lblKkn as any).qId || 'lbl_acc', text: 'Hesap Numarası :' } });\r\n    lblKkn.text = 'Hesap Numarası :';\r\n    var br = Number((_e = selected === null || selected === void 0 ? void 0 : selected.accountInfo) === null || _e === void 0 ? void 0 : _e.branchCode) || 0;\r\n    var no = Number((_f = selected === null || selected === void 0 ? void 0 : selected.accountInfo) === null || _f === void 0 ? void 0 : _f.number) || 0;\r\n    cmbKkn.qValue = (br && no) ? br + \"-\" + no : '';\r\n}\r\n",
+					"H": "var _a, _b, _c, _d, _e, _f;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nvar raw = quick.store.get('$getPaidInstallmentData');\r\nvar selected = Array.isArray(raw)\r\n    ? (raw.find(function (x) { return x === null || x === void 0 ? void 0 : x.selected; }) || raw[0] || null)\r\n    : (raw || null);\r\ncomponents.dt_policyPaymentList.items = selected ? [selected] : [];\r\nvar ac = quick.store.get('$auto_debtorCreditor');\r\nif (selected) {\r\n    if (ac === 'debit') {\r\n        selected.debitAmount = selected.amount;\r\n    }\r\n    else {\r\n        selected.creditAmount = selected.amount;\r\n    }\r\n}\r\nvar pol = ((selected === null || selected === void 0 ? void 0 : selected.policyNumber) || '').split('/');\r\ncomponents.txtPolicyNo.qValue = pol[0] || '';\r\ncomponents.txtPolicyNo2.qValue = pol[1] || '';\r\ncomponents.comboOdenecekTutar.qValue = (selected === null || selected === void 0 ? void 0 : selected.amount) || '';\r\nvar pRaw = ((selected === null || selected === void 0 ? void 0 : selected.paymentTypeRaw) || (selected === null || selected === void 0 ? void 0 : selected.paymentType) || '').toUpperCase();\r\nvar isCash = (pRaw === 'ACCOUNT' && !(((_a = selected === null || selected === void 0 ? void 0 : selected.accountInfo) === null || _a === void 0 ? void 0 : _a.branchCode) > 0 && ((_b = selected === null || selected === void 0 ? void 0 : selected.accountInfo) === null || _b === void 0 ? void 0 : _b.number) > 0));\r\nvar isCari = (pRaw === 'ACCOUNT' && (((_c = selected === null || selected === void 0 ? void 0 : selected.accountInfo) === null || _c === void 0 ? void 0 : _c.branchCode) > 0 && ((_d = selected === null || selected === void 0 ? void 0 : selected.accountInfo) === null || _d === void 0 ? void 0 : _d.number) > 0));\r\nvar isCcard = (pRaw === 'CCARD' || pRaw === 'IMCCARD');\r\ncomponents.comboOdemeSekli.qValue = isCash ? 'Nakit' : (isCari ? 'Cari Hesap' : (isCcard ? 'Kredi Kartı' : ((selected === null || selected === void 0 ? void 0 : selected.paymentType) || '')));\r\nvar lblKkn = components.EdtrComp_94;\r\nvar cmbKkn = components.comboKkn;\r\nif (isCash) {\r\n    lblKkn.visible = false;\r\n    cmbKkn.visible = false;\r\n    cmbKkn.qValue = '';\r\n}\r\nelse if (isCcard) {\r\n    lblKkn.visible = true;\r\n    cmbKkn.visible = true;\r\n    lblKkn.text = 'Kredi Kartı Numarası : ';\r\n    cmbKkn.qValue = (selected === null || selected === void 0 ? void 0 : selected.creditCardNumberForList) || (selected === null || selected === void 0 ? void 0 : selected.creditCardNumber) || '';\r\n}\r\nelse if (isCari) {\r\n    lblKkn.visible = true;\r\n    cmbKkn.visible = true;\r\n    lblKkn.text = 'Hesap Numarası :';\r\n    var br = Number((_e = selected === null || selected === void 0 ? void 0 : selected.accountInfo) === null || _e === void 0 ? void 0 : _e.branchCode) || 0;\r\n    var no = Number((_f = selected === null || selected === void 0 ? void 0 : selected.accountInfo) === null || _f === void 0 ? void 0 : _f.number) || 0;\r\n    cmbKkn.qValue = (br && no) ? br + \"-\" + no : '';\r\n}\r\n",
 					"C": true,
 					"EV": true,
 					"HL": "JS"
@@ -2578,7 +2578,7 @@ let pjson = {
 					"HL": "JS"
 				},
 				"pc_cancelPaymentStart": {
-					"H": "var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nquick.MM.trigger('setConsumerAndScreenInfo');\r\nvar si = quick.store.get('$getPaidInstallmentData') || [];\r\nvar rawAmt = (si.amount || '').toString().trim();\r\nvar amountParsed = parseFloat(rawAmt.replace(/[^\\d.,-]/g, '').replace(',', '.')) || 0;\r\nvar currencyCode = ((_a = rawAmt.match(/[A-Z]{2,3}$/)) === null || _a === void 0 ? void 0 : _a[0]) || 'TRY';\r\nvar _l = (si.policyNumber || '').split('/'), policyNo = _l[0], renewalNo = _l[1];\r\nvar paymentTypeRaw = (si.paymentTypeRaw || si.paymentType || '').toUpperCase();\r\nvar accBranch = Number((_e = (_c = (_b = si.accountInfo) === null || _b === void 0 ? void 0 : _b.branchCode) !== null && _c !== void 0 ? _c : (_d = si.accountNumber) === null || _d === void 0 ? void 0 : _d.branchCode) !== null && _e !== void 0 ? _e : 0);\r\nvar accNumber = Number((_k = (_j = (_g = (_f = si.accountInfo) === null || _f === void 0 ? void 0 : _f.number) !== null && _g !== void 0 ? _g : (_h = si.accountNumber) === null || _h === void 0 ? void 0 : _h.number) !== null && _j !== void 0 ? _j : si.accountNumber) !== null && _k !== void 0 ? _k : 0);\r\nvar hasAccountInfo = paymentTypeRaw === 'ACCOUNT' && accBranch > 0 && accNumber > 0;\r\nvar cancelPaymentType;\r\nif (paymentTypeRaw === 'CCARD' || paymentTypeRaw === 'CREDIT_CARD') {\r\n    cancelPaymentType = 'CREDIT_CARD';\r\n}\r\nelse if (paymentTypeRaw === 'ACCOUNT') {\r\n    cancelPaymentType = hasAccountInfo ? 'ACCOUNT' : 'CASH';\r\n}\r\n// else if (paymentTypeRaw === 'IMCCARD'){\r\n// cancelPaymentType = 'IMCCARD';\r\n// }\r\nelse {\r\n    cancelPaymentType = paymentTypeRaw || 'ACCOUNT';\r\n}\r\nvar cancelRequest = {\r\n    url: '/api/wrapperclient/cancelPaymentRecord',\r\n    http: 'POST',\r\n    data: {\r\n        policyNumber: { policyNo: policyNo, renewalNo: renewalNo },\r\n        installmentInfoList: [\r\n            {\r\n                amount: {\r\n                    amount: {\r\n                        amount: amountParsed,\r\n                        currencyCode: { code: currencyCode }\r\n                    },\r\n                    amountTL: {\r\n                        amount: amountParsed,\r\n                        currencyCode: { code: currencyCode }\r\n                    }\r\n                },\r\n                bankRefId: si.bankRefId,\r\n                installmentDate: si.dueDate,\r\n                installmentId: si.installmentId,\r\n                installmentStatus: 'PAID',\r\n                paymentId: si.paymentId,\r\n                required: false,\r\n                transactionId: si.transactionId,\r\n                paymentType: cancelPaymentType\r\n            }\r\n        ]\r\n    },\r\n    responseField: '',\r\n    blockRender: true,\r\n    onSuccess: 'cancelSuccessAlert',\r\n    onFail: 'cancelFailAlert'\r\n};\r\nquick.Request.async(cancelRequest);\r\n",
+					"H": "var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nquick.MM.trigger('setConsumerAndScreenInfo');\r\nvar si = quick.store.get('$getPaidInstallmentData') || [];\r\nvar rawAmt = (si.amount || '').toString().trim();\r\nvar amountParsed = parseFloat(rawAmt.replace(/[^\\d.,-]/g, '').replace(',', '.')) || 0;\r\nvar currencyCode = ((_a = rawAmt.match(/[A-Z]{2,3}$/)) === null || _a === void 0 ? void 0 : _a[0]) || 'TRY';\r\nvar _l = (si.policyNumber || '').split('/'), policyNo = _l[0], renewalNo = _l[1];\r\nvar paymentTypeRaw = (si.paymentTypeRaw || si.paymentType || '').toUpperCase();\r\nvar accBranch = Number((_e = (_c = (_b = si.accountInfo) === null || _b === void 0 ? void 0 : _b.branchCode) !== null && _c !== void 0 ? _c : (_d = si.accountNumber) === null || _d === void 0 ? void 0 : _d.branchCode) !== null && _e !== void 0 ? _e : 0);\r\nvar accNumber = Number((_k = (_j = (_g = (_f = si.accountInfo) === null || _f === void 0 ? void 0 : _f.number) !== null && _g !== void 0 ? _g : (_h = si.accountNumber) === null || _h === void 0 ? void 0 : _h.number) !== null && _j !== void 0 ? _j : si.accountNumber) !== null && _k !== void 0 ? _k : 0);\r\nvar hasAccountInfo = paymentTypeRaw === 'ACCOUNT' && accBranch > 0 && accNumber > 0;\r\nvar cancelPaymentType;\r\nif (paymentTypeRaw === 'CCARD' || paymentTypeRaw === 'CREDIT_CARD') {\r\n    cancelPaymentType = 'CREDIT_CARD';\r\n}\r\nelse if (paymentTypeRaw === 'ACCOUNT') {\r\n    cancelPaymentType = hasAccountInfo ? 'ACCOUNT' : 'CASH';\r\n}\r\n// else if (paymentTypeRaw === 'IMCCARD'){\r\n// cancelPaymentType = 'IMCCARD';\r\n// }\r\nelse {\r\n    cancelPaymentType = paymentTypeRaw || 'ACCOUNT';\r\n}\r\nvar cancelRequest = {\r\n    url: '/api/wrapperclient/cancelPaymentRecord',\r\n    http: 'POST',\r\n    data: {\r\n        policyNumber: { policyNo: policyNo, renewalNo: renewalNo },\r\n        installmentInfoList: [\r\n            {\r\n                amount: {\r\n                    amount: {\r\n                        amount: amountParsed,\r\n                        currencyCode: { code: currencyCode }\r\n                    },\r\n                    amountTL: {\r\n                        amount: amountParsed,\r\n                        currencyCode: { code: currencyCode }\r\n                    }\r\n                },\r\n                bankRefId: si.bankRefId,\r\n                installmentDate: si.originalDueDate,\r\n                installmentId: si.installmentId,\r\n                installmentStatus: 'PAID',\r\n                paymentId: si.paymentId,\r\n                required: false,\r\n                transactionId: si.transactionId,\r\n                paymentType: cancelPaymentType\r\n            }\r\n        ]\r\n    },\r\n    responseField: '',\r\n    blockRender: true,\r\n    onSuccess: 'cancelSuccessAlert',\r\n    onFail: 'cancelFailAlert'\r\n};\r\nquick.Request.async(cancelRequest);\r\n",
 					"C": true,
 					"HL": "JS"
 				},
@@ -3720,12 +3720,12 @@ let pjson = {
 																	"dOpt": {
 																		"xs": [
 																			"d:d-flex",
-																			"c:col-3"
+																			"c:col-4"
 																		]
 																	},
-																	"class": "d-flex col-3"
+																	"class": "d-flex col-4"
 																},
-																"compDomClasses": "col d-flex col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex col-4 pb-0 newDropBorder"
 															},
 															"S": {
 																"xs-xl": {
@@ -3980,12 +3980,12 @@ let pjson = {
 																	"dOpt": {
 																		"xs": [
 																			"d:d-flex",
-																			"c:col-3"
+																			"c:col-4"
 																		]
 																	},
-																	"class": "d-flex col-3"
+																	"class": "d-flex col-4"
 																},
-																"compDomClasses": "col d-flex col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex col-4 pb-0 newDropBorder"
 															},
 															"S": {
 																"xs-xl": {
@@ -4240,12 +4240,12 @@ let pjson = {
 																	"dOpt": {
 																		"xs": [
 																			"d:d-flex",
-																			"c:col-3"
+																			"c:col-4"
 																		]
 																	},
-																	"class": "d-flex col-3"
+																	"class": "d-flex col-4"
 																},
-																"compDomClasses": "col d-flex col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex col-4 pb-0 newDropBorder"
 															},
 															"S": {
 																"xs-xl": {
@@ -4443,7 +4443,7 @@ let pjson = {
 																	},
 																	"class": "text-body-1 font-weight-regular"
 																},
-																"compDomClasses": "q-label  text-body-1 font-weight-regular"
+																"compDomClasses": "q-label text-body-1 font-weight-regular newDropBorder"
 															},
 															"S": {
 																"xs-xl": {
@@ -4558,7 +4558,7 @@ let pjson = {
 													},
 													"class": "mr-1"
 												},
-												"compDomClasses": "v-btn v-btn--depressed v-btn--rounded theme--dark v-size--default mr-1"
+												"compDomClasses": "v-btn v-btn--depressed v-btn--rounded theme--dark v-size--default mr-1 newDropBorder"
 											}
 										},
 										{
@@ -4639,7 +4639,7 @@ let pjson = {
 																	},
 																	"class": "text-body-1 font-weight-regular"
 																},
-																"compDomClasses": "q-label  text-body-1 font-weight-regular"
+																"compDomClasses": "q-label text-body-1 font-weight-regular newDropBorder"
 															},
 															"S": {
 																"xs-xl": {
@@ -4754,7 +4754,7 @@ let pjson = {
 													},
 													"class": "mr-1"
 												},
-												"compDomClasses": "v-btn v-btn--depressed v-btn--rounded theme--dark v-size--default mr-1"
+												"compDomClasses": "v-btn v-btn--depressed v-btn--rounded theme--dark v-size--default mr-1 newDropBorder"
 											}
 										}
 									],
