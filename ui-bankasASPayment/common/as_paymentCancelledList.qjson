@@ -19,7 +19,7 @@ let pjson = {
 			},
 			"E": {
 				"paymentCancelledListInfo": {
-					"H": "debugger;\n\nquick.MM.trigger('setConsumerAndScreenInfo')\n\ncomponents.dt_policyPaymentList.items = [];\n\n\nconst serviceRequest: IRequest = {\n  url: '/api/wrapperclient/getPaidInstallmentList',\n  http: 'POST',\n  data: {\n    getPaidInstallmentRequest: {\n      customerNumber: (<any>quick.containerServices).getCustomerContext()?.customerNumber,\n      customerName:   (<any>quick.containerServices).getCustomerContext()?.customerName + ' ' + (<any>quick.containerServices).getCustomerContext()?.customerSurname\n    }\n  },\n  onFail: 'empty',\n  onSuccess: 'empty',\n  responseField: 'empty',\n  blockRender: false\n};\n\n// Tarih formatlama \nfunction formatDateForDisplay(dateString: any) {\n  if (!dateString) return '';\n  if (dateString.includes('-') && dateString.length === 10) {\n    const parts = dateString.split('-');\n    return `${parts[2]}.${parts[1]}.${parts[0]}`;\n  }\n  return dateString;\n}\n\n// Kredi kartı bilgilerini getir\nasync function getCreditCardInfo(cardNumber: any, paymentType: any) {\n  if (paymentType !== 'CCARD' && paymentType !== 'IMCCARD') {\n    return null;\n  }\n  try {\n  components.as_loadingCustomComp?.open?.();\n    const reqData = {\n      customerNo: (<any>quick.containerServices).getCustomerContext()?.customerNumber,\n      branchCode: 0,\n      accountNo: 0,\n      pageSize: 0,\n      pageNumber: 0,\n      transactionType: paymentType === 'IMCCARD' ? 'I' : 'S'\n    };\n\n    const cardListReq: IRequest = {\n      url: '/api/uiclient/retrieveCreditCardList',\n      http: 'POST',\n      data: reqData,\n      onFail: 'empty',\n      onSuccess: 'empty',\n      responseField: 'empty',\n      blockRender: false\n    };\n\n    const resp = await quick.Request.async(cardListReq);\n    const cardInfo = resp?.data?.cardInfo || [];\n    \n    if (Array.isArray(cardInfo) && cardInfo.length > 0) {\n      const searchCardNumber = (cardNumber || '').toString();\n      const last4Digits = searchCardNumber.slice(-4);\n\n      // Kart bul tam numara eşleşmesi veya son 4 hane eşleşmesi\n      const foundCard = cardInfo.find((card: any) => {\n        const cardNo = card.cardNo || card.mainCardNo || '';\n        return (searchCardNumber && cardNo === searchCardNumber) || \n               (last4Digits && cardNo.slice(-4) === last4Digits);\n      }) || cardInfo[0]; \n\n      if (foundCard) {\n        return {\n          embossName: foundCard.embossName || '',\n          availableLimit: foundCard.availableLimit || '0.00'\n        };\n      }\n    }\n  }catch (error) {\n  }\n\n  return null;\n}\n\nquick.Request.async(serviceRequest)?.then(async (resp) => {\n  const list = resp.data.getPaidInstallmentResponse.paidInstallmentList || [];\n  const flatList: any[] = [];\n\n  for (let i = 0; i < list.length; i++) {\n    const item = list[i];\n\n    const paymentTypeRaw = (item.paymentType || '').toUpperCase();\n    const accBranch = Number(item?.accountNumber?.branchCode);\n    const accNumber = Number(item?.accountNumber?.number);\n    const hasAccountInfo = paymentTypeRaw === 'ACCOUNT' && accBranch > 0 && accNumber > 0;\n\n    const paymentTypeDisplay =\n      paymentTypeRaw === 'ACCOUNT'\n        ? (hasAccountInfo ? 'Cari Hesap' : 'Nakit')\n        : paymentTypeRaw === 'CCARD'\n        ? 'Kredi Kartı'\n        : paymentTypeRaw === 'IMCCARD'\n        ? 'İmece Kart'\n        : (item.paymentType || '');\n\n    let accountOrCardNo = '';                                           \n    if (paymentTypeRaw === 'ACCOUNT' && hasAccountInfo) {                \n      accountOrCardNo = `${accBranch}-${accNumber}`;                     \n    } else if (paymentTypeRaw === 'CCARD' || paymentTypeRaw === 'IMCCARD') {\n      accountOrCardNo = item.creditCardNumber || '';                            \n    }\n\n    // 2. ekran için özel kredi kartı formatı\n    let creditCardDisplayForList = accountOrCardNo;\n    \n    if (paymentTypeRaw === 'CCARD' || paymentTypeRaw === 'IMCCARD') {\n      try {\n        const cardInfo = await getCreditCardInfo(item.creditCardNumber, paymentTypeRaw);\n        \n        if (cardInfo && cardInfo.embossName && cardInfo.availableLimit) {\n          const cardNumber = item.creditCardNumber || '';\n          const holderName = cardInfo.embossName;\n          \n          // availableLimit string geliyor format\n          const availableLimit = Number(cardInfo.availableLimit).toLocaleString('tr-TR', {\n            minimumFractionDigits: 2, \n            maximumFractionDigits: 2\n          }) + ' TL';\n          \n          creditCardDisplayForList = `${cardNumber} (${availableLimit}) ${holderName}`;\n        }\n      } catch (error) {\n      }\n    }\n\n    flatList.push({\n      id: i + 1,\n      policyNumber: item.policyNumber?.policyNo + '/' + item.policyNumber?.renewalNo,\n      \n      // Tüm ekranlarda dd.mm.yy formatında görünüm\n      dueDate: formatDateForDisplay(item.installmentDate),\n      \n      insuranceTypeName: item.insuranceTypeName,\n      debitOrCredit: ((item.installmentType || '').toUpperCase() === 'REFUND') ? 'Alacak' : 'Borç',\n      \n      bankRefId : item.bankRefId,\n      paymentType: paymentTypeDisplay,\n      paymentTypeRaw: paymentTypeRaw,\n      accountInfo: item.accountNumber || null,\n\n      creditCardNumber: accountOrCardNo,\n      \n      // 2. ekran için - kart + limit + isim formatı\n      creditCardNumberForList: creditCardDisplayForList,\n      \n      amount: Math.abs(Number(item.amount.amount.amount)).toLocaleString('tr-TR', {\n            minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' ' + item.amount.amount.currencyCode.code,\n\n      paymentId: item.paymentId || '',\n      installmentId: item.installmentId || '',\n      \n      // Tüm ekranlarda dd.mm.yy formatında görünüm\n      installmentDate: formatDateForDisplay(item.installmentDate),\n      \n      transactionId: item.transactionId || '',\n      orderId: item.orderId,\n      customerName: (<any>quick.containerServices).getCustomerContext()?.customerName\n                  + ' ' + (<any>quick.containerServices).getCustomerContext()?.customerSurname,\n      customerNumber: (<any>quick.containerServices).getCustomerContext()?.customerNumber,\n      firmType: item.firmType,\n      insuranceType: item.insuranceType,\n      \n      // orijinal tarihler\n      originalDueDate: item.installmentDate,\n      originalInstallmentDate: item.installmentDate\n    });\n  }\n\n  components.dt_policyPaymentList.items = flatList;\n  quick.store.set('$getPaidInstallmentData', flatList);\n  \n  // Loading kapat - başarılı durumda\n  components.as_loadingCustomComp?.close?.();\n  \n}).catch((error) => {\n  // Loading kapat hata durumunda\n  components.as_loadingCustomComp?.close?.();\n});",
+					"H": "debugger;\n\nquick.MM.trigger('setConsumerAndScreenInfo')\n\ncomponents.dt_policyPaymentList.items = [];\n\n\nconst serviceRequest: IRequest = {\n  url: '/api/wrapperclient/getPaidInstallmentList',\n  http: 'POST',\n  data: {\n    getPaidInstallmentRequest: {\n      customerNumber: (<any>quick.containerServices).getCustomerContext()?.customerNumber,\n      customerName:   (<any>quick.containerServices).getCustomerContext()?.customerName + ' ' + (<any>quick.containerServices).getCustomerContext()?.customerSurname\n    }\n  },\n  onFail: 'empty',\n  onSuccess: 'empty',\n  responseField: 'empty',\n  blockRender: false\n};\n\n// Tarih formatlama \nfunction formatDateForDisplay(dateString: any) {\n  if (!dateString) return '';\n  if (dateString.includes('-') && dateString.length === 10) {\n    const parts = dateString.split('-');\n    return `${parts[2]}.${parts[1]}.${parts[0]}`;\n  }\n  return dateString;\n}\n\n// Kredi kartı bilgilerini getir\nasync function getCreditCardInfo(cardNumber: any, paymentType: any) {\n  if (paymentType !== 'CCARD' && paymentType !== 'IMCCARD') {\n    return null;\n  }\n  try {\n  components.as_loadingCustomComp?.open?.();\n    const reqData = {\n      customerNo: (<any>quick.containerServices).getCustomerContext()?.customerNumber,\n      branchCode: 0,\n      accountNo: 0,\n      pageSize: 0,\n      pageNumber: 0,\n      transactionType: paymentType === 'IMCCARD' ? 'I' : 'S'\n    };\n\n    const cardListReq: IRequest = {\n      url: '/api/uiclient/retrieveCreditCardList',\n      http: 'POST',\n      data: reqData,\n      onFail: 'empty',\n      onSuccess: 'empty',\n      responseField: 'empty',\n      blockRender: false\n    };\n\n    const resp = await quick.Request.async(cardListReq);\n    const cardInfo = resp?.data?.cardInfo || [];\n    \n    if (Array.isArray(cardInfo) && cardInfo.length > 0) {\n      const searchCardNumber = (cardNumber || '').toString();\n      const last4Digits = searchCardNumber.slice(-4);\n\n      // Kart bul tam numara eşleşmesi veya son 4 hane eşleşmesi\n      const foundCard = cardInfo.find((card: any) => {\n        const cardNo = card.cardNo || card.mainCardNo || '';\n        return (searchCardNumber && cardNo === searchCardNumber) || \n               (last4Digits && cardNo.slice(-4) === last4Digits);\n      }) || cardInfo[0]; \n\n      if (foundCard) {\n        return {\n          embossName: foundCard.embossName || '',\n          availableLimit: foundCard.availableLimit || '0.00'\n        };\n      }\n    }\n  }catch (error) {\n  }\n\n  return null;\n}\n\nquick.Request.async(serviceRequest)?.then(async (resp) => {\n  const list = resp.data.getPaidInstallmentResponse.paidInstallmentList || [];\n  const flatList: any[] = [];\n\n  for (let i = 0; i < list.length; i++) {\n    const item = list[i];\n\n    const paymentTypeRaw = (item.paymentType || '').toUpperCase();\n    const accBranch = Number(item?.accountNumber?.branchCode);\n    const accNumber = Number(item?.accountNumber?.number);\n    const hasAccountInfo = paymentTypeRaw === 'ACCOUNT' && accBranch > 0 && accNumber > 0;\n\n    const paymentTypeDisplay =\n      paymentTypeRaw === 'ACCOUNT'\n        ? (hasAccountInfo ? 'Cari Hesap' : 'Nakit')\n        : paymentTypeRaw === 'CCARD'\n        ? 'Kredi Kartı'\n        : paymentTypeRaw === 'IMCCARD'\n        ? 'İmece Kart'\n        : (item.paymentType || '');\n\n    let accountOrCardNo = '';                                           \n    if (paymentTypeRaw === 'ACCOUNT' && hasAccountInfo) {                \n      accountOrCardNo = `${accBranch}-${accNumber}`;                     \n    } else if (paymentTypeRaw === 'CCARD' || paymentTypeRaw === 'IMCCARD') {\n      accountOrCardNo = item.creditCardNumber || '';                            \n    }\n\n    // 2. ekran için özel kredi kartı formatı\n    let creditCardDisplayForList = accountOrCardNo;\n    \n    if (paymentTypeRaw === 'CCARD' || paymentTypeRaw === 'IMCCARD') {\n      try {\n        const cardInfo = await getCreditCardInfo(item.creditCardNumber, paymentTypeRaw);\n        \n        if (cardInfo && cardInfo.embossName && cardInfo.availableLimit) {\n          const cardNumber = item.creditCardNumber || '';\n          const holderName = cardInfo.embossName;\n          \n          // availableLimit string geliyor format\n          const availableLimit = Number(cardInfo.availableLimit).toLocaleString('tr-TR', {\n            minimumFractionDigits: 2, \n            maximumFractionDigits: 2\n          }) + ' TL';\n          \n          creditCardDisplayForList = `${cardNumber} (${availableLimit}) ${holderName}`;\n        }\n      } catch (error) {\n      }\n    }\n\n    flatList.push({\nid: i + 1,\n  policyNumber: item.policyNumber?.policyNo + '/' + item.policyNumber?.renewalNo,\n  \n  dueDate: formatDateForDisplay(item.installmentDate),\n  \n  insuranceTypeName: item.insuranceTypeName,\n  debitOrCredit: ((item.installmentType || '').toUpperCase() === 'REFUND') ? 'Alacak' : 'Borç',\n  \n  bankRefId : item.bankRefId,\n  paymentType: paymentTypeDisplay,\n  paymentTypeRaw: paymentTypeRaw,\n  accountInfo: item.accountNumber || null,\n\n  creditCardNumber: accountOrCardNo,\n  creditCardNumberForList: creditCardDisplayForList,\n  \n  //formatlanmış amount\n  amount: Math.abs(Number(item.amount.amount.amount)).toLocaleString('tr-TR', {\n    minimumFractionDigits: 2, \n    maximumFractionDigits: 2\n  }) + ' ' + item.amount.amount.currencyCode.code,\n  \n  // ham değer\n  rawAmount: Math.abs(Number(item.amount.amount.amount)),\n  currencyCode: item.amount.amount.currencyCode.code,\n\n  paymentId: item.paymentId || '',\n  installmentId: item.installmentId || '',\n  installmentDate: formatDateForDisplay(item.installmentDate),\n  transactionId: item.transactionId || '',\n  orderId: item.orderId,\n  customerName: (<any>quick.containerServices).getCustomerContext()?.customerName\n              + ' ' + (<any>quick.containerServices).getCustomerContext()?.customerSurname,\n  customerNumber: (<any>quick.containerServices).getCustomerContext()?.customerNumber,\n  firmType: item.firmType,\n  insuranceType: item.insuranceType,\n  \n  originalDueDate: item.installmentDate,\n  originalInstallmentDate: item.installmentDate\n  });\n}\n\n  components.dt_policyPaymentList.items = flatList;\n  quick.store.set('$getPaidInstallmentData', flatList);\n  \n  // Loading kapat - başarılı durumda\n  components.as_loadingCustomComp?.close?.();\n  \n}).catch((error) => {\n  // Loading kapat hata durumunda\n  components.as_loadingCustomComp?.close?.();\n});",
 					"C": true,
 					"HL": "TS"
 				},
@@ -57,6 +57,169 @@ let pjson = {
 					"pageBackgroundColor": "#ffffff",
 					"statusBarColor": "#ffffff"
 				}
+			}
+		},
+		{
+			"T": "VCard",
+			"P": {
+				"ID": {
+					"H": "EdtrComp_12",
+					"T": "prop"
+				},
+				"color": {
+					"H": "'primary'",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"visible": {
+					"H": "true",
+					"T": "prop"
+				}
+			},
+			"E": {},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "VRow",
+							"P": {
+								"ID": {
+									"H": "EdtrComp_37",
+									"T": "prop"
+								}
+							},
+							"E": {},
+							"C": {
+								"default": {
+									"c": [
+										{
+											"T": "VCol",
+											"C": {
+												"default": {
+													"c": [
+														{
+															"T": "QLabel",
+															"P": {
+																"ID": {
+																	"H": "EdtrComp_49",
+																	"T": "prop"
+																},
+																"tagType": {
+																	"H": "'span'",
+																	"T": "prop"
+																},
+																"text": {
+																	"H": "'Anadolu Sigorta Poliçe Tahsilat/İade İptalleri'",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"visible": {
+																	"H": "true",
+																	"T": "prop"
+																},
+																"processHtml": {
+																	"H": "false",
+																	"T": "prop"
+																}
+															},
+															"E": {},
+															"C": {},
+															"_Editor": {
+																"eID": "EdtrComp_49"
+															},
+															"O": {
+																"cType": "slot",
+																"layout": {
+																	"dOpt": {
+																		"xs": [
+																			"tt:text-h6",
+																			"sp:pb-3"
+																		]
+																	},
+																	"class": "text-h6 pb-3"
+																}
+															}
+														}
+													],
+													"cType": "slot"
+												}
+											},
+											"E": {},
+											"P": {
+												"ID": {
+													"H": "EdtrComp_47",
+													"T": "prop"
+												}
+											},
+											"_Editor": {
+												"eID": "EdtrComp_47"
+											},
+											"O": {
+												"cType": "slot",
+												"layout": {
+													"dOpt": {
+														"xs": [
+															"d:d-flex",
+															"fd:flex-column"
+														]
+													},
+													"class": "d-flex flex-column"
+												}
+											},
+											"S": {
+												"xs-xl": {
+													"col": "",
+													"flexDirection": "column",
+													"alignItems": "",
+													"justifyContent": "",
+													"marginLeft": "",
+													"marginRight": "",
+													"marginBottom": "",
+													"marginTop": "",
+													"paddingTop": "12px",
+													"paddingBottom": "12px",
+													"paddingLeft": "12px",
+													"paddingRight": "12px",
+													"backgroundColor": "",
+													"boxShadow": "",
+													"boxSizing": "",
+													"borderTopStyle": "",
+													"borderRightStyle": "",
+													"borderBottomStyle": "",
+													"borderLeftStyle": "",
+													"borderTopLeftRadius": "",
+													"borderTopRightRadius": "",
+													"borderBottomLeftRadius": "",
+													"borderBottomRightRadius": "",
+													"borderTopWidth": "",
+													"borderRightWidth": "",
+													"borderBottomWidth": "",
+													"borderLeftWidth": "",
+													"defaultBorderColor": "",
+													"sides": ""
+												}
+											}
+										}
+									],
+									"cType": "slot"
+								}
+							},
+							"_Editor": {
+								"eID": "EdtrComp_37"
+							},
+							"O": {
+								"cType": "slot"
+							}
+						}
+					],
+					"cType": "slot"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_12"
+			},
+			"O": {
+				"cType": "slot"
 			}
 		},
 		{
@@ -934,7 +1097,7 @@ let pjson = {
 			},
 			"E": {
 				"paymentCancelledListInfo": {
-					"H": "var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\r\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\r\n    return new (P || (P = Promise))(function (resolve, reject) {\r\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\r\n        function rejected(value) { try { step(generator[\"throw\"](value)); } catch (e) { reject(e); } }\r\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\r\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\r\n    });\r\n};\r\nvar __generator = (this && this.__generator) || function (thisArg, body) {\r\n    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;\r\n    return g = { next: verb(0), \"throw\": verb(1), \"return\": verb(2) }, typeof Symbol === \"function\" && (g[Symbol.iterator] = function() { return this; }), g;\r\n    function verb(n) { return function (v) { return step([n, v]); }; }\r\n    function step(op) {\r\n        if (f) throw new TypeError(\"Generator is already executing.\");\r\n        while (_) try {\r\n            if (f = 1, y && (t = op[0] & 2 ? y[\"return\"] : op[0] ? y[\"throw\"] || ((t = y[\"return\"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;\r\n            if (y = 0, t) op = [op[0] & 2, t.value];\r\n            switch (op[0]) {\r\n                case 0: case 1: t = op; break;\r\n                case 4: _.label++; return { value: op[1], done: false };\r\n                case 5: _.label++; y = op[1]; op = [0]; continue;\r\n                case 7: op = _.ops.pop(); _.trys.pop(); continue;\r\n                default:\r\n                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }\r\n                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }\r\n                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }\r\n                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }\r\n                    if (t[2]) _.ops.pop();\r\n                    _.trys.pop(); continue;\r\n            }\r\n            op = body.call(thisArg, _);\r\n        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }\r\n        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };\r\n    }\r\n};\r\nvar _a, _b, _c, _d;\r\nvar _this = this;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nquick.MM.trigger('setConsumerAndScreenInfo');\r\ncomponents.dt_policyPaymentList.items = [];\r\nvar serviceRequest = {\r\n    url: '/api/wrapperclient/getPaidInstallmentList',\r\n    http: 'POST',\r\n    data: {\r\n        getPaidInstallmentRequest: {\r\n            customerNumber: (_a = quick.containerServices.getCustomerContext()) === null || _a === void 0 ? void 0 : _a.customerNumber,\r\n            customerName: ((_b = quick.containerServices.getCustomerContext()) === null || _b === void 0 ? void 0 : _b.customerName) + ' ' + ((_c = quick.containerServices.getCustomerContext()) === null || _c === void 0 ? void 0 : _c.customerSurname)\r\n        }\r\n    },\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false\r\n};\r\n// Tarih formatlama \r\nfunction formatDateForDisplay(dateString) {\r\n    if (!dateString)\r\n        return '';\r\n    if (dateString.includes('-') && dateString.length === 10) {\r\n        var parts = dateString.split('-');\r\n        return parts[2] + \".\" + parts[1] + \".\" + parts[0];\r\n    }\r\n    return dateString;\r\n}\r\n// Kredi kartı bilgilerini getir\r\nfunction getCreditCardInfo(cardNumber, paymentType) {\r\n    var _a, _b, _c, _d;\r\n    return __awaiter(this, void 0, void 0, function () {\r\n        var reqData, cardListReq, resp, cardInfo, searchCardNumber_1, last4Digits_1, foundCard, error_1;\r\n        return __generator(this, function (_e) {\r\n            switch (_e.label) {\r\n                case 0:\r\n                    if (paymentType !== 'CCARD' && paymentType !== 'IMCCARD') {\r\n                        return [2 /*return*/, null];\r\n                    }\r\n                    _e.label = 1;\r\n                case 1:\r\n                    _e.trys.push([1, 3, , 4]);\r\n                    (_b = (_a = components.as_loadingCustomComp) === null || _a === void 0 ? void 0 : _a.open) === null || _b === void 0 ? void 0 : _b.call(_a);\r\n                    reqData = {\r\n                        customerNo: (_c = quick.containerServices.getCustomerContext()) === null || _c === void 0 ? void 0 : _c.customerNumber,\r\n                        branchCode: 0,\r\n                        accountNo: 0,\r\n                        pageSize: 0,\r\n                        pageNumber: 0,\r\n                        transactionType: paymentType === 'IMCCARD' ? 'I' : 'S'\r\n                    };\r\n                    cardListReq = {\r\n                        url: '/api/uiclient/retrieveCreditCardList',\r\n                        http: 'POST',\r\n                        data: reqData,\r\n                        onFail: 'empty',\r\n                        onSuccess: 'empty',\r\n                        responseField: 'empty',\r\n                        blockRender: false\r\n                    };\r\n                    return [4 /*yield*/, quick.Request.async(cardListReq)];\r\n                case 2:\r\n                    resp = _e.sent();\r\n                    cardInfo = ((_d = resp === null || resp === void 0 ? void 0 : resp.data) === null || _d === void 0 ? void 0 : _d.cardInfo) || [];\r\n                    if (Array.isArray(cardInfo) && cardInfo.length > 0) {\r\n                        searchCardNumber_1 = (cardNumber || '').toString();\r\n                        last4Digits_1 = searchCardNumber_1.slice(-4);\r\n                        foundCard = cardInfo.find(function (card) {\r\n                            var cardNo = card.cardNo || card.mainCardNo || '';\r\n                            return (searchCardNumber_1 && cardNo === searchCardNumber_1) ||\r\n                                (last4Digits_1 && cardNo.slice(-4) === last4Digits_1);\r\n                        }) || cardInfo[0];\r\n                        if (foundCard) {\r\n                            return [2 /*return*/, {\r\n                                    embossName: foundCard.embossName || '',\r\n                                    availableLimit: foundCard.availableLimit || '0.00'\r\n                                }];\r\n                        }\r\n                    }\r\n                    return [3 /*break*/, 4];\r\n                case 3:\r\n                    error_1 = _e.sent();\r\n                    return [3 /*break*/, 4];\r\n                case 4: return [2 /*return*/, null];\r\n            }\r\n        });\r\n    });\r\n}\r\n(_d = quick.Request.async(serviceRequest)) === null || _d === void 0 ? void 0 : _d.then(function (resp) { return __awaiter(_this, void 0, void 0, function () {\r\n    var list, flatList, i, item, paymentTypeRaw, accBranch, accNumber, hasAccountInfo, paymentTypeDisplay, accountOrCardNo, creditCardDisplayForList, cardInfo, cardNumber, holderName, availableLimit, error_2;\r\n    var _a, _b, _c, _d, _e, _f, _g, _h, _j;\r\n    return __generator(this, function (_k) {\r\n        switch (_k.label) {\r\n            case 0:\r\n                list = resp.data.getPaidInstallmentResponse.paidInstallmentList || [];\r\n                flatList = [];\r\n                i = 0;\r\n                _k.label = 1;\r\n            case 1:\r\n                if (!(i < list.length)) return [3 /*break*/, 7];\r\n                item = list[i];\r\n                paymentTypeRaw = (item.paymentType || '').toUpperCase();\r\n                accBranch = Number((_a = item === null || item === void 0 ? void 0 : item.accountNumber) === null || _a === void 0 ? void 0 : _a.branchCode);\r\n                accNumber = Number((_b = item === null || item === void 0 ? void 0 : item.accountNumber) === null || _b === void 0 ? void 0 : _b.number);\r\n                hasAccountInfo = paymentTypeRaw === 'ACCOUNT' && accBranch > 0 && accNumber > 0;\r\n                paymentTypeDisplay = paymentTypeRaw === 'ACCOUNT'\r\n                    ? (hasAccountInfo ? 'Cari Hesap' : 'Nakit')\r\n                    : paymentTypeRaw === 'CCARD'\r\n                        ? 'Kredi Kartı'\r\n                        : paymentTypeRaw === 'IMCCARD'\r\n                            ? 'İmece Kart'\r\n                            : (item.paymentType || '');\r\n                accountOrCardNo = '';\r\n                if (paymentTypeRaw === 'ACCOUNT' && hasAccountInfo) {\r\n                    accountOrCardNo = accBranch + \"-\" + accNumber;\r\n                }\r\n                else if (paymentTypeRaw === 'CCARD' || paymentTypeRaw === 'IMCCARD') {\r\n                    accountOrCardNo = item.creditCardNumber || '';\r\n                }\r\n                creditCardDisplayForList = accountOrCardNo;\r\n                if (!(paymentTypeRaw === 'CCARD' || paymentTypeRaw === 'IMCCARD')) return [3 /*break*/, 5];\r\n                _k.label = 2;\r\n            case 2:\r\n                _k.trys.push([2, 4, , 5]);\r\n                return [4 /*yield*/, getCreditCardInfo(item.creditCardNumber, paymentTypeRaw)];\r\n            case 3:\r\n                cardInfo = _k.sent();\r\n                if (cardInfo && cardInfo.embossName && cardInfo.availableLimit) {\r\n                    cardNumber = item.creditCardNumber || '';\r\n                    holderName = cardInfo.embossName;\r\n                    availableLimit = Number(cardInfo.availableLimit).toLocaleString('tr-TR', {\r\n                        minimumFractionDigits: 2,\r\n                        maximumFractionDigits: 2\r\n                    }) + ' TL';\r\n                    creditCardDisplayForList = cardNumber + \" (\" + availableLimit + \") \" + holderName;\r\n                }\r\n                return [3 /*break*/, 5];\r\n            case 4:\r\n                error_2 = _k.sent();\r\n                return [3 /*break*/, 5];\r\n            case 5:\r\n                flatList.push({\r\n                    id: i + 1,\r\n                    policyNumber: ((_c = item.policyNumber) === null || _c === void 0 ? void 0 : _c.policyNo) + '/' + ((_d = item.policyNumber) === null || _d === void 0 ? void 0 : _d.renewalNo),\r\n                    // Tüm ekranlarda dd.mm.yy formatında görünüm\r\n                    dueDate: formatDateForDisplay(item.installmentDate),\r\n                    insuranceTypeName: item.insuranceTypeName,\r\n                    debitOrCredit: ((item.installmentType || '').toUpperCase() === 'REFUND') ? 'Alacak' : 'Borç',\r\n                    bankRefId: item.bankRefId,\r\n                    paymentType: paymentTypeDisplay,\r\n                    paymentTypeRaw: paymentTypeRaw,\r\n                    accountInfo: item.accountNumber || null,\r\n                    creditCardNumber: accountOrCardNo,\r\n                    // 2. ekran için - kart + limit + isim formatı\r\n                    creditCardNumberForList: creditCardDisplayForList,\r\n                    amount: Math.abs(Number(item.amount.amount.amount)).toLocaleString('tr-TR', {\r\n                        minimumFractionDigits: 2, maximumFractionDigits: 2\r\n                    }) + ' ' + item.amount.amount.currencyCode.code,\r\n                    paymentId: item.paymentId || '',\r\n                    installmentId: item.installmentId || '',\r\n                    // Tüm ekranlarda dd.mm.yy formatında görünüm\r\n                    installmentDate: formatDateForDisplay(item.installmentDate),\r\n                    transactionId: item.transactionId || '',\r\n                    orderId: item.orderId,\r\n                    customerName: ((_e = quick.containerServices.getCustomerContext()) === null || _e === void 0 ? void 0 : _e.customerName)\r\n                        + ' ' + ((_f = quick.containerServices.getCustomerContext()) === null || _f === void 0 ? void 0 : _f.customerSurname),\r\n                    customerNumber: (_g = quick.containerServices.getCustomerContext()) === null || _g === void 0 ? void 0 : _g.customerNumber,\r\n                    firmType: item.firmType,\r\n                    insuranceType: item.insuranceType,\r\n                    // orijinal tarihler\r\n                    originalDueDate: item.installmentDate,\r\n                    originalInstallmentDate: item.installmentDate\r\n                });\r\n                _k.label = 6;\r\n            case 6:\r\n                i++;\r\n                return [3 /*break*/, 1];\r\n            case 7:\r\n                components.dt_policyPaymentList.items = flatList;\r\n                quick.store.set('$getPaidInstallmentData', flatList);\r\n                // Loading kapat - başarılı durumda\r\n                (_j = (_h = components.as_loadingCustomComp) === null || _h === void 0 ? void 0 : _h.close) === null || _j === void 0 ? void 0 : _j.call(_h);\r\n                return [2 /*return*/];\r\n        }\r\n    });\r\n}); }).catch(function (error) {\r\n    var _a, _b;\r\n    // Loading kapat hata durumunda\r\n    (_b = (_a = components.as_loadingCustomComp) === null || _a === void 0 ? void 0 : _a.close) === null || _b === void 0 ? void 0 : _b.call(_a);\r\n});\r\n",
+					"H": "var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\r\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\r\n    return new (P || (P = Promise))(function (resolve, reject) {\r\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\r\n        function rejected(value) { try { step(generator[\"throw\"](value)); } catch (e) { reject(e); } }\r\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\r\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\r\n    });\r\n};\r\nvar __generator = (this && this.__generator) || function (thisArg, body) {\r\n    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;\r\n    return g = { next: verb(0), \"throw\": verb(1), \"return\": verb(2) }, typeof Symbol === \"function\" && (g[Symbol.iterator] = function() { return this; }), g;\r\n    function verb(n) { return function (v) { return step([n, v]); }; }\r\n    function step(op) {\r\n        if (f) throw new TypeError(\"Generator is already executing.\");\r\n        while (_) try {\r\n            if (f = 1, y && (t = op[0] & 2 ? y[\"return\"] : op[0] ? y[\"throw\"] || ((t = y[\"return\"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;\r\n            if (y = 0, t) op = [op[0] & 2, t.value];\r\n            switch (op[0]) {\r\n                case 0: case 1: t = op; break;\r\n                case 4: _.label++; return { value: op[1], done: false };\r\n                case 5: _.label++; y = op[1]; op = [0]; continue;\r\n                case 7: op = _.ops.pop(); _.trys.pop(); continue;\r\n                default:\r\n                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }\r\n                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }\r\n                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }\r\n                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }\r\n                    if (t[2]) _.ops.pop();\r\n                    _.trys.pop(); continue;\r\n            }\r\n            op = body.call(thisArg, _);\r\n        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }\r\n        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };\r\n    }\r\n};\r\nvar _a, _b, _c, _d;\r\nvar _this = this;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nquick.MM.trigger('setConsumerAndScreenInfo');\r\ncomponents.dt_policyPaymentList.items = [];\r\nvar serviceRequest = {\r\n    url: '/api/wrapperclient/getPaidInstallmentList',\r\n    http: 'POST',\r\n    data: {\r\n        getPaidInstallmentRequest: {\r\n            customerNumber: (_a = quick.containerServices.getCustomerContext()) === null || _a === void 0 ? void 0 : _a.customerNumber,\r\n            customerName: ((_b = quick.containerServices.getCustomerContext()) === null || _b === void 0 ? void 0 : _b.customerName) + ' ' + ((_c = quick.containerServices.getCustomerContext()) === null || _c === void 0 ? void 0 : _c.customerSurname)\r\n        }\r\n    },\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false\r\n};\r\n// Tarih formatlama \r\nfunction formatDateForDisplay(dateString) {\r\n    if (!dateString)\r\n        return '';\r\n    if (dateString.includes('-') && dateString.length === 10) {\r\n        var parts = dateString.split('-');\r\n        return parts[2] + \".\" + parts[1] + \".\" + parts[0];\r\n    }\r\n    return dateString;\r\n}\r\n// Kredi kartı bilgilerini getir\r\nfunction getCreditCardInfo(cardNumber, paymentType) {\r\n    var _a, _b, _c, _d;\r\n    return __awaiter(this, void 0, void 0, function () {\r\n        var reqData, cardListReq, resp, cardInfo, searchCardNumber_1, last4Digits_1, foundCard, error_1;\r\n        return __generator(this, function (_e) {\r\n            switch (_e.label) {\r\n                case 0:\r\n                    if (paymentType !== 'CCARD' && paymentType !== 'IMCCARD') {\r\n                        return [2 /*return*/, null];\r\n                    }\r\n                    _e.label = 1;\r\n                case 1:\r\n                    _e.trys.push([1, 3, , 4]);\r\n                    (_b = (_a = components.as_loadingCustomComp) === null || _a === void 0 ? void 0 : _a.open) === null || _b === void 0 ? void 0 : _b.call(_a);\r\n                    reqData = {\r\n                        customerNo: (_c = quick.containerServices.getCustomerContext()) === null || _c === void 0 ? void 0 : _c.customerNumber,\r\n                        branchCode: 0,\r\n                        accountNo: 0,\r\n                        pageSize: 0,\r\n                        pageNumber: 0,\r\n                        transactionType: paymentType === 'IMCCARD' ? 'I' : 'S'\r\n                    };\r\n                    cardListReq = {\r\n                        url: '/api/uiclient/retrieveCreditCardList',\r\n                        http: 'POST',\r\n                        data: reqData,\r\n                        onFail: 'empty',\r\n                        onSuccess: 'empty',\r\n                        responseField: 'empty',\r\n                        blockRender: false\r\n                    };\r\n                    return [4 /*yield*/, quick.Request.async(cardListReq)];\r\n                case 2:\r\n                    resp = _e.sent();\r\n                    cardInfo = ((_d = resp === null || resp === void 0 ? void 0 : resp.data) === null || _d === void 0 ? void 0 : _d.cardInfo) || [];\r\n                    if (Array.isArray(cardInfo) && cardInfo.length > 0) {\r\n                        searchCardNumber_1 = (cardNumber || '').toString();\r\n                        last4Digits_1 = searchCardNumber_1.slice(-4);\r\n                        foundCard = cardInfo.find(function (card) {\r\n                            var cardNo = card.cardNo || card.mainCardNo || '';\r\n                            return (searchCardNumber_1 && cardNo === searchCardNumber_1) ||\r\n                                (last4Digits_1 && cardNo.slice(-4) === last4Digits_1);\r\n                        }) || cardInfo[0];\r\n                        if (foundCard) {\r\n                            return [2 /*return*/, {\r\n                                    embossName: foundCard.embossName || '',\r\n                                    availableLimit: foundCard.availableLimit || '0.00'\r\n                                }];\r\n                        }\r\n                    }\r\n                    return [3 /*break*/, 4];\r\n                case 3:\r\n                    error_1 = _e.sent();\r\n                    return [3 /*break*/, 4];\r\n                case 4: return [2 /*return*/, null];\r\n            }\r\n        });\r\n    });\r\n}\r\n(_d = quick.Request.async(serviceRequest)) === null || _d === void 0 ? void 0 : _d.then(function (resp) { return __awaiter(_this, void 0, void 0, function () {\r\n    var list, flatList, i, item, paymentTypeRaw, accBranch, accNumber, hasAccountInfo, paymentTypeDisplay, accountOrCardNo, creditCardDisplayForList, cardInfo, cardNumber, holderName, availableLimit, error_2;\r\n    var _a, _b, _c, _d, _e, _f, _g, _h, _j;\r\n    return __generator(this, function (_k) {\r\n        switch (_k.label) {\r\n            case 0:\r\n                list = resp.data.getPaidInstallmentResponse.paidInstallmentList || [];\r\n                flatList = [];\r\n                i = 0;\r\n                _k.label = 1;\r\n            case 1:\r\n                if (!(i < list.length)) return [3 /*break*/, 7];\r\n                item = list[i];\r\n                paymentTypeRaw = (item.paymentType || '').toUpperCase();\r\n                accBranch = Number((_a = item === null || item === void 0 ? void 0 : item.accountNumber) === null || _a === void 0 ? void 0 : _a.branchCode);\r\n                accNumber = Number((_b = item === null || item === void 0 ? void 0 : item.accountNumber) === null || _b === void 0 ? void 0 : _b.number);\r\n                hasAccountInfo = paymentTypeRaw === 'ACCOUNT' && accBranch > 0 && accNumber > 0;\r\n                paymentTypeDisplay = paymentTypeRaw === 'ACCOUNT'\r\n                    ? (hasAccountInfo ? 'Cari Hesap' : 'Nakit')\r\n                    : paymentTypeRaw === 'CCARD'\r\n                        ? 'Kredi Kartı'\r\n                        : paymentTypeRaw === 'IMCCARD'\r\n                            ? 'İmece Kart'\r\n                            : (item.paymentType || '');\r\n                accountOrCardNo = '';\r\n                if (paymentTypeRaw === 'ACCOUNT' && hasAccountInfo) {\r\n                    accountOrCardNo = accBranch + \"-\" + accNumber;\r\n                }\r\n                else if (paymentTypeRaw === 'CCARD' || paymentTypeRaw === 'IMCCARD') {\r\n                    accountOrCardNo = item.creditCardNumber || '';\r\n                }\r\n                creditCardDisplayForList = accountOrCardNo;\r\n                if (!(paymentTypeRaw === 'CCARD' || paymentTypeRaw === 'IMCCARD')) return [3 /*break*/, 5];\r\n                _k.label = 2;\r\n            case 2:\r\n                _k.trys.push([2, 4, , 5]);\r\n                return [4 /*yield*/, getCreditCardInfo(item.creditCardNumber, paymentTypeRaw)];\r\n            case 3:\r\n                cardInfo = _k.sent();\r\n                if (cardInfo && cardInfo.embossName && cardInfo.availableLimit) {\r\n                    cardNumber = item.creditCardNumber || '';\r\n                    holderName = cardInfo.embossName;\r\n                    availableLimit = Number(cardInfo.availableLimit).toLocaleString('tr-TR', {\r\n                        minimumFractionDigits: 2,\r\n                        maximumFractionDigits: 2\r\n                    }) + ' TL';\r\n                    creditCardDisplayForList = cardNumber + \" (\" + availableLimit + \") \" + holderName;\r\n                }\r\n                return [3 /*break*/, 5];\r\n            case 4:\r\n                error_2 = _k.sent();\r\n                return [3 /*break*/, 5];\r\n            case 5:\r\n                flatList.push({\r\n                    id: i + 1,\r\n                    policyNumber: ((_c = item.policyNumber) === null || _c === void 0 ? void 0 : _c.policyNo) + '/' + ((_d = item.policyNumber) === null || _d === void 0 ? void 0 : _d.renewalNo),\r\n                    dueDate: formatDateForDisplay(item.installmentDate),\r\n                    insuranceTypeName: item.insuranceTypeName,\r\n                    debitOrCredit: ((item.installmentType || '').toUpperCase() === 'REFUND') ? 'Alacak' : 'Borç',\r\n                    bankRefId: item.bankRefId,\r\n                    paymentType: paymentTypeDisplay,\r\n                    paymentTypeRaw: paymentTypeRaw,\r\n                    accountInfo: item.accountNumber || null,\r\n                    creditCardNumber: accountOrCardNo,\r\n                    creditCardNumberForList: creditCardDisplayForList,\r\n                    //formatlanmış amount\r\n                    amount: Math.abs(Number(item.amount.amount.amount)).toLocaleString('tr-TR', {\r\n                        minimumFractionDigits: 2,\r\n                        maximumFractionDigits: 2\r\n                    }) + ' ' + item.amount.amount.currencyCode.code,\r\n                    // ham değer\r\n                    rawAmount: Math.abs(Number(item.amount.amount.amount)),\r\n                    currencyCode: item.amount.amount.currencyCode.code,\r\n                    paymentId: item.paymentId || '',\r\n                    installmentId: item.installmentId || '',\r\n                    installmentDate: formatDateForDisplay(item.installmentDate),\r\n                    transactionId: item.transactionId || '',\r\n                    orderId: item.orderId,\r\n                    customerName: ((_e = quick.containerServices.getCustomerContext()) === null || _e === void 0 ? void 0 : _e.customerName)\r\n                        + ' ' + ((_f = quick.containerServices.getCustomerContext()) === null || _f === void 0 ? void 0 : _f.customerSurname),\r\n                    customerNumber: (_g = quick.containerServices.getCustomerContext()) === null || _g === void 0 ? void 0 : _g.customerNumber,\r\n                    firmType: item.firmType,\r\n                    insuranceType: item.insuranceType,\r\n                    originalDueDate: item.installmentDate,\r\n                    originalInstallmentDate: item.installmentDate\r\n                });\r\n                _k.label = 6;\r\n            case 6:\r\n                i++;\r\n                return [3 /*break*/, 1];\r\n            case 7:\r\n                components.dt_policyPaymentList.items = flatList;\r\n                quick.store.set('$getPaidInstallmentData', flatList);\r\n                // Loading kapat - başarılı durumda\r\n                (_j = (_h = components.as_loadingCustomComp) === null || _h === void 0 ? void 0 : _h.close) === null || _j === void 0 ? void 0 : _j.call(_h);\r\n                return [2 /*return*/];\r\n        }\r\n    });\r\n}); }).catch(function (error) {\r\n    var _a, _b;\r\n    // Loading kapat hata durumunda\r\n    (_b = (_a = components.as_loadingCustomComp) === null || _a === void 0 ? void 0 : _a.close) === null || _b === void 0 ? void 0 : _b.call(_a);\r\n});\r\n",
 					"C": true,
 					"HL": "JS"
 				},
@@ -966,13 +1129,180 @@ let pjson = {
 					},
 					"class": "pt-0 pl-0 pr-0 pb-0"
 				},
-				"compDomClasses": ""
+				"compDomClasses": "newDropBorder"
 			},
 			"S": {
 				"xs-xl": {
 					"pageBackgroundColor": "#ffffff",
 					"statusBarColor": "#ffffff"
 				}
+			}
+		},
+		{
+			"T": "VCard",
+			"P": {
+				"ID": {
+					"H": "EdtrComp_12",
+					"T": "prop"
+				},
+				"color": {
+					"H": "╬'primary'╩╩",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"visible": {
+					"H": "╬true╩╩",
+					"T": "prop"
+				}
+			},
+			"E": {},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "VRow",
+							"P": {
+								"ID": {
+									"H": "EdtrComp_37",
+									"T": "prop"
+								}
+							},
+							"E": {},
+							"C": {
+								"default": {
+									"c": [
+										{
+											"T": "VCol",
+											"C": {
+												"default": {
+													"c": [
+														{
+															"T": "QLabel",
+															"P": {
+																"ID": {
+																	"H": "EdtrComp_49",
+																	"T": "prop"
+																},
+																"tagType": {
+																	"H": "╬'span'╩╩",
+																	"T": "prop"
+																},
+																"text": {
+																	"H": "╬'Anadolu Sigorta Poliçe Tahsilat/İade İptalleri'╩╩",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"visible": {
+																	"H": "╬true╩╩",
+																	"T": "prop"
+																},
+																"processHtml": {
+																	"H": "╬false╩╩",
+																	"T": "prop"
+																}
+															},
+															"E": {},
+															"C": {},
+															"_Editor": {
+																"eID": "EdtrComp_49"
+															},
+															"O": {
+																"cType": "slot",
+																"layout": {
+																	"dOpt": {
+																		"xs": [
+																			"tt:text-h6",
+																			"sp:pb-3"
+																		]
+																	},
+																	"class": "text-h6 pb-3"
+																},
+																"compDomClasses": "q-label text-h6 pb-3 newDropBorder"
+															}
+														}
+													],
+													"cType": "slot"
+												}
+											},
+											"E": {},
+											"P": {
+												"ID": {
+													"H": "EdtrComp_47",
+													"T": "prop"
+												}
+											},
+											"_Editor": {
+												"eID": "EdtrComp_47"
+											},
+											"O": {
+												"cType": "slot",
+												"layout": {
+													"dOpt": {
+														"xs": [
+															"d:d-flex",
+															"fd:flex-column"
+														]
+													},
+													"class": "d-flex flex-column"
+												},
+												"compDomClasses": "col d-flex flex-column pb-0 newDropBorder"
+											},
+											"S": {
+												"xs-xl": {
+													"col": "",
+													"flexDirection": "column",
+													"alignItems": "",
+													"justifyContent": "",
+													"marginLeft": "",
+													"marginRight": "",
+													"marginBottom": "",
+													"marginTop": "",
+													"paddingTop": "12px",
+													"paddingBottom": "12px",
+													"paddingLeft": "12px",
+													"paddingRight": "12px",
+													"backgroundColor": "",
+													"boxShadow": "",
+													"boxSizing": "",
+													"borderTopStyle": "",
+													"borderRightStyle": "",
+													"borderBottomStyle": "",
+													"borderLeftStyle": "",
+													"borderTopLeftRadius": "",
+													"borderTopRightRadius": "",
+													"borderBottomLeftRadius": "",
+													"borderBottomRightRadius": "",
+													"borderTopWidth": "",
+													"borderRightWidth": "",
+													"borderBottomWidth": "",
+													"borderLeftWidth": "",
+													"defaultBorderColor": "",
+													"sides": ""
+												}
+											}
+										}
+									],
+									"cType": "slot"
+								}
+							},
+							"_Editor": {
+								"eID": "EdtrComp_37"
+							},
+							"O": {
+								"cType": "slot",
+								"compDomClasses": "row newDropBorder"
+							}
+						}
+					],
+					"cType": "slot"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_12"
+			},
+			"O": {
+				"cType": "slot",
+				"compDomClasses": "v-card v-sheet theme--light primary newDropBorder"
 			}
 		},
 		{
@@ -1280,7 +1610,7 @@ let pjson = {
 																											},
 																											"O": {
 																												"cType": "scopedSlot",
-																												"compDomClasses": "v-data-table v-data-table--dense v-data-table--fixed-header theme--light"
+																												"compDomClasses": "v-data-table v-data-table--dense v-data-table--fixed-header theme--light newDropBorder"
 																											}
 																										}
 																									],
@@ -1305,7 +1635,7 @@ let pjson = {
 																									},
 																									"class": ""
 																								},
-																								"compDomClasses": "col pb-0"
+																								"compDomClasses": "col pb-0 newDropBorder"
 																							},
 																							"S": {
 																								"xs-xl": {
@@ -1335,7 +1665,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "row"
+																				"compDomClasses": "row newDropBorder"
 																			},
 																			"S": {
 																				"xs-xl": {
@@ -1376,7 +1706,7 @@ let pjson = {
 																	},
 																	"class": ""
 																},
-																"compDomClasses": "col pb-0"
+																"compDomClasses": "col pb-0 newDropBorder"
 															},
 															"S": {
 																"xs-xl": {
@@ -1460,7 +1790,7 @@ let pjson = {
 											},
 											"O": {
 												"cType": "slot",
-												"compDomClasses": "row"
+												"compDomClasses": "row newDropBorder"
 											}
 										}
 									],
@@ -1472,7 +1802,7 @@ let pjson = {
 							},
 							"O": {
 								"cType": "slot",
-								"compDomClasses": "v-card v-sheet theme--light white"
+								"compDomClasses": "v-card v-sheet theme--light white newDropBorder"
 							}
 						}
 					],
@@ -1499,7 +1829,7 @@ let pjson = {
 					},
 					"class": "pl-0 pt-0 pr-0 pb-0 mt-0 ml-0 mr-0 mb-0"
 				},
-				"compDomClasses": "container container--fluid pl-0 pt-0 pr-0 pb-0 mt-0 ml-0 mr-0 mb-0 container container--fluid"
+				"compDomClasses": "container container--fluid pl-0 pt-0 pr-0 pb-0 mt-0 ml-0 mr-0 mb-0 newDropBorder"
 			},
 			"S": {
 				"xs-xl": {
@@ -1613,7 +1943,7 @@ let pjson = {
 																	},
 																	"class": "text-body-1 font-weight-regular"
 																},
-																"compDomClasses": "q-label  text-body-1 font-weight-regular"
+																"compDomClasses": "q-label text-body-1 font-weight-regular newDropBorder"
 															},
 															"S": {
 																"xs-xl": {
@@ -1728,7 +2058,7 @@ let pjson = {
 													},
 													"class": "mr-1"
 												},
-												"compDomClasses": "v-btn v-btn--depressed v-btn--rounded theme--dark v-size--default mr-1"
+												"compDomClasses": "v-btn v-btn--depressed v-btn--rounded theme--dark v-size--default mr-1 newDropBorder"
 											}
 										}
 									],
@@ -1760,7 +2090,7 @@ let pjson = {
 									},
 									"class": "d-flex pr-3 pl-3 pb-3 pt-3 justify-end"
 								},
-								"compDomClasses": "col d-flex pr-3 pl-3 pb-3 pt-3 justify-end pb-0"
+								"compDomClasses": "col d-flex pr-3 pl-3 pb-3 pt-3 justify-end pb-0 newDropBorder"
 							},
 							"S": {
 								"xs-xl": {
@@ -1790,7 +2120,7 @@ let pjson = {
 			},
 			"O": {
 				"cType": "slot",
-				"compDomClasses": "row"
+				"compDomClasses": "row newDropBorder"
 			}
 		},
 		{
@@ -1826,7 +2156,7 @@ let pjson = {
 							},
 							"O": {
 								"cType": "child",
-								"compDomClasses": ""
+								"compDomClasses": "editor-ghost-comp"
 							}
 						}
 					],
@@ -1839,7 +2169,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": ""
+				"compDomClasses": "newDropBorder"
 			}
 		}
 	],
