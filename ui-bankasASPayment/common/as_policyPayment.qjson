@@ -45,7 +45,7 @@ let pjson = {
 					"HL": "TS"
 				},
 				"retrieveCustomerAccounts": {
-					"H": "debugger;\r\n//Tahsilat şekli Hesaptan seçildi\r\nlet requestData = {\r\n    \"customerNumber\": (<any>quick.containerServices).getCustomerContext().customerNumber,\r\n    \"accountType\": [\r\n        {\r\n            \"code\": \"DEMAND\"\r\n        }\r\n    ],\r\n    \"statusCode\": {\r\n        \"code\": \"OPEN\"\r\n    }\r\n};\r\nquick.MM.trigger('setDatasConsumerAndScreenInfo');\r\n\r\nlet serviceRequest: IRequest = {\r\n    url: '/api/uiclient/retrieveCustomerAccounts',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'retrieveCustomerAccountsResponse',\r\n    blockRender: false,\r\n}\r\n\r\nquick.Request.async(serviceRequest)?.then((resp) => {\r\n    quick.EM.trace(resp?.data);\r\n    let decimal;\r\n    let amountBalance;\r\n    let accountList = resp?.data.accountList.account;\r\n    let tmpList = [];\r\n\r\n    let overDraft = resp?.data?.accountList?.account[0]?.overdraft;\r\n    if (overDraft == true) {\r\n        components.cbox_overdraft.visible = true;\r\n    }\r\n    else {\r\n        components.cbox_overdraft.visible = false;\r\n    }\r\n\r\n    for (var i = 0; i < accountList.length; i++) {\r\n        amountBalance = quick.Quick.toMoney(Number(accountList[i].balance)); //'124.0';\r\n        if (amountBalance.split(',')[1]) { }\r\n        else {\r\n            decimal = ',00';\r\n            amountBalance = amountBalance + decimal;\r\n        }\r\n\r\n        let data = {\r\n            text: accountList[i].number?.branchCode + '-' + accountList[i].number?.number + ' - Vadesiz TL - ' + amountBalance + ' TRY',\r\n            value: accountList[i]\r\n        }\r\n        tmpList.push(data);\r\n    }\r\n    components.vauto_accountList.items = tmpList;\r\n    components.as_loadingCustomComp.close();\r\n})\r\n    .catch((err) => {\r\n        components.as_loadingCustomComp.close();\r\n        let errorMessage = err?.response?.data?.responseMessage ?? 'Bir hata oluştu.';\r\n        (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n        components.as_alertCustomComp.open();\r\n    });",
+					"H": "debugger;\r\n//Tahsilat şekli Hesaptan seçildi\r\nlet requestData = {\r\n    \"customerNumber\": (<any>quick.containerServices).getCustomerContext()?.customerNumber,\r\n    \"accountType\": [\r\n        {\r\n            \"code\": \"DEMAND\"\r\n        }\r\n    ],\r\n    \"statusCode\": {\r\n        \"code\": \"OPEN\"\r\n    }\r\n};\r\nquick.MM.trigger('setDatasConsumerAndScreenInfo');\r\n\r\nlet serviceRequest: IRequest = {\r\n    url: '/api/uiclient/retrieveCustomerAccounts',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'retrieveCustomerAccountsResponse',\r\n    blockRender: false,\r\n}\r\n\r\nquick.Request.async(serviceRequest)?.then((resp) => {\r\n    quick.EM.trace(resp?.data);\r\n    let decimal;\r\n    let amountBalance;\r\n    let accountList = resp?.data.accountList.account;\r\n    let tmpList = [];\r\n\r\n    let overDraft = resp?.data?.accountList?.account[0]?.overdraft;\r\n    if (overDraft == true) {\r\n        components.cbox_overdraft.visible = true;\r\n    }\r\n    else {\r\n        components.cbox_overdraft.visible = false;\r\n    }\r\n\r\n    for (var i = 0; i < accountList.length; i++) {\r\n        amountBalance = quick.Quick.toMoney(Number(accountList[i].balance)); //'124.0';\r\n        if (amountBalance.split(',')[1]) { }\r\n        else {\r\n            decimal = ',00';\r\n            amountBalance = amountBalance + decimal;\r\n        }\r\n\r\n        let data = {\r\n            text: accountList[i].number?.branchCode + '-' + accountList[i].number?.number + ' - Vadesiz TL - ' + amountBalance + ' TRY',\r\n            value: accountList[i]\r\n        }\r\n        tmpList.push(data);\r\n    }\r\n    components.vauto_accountList.items = tmpList;\r\n    components.as_loadingCustomComp.close();\r\n})\r\n    .catch((err) => {\r\n        components.as_loadingCustomComp.close();\r\n        let errorMessage = err?.response?.data?.responseMessage ?? 'Bir hata oluştu.';\r\n        (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n        components.as_alertCustomComp.open();\r\n    });",
 					"C": true,
 					"HL": "TS"
 				},
@@ -2519,7 +2519,7 @@ let pjson = {
 					"HL": "JS"
 				},
 				"retrieveCustomerAccounts": {
-					"H": "var _a;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\n//Tahsilat şekli Hesaptan seçildi\r\nvar requestData = {\r\n    \"customerNumber\": quick.containerServices.getCustomerContext().customerNumber,\r\n    \"accountType\": [\r\n        {\r\n            \"code\": \"DEMAND\"\r\n        }\r\n    ],\r\n    \"statusCode\": {\r\n        \"code\": \"OPEN\"\r\n    }\r\n};\r\nquick.MM.trigger('setDatasConsumerAndScreenInfo');\r\nvar serviceRequest = {\r\n    url: '/api/uiclient/retrieveCustomerAccounts',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'retrieveCustomerAccountsResponse',\r\n    blockRender: false,\r\n};\r\n(_a = quick.Request.async(serviceRequest)) === null || _a === void 0 ? void 0 : _a.then(function (resp) {\r\n    var _a, _b, _c, _d, _e;\r\n    quick.EM.trace(resp === null || resp === void 0 ? void 0 : resp.data);\r\n    var decimal;\r\n    var amountBalance;\r\n    var accountList = resp === null || resp === void 0 ? void 0 : resp.data.accountList.account;\r\n    var tmpList = [];\r\n    var overDraft = (_c = (_b = (_a = resp === null || resp === void 0 ? void 0 : resp.data) === null || _a === void 0 ? void 0 : _a.accountList) === null || _b === void 0 ? void 0 : _b.account[0]) === null || _c === void 0 ? void 0 : _c.overdraft;\r\n    if (overDraft == true) {\r\n        components.cbox_overdraft.visible = true;\r\n    }\r\n    else {\r\n        components.cbox_overdraft.visible = false;\r\n    }\r\n    for (var i = 0; i < accountList.length; i++) {\r\n        amountBalance = quick.Quick.toMoney(Number(accountList[i].balance)); //'124.0';\r\n        if (amountBalance.split(',')[1]) { }\r\n        else {\r\n            decimal = ',00';\r\n            amountBalance = amountBalance + decimal;\r\n        }\r\n        var data = {\r\n            text: ((_d = accountList[i].number) === null || _d === void 0 ? void 0 : _d.branchCode) + '-' + ((_e = accountList[i].number) === null || _e === void 0 ? void 0 : _e.number) + ' - Vadesiz TL - ' + amountBalance + ' TRY',\r\n            value: accountList[i]\r\n        };\r\n        tmpList.push(data);\r\n    }\r\n    components.vauto_accountList.items = tmpList;\r\n    components.as_loadingCustomComp.close();\r\n}).catch(function (err) {\r\n    var _a, _b, _c;\r\n    components.as_loadingCustomComp.close();\r\n    var errorMessage = (_c = (_b = (_a = err === null || err === void 0 ? void 0 : err.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.responseMessage) !== null && _c !== void 0 ? _c : 'Bir hata oluştu.';\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n});\r\n",
+					"H": "var _a, _b;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\n//Tahsilat şekli Hesaptan seçildi\r\nvar requestData = {\r\n    \"customerNumber\": (_a = quick.containerServices.getCustomerContext()) === null || _a === void 0 ? void 0 : _a.customerNumber,\r\n    \"accountType\": [\r\n        {\r\n            \"code\": \"DEMAND\"\r\n        }\r\n    ],\r\n    \"statusCode\": {\r\n        \"code\": \"OPEN\"\r\n    }\r\n};\r\nquick.MM.trigger('setDatasConsumerAndScreenInfo');\r\nvar serviceRequest = {\r\n    url: '/api/uiclient/retrieveCustomerAccounts',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'retrieveCustomerAccountsResponse',\r\n    blockRender: false,\r\n};\r\n(_b = quick.Request.async(serviceRequest)) === null || _b === void 0 ? void 0 : _b.then(function (resp) {\r\n    var _a, _b, _c, _d, _e;\r\n    quick.EM.trace(resp === null || resp === void 0 ? void 0 : resp.data);\r\n    var decimal;\r\n    var amountBalance;\r\n    var accountList = resp === null || resp === void 0 ? void 0 : resp.data.accountList.account;\r\n    var tmpList = [];\r\n    var overDraft = (_c = (_b = (_a = resp === null || resp === void 0 ? void 0 : resp.data) === null || _a === void 0 ? void 0 : _a.accountList) === null || _b === void 0 ? void 0 : _b.account[0]) === null || _c === void 0 ? void 0 : _c.overdraft;\r\n    if (overDraft == true) {\r\n        components.cbox_overdraft.visible = true;\r\n    }\r\n    else {\r\n        components.cbox_overdraft.visible = false;\r\n    }\r\n    for (var i = 0; i < accountList.length; i++) {\r\n        amountBalance = quick.Quick.toMoney(Number(accountList[i].balance)); //'124.0';\r\n        if (amountBalance.split(',')[1]) { }\r\n        else {\r\n            decimal = ',00';\r\n            amountBalance = amountBalance + decimal;\r\n        }\r\n        var data = {\r\n            text: ((_d = accountList[i].number) === null || _d === void 0 ? void 0 : _d.branchCode) + '-' + ((_e = accountList[i].number) === null || _e === void 0 ? void 0 : _e.number) + ' - Vadesiz TL - ' + amountBalance + ' TRY',\r\n            value: accountList[i]\r\n        };\r\n        tmpList.push(data);\r\n    }\r\n    components.vauto_accountList.items = tmpList;\r\n    components.as_loadingCustomComp.close();\r\n}).catch(function (err) {\r\n    var _a, _b, _c;\r\n    components.as_loadingCustomComp.close();\r\n    var errorMessage = (_c = (_b = (_a = err === null || err === void 0 ? void 0 : err.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.responseMessage) !== null && _c !== void 0 ? _c : 'Bir hata oluştu.';\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n});\r\n",
 					"C": true,
 					"HL": "JS"
 				},
@@ -4406,7 +4406,7 @@ let pjson = {
 																	},
 																	"class": "text-body-1 font-weight-regular"
 																},
-																"compDomClasses": "q-label  text-body-1 font-weight-regular"
+																"compDomClasses": "q-label text-body-1 font-weight-regular newDropBorder"
 															},
 															"S": {
 																"xs-xl": {
@@ -4521,7 +4521,7 @@ let pjson = {
 													},
 													"class": "mr-1"
 												},
-												"compDomClasses": "v-btn v-btn--depressed v-btn--rounded theme--dark v-size--default mr-1"
+												"compDomClasses": "v-btn v-btn--depressed v-btn--rounded theme--dark v-size--default mr-1 newDropBorder"
 											}
 										},
 										{
@@ -4603,7 +4603,7 @@ let pjson = {
 																	},
 																	"class": "text-body-1 font-weight-regular"
 																},
-																"compDomClasses": "q-label  text-body-1 font-weight-regular"
+																"compDomClasses": "q-label text-body-1 font-weight-regular newDropBorder"
 															},
 															"S": {
 																"xs-xl": {
@@ -4718,7 +4718,7 @@ let pjson = {
 													},
 													"class": "mr-1"
 												},
-												"compDomClasses": "v-btn v-btn--depressed v-btn--rounded theme--dark v-size--default mr-1"
+												"compDomClasses": "v-btn v-btn--depressed v-btn--rounded theme--dark v-size--default mr-1 newDropBorder"
 											}
 										}
 									],
@@ -4750,7 +4750,7 @@ let pjson = {
 									},
 									"class": "d-flex pr-3 pl-3 pb-3 pt-3 justify-end"
 								},
-								"compDomClasses": "col d-flex pr-3 pl-3 pb-3 pt-3 justify-end pb-0"
+								"compDomClasses": "col d-flex pr-3 pl-3 pb-3 pt-3 justify-end pb-0 newDropBorder"
 							},
 							"S": {
 								"xs-xl": {
@@ -4780,7 +4780,7 @@ let pjson = {
 			},
 			"O": {
 				"cType": "slot",
-				"compDomClasses": "row"
+				"compDomClasses": "row newDropBorder"
 			}
 		},
 		{
@@ -4810,7 +4810,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": ""
+				"compDomClasses": "newDropBorder"
 			}
 		},
 		{
@@ -4890,7 +4890,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": ""
+				"compDomClasses": "newDropBorder"
 			}
 		},
 		{
@@ -4985,7 +4985,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": ""
+				"compDomClasses": "newDropBorder"
 			}
 		}
 	],

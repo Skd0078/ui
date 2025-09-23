@@ -24,7 +24,7 @@ let pjson = {
 			},
 			"E": {
 				"setItems": {
-					"H": "debugger;\r\n\r\nconst raw = quick.store.get('$getPaidInstallmentData');\r\n\r\nconst selected = Array.isArray(raw)\r\n  ? (raw.find((x:any) => x?.selected) || raw[0] || null)\r\n  : (raw || null);\r\n\r\ncomponents.dt_policyPaymentList.items = selected ? [selected] : [];\r\n\r\nconst ac = quick.store.get('$auto_debtorCreditor');\r\nif (selected) {\r\n  if (ac === 'debit') {\r\n    selected.debitAmount = selected.amount;\r\n  } else {\r\n    selected.creditAmount = selected.amount;\r\n  }\r\n}\r\n\r\nconst pol = (selected?.policyNumber || '').split('/');\r\ncomponents.txtPolicyNo.qValue        = pol[0] || '';\r\ncomponents.txtPolicyNo2.qValue       = pol[1] || '';\r\ncomponents.comboOdenecekTutar.qValue = selected?.amount || '';\r\n\r\nconst pRaw = (selected?.paymentTypeRaw || selected?.paymentType || '').toUpperCase();\r\nconst isCash  = (pRaw === 'ACCOUNT' && !(selected?.accountInfo?.branchCode > 0 && selected?.accountInfo?.number > 0));\r\nconst isCari  = (pRaw === 'ACCOUNT' &&  (selected?.accountInfo?.branchCode > 0 && selected?.accountInfo?.number > 0));\r\nconst isCcard = (pRaw === 'CCARD' || pRaw === 'IMCCARD');\r\n\r\ncomponents.comboOdemeSekli.qValue = isCash ? 'Nakit' : (isCari ? 'Cari Hesap' : (isCcard ? 'Kredi Kartı' : (selected?.paymentType || '')));\r\n\r\nconst lblKkn = components.EdtrComp_94;   \r\nconst cmbKkn = components.comboKkn;      \r\n\r\nif (isCash) {\r\n  lblKkn.visible = false;                            \r\n  cmbKkn.visible = false;                           \r\n  cmbKkn.qValue  = '';                                \r\n\r\n} else if (isCcard) {\r\n  lblKkn.visible = true;                            \r\n  cmbKkn.visible = true;                        \r\n  lblKkn.text = 'Kredi Kartı Numarası : ';\r\n  \r\n\r\n  cmbKkn.qValue = selected?.creditCardNumberForList || selected?.creditCardNumber || ''; \r\n\r\n} else if (isCari) {\r\n  lblKkn.visible = true;                             \r\n  cmbKkn.visible = true;                             \r\n  lblKkn.text = 'Hesap Numarası :';\r\n\r\n  const br = Number(selected?.accountInfo?.branchCode) || 0;\r\n  const no = Number(selected?.accountInfo?.number)     || 0;\r\n  cmbKkn.qValue = (br && no) ? `${br}-${no}` : '';     \r\n}",
+					"H": "debugger;\r\n\r\nconst raw = quick.store.get('$getPaidInstallmentData');\r\n\r\nconst selected = Array.isArray(raw)\r\n  ? (raw.find((x:any) => x?.selected) || raw[0] || null)\r\n  : (raw || null);\r\n\r\ncomponents.dt_policyPaymentList.items = selected ? [selected] : [];\r\n\r\nconst ac = quick.store.get('$auto_debtorCreditor');\r\nif (selected) {\r\n  if (ac === 'debit') {\r\n    selected.debitAmount = selected.amount;\r\n  } else {\r\n    selected.creditAmount = selected.amount;\r\n  }\r\n}\r\n\r\nconst pol = (selected?.policyNumber || '').split('/');\r\ncomponents.txtPolicyNo.qValue        = pol[0] || '';\r\ncomponents.txtPolicyNo2.qValue       = pol[1] || '';\r\ncomponents.comboOdenecekTutar.qValue = selected?.amount || '';\r\n\r\nconst pRaw = (selected?.paymentTypeRaw || selected?.paymentType || '').toUpperCase();\r\nconst isCash  = (pRaw === 'ACCOUNT' && !(selected?.accountInfo?.branchCode > 0 && selected?.accountInfo?.number > 0));\r\nconst isCari  = (pRaw === 'ACCOUNT' &&  (selected?.accountInfo?.branchCode > 0 && selected?.accountInfo?.number > 0));\r\nconst isCcard = (pRaw === 'CCARD' || pRaw === 'IMCCARD');\r\n\r\ncomponents.comboOdemeSekli.qValue = isCash ? 'Nakit' : (isCari ? 'Cari Hesap' : (isCcard ? 'Kredi Kartı' : (selected?.paymentType || '')));\r\n\r\nconst lblKkn = components.EdtrComp_94;   \r\nconst cmbKkn = components.comboKkn;      \r\n\r\nif (isCash) {\r\n  lblKkn.visible = false;                            \r\n  cmbKkn.visible = false;                           \r\n  cmbKkn.qValue  = '';                                \r\n\r\n} else if (isCcard) {\r\n  lblKkn.visible = true;                            \r\n  cmbKkn.visible = true;                        \r\n  lblKkn.text = 'Kredi Kartı Numarası : ';\r\n  \r\n\r\n  cmbKkn.qValue = selected?.creditCardNumberForList || selected?.creditCardNumber || ''; \r\n\r\n}else if (isCari) {\r\n  lblKkn.visible = true;                             \r\n  cmbKkn.visible = true;                             \r\n  lblKkn.text = 'Hesap Numarası :';\r\n\r\n  cmbKkn.qValue = selected?.creditCardNumberForList || '';\r\n  \r\n  if (!cmbKkn.qValue) {\r\n    const br = Number(selected?.accountInfo?.branchCode) || 0;\r\n    const no = Number(selected?.accountInfo?.number)     || 0;\r\n    cmbKkn.qValue = (br && no) ? `${br}-${no}` : '';\r\n  }\r\n}",
 					"C": true,
 					"EV": true,
 					"HL": "TS"
@@ -2733,7 +2733,7 @@ let pjson = {
 			},
 			"E": {
 				"setItems": {
-					"H": "var _a, _b, _c, _d, _e, _f;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nvar raw = quick.store.get('$getPaidInstallmentData');\r\nvar selected = Array.isArray(raw)\r\n    ? (raw.find(function (x) { return x === null || x === void 0 ? void 0 : x.selected; }) || raw[0] || null)\r\n    : (raw || null);\r\ncomponents.dt_policyPaymentList.items = selected ? [selected] : [];\r\nvar ac = quick.store.get('$auto_debtorCreditor');\r\nif (selected) {\r\n    if (ac === 'debit') {\r\n        selected.debitAmount = selected.amount;\r\n    }\r\n    else {\r\n        selected.creditAmount = selected.amount;\r\n    }\r\n}\r\nvar pol = ((selected === null || selected === void 0 ? void 0 : selected.policyNumber) || '').split('/');\r\ncomponents.txtPolicyNo.qValue = pol[0] || '';\r\ncomponents.txtPolicyNo2.qValue = pol[1] || '';\r\ncomponents.comboOdenecekTutar.qValue = (selected === null || selected === void 0 ? void 0 : selected.amount) || '';\r\nvar pRaw = ((selected === null || selected === void 0 ? void 0 : selected.paymentTypeRaw) || (selected === null || selected === void 0 ? void 0 : selected.paymentType) || '').toUpperCase();\r\nvar isCash = (pRaw === 'ACCOUNT' && !(((_a = selected === null || selected === void 0 ? void 0 : selected.accountInfo) === null || _a === void 0 ? void 0 : _a.branchCode) > 0 && ((_b = selected === null || selected === void 0 ? void 0 : selected.accountInfo) === null || _b === void 0 ? void 0 : _b.number) > 0));\r\nvar isCari = (pRaw === 'ACCOUNT' && (((_c = selected === null || selected === void 0 ? void 0 : selected.accountInfo) === null || _c === void 0 ? void 0 : _c.branchCode) > 0 && ((_d = selected === null || selected === void 0 ? void 0 : selected.accountInfo) === null || _d === void 0 ? void 0 : _d.number) > 0));\r\nvar isCcard = (pRaw === 'CCARD' || pRaw === 'IMCCARD');\r\ncomponents.comboOdemeSekli.qValue = isCash ? 'Nakit' : (isCari ? 'Cari Hesap' : (isCcard ? 'Kredi Kartı' : ((selected === null || selected === void 0 ? void 0 : selected.paymentType) || '')));\r\nvar lblKkn = components.EdtrComp_94;\r\nvar cmbKkn = components.comboKkn;\r\nif (isCash) {\r\n    lblKkn.visible = false;\r\n    cmbKkn.visible = false;\r\n    cmbKkn.qValue = '';\r\n}\r\nelse if (isCcard) {\r\n    lblKkn.visible = true;\r\n    cmbKkn.visible = true;\r\n    lblKkn.text = 'Kredi Kartı Numarası : ';\r\n    cmbKkn.qValue = (selected === null || selected === void 0 ? void 0 : selected.creditCardNumberForList) || (selected === null || selected === void 0 ? void 0 : selected.creditCardNumber) || '';\r\n}\r\nelse if (isCari) {\r\n    lblKkn.visible = true;\r\n    cmbKkn.visible = true;\r\n    lblKkn.text = 'Hesap Numarası :';\r\n    var br = Number((_e = selected === null || selected === void 0 ? void 0 : selected.accountInfo) === null || _e === void 0 ? void 0 : _e.branchCode) || 0;\r\n    var no = Number((_f = selected === null || selected === void 0 ? void 0 : selected.accountInfo) === null || _f === void 0 ? void 0 : _f.number) || 0;\r\n    cmbKkn.qValue = (br && no) ? br + \"-\" + no : '';\r\n}\r\n",
+					"H": "var _a, _b, _c, _d, _e, _f;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nvar raw = quick.store.get('$getPaidInstallmentData');\r\nvar selected = Array.isArray(raw)\r\n    ? (raw.find(function (x) { return x === null || x === void 0 ? void 0 : x.selected; }) || raw[0] || null)\r\n    : (raw || null);\r\ncomponents.dt_policyPaymentList.items = selected ? [selected] : [];\r\nvar ac = quick.store.get('$auto_debtorCreditor');\r\nif (selected) {\r\n    if (ac === 'debit') {\r\n        selected.debitAmount = selected.amount;\r\n    }\r\n    else {\r\n        selected.creditAmount = selected.amount;\r\n    }\r\n}\r\nvar pol = ((selected === null || selected === void 0 ? void 0 : selected.policyNumber) || '').split('/');\r\ncomponents.txtPolicyNo.qValue = pol[0] || '';\r\ncomponents.txtPolicyNo2.qValue = pol[1] || '';\r\ncomponents.comboOdenecekTutar.qValue = (selected === null || selected === void 0 ? void 0 : selected.amount) || '';\r\nvar pRaw = ((selected === null || selected === void 0 ? void 0 : selected.paymentTypeRaw) || (selected === null || selected === void 0 ? void 0 : selected.paymentType) || '').toUpperCase();\r\nvar isCash = (pRaw === 'ACCOUNT' && !(((_a = selected === null || selected === void 0 ? void 0 : selected.accountInfo) === null || _a === void 0 ? void 0 : _a.branchCode) > 0 && ((_b = selected === null || selected === void 0 ? void 0 : selected.accountInfo) === null || _b === void 0 ? void 0 : _b.number) > 0));\r\nvar isCari = (pRaw === 'ACCOUNT' && (((_c = selected === null || selected === void 0 ? void 0 : selected.accountInfo) === null || _c === void 0 ? void 0 : _c.branchCode) > 0 && ((_d = selected === null || selected === void 0 ? void 0 : selected.accountInfo) === null || _d === void 0 ? void 0 : _d.number) > 0));\r\nvar isCcard = (pRaw === 'CCARD' || pRaw === 'IMCCARD');\r\ncomponents.comboOdemeSekli.qValue = isCash ? 'Nakit' : (isCari ? 'Cari Hesap' : (isCcard ? 'Kredi Kartı' : ((selected === null || selected === void 0 ? void 0 : selected.paymentType) || '')));\r\nvar lblKkn = components.EdtrComp_94;\r\nvar cmbKkn = components.comboKkn;\r\nif (isCash) {\r\n    lblKkn.visible = false;\r\n    cmbKkn.visible = false;\r\n    cmbKkn.qValue = '';\r\n}\r\nelse if (isCcard) {\r\n    lblKkn.visible = true;\r\n    cmbKkn.visible = true;\r\n    lblKkn.text = 'Kredi Kartı Numarası : ';\r\n    cmbKkn.qValue = (selected === null || selected === void 0 ? void 0 : selected.creditCardNumberForList) || (selected === null || selected === void 0 ? void 0 : selected.creditCardNumber) || '';\r\n}\r\nelse if (isCari) {\r\n    lblKkn.visible = true;\r\n    cmbKkn.visible = true;\r\n    lblKkn.text = 'Hesap Numarası :';\r\n    cmbKkn.qValue = (selected === null || selected === void 0 ? void 0 : selected.creditCardNumberForList) || '';\r\n    if (!cmbKkn.qValue) {\r\n        var br = Number((_e = selected === null || selected === void 0 ? void 0 : selected.accountInfo) === null || _e === void 0 ? void 0 : _e.branchCode) || 0;\r\n        var no = Number((_f = selected === null || selected === void 0 ? void 0 : selected.accountInfo) === null || _f === void 0 ? void 0 : _f.number) || 0;\r\n        cmbKkn.qValue = (br && no) ? br + \"-\" + no : '';\r\n    }\r\n}\r\n",
 					"C": true,
 					"EV": true,
 					"HL": "JS"
@@ -4779,7 +4779,7 @@ let pjson = {
 																	},
 																	"class": "text-body-1 font-weight-regular"
 																},
-																"compDomClasses": "q-label  text-body-1 font-weight-regular"
+																"compDomClasses": "q-label text-body-1 font-weight-regular newDropBorder"
 															},
 															"S": {
 																"xs-xl": {
@@ -4894,7 +4894,7 @@ let pjson = {
 													},
 													"class": "mr-1"
 												},
-												"compDomClasses": "v-btn v-btn--depressed v-btn--rounded theme--dark v-size--default mr-1"
+												"compDomClasses": "v-btn v-btn--depressed v-btn--rounded theme--dark v-size--default mr-1 newDropBorder"
 											}
 										},
 										{
@@ -4975,7 +4975,7 @@ let pjson = {
 																	},
 																	"class": "text-body-1 font-weight-regular"
 																},
-																"compDomClasses": "q-label  text-body-1 font-weight-regular"
+																"compDomClasses": "q-label text-body-1 font-weight-regular newDropBorder"
 															},
 															"S": {
 																"xs-xl": {
@@ -5090,7 +5090,7 @@ let pjson = {
 													},
 													"class": "mr-1"
 												},
-												"compDomClasses": "v-btn v-btn--depressed v-btn--rounded theme--dark v-size--default mr-1"
+												"compDomClasses": "v-btn v-btn--depressed v-btn--rounded theme--dark v-size--default mr-1 newDropBorder"
 											}
 										}
 									],
@@ -5122,7 +5122,7 @@ let pjson = {
 									},
 									"class": "d-flex pr-3 pl-3 pb-3 pt-3 justify-end"
 								},
-								"compDomClasses": "col d-flex pr-3 pl-3 pb-3 pt-3 justify-end pb-0"
+								"compDomClasses": "col d-flex pr-3 pl-3 pb-3 pt-3 justify-end pb-0 newDropBorder"
 							},
 							"S": {
 								"xs-xl": {
@@ -5152,7 +5152,7 @@ let pjson = {
 			},
 			"O": {
 				"cType": "slot",
-				"compDomClasses": "row"
+				"compDomClasses": "row newDropBorder"
 			}
 		},
 		{
@@ -5252,7 +5252,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": ""
+				"compDomClasses": "newDropBorder"
 			}
 		},
 		{
@@ -5332,7 +5332,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": ""
+				"compDomClasses": "newDropBorder"
 			}
 		},
 		{
@@ -5412,7 +5412,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": ""
+				"compDomClasses": "newDropBorder"
 			}
 		},
 		{
@@ -5461,7 +5461,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": ""
+				"compDomClasses": "newDropBorder"
 			}
 		}
 	],
