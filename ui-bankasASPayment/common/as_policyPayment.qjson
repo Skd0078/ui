@@ -1007,7 +1007,7 @@ let pjson = {
 																			},
 																			"E": {
 																				"change": {
-																					"H": "debugger;\r\ncomponents.as_loadingCustomComp.open();\r\ncomponents.row_accountRow.visible = true;\r\ncomponents.cbox_overdraft.visible = false;\r\ncomponents.vauto_interestFreePeriod.visible = false;\r\ncomponents.btn_createOrder.visible = true;\r\nif (components.vauto_paymentType.qValue == \"1\") {\r\n  //Nakit\r\n  components.row_accountRow.visible = false;\r\n  quick.store.set(\"paymentType\", \"cash\");\r\n  quick.store.set(\"paymentTypeEnum\", \"CASH\");\r\n  components.as_loadingCustomComp.close();\r\n} else if (components.vauto_paymentType.qValue == \"2\") {\r\n  //Kredi Kartı\r\n  quick.MM.trigger(\"retrieveCreditCardList\", [{ isImeceCard: false }]);\r\n  quick.store.set(\"paymentType\", \"creditCard\");\r\n  quick.store.set(\"paymentTypeEnum\", \"CREDIT_CARD\");\r\n} else if (components.vauto_paymentType.qValue == \"3\") {\r\n  //Cari Hesap\r\n  quick.MM.trigger(\"retrieveCustomerAccounts\");\r\n  components.vauto_accountList.label = \"Hesap Numarası\";\r\n  quick.store.set(\"paymentType\", \"account\");\r\n  quick.store.set(\"paymentTypeEnum\", \"ACCOUNT\");\r\n} else if (components.vauto_paymentType.qValue == \"4\") {\r\n  //İmece Kart\r\n  quick.MM.trigger(\"retrieveCreditCardList\", [{ isImeceCard: true }]);\r\n  components.vauto_interestFreePeriod.visible = true;\r\n  quick.store.set(\"paymentType\", \"creditCard\");\r\n  quick.store.set(\"paymentTypeEnum\", \"CREDIT_CARD\");\r\n\r\n}",
+																					"H": "debugger;\r\ncomponents.as_loadingCustomComp.open();\r\ncomponents.row_accountRow.visible = true;\r\ncomponents.cbox_overdraft.visible = false;\r\ncomponents.vauto_interestFreePeriod.visible = false;\r\ncomponents.btn_createOrder.visible = true;\r\nif (components.vauto_paymentType.qValue == \"1\") {\r\n  //Nakit\r\n  components.row_accountRow.visible = false;\r\n  quick.store.set(\"paymentType\", \"cash\");\r\n  quick.store.set(\"paymentTypeEnum\", \"CASH\");\r\n  components.as_loadingCustomComp.close();\r\n} else if (components.vauto_paymentType.qValue == \"2\") {\r\n  //Kredi Kartı\r\n  quick.store.set(\"paymentType\", \"creditCard\");\r\n  quick.store.set(\"paymentTypeEnum\", \"CREDIT_CARD\");\r\n  quick.MM.trigger(\"retrieveCreditCardList\", [{ isImeceCard: false }]);\r\n} else if (components.vauto_paymentType.qValue == \"3\") {\r\n  //Cari Hesap\r\n  components.vauto_accountList.label = \"Hesap Numarası\";\r\n  quick.store.set(\"paymentType\", \"account\");\r\n  quick.store.set(\"paymentTypeEnum\", \"ACCOUNT\");\r\n  quick.MM.trigger(\"retrieveCustomerAccounts\");\r\n\r\n} else if (components.vauto_paymentType.qValue == \"4\") {\r\n  //İmece Kart\r\n  components.vauto_interestFreePeriod.visible = true;\r\n  quick.store.set(\"paymentType\", \"creditCard\");\r\n  quick.store.set(\"paymentTypeEnum\", \"CREDIT_CARD\");\r\n  quick.MM.trigger(\"retrieveCreditCardList\", [{ isImeceCard: true }]);\r\n\r\n}",
 																					"HL": "TS"
 																				}
 																			},
@@ -3496,7 +3496,7 @@ let pjson = {
 																			},
 																			"E": {
 																				"change": {
-																					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\ncomponents.as_loadingCustomComp.open();\r\ncomponents.row_accountRow.visible = true;\r\ncomponents.cbox_overdraft.visible = false;\r\ncomponents.vauto_interestFreePeriod.visible = false;\r\ncomponents.btn_createOrder.visible = true;\r\nif (components.vauto_paymentType.qValue == \"1\") {\r\n    //Nakit\r\n    components.row_accountRow.visible = false;\r\n    quick.store.set(\"paymentType\", \"cash\");\r\n    quick.store.set(\"paymentTypeEnum\", \"CASH\");\r\n    components.as_loadingCustomComp.close();\r\n}\r\nelse if (components.vauto_paymentType.qValue == \"2\") {\r\n    //Kredi Kartı\r\n    quick.MM.trigger(\"retrieveCreditCardList\", [{ isImeceCard: false }]);\r\n    quick.store.set(\"paymentType\", \"creditCard\");\r\n    quick.store.set(\"paymentTypeEnum\", \"CREDIT_CARD\");\r\n}\r\nelse if (components.vauto_paymentType.qValue == \"3\") {\r\n    //Cari Hesap\r\n    quick.MM.trigger(\"retrieveCustomerAccounts\");\r\n    components.vauto_accountList.label = \"Hesap Numarası\";\r\n    quick.store.set(\"paymentType\", \"account\");\r\n    quick.store.set(\"paymentTypeEnum\", \"ACCOUNT\");\r\n}\r\nelse if (components.vauto_paymentType.qValue == \"4\") {\r\n    //İmece Kart\r\n    quick.MM.trigger(\"retrieveCreditCardList\", [{ isImeceCard: true }]);\r\n    components.vauto_interestFreePeriod.visible = true;\r\n    quick.store.set(\"paymentType\", \"creditCard\");\r\n    quick.store.set(\"paymentTypeEnum\", \"CREDIT_CARD\");\r\n}\r\n",
+																					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\ncomponents.as_loadingCustomComp.open();\r\ncomponents.row_accountRow.visible = true;\r\ncomponents.cbox_overdraft.visible = false;\r\ncomponents.vauto_interestFreePeriod.visible = false;\r\ncomponents.btn_createOrder.visible = true;\r\nif (components.vauto_paymentType.qValue == \"1\") {\r\n    //Nakit\r\n    components.row_accountRow.visible = false;\r\n    quick.store.set(\"paymentType\", \"cash\");\r\n    quick.store.set(\"paymentTypeEnum\", \"CASH\");\r\n    components.as_loadingCustomComp.close();\r\n}\r\nelse if (components.vauto_paymentType.qValue == \"2\") {\r\n    //Kredi Kartı\r\n    quick.store.set(\"paymentType\", \"creditCard\");\r\n    quick.store.set(\"paymentTypeEnum\", \"CREDIT_CARD\");\r\n    quick.MM.trigger(\"retrieveCreditCardList\", [{ isImeceCard: false }]);\r\n}\r\nelse if (components.vauto_paymentType.qValue == \"3\") {\r\n    //Cari Hesap\r\n    components.vauto_accountList.label = \"Hesap Numarası\";\r\n    quick.store.set(\"paymentType\", \"account\");\r\n    quick.store.set(\"paymentTypeEnum\", \"ACCOUNT\");\r\n    quick.MM.trigger(\"retrieveCustomerAccounts\");\r\n}\r\nelse if (components.vauto_paymentType.qValue == \"4\") {\r\n    //İmece Kart\r\n    components.vauto_interestFreePeriod.visible = true;\r\n    quick.store.set(\"paymentType\", \"creditCard\");\r\n    quick.store.set(\"paymentTypeEnum\", \"CREDIT_CARD\");\r\n    quick.MM.trigger(\"retrieveCreditCardList\", [{ isImeceCard: true }]);\r\n}\r\n",
 																					"HL": "JS"
 																				}
 																			},
@@ -4810,7 +4810,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": "newDropBorder"
+				"compDomClasses": ""
 			}
 		},
 		{
@@ -4890,7 +4890,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": "newDropBorder"
+				"compDomClasses": ""
 			}
 		},
 		{
@@ -4985,7 +4985,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": "newDropBorder"
+				"compDomClasses": ""
 			}
 		}
 	],

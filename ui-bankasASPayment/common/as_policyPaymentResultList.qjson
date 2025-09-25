@@ -654,7 +654,7 @@ let pjson = {
 											},
 											"E": {
 												"click": {
-													"H": "debugger;\r\n\r\nlet policyPayment = quick.store.get('$policyPayment');\r\nlet vauto_debtorCreditorValue = quick.store.get('$vauto_debtorCreditor');\r\n\r\nlet request = {\r\n    policyNumber: {\r\n        policyNo: policyPayment.policyNumber,\r\n        renewalNo: policyPayment.renewalNumber\r\n    },\r\n    operationType: vauto_debtorCreditorValue == \"debit\" ? \"PAYMENT\" : \"REFUND\",\r\n    isLegacy: false\r\n};\r\n\r\nquick.MM.trigger(\"searchPolicyPaymentPlan\", [{ request: request }]);\r\n\r\n",
+													"H": "debugger;\r\n\r\nlet policyPayment = quick.store.get('$policyPayment');\r\nlet vauto_debtorCreditorValue = quick.store.get('$vauto_debtorCreditor');\r\n\r\nlet request = {\r\n    policyNumber: {\r\n        policyNo: policyPayment.policyNumber,\r\n        renewalNo: policyPayment.renewalNumber\r\n    },\r\n    operationType: vauto_debtorCreditorValue == \"debit\" ? \"PAYMENT\" : \"REFUND\",\r\n    isLegacy: true\r\n};\r\n\r\nquick.MM.trigger(\"searchPolicyPaymentPlan\", [{ request: request }]);\r\n\r\n",
 													"P": "mouseEvent:unknown | undefined",
 													"HL": "TS"
 												}
@@ -1638,7 +1638,7 @@ let pjson = {
 											},
 											"E": {
 												"click": {
-													"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\ndebugger;\r\nvar policyPayment = quick.store.get('$policyPayment');\r\nvar vauto_debtorCreditorValue = quick.store.get('$vauto_debtorCreditor');\r\nvar request = {\r\n    policyNumber: {\r\n        policyNo: policyPayment.policyNumber,\r\n        renewalNo: policyPayment.renewalNumber\r\n    },\r\n    operationType: vauto_debtorCreditorValue == \"debit\" ? \"PAYMENT\" : \"REFUND\",\r\n    isLegacy: false\r\n};\r\nquick.MM.trigger(\"searchPolicyPaymentPlan\", [{ request: request }]);\r\n",
+													"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\ndebugger;\r\nvar policyPayment = quick.store.get('$policyPayment');\r\nvar vauto_debtorCreditorValue = quick.store.get('$vauto_debtorCreditor');\r\nvar request = {\r\n    policyNumber: {\r\n        policyNo: policyPayment.policyNumber,\r\n        renewalNo: policyPayment.renewalNumber\r\n    },\r\n    operationType: vauto_debtorCreditorValue == \"debit\" ? \"PAYMENT\" : \"REFUND\",\r\n    isLegacy: true\r\n};\r\nquick.MM.trigger(\"searchPolicyPaymentPlan\", [{ request: request }]);\r\n",
 													"P": "mouseEvent:unknown | undefined",
 													"HL": "JS"
 												}
