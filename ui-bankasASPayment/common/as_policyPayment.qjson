@@ -24,7 +24,7 @@ let pjson = {
 			},
 			"E": {
 				"setItems": {
-					"H": "debugger;\r\nlet paymentPlan = quick.store.get('$paymentPlan');\r\nlet policy = quick.store.get('$policyPayment');\r\n\r\nlet items = []\r\npaymentPlan.amountText = quick.Quick.toMoney(Math.abs(paymentPlan.amount.amount.amount), 'tr-TR', { minimumFractionDigits: 2 })\r\n    + \" \" + paymentPlan.amount.amount.currencyCode.code;\r\npaymentPlan.amountTLText = quick.Quick.toMoney(Math.abs(paymentPlan.amount.amountTL.amount), 'tr-TR', { minimumFractionDigits: 2 })\r\n    + \" \" + paymentPlan.amount.amountTL.currencyCode.code;\r\npaymentPlan.id = 1;\r\npaymentPlan.installmentDateFormatted = paymentPlan.installmentDate?.split('-').reverse().join('.');\r\nitems.push(paymentPlan);\r\n\r\ncomponents.dt_policyPaymentList.items = items;\r\n\r\ncomponents.txt_policyNo.qValue = policy.policyNumber;\r\ncomponents.txt_renewalNo.qValue = policy.renewalNumber;\r\ncomponents.txt_amount.qValue = paymentPlan.amountText;\r\n\r\nlet interestFreePeriodItems = [];\r\nif (policy.interestFreePeriods) {\r\n    for (let i in policy.interestFreePeriods) {\r\n        let interestFreePeriodItem = {\r\n            text: i,\r\n            value: i\r\n        }\r\n        interestFreePeriodItems.push(interestFreePeriodItem);\r\n    }\r\n}\r\ncomponents.vauto_interestFreePeriod.items = interestFreePeriodItems;\r\nquick.MM.trigger(\"setPaymentType\");\r\n\r\nlet vauto_debtorCreditor = quick.store.get('$vauto_debtorCreditor'); // Borç veya alacak\r\nlet isDebit = vauto_debtorCreditor == \"debit\";\r\nif (isDebit) {\r\n    components.lbl_title.text = \"Anadolu Sigorta Tahsilat\";\r\n    components.vauto_paymentType.label = \"Tahsilat Tipi\";\r\n    components.txt_amount.label = \"Tahsil Edilecek Tutar\";\r\n    components.txt_continue.text = \"Tahsil Et\";\r\n} else {\r\n    components.lbl_title.text = \"Anadolu Sigorta İade\";\r\n    components.vauto_paymentType.label = \"İade Tipi\";\r\n    components.txt_amount.label = \"İade Edilecek Tutar\";\r\n    components.txt_continue.text = \"İade Et\";\r\n}",
+					"H": "debugger;\r\nlet paymentPlan = quick.store.get('$paymentPlan');\r\nlet policy = quick.store.get('$policyPayment');\r\n\r\nlet items = []\r\npaymentPlan.amountText = quick.Quick.toMoney(Math.abs(paymentPlan.amount.amount.amount), 'tr-TR', { minimumFractionDigits: 2 })\r\n    + \" \" + paymentPlan.amount.amount.currencyCode.code;\r\npaymentPlan.amountTLText = quick.Quick.toMoney(Math.abs(paymentPlan.amount.amountTL.amount), 'tr-TR', { minimumFractionDigits: 2 })\r\n    + \" \" + paymentPlan.amount.amountTL.currencyCode.code;\r\npaymentPlan.id = 1;\r\npaymentPlan.installmentDateFormatted = paymentPlan.installmentDate?.split('-').reverse().join('.');\r\nitems.push(paymentPlan);\r\n\r\ncomponents.dt_policyPaymentList.items = items;\r\n\r\ncomponents.txt_policyNo.qValue = policy.policyNumber;\r\ncomponents.txt_renewalNo.qValue = policy.renewalNumber;\r\ncomponents.txt_amount.qValue = paymentPlan.amountText;\r\n\r\nlet interestFreePeriodItems = [];\r\nif (policy.interestFreePeriods) {\r\n    for (let i in policy.interestFreePeriods?.period) {\r\n        let interestFreePeriodItem = {\r\n            text: policy.interestFreePeriods.period[i],\r\n            value: policy.interestFreePeriods.period[i]\r\n        }\r\n        interestFreePeriodItems.push(interestFreePeriodItem);\r\n    }\r\n}\r\ncomponents.vauto_interestFreePeriod.items = interestFreePeriodItems;\r\nquick.MM.trigger(\"setPaymentType\");\r\n\r\nlet vauto_debtorCreditor = quick.store.get('$vauto_debtorCreditor'); // Borç veya alacak\r\nlet isDebit = vauto_debtorCreditor == \"debit\";\r\nif (isDebit) {\r\n    components.lbl_title.text = \"Anadolu Sigorta Tahsilat\";\r\n    components.vauto_paymentType.label = \"Tahsilat Tipi\";\r\n    components.txt_amount.label = \"Tahsil Edilecek Tutar\";\r\n    components.txt_continue.text = \"Tahsil Et\";\r\n} else {\r\n    components.lbl_title.text = \"Anadolu Sigorta İade\";\r\n    components.vauto_paymentType.label = \"İade Tipi\";\r\n    components.txt_amount.label = \"İade Edilecek Tutar\";\r\n    components.txt_continue.text = \"İade Et\";\r\n}",
 					"C": true,
 					"EV": true,
 					"HL": "TS"
@@ -40,12 +40,12 @@ let pjson = {
 					"HL": "TS"
 				},
 				"retrieveCreditCardList": {
-					"H": "debugger;\r\nlet isImeceCard;\r\ncomponents.vauto_accountList.label = \"Kredi Kartı\";\r\n\r\nlet requestData = {\r\n    //\"customerNo\": quick.store.get('$customerInfo').customerNumber, //(<any>quick.containerServices).getCustomerContext()?.customerNumber,\r\n    \"customerNo\": (<any>quick.containerServices).getCustomerContext()?.customerNumber,\r\n    \"branchCode\": 0,\r\n    \"accountNo\": 0,\r\n    \"pageSize\": 0,\r\n    \"pageNumber\": 0,\r\n    \"transactionType\": isImeceCard ? \"I\" : \"S\"\r\n};\r\nquick.MM.trigger('setDatasConsumerAndScreenInfo');\r\nlet serviceRequest: IRequest = {\r\n    url: '/api/uiclient/retrieveCreditCardList',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n}\r\n\r\nquick.Request.async(serviceRequest)?.then((resp) => {\r\n    debugger;\r\n    let decimal\r\n    let availableLimit;\r\n    let cardList = resp.data.cardInfo;\r\n    let tmpList = [];\r\n    quick.store.set(\"creditCardInfo\", resp.data);\r\n    for (var i = 0; i < cardList.length; i++) {\r\n        if (cardList[i].cardStatCode == \"N\" || cardList[i].cardStatCode == \"CR\" || cardList[i].cardStatCode == \"SG\") {\r\n            if (cardList[i].cardType != \"V\" && cardList[i].cardNo == cardList[i].mainCardNo) {\r\n                availableLimit = quick.Quick.toMoney(Number(cardList[i].availableLimit)); //'124.0';\r\n                if (availableLimit.split(',')[1]) { }\r\n                else {\r\n                    decimal = ',00';\r\n                    availableLimit = availableLimit + decimal;\r\n                }\r\n\r\n                let data = {\r\n                    text: cardList[i].cardNo + ' (' + availableLimit + ') ' + cardList[i].embossName,\r\n                    value: cardList[i]\r\n                }\r\n                tmpList.push(data);\r\n            }\r\n        }\r\n    }\r\n    components.vauto_accountList.items = tmpList;;\r\n    components.as_loadingCustomComp.close();\r\n})\r\n    .catch((err) => {\r\n        components.as_loadingCustomComp.close();\r\n        let errorMessage = err?.response?.data?.responseMessage ?? 'Bir hata oluştu.';\r\n        (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n        components.as_alertCustomComp.open();\r\n    });",
+					"H": "debugger;\r\nlet isImeceCard;\r\nif (isImeceCard) {\r\n    components.vauto_accountList.label = \"İmece Kart No\";\r\n} else {\r\n    components.vauto_accountList.label = \"Kredi Kartı\";\r\n}\r\ncomponents.vauto_accountList.placeholder = \"Seçiniz\";\r\n\r\n\r\nlet requestData = {\r\n    //\"customerNo\": quick.store.get('$customerInfo').customerNumber, //(<any>quick.containerServices).getCustomerContext()?.customerNumber,\r\n    \"customerNo\": (<any>quick.containerServices).getCustomerContext()?.customerNumber,\r\n    \"branchCode\": 0,\r\n    \"accountNo\": 0,\r\n    \"pageSize\": 0,\r\n    \"pageNumber\": 0,\r\n    \"transactionType\": isImeceCard ? \"I\" : \"S\"\r\n};\r\nquick.MM.trigger('setDatasConsumerAndScreenInfo');\r\nlet serviceRequest: IRequest = {\r\n    url: '/api/uiclient/retrieveCreditCardList',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n}\r\n\r\nquick.Request.async(serviceRequest)?.then((resp) => {\r\n    debugger;\r\n    let decimal\r\n    let availableLimit;\r\n    let cardList = resp.data.cardInfo;\r\n    let tmpList = [];\r\n    quick.store.set(\"creditCardInfo\", resp.data);\r\n    for (var i = 0; i < cardList.length; i++) {\r\n        if (cardList[i].cardStatCode == \"N\" || cardList[i].cardStatCode == \"CR\" || cardList[i].cardStatCode == \"SG\") {\r\n            if (cardList[i].cardType != \"V\" && cardList[i].cardNo == cardList[i].mainCardNo) {\r\n                availableLimit = quick.Quick.toMoney(Number(cardList[i].availableLimit)); //'124.0';\r\n                if (availableLimit.split(',')[1]) { }\r\n                else {\r\n                    decimal = ',00';\r\n                    availableLimit = availableLimit + decimal;\r\n                }\r\n\r\n                let data = {\r\n                    text: cardList[i].cardNo + ' (' + availableLimit + ') ' + cardList[i].embossName,\r\n                    value: cardList[i]\r\n                }\r\n                tmpList.push(data);\r\n            }\r\n        }\r\n    }\r\n    components.vauto_accountList.items = tmpList;\r\n    components.vauto_accountList.disabled = false;\r\n    components.as_loadingCustomComp.close();\r\n})\r\n    .catch((err) => {\r\n        components.as_loadingCustomComp.close();\r\n        components.vauto_accountList.disabled = true;\r\n        components.vauto_accountList.placeholder = \"Hesaplar Yüklenemedi.\";\r\n        components.btn_createOrder.visible = false;\r\n        let errorMessage = err?.response?.data?.responseMessage ?? 'Bir hata oluştu.';\r\n        (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n        components.as_alertCustomComp.open();\r\n    });",
 					"C": true,
 					"HL": "TS"
 				},
 				"retrieveCustomerAccounts": {
-					"H": "debugger;\r\n//Tahsilat şekli Hesaptan seçildi\r\nlet requestData = {\r\n    \"customerNumber\": (<any>quick.containerServices).getCustomerContext()?.customerNumber,\r\n    \"accountType\": [\r\n        {\r\n            \"code\": \"DEMAND\"\r\n        }\r\n    ],\r\n    \"statusCode\": {\r\n        \"code\": \"OPEN\"\r\n    }\r\n};\r\nquick.MM.trigger('setDatasConsumerAndScreenInfo');\r\n\r\nlet serviceRequest: IRequest = {\r\n    url: '/api/uiclient/retrieveCustomerAccounts',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'retrieveCustomerAccountsResponse',\r\n    blockRender: false,\r\n}\r\n\r\nquick.Request.async(serviceRequest)?.then((resp) => {\r\n    quick.EM.trace(resp?.data);\r\n    let decimal;\r\n    let amountBalance;\r\n    let accountList = resp?.data.accountList.account;\r\n    let tmpList = [];\r\n\r\n    let overDraft = resp?.data?.accountList?.account[0]?.overdraft;\r\n    if (overDraft == true) {\r\n        components.cbox_overdraft.visible = true;\r\n    }\r\n    else {\r\n        components.cbox_overdraft.visible = false;\r\n    }\r\n\r\n    for (var i = 0; i < accountList.length; i++) {\r\n        amountBalance = quick.Quick.toMoney(Number(accountList[i].balance)); //'124.0';\r\n        if (amountBalance.split(',')[1]) { }\r\n        else {\r\n            decimal = ',00';\r\n            amountBalance = amountBalance + decimal;\r\n        }\r\n\r\n        let data = {\r\n            text: accountList[i].number?.branchCode + '-' + accountList[i].number?.number + ' - Vadesiz TL - ' + amountBalance + ' TRY',\r\n            value: accountList[i]\r\n        }\r\n        tmpList.push(data);\r\n    }\r\n    components.vauto_accountList.items = tmpList;\r\n    components.as_loadingCustomComp.close();\r\n})\r\n    .catch((err) => {\r\n        components.as_loadingCustomComp.close();\r\n        let errorMessage = err?.response?.data?.responseMessage ?? 'Bir hata oluştu.';\r\n        (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n        components.as_alertCustomComp.open();\r\n    });",
+					"H": "debugger;\r\n//Tahsilat şekli Hesaptan seçildi\r\ncomponents.vauto_accountList.placeholder = \"Seçiniz\";\r\n\r\nlet requestData = {\r\n    \"customerNumber\": (<any>quick.containerServices).getCustomerContext()?.customerNumber,\r\n    \"accountType\": [\r\n        {\r\n            \"code\": \"DEMAND\"\r\n        }\r\n    ],\r\n    \"statusCode\": {\r\n        \"code\": \"OPEN\"\r\n    }\r\n};\r\nquick.MM.trigger('setDatasConsumerAndScreenInfo');\r\n\r\nlet serviceRequest: IRequest = {\r\n    url: '/api/uiclient/retrieveCustomerAccounts',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'retrieveCustomerAccountsResponse',\r\n    blockRender: false,\r\n}\r\n\r\nquick.Request.async(serviceRequest)?.then((resp) => {\r\n    quick.EM.trace(resp?.data);\r\n    let decimal;\r\n    let amountBalance;\r\n    let accountList = resp?.data.accountList.account;\r\n    let tmpList = [];\r\n\r\n    let overDraft = resp?.data?.accountList?.account[0]?.overdraft;\r\n    if (overDraft == true) {\r\n        components.cbox_overdraft.visible = true;\r\n    }\r\n    else {\r\n        components.cbox_overdraft.visible = false;\r\n    }\r\n\r\n    for (var i = 0; i < accountList.length; i++) {\r\n        amountBalance = quick.Quick.toMoney(Number(accountList[i].balance)); //'124.0';\r\n        if (amountBalance.split(',')[1]) { }\r\n        else {\r\n            decimal = ',00';\r\n            amountBalance = amountBalance + decimal;\r\n        }\r\n\r\n        let data = {\r\n            text: accountList[i].number?.branchCode + '-' + accountList[i].number?.number + ' - Vadesiz TL - ' + amountBalance + ' TRY',\r\n            value: accountList[i]\r\n        }\r\n        tmpList.push(data);\r\n    }\r\n    components.vauto_accountList.items = tmpList;\r\n    components.vauto_accountList.disabled = false;\r\n\r\n    components.as_loadingCustomComp.close();\r\n})\r\n    .catch((err) => {\r\n        components.as_loadingCustomComp.close();\r\n        components.vauto_accountList.disabled = true;\r\n        components.vauto_accountList.placeholder = \"Hesaplar Yüklenemedi.\";\r\n        components.btn_createOrder.visible = false;\r\n        let errorMessage = err?.response?.data?.responseMessage ?? 'Bir hata oluştu.';\r\n        (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n        components.as_alertCustomComp.open();\r\n    });",
 					"C": true,
 					"HL": "TS"
 				},
@@ -1003,6 +1003,11 @@ let pjson = {
 																					"H": "'Tahsilat Tipi'",
 																					"T": "prop",
 																					"HL": "QS"
+																				},
+																				"placeholder": {
+																					"H": "'Seçiniz'",
+																					"T": "prop",
+																					"HL": "QS"
 																				}
 																			},
 																			"E": {
@@ -1198,6 +1203,11 @@ let pjson = {
 																				},
 																				"label": {
 																					"H": "'Hesap Numarası'",
+																					"T": "prop",
+																					"HL": "QS"
+																				},
+																				"placeholder": {
+																					"H": "'Seçiniz'",
 																					"T": "prop",
 																					"HL": "QS"
 																				}
@@ -1406,7 +1416,7 @@ let pjson = {
 													"T": "prop"
 												},
 												"visible": {
-													"H": "false",
+													"H": "true",
 													"T": "prop",
 													"HL": "QS"
 												}
@@ -1483,6 +1493,11 @@ let pjson = {
 																				},
 																				"rules": {
 																					"H": "[Quick.validation.required('İmece kart ile yapılan ödemelerde faizsiz dönem seçilmesi zorunludur.')]",
+																					"T": "prop",
+																					"HL": "QS"
+																				},
+																				"placeholder": {
+																					"H": "'Seçiniz'",
 																					"T": "prop",
 																					"HL": "QS"
 																				}
@@ -2498,7 +2513,7 @@ let pjson = {
 			},
 			"E": {
 				"setItems": {
-					"H": "var _a;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nvar paymentPlan = quick.store.get('$paymentPlan');\r\nvar policy = quick.store.get('$policyPayment');\r\nvar items = [];\r\npaymentPlan.amountText = quick.Quick.toMoney(Math.abs(paymentPlan.amount.amount.amount), 'tr-TR', { minimumFractionDigits: 2 })\r\n    + \" \" + paymentPlan.amount.amount.currencyCode.code;\r\npaymentPlan.amountTLText = quick.Quick.toMoney(Math.abs(paymentPlan.amount.amountTL.amount), 'tr-TR', { minimumFractionDigits: 2 })\r\n    + \" \" + paymentPlan.amount.amountTL.currencyCode.code;\r\npaymentPlan.id = 1;\r\npaymentPlan.installmentDateFormatted = (_a = paymentPlan.installmentDate) === null || _a === void 0 ? void 0 : _a.split('-').reverse().join('.');\r\nitems.push(paymentPlan);\r\ncomponents.dt_policyPaymentList.items = items;\r\ncomponents.txt_policyNo.qValue = policy.policyNumber;\r\ncomponents.txt_renewalNo.qValue = policy.renewalNumber;\r\ncomponents.txt_amount.qValue = paymentPlan.amountText;\r\nvar interestFreePeriodItems = [];\r\nif (policy.interestFreePeriods) {\r\n    for (var i in policy.interestFreePeriods) {\r\n        var interestFreePeriodItem = {\r\n            text: i,\r\n            value: i\r\n        };\r\n        interestFreePeriodItems.push(interestFreePeriodItem);\r\n    }\r\n}\r\ncomponents.vauto_interestFreePeriod.items = interestFreePeriodItems;\r\nquick.MM.trigger(\"setPaymentType\");\r\nvar vauto_debtorCreditor = quick.store.get('$vauto_debtorCreditor'); // Borç veya alacak\r\nvar isDebit = vauto_debtorCreditor == \"debit\";\r\nif (isDebit) {\r\n    components.lbl_title.text = \"Anadolu Sigorta Tahsilat\";\r\n    components.vauto_paymentType.label = \"Tahsilat Tipi\";\r\n    components.txt_amount.label = \"Tahsil Edilecek Tutar\";\r\n    components.txt_continue.text = \"Tahsil Et\";\r\n}\r\nelse {\r\n    components.lbl_title.text = \"Anadolu Sigorta İade\";\r\n    components.vauto_paymentType.label = \"İade Tipi\";\r\n    components.txt_amount.label = \"İade Edilecek Tutar\";\r\n    components.txt_continue.text = \"İade Et\";\r\n}\r\n",
+					"H": "var _a, _b;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nvar paymentPlan = quick.store.get('$paymentPlan');\r\nvar policy = quick.store.get('$policyPayment');\r\nvar items = [];\r\npaymentPlan.amountText = quick.Quick.toMoney(Math.abs(paymentPlan.amount.amount.amount), 'tr-TR', { minimumFractionDigits: 2 })\r\n    + \" \" + paymentPlan.amount.amount.currencyCode.code;\r\npaymentPlan.amountTLText = quick.Quick.toMoney(Math.abs(paymentPlan.amount.amountTL.amount), 'tr-TR', { minimumFractionDigits: 2 })\r\n    + \" \" + paymentPlan.amount.amountTL.currencyCode.code;\r\npaymentPlan.id = 1;\r\npaymentPlan.installmentDateFormatted = (_a = paymentPlan.installmentDate) === null || _a === void 0 ? void 0 : _a.split('-').reverse().join('.');\r\nitems.push(paymentPlan);\r\ncomponents.dt_policyPaymentList.items = items;\r\ncomponents.txt_policyNo.qValue = policy.policyNumber;\r\ncomponents.txt_renewalNo.qValue = policy.renewalNumber;\r\ncomponents.txt_amount.qValue = paymentPlan.amountText;\r\nvar interestFreePeriodItems = [];\r\nif (policy.interestFreePeriods) {\r\n    for (var i in (_b = policy.interestFreePeriods) === null || _b === void 0 ? void 0 : _b.period) {\r\n        var interestFreePeriodItem = {\r\n            text: policy.interestFreePeriods.period[i],\r\n            value: policy.interestFreePeriods.period[i]\r\n        };\r\n        interestFreePeriodItems.push(interestFreePeriodItem);\r\n    }\r\n}\r\ncomponents.vauto_interestFreePeriod.items = interestFreePeriodItems;\r\nquick.MM.trigger(\"setPaymentType\");\r\nvar vauto_debtorCreditor = quick.store.get('$vauto_debtorCreditor'); // Borç veya alacak\r\nvar isDebit = vauto_debtorCreditor == \"debit\";\r\nif (isDebit) {\r\n    components.lbl_title.text = \"Anadolu Sigorta Tahsilat\";\r\n    components.vauto_paymentType.label = \"Tahsilat Tipi\";\r\n    components.txt_amount.label = \"Tahsil Edilecek Tutar\";\r\n    components.txt_continue.text = \"Tahsil Et\";\r\n}\r\nelse {\r\n    components.lbl_title.text = \"Anadolu Sigorta İade\";\r\n    components.vauto_paymentType.label = \"İade Tipi\";\r\n    components.txt_amount.label = \"İade Edilecek Tutar\";\r\n    components.txt_continue.text = \"İade Et\";\r\n}\r\n",
 					"C": true,
 					"EV": true,
 					"HL": "JS"
@@ -2514,12 +2529,12 @@ let pjson = {
 					"HL": "JS"
 				},
 				"retrieveCreditCardList": {
-					"H": "var _a, _b;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nvar isImeceCard;\r\ncomponents.vauto_accountList.label = \"Kredi Kartı\";\r\nvar requestData = {\r\n    //\"customerNo\": quick.store.get('$customerInfo').customerNumber, //(<any>quick.containerServices).getCustomerContext()?.customerNumber,\r\n    \"customerNo\": (_a = quick.containerServices.getCustomerContext()) === null || _a === void 0 ? void 0 : _a.customerNumber,\r\n    \"branchCode\": 0,\r\n    \"accountNo\": 0,\r\n    \"pageSize\": 0,\r\n    \"pageNumber\": 0,\r\n    \"transactionType\": isImeceCard ? \"I\" : \"S\"\r\n};\r\nquick.MM.trigger('setDatasConsumerAndScreenInfo');\r\nvar serviceRequest = {\r\n    url: '/api/uiclient/retrieveCreditCardList',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n};\r\n(_b = quick.Request.async(serviceRequest)) === null || _b === void 0 ? void 0 : _b.then(function (resp) {\r\n    debugger;\r\n    var decimal;\r\n    var availableLimit;\r\n    var cardList = resp.data.cardInfo;\r\n    var tmpList = [];\r\n    quick.store.set(\"creditCardInfo\", resp.data);\r\n    for (var i = 0; i < cardList.length; i++) {\r\n        if (cardList[i].cardStatCode == \"N\" || cardList[i].cardStatCode == \"CR\" || cardList[i].cardStatCode == \"SG\") {\r\n            if (cardList[i].cardType != \"V\" && cardList[i].cardNo == cardList[i].mainCardNo) {\r\n                availableLimit = quick.Quick.toMoney(Number(cardList[i].availableLimit)); //'124.0';\r\n                if (availableLimit.split(',')[1]) { }\r\n                else {\r\n                    decimal = ',00';\r\n                    availableLimit = availableLimit + decimal;\r\n                }\r\n                var data = {\r\n                    text: cardList[i].cardNo + ' (' + availableLimit + ') ' + cardList[i].embossName,\r\n                    value: cardList[i]\r\n                };\r\n                tmpList.push(data);\r\n            }\r\n        }\r\n    }\r\n    components.vauto_accountList.items = tmpList;\r\n    ;\r\n    components.as_loadingCustomComp.close();\r\n}).catch(function (err) {\r\n    var _a, _b, _c;\r\n    components.as_loadingCustomComp.close();\r\n    var errorMessage = (_c = (_b = (_a = err === null || err === void 0 ? void 0 : err.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.responseMessage) !== null && _c !== void 0 ? _c : 'Bir hata oluştu.';\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n});\r\n",
+					"H": "var _a, _b;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nvar isImeceCard;\r\nif (isImeceCard) {\r\n    components.vauto_accountList.label = \"İmece Kart No\";\r\n}\r\nelse {\r\n    components.vauto_accountList.label = \"Kredi Kartı\";\r\n}\r\ncomponents.vauto_accountList.placeholder = \"Seçiniz\";\r\nvar requestData = {\r\n    //\"customerNo\": quick.store.get('$customerInfo').customerNumber, //(<any>quick.containerServices).getCustomerContext()?.customerNumber,\r\n    \"customerNo\": (_a = quick.containerServices.getCustomerContext()) === null || _a === void 0 ? void 0 : _a.customerNumber,\r\n    \"branchCode\": 0,\r\n    \"accountNo\": 0,\r\n    \"pageSize\": 0,\r\n    \"pageNumber\": 0,\r\n    \"transactionType\": isImeceCard ? \"I\" : \"S\"\r\n};\r\nquick.MM.trigger('setDatasConsumerAndScreenInfo');\r\nvar serviceRequest = {\r\n    url: '/api/uiclient/retrieveCreditCardList',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n};\r\n(_b = quick.Request.async(serviceRequest)) === null || _b === void 0 ? void 0 : _b.then(function (resp) {\r\n    debugger;\r\n    var decimal;\r\n    var availableLimit;\r\n    var cardList = resp.data.cardInfo;\r\n    var tmpList = [];\r\n    quick.store.set(\"creditCardInfo\", resp.data);\r\n    for (var i = 0; i < cardList.length; i++) {\r\n        if (cardList[i].cardStatCode == \"N\" || cardList[i].cardStatCode == \"CR\" || cardList[i].cardStatCode == \"SG\") {\r\n            if (cardList[i].cardType != \"V\" && cardList[i].cardNo == cardList[i].mainCardNo) {\r\n                availableLimit = quick.Quick.toMoney(Number(cardList[i].availableLimit)); //'124.0';\r\n                if (availableLimit.split(',')[1]) { }\r\n                else {\r\n                    decimal = ',00';\r\n                    availableLimit = availableLimit + decimal;\r\n                }\r\n                var data = {\r\n                    text: cardList[i].cardNo + ' (' + availableLimit + ') ' + cardList[i].embossName,\r\n                    value: cardList[i]\r\n                };\r\n                tmpList.push(data);\r\n            }\r\n        }\r\n    }\r\n    components.vauto_accountList.items = tmpList;\r\n    components.vauto_accountList.disabled = false;\r\n    components.as_loadingCustomComp.close();\r\n}).catch(function (err) {\r\n    var _a, _b, _c;\r\n    components.as_loadingCustomComp.close();\r\n    components.vauto_accountList.disabled = true;\r\n    components.vauto_accountList.placeholder = \"Hesaplar Yüklenemedi.\";\r\n    components.btn_createOrder.visible = false;\r\n    var errorMessage = (_c = (_b = (_a = err === null || err === void 0 ? void 0 : err.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.responseMessage) !== null && _c !== void 0 ? _c : 'Bir hata oluştu.';\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n});\r\n",
 					"C": true,
 					"HL": "JS"
 				},
 				"retrieveCustomerAccounts": {
-					"H": "var _a, _b;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\n//Tahsilat şekli Hesaptan seçildi\r\nvar requestData = {\r\n    \"customerNumber\": (_a = quick.containerServices.getCustomerContext()) === null || _a === void 0 ? void 0 : _a.customerNumber,\r\n    \"accountType\": [\r\n        {\r\n            \"code\": \"DEMAND\"\r\n        }\r\n    ],\r\n    \"statusCode\": {\r\n        \"code\": \"OPEN\"\r\n    }\r\n};\r\nquick.MM.trigger('setDatasConsumerAndScreenInfo');\r\nvar serviceRequest = {\r\n    url: '/api/uiclient/retrieveCustomerAccounts',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'retrieveCustomerAccountsResponse',\r\n    blockRender: false,\r\n};\r\n(_b = quick.Request.async(serviceRequest)) === null || _b === void 0 ? void 0 : _b.then(function (resp) {\r\n    var _a, _b, _c, _d, _e;\r\n    quick.EM.trace(resp === null || resp === void 0 ? void 0 : resp.data);\r\n    var decimal;\r\n    var amountBalance;\r\n    var accountList = resp === null || resp === void 0 ? void 0 : resp.data.accountList.account;\r\n    var tmpList = [];\r\n    var overDraft = (_c = (_b = (_a = resp === null || resp === void 0 ? void 0 : resp.data) === null || _a === void 0 ? void 0 : _a.accountList) === null || _b === void 0 ? void 0 : _b.account[0]) === null || _c === void 0 ? void 0 : _c.overdraft;\r\n    if (overDraft == true) {\r\n        components.cbox_overdraft.visible = true;\r\n    }\r\n    else {\r\n        components.cbox_overdraft.visible = false;\r\n    }\r\n    for (var i = 0; i < accountList.length; i++) {\r\n        amountBalance = quick.Quick.toMoney(Number(accountList[i].balance)); //'124.0';\r\n        if (amountBalance.split(',')[1]) { }\r\n        else {\r\n            decimal = ',00';\r\n            amountBalance = amountBalance + decimal;\r\n        }\r\n        var data = {\r\n            text: ((_d = accountList[i].number) === null || _d === void 0 ? void 0 : _d.branchCode) + '-' + ((_e = accountList[i].number) === null || _e === void 0 ? void 0 : _e.number) + ' - Vadesiz TL - ' + amountBalance + ' TRY',\r\n            value: accountList[i]\r\n        };\r\n        tmpList.push(data);\r\n    }\r\n    components.vauto_accountList.items = tmpList;\r\n    components.as_loadingCustomComp.close();\r\n}).catch(function (err) {\r\n    var _a, _b, _c;\r\n    components.as_loadingCustomComp.close();\r\n    var errorMessage = (_c = (_b = (_a = err === null || err === void 0 ? void 0 : err.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.responseMessage) !== null && _c !== void 0 ? _c : 'Bir hata oluştu.';\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n});\r\n",
+					"H": "var _a, _b;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\n//Tahsilat şekli Hesaptan seçildi\r\ncomponents.vauto_accountList.placeholder = \"Seçiniz\";\r\nvar requestData = {\r\n    \"customerNumber\": (_a = quick.containerServices.getCustomerContext()) === null || _a === void 0 ? void 0 : _a.customerNumber,\r\n    \"accountType\": [\r\n        {\r\n            \"code\": \"DEMAND\"\r\n        }\r\n    ],\r\n    \"statusCode\": {\r\n        \"code\": \"OPEN\"\r\n    }\r\n};\r\nquick.MM.trigger('setDatasConsumerAndScreenInfo');\r\nvar serviceRequest = {\r\n    url: '/api/uiclient/retrieveCustomerAccounts',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'retrieveCustomerAccountsResponse',\r\n    blockRender: false,\r\n};\r\n(_b = quick.Request.async(serviceRequest)) === null || _b === void 0 ? void 0 : _b.then(function (resp) {\r\n    var _a, _b, _c, _d, _e;\r\n    quick.EM.trace(resp === null || resp === void 0 ? void 0 : resp.data);\r\n    var decimal;\r\n    var amountBalance;\r\n    var accountList = resp === null || resp === void 0 ? void 0 : resp.data.accountList.account;\r\n    var tmpList = [];\r\n    var overDraft = (_c = (_b = (_a = resp === null || resp === void 0 ? void 0 : resp.data) === null || _a === void 0 ? void 0 : _a.accountList) === null || _b === void 0 ? void 0 : _b.account[0]) === null || _c === void 0 ? void 0 : _c.overdraft;\r\n    if (overDraft == true) {\r\n        components.cbox_overdraft.visible = true;\r\n    }\r\n    else {\r\n        components.cbox_overdraft.visible = false;\r\n    }\r\n    for (var i = 0; i < accountList.length; i++) {\r\n        amountBalance = quick.Quick.toMoney(Number(accountList[i].balance)); //'124.0';\r\n        if (amountBalance.split(',')[1]) { }\r\n        else {\r\n            decimal = ',00';\r\n            amountBalance = amountBalance + decimal;\r\n        }\r\n        var data = {\r\n            text: ((_d = accountList[i].number) === null || _d === void 0 ? void 0 : _d.branchCode) + '-' + ((_e = accountList[i].number) === null || _e === void 0 ? void 0 : _e.number) + ' - Vadesiz TL - ' + amountBalance + ' TRY',\r\n            value: accountList[i]\r\n        };\r\n        tmpList.push(data);\r\n    }\r\n    components.vauto_accountList.items = tmpList;\r\n    components.vauto_accountList.disabled = false;\r\n    components.as_loadingCustomComp.close();\r\n}).catch(function (err) {\r\n    var _a, _b, _c;\r\n    components.as_loadingCustomComp.close();\r\n    components.vauto_accountList.disabled = true;\r\n    components.vauto_accountList.placeholder = \"Hesaplar Yüklenemedi.\";\r\n    components.btn_createOrder.visible = false;\r\n    var errorMessage = (_c = (_b = (_a = err === null || err === void 0 ? void 0 : err.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.responseMessage) !== null && _c !== void 0 ? _c : 'Bir hata oluştu.';\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n});\r\n",
 					"C": true,
 					"HL": "JS"
 				},
@@ -3492,6 +3507,11 @@ let pjson = {
 																					"H": "╬'Tahsilat Tipi'╩╩",
 																					"T": "prop",
 																					"HL": "QS"
+																				},
+																				"placeholder": {
+																					"H": "╬'Seçiniz'╩╩",
+																					"T": "prop",
+																					"HL": "QS"
 																				}
 																			},
 																			"E": {
@@ -3517,7 +3537,7 @@ let pjson = {
 																					},
 																					"class": "pt-3 pl-3 pb-3 pr-3"
 																				},
-																				"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete pt-3 pl-3 pb-3 pr-3 undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--placeholder v-text-field--rounded v-select v-autocomplete pt-3 pl-3 pb-3 pr-3 undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -3692,6 +3712,11 @@ let pjson = {
 																					"H": "╬'Hesap Numarası'╩╩",
 																					"T": "prop",
 																					"HL": "QS"
+																				},
+																				"placeholder": {
+																					"H": "╬'Seçiniz'╩╩",
+																					"T": "prop",
+																					"HL": "QS"
 																				}
 																			},
 																			"E": {},
@@ -3712,7 +3737,7 @@ let pjson = {
 																					},
 																					"class": "pt-3 pr-3 pb-3 pl-3"
 																				},
-																				"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete pt-3 pr-3 pb-3 pl-3 undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--placeholder v-text-field--rounded v-select v-autocomplete pt-3 pr-3 pb-3 pl-3 undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -3903,7 +3928,7 @@ let pjson = {
 													"T": "prop"
 												},
 												"visible": {
-													"H": "╬false╩╩",
+													"H": "╬true╩╩",
 													"T": "prop",
 													"HL": "QS"
 												}
@@ -3982,6 +4007,11 @@ let pjson = {
 																					"H": "╬[]╠()╣.╣.╣Quick╩╠validation╩╩╠required╩╩╠'İmece kart ile yapılan ödemelerde faizsiz dönem seçilmesi zorunludur.'╩╩╩╩",
 																					"T": "prop",
 																					"HL": "QS"
+																				},
+																				"placeholder": {
+																					"H": "╬'Seçiniz'╩╩",
+																					"T": "prop",
+																					"HL": "QS"
 																				}
 																			},
 																			"E": {},
@@ -4002,7 +4032,7 @@ let pjson = {
 																					},
 																					"class": "pt-3 pr-3 pb-3 pl-3"
 																				},
-																				"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete pt-3 pr-3 pb-3 pl-3 undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--placeholder v-text-field--rounded v-select v-autocomplete pt-3 pr-3 pb-3 pl-3 undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -4810,7 +4840,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": ""
+				"compDomClasses": "newDropBorder"
 			}
 		},
 		{
@@ -4890,7 +4920,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": ""
+				"compDomClasses": "newDropBorder"
 			}
 		},
 		{
@@ -4985,7 +5015,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": ""
+				"compDomClasses": "newDropBorder"
 			}
 		}
 	],
