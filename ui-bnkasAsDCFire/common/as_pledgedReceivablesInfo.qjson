@@ -83,7 +83,7 @@ let pjson = {
 					"HL": "TS"
 				},
 				"validateComponents": {
-					"H": "debugger;\r\nlet validationErrors = []\r\nif (components.EdtrComp_85.qValue == 0) {\r\n\r\n} else if (components.EdtrComp_85.qValue == 1) {\r\n\r\n}\r\n/* TODO\r\nlet isBranchCodeValid = quick.Quick.validate(\"vauto_branchCode\", false, false);\r\nlet isRedirectorValid = quick.Quick.validate(\"vauto_redirector\", false, false);\r\nlet isAssuranceTypeValid = quick.Quick.validate(\"txt_assuranceType\", false, false);\r\n\r\nif (!isBranchCodeValid) validationErrors.push(\"Şube Kodu boş olamaz\");\r\nif (!isRedirectorValid) validationErrors.push(\"Yönlendiren boş olamaz\");\r\nif (!isAssuranceTypeValid) validationErrors.push(\"Sigorta Türü boş olamaz\");\r\n\r\nquick.parent.props.validationErrors = validationErrors;\r\n*/",
+					"H": "debugger;\r\nlet validationErrors = []\r\nlet rdg_pledgedReceivableInfo = quick.Quick.validate(\"rdg_pledgedReceivableInfo\", false, false);\r\n\r\nif (!rdg_pledgedReceivableInfo) {\r\n    validationErrors.push(\"Rehinli alacaklı tercihinizi belirtiniz\");\r\n} else {\r\n    if (components.EdtrComp_85.qValue == 0) { // Bankamız\r\n        if (!components.txt_realEstateNumber.qValue) {\r\n\r\n        }\r\n    } else if (components.EdtrComp_85.qValue == 1) { // Diğer\r\n\r\n    }\r\n}\r\n\r\n/* TODO\r\nlet isBranchCodeValid = quick.Quick.validate(\"vauto_branchCode\", false, false);\r\nlet isRedirectorValid = quick.Quick.validate(\"vauto_redirector\", false, false);\r\nlet isAssuranceTypeValid = quick.Quick.validate(\"txt_assuranceType\", false, false);\r\n\r\nif (!isBranchCodeValid) validationErrors.push(\"Şube Kodu boş olamaz\");\r\nif (!isRedirectorValid) validationErrors.push(\"Yönlendiren boş olamaz\");\r\nif (!isAssuranceTypeValid) validationErrors.push(\"Sigorta Türü boş olamaz\");\r\n\r\nquick.parent.props.validationErrors = validationErrors;\r\n*/",
 					"C": true,
 					"EV": true,
 					"HL": "TS"
@@ -5992,7 +5992,7 @@ let pjson = {
 					"HL": "JS"
 				},
 				"validateComponents": {
-					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nvar validationErrors = [];\r\nif (components.EdtrComp_85.qValue == 0) {\r\n}\r\nelse if (components.EdtrComp_85.qValue == 1) {\r\n}\r\n",
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nvar validationErrors = [];\r\nvar rdg_pledgedReceivableInfo = quick.Quick.validate(\"rdg_pledgedReceivableInfo\", false, false);\r\nif (!rdg_pledgedReceivableInfo) {\r\n    validationErrors.push(\"Rehinli alacaklı tercihinizi belirtiniz\");\r\n}\r\nelse {\r\n    if (components.EdtrComp_85.qValue == 0) { // Bankamız\r\n        if (!components.txt_realEstateNumber.qValue) {\r\n        }\r\n    }\r\n    else if (components.EdtrComp_85.qValue == 1) { // Diğer\r\n    }\r\n}\r\n",
 					"C": true,
 					"EV": true,
 					"HL": "JS"

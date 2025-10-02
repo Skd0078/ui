@@ -12,7 +12,13 @@ let pjson = {
 					"T": "prop"
 				}
 			},
-			"E": {},
+			"E": {
+				"createProposal": {
+					"H": "debugger;\r\ncomponents.as_loadingCustomComp.open();\r\nlet assuranceInfo = components.as_assuranceInfo.getAssuranceCompInfo();\r\nlet buildingInfo = components.as_buildingInfo.getBuildingInfo();\r\nlet buildingUAVTAdressInfo = components.as_buildingUAVTAdressInfo.getBuildingUavtCompInfo();\r\nlet customerInfoType = (components.as_assuranceOwnerInfo as any).getAssuranceOwnerInfo().customerInfoType;\r\nlet insuranceCustomerNumber = (components.as_assuranceOwnerInfo as any).getAssuranceOwnerInfo().customerNumber;\r\nlet additionalInfo = components.as_additionalInfo.getAdditionalInfo();\r\nlet policyDate = components.as_policyInfo.getPolicyInfoDate();\r\nlet insuredStatus = components.as_insuredStatus.getInsuredStatus();\r\nlet requestData = {\r\n    \"policyInfo\": {\r\n        \"policyInfoType\": \"DCFIRE\",\r\n        \"insurancePackageId\": \"919\",\r\n        \"startDate\": policyDate.policyStartDate,\r\n        \"endDate\": policyDate.policyEndDate,\r\n        \"branchCode\": assuranceInfo.branchCode,\r\n        \"ownerUserInfo\": {\r\n            \"userId\": assuranceInfo.redirectorId\r\n        },\r\n        \"insurerInfo\": {\r\n            \"customerInfoType\": customerInfoType,\r\n            \"insuranceCustomerNumber\": 3263163,//insuranceCustomerNumber,TODO\r\n            \"customerNumber\": 3263163, //insuranceCustomerNumber,\r\n            \"contactRole\": \"6\"\r\n        },\r\n        \"insuredInfo\": {\r\n            \"customerInfoType\": customerInfoType,\r\n            \"insuranceCustomerNumber\": 3263163, //insuranceCustomerNumber,\r\n            \"customerNumber\": 3263163, //insuranceCustomerNumber,\r\n            \"contactRole\": \"1\"\r\n        }\r\n        ,\r\n        \"businessActivityType\": {\r\n            \"referenceDataType\": {\r\n                \"code\": additionalInfo.fieldOfActivity\r\n            }\r\n        },\r\n        \"grossArea\": buildingInfo.acreage,\r\n        \"buildingConstructionYear\": buildingInfo.buildingConstructionYear,\r\n        \"totalFloorCount\": {\r\n            \"referenceDataType\": {\r\n                \"code\": buildingInfo.totalFloorCount\r\n            }\r\n        },\r\n        \"policyHolderRole\": {\r\n            \"referenceDataType\": {\r\n                \"code\": insuredStatus.insuredStatus\r\n            }\r\n        },\r\n        \"pvSolarSystem\": buildingInfo.pvSolarSystem,\r\n        \"residenceEmpty\": buildingInfo.residenceEmpty,\r\n        \"addressInfoType\": {\r\n            \"uavtAddressCode\": buildingUAVTAdressInfo.uavtAddressCode,\r\n            \"cityCode\": buildingUAVTAdressInfo.cityCode,\r\n            \"streetCode\": buildingUAVTAdressInfo.streetCode,\r\n            \"districtCode\": buildingUAVTAdressInfo.districtCode,\r\n            \"villageCode\": buildingUAVTAdressInfo.villageCode,\r\n            \"countyCode\": buildingUAVTAdressInfo.countyCode,\r\n            \"buildingPosition\": {\r\n                \"description\": buildingUAVTAdressInfo.storey,\r\n                \"referenceDataType\": {\r\n                    \"code\": buildingUAVTAdressInfo.storeyCode\r\n                }\r\n            },\r\n            \"buildingPositionValue\": buildingUAVTAdressInfo.storeyNo\r\n        },\r\n        \"insuredObjectInfo\": additionalInfo?.insuredObjectInfo,\r\n        \"additionalInfoLiability\": additionalInfo?.additionalInfoLiability,\r\n        \"additionalInfoPersonalAccident\": additionalInfo?.additionalInfoPersonalAccident,\r\n        \"apartmentFloorNumberType\": {\r\n            \"referenceDataType\": {\r\n                \"code\": buildingInfo.riskFloor\r\n            }\r\n        }\r\n    }\r\n};\r\n\r\n\r\nlet serviceRequest: IRequest = {\r\n    url: '/api/wrapperclient/getCoverDetails',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n}\r\n\r\nquick.Request.async(serviceRequest)?.then((resp) => {\r\n    quick.EM.trace(resp?.data);\r\n    quick.store.set(\"$dcfireTableItems\", resp?.data);\r\n    quick.store.set(\"$dcfireRequest\", requestData);\r\n    components.as_policyProposalTable.setItems();\r\n    components.as_policyProposalTable.visible = true;\r\n    components.as_loadingCustomComp.close();\r\n\r\n    components.as_assuranceInfo.visible = false;\r\n    components.as_buildingInfo.visible = false;\r\n    components.as_buildingUAVTAdressInfo.visible = false;\r\n    components.as_assuranceOwnerInfo.visible = false;\r\n    components.as_insuredStatus.visible = false;\r\n    components.as_pledgedReceivablesInfo.visible = false;\r\n    components.as_additionalInfo.visible = false;\r\n    components.as_policyInfo.visible = false;\r\n\r\n})\r\n    .catch((err) => {\r\n        let errorMessage = err?.response?.data?.responseMessage ?? 'Bir hata oluştu.';\r\n        (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n        components.as_loadingCustomComp.close();\r\n        components.as_alertCustomComp.open();\r\n    });",
+					"C": true,
+					"HL": "TS"
+				}
+			},
 			"C": {},
 			"_Editor": {
 				"eID": "EdtrComp_1"
@@ -403,7 +409,7 @@ let pjson = {
 			},
 			"E": {
 				"validateAllComponents": {
-					"H": "debugger;\r\nlet errorMessage;\r\ncomponents.as_assuranceInfo.validateComponents();\r\ncomponents.as_buildingInfo.validateComponents();\r\ncomponents.as_buildingUAVTAdressInfo.validateComponents();\r\ncomponents.as_insuredStatus.validateComponents();\r\nif ((<any>components.as_assuranceInfo).props?.validationErrors?.length) {\r\n    errorMessage = (<any>components.as_assuranceInfo).props?.validationErrors.join('\\n');\r\n    (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n} else if ((<any>components.as_buildingInfo).props?.validationErrors?.length) {\r\n    errorMessage = (<any>components.as_buildingInfo).props?.validationErrors.join('\\n');\r\n    (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n} else if ((<any>components.as_buildingUAVTAdressInfo).props?.validationErrors?.length) {\r\n    errorMessage = (<any>components.as_buildingUAVTAdressInfo).props?.validationErrors.join('\\n');\r\n    (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n} else if ((<any>components.as_insuredStatus).props?.validationErrors?.length) {\r\n    errorMessage = (<any>components.as_insuredStatus).props?.validationErrors.join('\\n');\r\n    (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n}\r\n\r\n\r\n\r\n",
+					"H": "debugger;\r\n\r\nlet errorMessage;\r\n\r\ncomponents.as_assuranceInfo.validateComponents();\r\ncomponents.as_buildingInfo.validateComponents();\r\ncomponents.as_buildingUAVTAdressInfo.validateComponents();\r\ncomponents.as_insuredStatus.validateComponents();\r\nif ((<any>components.as_assuranceInfo).props?.validationErrors?.length) {\r\n    errorMessage = (<any>components.as_assuranceInfo).props?.validationErrors.join('\\n');\r\n    (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n} else if ((<any>components.as_buildingInfo).props?.validationErrors?.length) {\r\n    errorMessage = (<any>components.as_buildingInfo).props?.validationErrors.join('\\n');\r\n    (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n} else if ((<any>components.as_buildingUAVTAdressInfo).props?.validationErrors?.length) {\r\n    errorMessage = (<any>components.as_buildingUAVTAdressInfo).props?.validationErrors.join('\\n');\r\n    (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n} else if ((<any>components.as_insuredStatus).props?.validationErrors?.length) {\r\n    errorMessage = (<any>components.as_insuredStatus).props?.validationErrors.join('\\n');\r\n    (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n} else {\r\n    quick.MM.trigger(\"createProposal\");\r\n}\r\n",
 					"C": true,
 					"HL": "TS"
 				}
@@ -459,7 +465,13 @@ let pjson = {
 					"HL": "QS"
 				}
 			},
-			"E": {},
+			"E": {
+				"clickBackButtonEvent": {
+					"H": "components.as_policyProposalTable.visible = false;\r\n\r\ncomponents.as_assuranceInfo.visible = true;\r\ncomponents.as_buildingInfo.visible = true;\r\ncomponents.as_buildingUAVTAdressInfo.visible = true;\r\ncomponents.as_assuranceOwnerInfo.visible = true;\r\ncomponents.as_insuredStatus.visible = true;\r\ncomponents.as_pledgedReceivablesInfo.visible = true;\r\ncomponents.as_additionalInfo.visible = true;\r\ncomponents.as_policyInfo.visible = true;\r\n",
+					"C": true,
+					"HL": "TS"
+				}
+			},
 			"C": {
 				"default": {
 					"c": [
@@ -564,6 +576,53 @@ let pjson = {
 				"cType": "child",
 				"dynProps": true
 			}
+		},
+		{
+			"T": "CustomComponent",
+			"P": {
+				"ID": {
+					"H": "as_loadingCustomComp",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"QJsonPath": {
+					"H": "'/static/ui-bnkasAsDCFire/common/as_loadingCustomComp.qjson'",
+					"T": "prop",
+					"HL": "QS"
+				}
+			},
+			"E": {},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "Ghost",
+							"P": {
+								"ID": {
+									"H": "EdtrComp_23",
+									"T": "prop"
+								}
+							},
+							"E": {},
+							"C": {},
+							"_Editor": {
+								"eID": "EdtrComp_23"
+							},
+							"O": {
+								"cType": "child"
+							}
+						}
+					],
+					"cType": "child"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_22"
+			},
+			"O": {
+				"cType": "child",
+				"dynProps": true
+			}
 		}
 	],
 	"cJson": [
@@ -579,7 +638,13 @@ let pjson = {
 					"T": "prop"
 				}
 			},
-			"E": {},
+			"E": {
+				"createProposal": {
+					"H": "var _a;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\ncomponents.as_loadingCustomComp.open();\r\nvar assuranceInfo = components.as_assuranceInfo.getAssuranceCompInfo();\r\nvar buildingInfo = components.as_buildingInfo.getBuildingInfo();\r\nvar buildingUAVTAdressInfo = components.as_buildingUAVTAdressInfo.getBuildingUavtCompInfo();\r\nvar customerInfoType = components.as_assuranceOwnerInfo.getAssuranceOwnerInfo().customerInfoType;\r\nvar insuranceCustomerNumber = components.as_assuranceOwnerInfo.getAssuranceOwnerInfo().customerNumber;\r\nvar additionalInfo = components.as_additionalInfo.getAdditionalInfo();\r\nvar policyDate = components.as_policyInfo.getPolicyInfoDate();\r\nvar insuredStatus = components.as_insuredStatus.getInsuredStatus();\r\nvar requestData = {\r\n    \"policyInfo\": {\r\n        \"policyInfoType\": \"DCFIRE\",\r\n        \"insurancePackageId\": \"919\",\r\n        \"startDate\": policyDate.policyStartDate,\r\n        \"endDate\": policyDate.policyEndDate,\r\n        \"branchCode\": assuranceInfo.branchCode,\r\n        \"ownerUserInfo\": {\r\n            \"userId\": assuranceInfo.redirectorId\r\n        },\r\n        \"insurerInfo\": {\r\n            \"customerInfoType\": customerInfoType,\r\n            \"insuranceCustomerNumber\": 3263163,\r\n            \"customerNumber\": 3263163,\r\n            \"contactRole\": \"6\"\r\n        },\r\n        \"insuredInfo\": {\r\n            \"customerInfoType\": customerInfoType,\r\n            \"insuranceCustomerNumber\": 3263163,\r\n            \"customerNumber\": 3263163,\r\n            \"contactRole\": \"1\"\r\n        },\r\n        \"businessActivityType\": {\r\n            \"referenceDataType\": {\r\n                \"code\": additionalInfo.fieldOfActivity\r\n            }\r\n        },\r\n        \"grossArea\": buildingInfo.acreage,\r\n        \"buildingConstructionYear\": buildingInfo.buildingConstructionYear,\r\n        \"totalFloorCount\": {\r\n            \"referenceDataType\": {\r\n                \"code\": buildingInfo.totalFloorCount\r\n            }\r\n        },\r\n        \"policyHolderRole\": {\r\n            \"referenceDataType\": {\r\n                \"code\": insuredStatus.insuredStatus\r\n            }\r\n        },\r\n        \"pvSolarSystem\": buildingInfo.pvSolarSystem,\r\n        \"residenceEmpty\": buildingInfo.residenceEmpty,\r\n        \"addressInfoType\": {\r\n            \"uavtAddressCode\": buildingUAVTAdressInfo.uavtAddressCode,\r\n            \"cityCode\": buildingUAVTAdressInfo.cityCode,\r\n            \"streetCode\": buildingUAVTAdressInfo.streetCode,\r\n            \"districtCode\": buildingUAVTAdressInfo.districtCode,\r\n            \"villageCode\": buildingUAVTAdressInfo.villageCode,\r\n            \"countyCode\": buildingUAVTAdressInfo.countyCode,\r\n            \"buildingPosition\": {\r\n                \"description\": buildingUAVTAdressInfo.storey,\r\n                \"referenceDataType\": {\r\n                    \"code\": buildingUAVTAdressInfo.storeyCode\r\n                }\r\n            },\r\n            \"buildingPositionValue\": buildingUAVTAdressInfo.storeyNo\r\n        },\r\n        \"insuredObjectInfo\": additionalInfo === null || additionalInfo === void 0 ? void 0 : additionalInfo.insuredObjectInfo,\r\n        \"additionalInfoLiability\": additionalInfo === null || additionalInfo === void 0 ? void 0 : additionalInfo.additionalInfoLiability,\r\n        \"additionalInfoPersonalAccident\": additionalInfo === null || additionalInfo === void 0 ? void 0 : additionalInfo.additionalInfoPersonalAccident,\r\n        \"apartmentFloorNumberType\": {\r\n            \"referenceDataType\": {\r\n                \"code\": buildingInfo.riskFloor\r\n            }\r\n        }\r\n    }\r\n};\r\nvar serviceRequest = {\r\n    url: '/api/wrapperclient/getCoverDetails',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n};\r\n(_a = quick.Request.async(serviceRequest)) === null || _a === void 0 ? void 0 : _a.then(function (resp) {\r\n    quick.EM.trace(resp === null || resp === void 0 ? void 0 : resp.data);\r\n    quick.store.set(\"$dcfireTableItems\", resp === null || resp === void 0 ? void 0 : resp.data);\r\n    quick.store.set(\"$dcfireRequest\", requestData);\r\n    components.as_policyProposalTable.setItems();\r\n    components.as_policyProposalTable.visible = true;\r\n    components.as_loadingCustomComp.close();\r\n    components.as_assuranceInfo.visible = false;\r\n    components.as_buildingInfo.visible = false;\r\n    components.as_buildingUAVTAdressInfo.visible = false;\r\n    components.as_assuranceOwnerInfo.visible = false;\r\n    components.as_insuredStatus.visible = false;\r\n    components.as_pledgedReceivablesInfo.visible = false;\r\n    components.as_additionalInfo.visible = false;\r\n    components.as_policyInfo.visible = false;\r\n}).catch(function (err) {\r\n    var _a, _b, _c;\r\n    var errorMessage = (_c = (_b = (_a = err === null || err === void 0 ? void 0 : err.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.responseMessage) !== null && _c !== void 0 ? _c : 'Bir hata oluştu.';\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_loadingCustomComp.close();\r\n    components.as_alertCustomComp.open();\r\n});\r\n",
+					"C": true,
+					"HL": "JS"
+				}
+			},
 			"C": {},
 			"_Editor": {
 				"eID": "EdtrComp_1"
@@ -985,7 +1050,7 @@ let pjson = {
 			},
 			"E": {
 				"validateAllComponents": {
-					"H": "var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nvar errorMessage;\r\ncomponents.as_assuranceInfo.validateComponents();\r\ncomponents.as_buildingInfo.validateComponents();\r\ncomponents.as_buildingUAVTAdressInfo.validateComponents();\r\ncomponents.as_insuredStatus.validateComponents();\r\nif ((_b = (_a = components.as_assuranceInfo.props) === null || _a === void 0 ? void 0 : _a.validationErrors) === null || _b === void 0 ? void 0 : _b.length) {\r\n    errorMessage = (_c = components.as_assuranceInfo.props) === null || _c === void 0 ? void 0 : _c.validationErrors.join('\\n');\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n}\r\nelse if ((_e = (_d = components.as_buildingInfo.props) === null || _d === void 0 ? void 0 : _d.validationErrors) === null || _e === void 0 ? void 0 : _e.length) {\r\n    errorMessage = (_f = components.as_buildingInfo.props) === null || _f === void 0 ? void 0 : _f.validationErrors.join('\\n');\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n}\r\nelse if ((_h = (_g = components.as_buildingUAVTAdressInfo.props) === null || _g === void 0 ? void 0 : _g.validationErrors) === null || _h === void 0 ? void 0 : _h.length) {\r\n    errorMessage = (_j = components.as_buildingUAVTAdressInfo.props) === null || _j === void 0 ? void 0 : _j.validationErrors.join('\\n');\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n}\r\nelse if ((_l = (_k = components.as_insuredStatus.props) === null || _k === void 0 ? void 0 : _k.validationErrors) === null || _l === void 0 ? void 0 : _l.length) {\r\n    errorMessage = (_m = components.as_insuredStatus.props) === null || _m === void 0 ? void 0 : _m.validationErrors.join('\\n');\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n}\r\n",
+					"H": "var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nvar errorMessage;\r\ncomponents.as_assuranceInfo.validateComponents();\r\ncomponents.as_buildingInfo.validateComponents();\r\ncomponents.as_buildingUAVTAdressInfo.validateComponents();\r\ncomponents.as_insuredStatus.validateComponents();\r\nif ((_b = (_a = components.as_assuranceInfo.props) === null || _a === void 0 ? void 0 : _a.validationErrors) === null || _b === void 0 ? void 0 : _b.length) {\r\n    errorMessage = (_c = components.as_assuranceInfo.props) === null || _c === void 0 ? void 0 : _c.validationErrors.join('\\n');\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n}\r\nelse if ((_e = (_d = components.as_buildingInfo.props) === null || _d === void 0 ? void 0 : _d.validationErrors) === null || _e === void 0 ? void 0 : _e.length) {\r\n    errorMessage = (_f = components.as_buildingInfo.props) === null || _f === void 0 ? void 0 : _f.validationErrors.join('\\n');\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n}\r\nelse if ((_h = (_g = components.as_buildingUAVTAdressInfo.props) === null || _g === void 0 ? void 0 : _g.validationErrors) === null || _h === void 0 ? void 0 : _h.length) {\r\n    errorMessage = (_j = components.as_buildingUAVTAdressInfo.props) === null || _j === void 0 ? void 0 : _j.validationErrors.join('\\n');\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n}\r\nelse if ((_l = (_k = components.as_insuredStatus.props) === null || _k === void 0 ? void 0 : _k.validationErrors) === null || _l === void 0 ? void 0 : _l.length) {\r\n    errorMessage = (_m = components.as_insuredStatus.props) === null || _m === void 0 ? void 0 : _m.validationErrors.join('\\n');\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n}\r\nelse {\r\n    quick.MM.trigger(\"createProposal\");\r\n}\r\n",
 					"C": true,
 					"HL": "JS"
 				}
@@ -1043,7 +1108,13 @@ let pjson = {
 					"HL": "QS"
 				}
 			},
-			"E": {},
+			"E": {
+				"clickBackButtonEvent": {
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ncomponents.as_policyProposalTable.visible = false;\r\ncomponents.as_assuranceInfo.visible = true;\r\ncomponents.as_buildingInfo.visible = true;\r\ncomponents.as_buildingUAVTAdressInfo.visible = true;\r\ncomponents.as_assuranceOwnerInfo.visible = true;\r\ncomponents.as_insuredStatus.visible = true;\r\ncomponents.as_pledgedReceivablesInfo.visible = true;\r\ncomponents.as_additionalInfo.visible = true;\r\ncomponents.as_policyInfo.visible = true;\r\n",
+					"C": true,
+					"HL": "JS"
+				}
+			},
 			"C": {
 				"default": {
 					"c": [
@@ -1146,6 +1217,55 @@ let pjson = {
 			},
 			"_Editor": {
 				"eID": "EdtrComp_20"
+			},
+			"O": {
+				"cType": "child",
+				"dynProps": true,
+				"compDomClasses": ""
+			}
+		},
+		{
+			"T": "CustomComponent",
+			"P": {
+				"ID": {
+					"H": "as_loadingCustomComp",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"QJsonPath": {
+					"H": "╬'/static/ui-bnkasAsDCFire/common/as_loadingCustomComp.qjson'╩╩",
+					"T": "prop",
+					"HL": "QS"
+				}
+			},
+			"E": {},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "Ghost",
+							"P": {
+								"ID": {
+									"H": "EdtrComp_23",
+									"T": "prop"
+								}
+							},
+							"E": {},
+							"C": {},
+							"_Editor": {
+								"eID": "EdtrComp_23"
+							},
+							"O": {
+								"cType": "child",
+								"compDomClasses": "editor-ghost-comp"
+							}
+						}
+					],
+					"cType": "child"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_22"
 			},
 			"O": {
 				"cType": "child",

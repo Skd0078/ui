@@ -32,6 +32,12 @@ let pjson = {
 					"C": true,
 					"EV": true,
 					"HL": "TS"
+				},
+				"getAdditionalInfo": {
+					"H": "debugger;\r\n\r\nquick.return({\r\n    \"fieldOfActivity\": components.vauto_fieldOfActivity.qValue,\r\n    \"additionalInfoLiability\": {\r\n        \"annualTotalTurnover\": returnObjectValue(\"txt_totalAnnualTurnover\"),\r\n        \"numberofEmployees\": components.txt_totalNumberOfEmployees.qValue,\r\n        \"numberofsubcontractorEmployees\": components.txt_numberOfSubcontractorEmployees.qValue,\r\n        \"subcontractorAnnualGrossLaborWage\": returnObjectValue(\"txt_totalAnnualGrossLaborWages\"),\r\n        \"totalAnnualGrossLaborWages\": returnObjectValue(\"txt_totalAnnualGrossLaborWagesOfTheSubcontractor\"),\r\n    },\r\n    \"additionalInfoPersonalAccident\": {\r\n        \"bedCapacity\": components.txt_bedCapacity.qValue,\r\n        \"numberofEmployees\": components.txt_numberOfEmployees.qValue,\r\n        \"numberofStudents\": components.txt_numberOfStudents.qValue\r\n    },\r\n    \"insuredObjectInfo\": {\r\n        \"billboardTotemSumInsured\": returnInsuredObjectInfo(\"Reklam Panosu\"),\r\n        \"buildingCanoSumInsured\": returnInsuredObjectInfo(\"Bina-Kanopi\"),\r\n        \"buildingSumInsured\": returnInsuredObjectInfo(\"Bina\"),\r\n        \"cashNegotiableSecuritiesSumInsured\": returnInsuredObjectInfo(\"Nakit Para ve Kıymetli Evrak\"),\r\n        \"decorationSumInsured\": returnInsuredObjectInfo(\"Dekorasyon\"),\r\n        \"electronicEquipmentSumInsured\": returnInsuredObjectInfo(\"Elektronik Cihaz\"),\r\n        \"fixturesSumInsured\": returnInsuredObjectInfo(\"Demirbaş\"),\r\n        \"fuelStocksSumInsured\": returnInsuredObjectInfo(\"Yakıt Emtiası\"),\r\n        \"glassBreakageSumInsured\": returnInsuredObjectInfo(\"Cam Kırılması\"),\r\n        \"glassFireSumInsured\": returnInsuredObjectInfo(\"Cam\"),\r\n        \"machinerySumInsured\": returnInsuredObjectInfo(\"Makine-Tesisat\"),\r\n        \"stockMarketSumInsured\": returnInsuredObjectInfo(\"Market Emtiası\"),\r\n        \"stocksSumInsured\": returnInsuredObjectInfo(\"Emtia\")\r\n    }\r\n})\r\n\r\nfunction returnInsuredObjectInfo(name) {\r\n    let info = quick.Quick.toDecimal((<any>components[\"txt_amount_q_\" + name]).qValue, \".\");\r\n    if (info && info != 0) {\r\n        return info\r\n    } else {\r\n        return null;\r\n    }\r\n}\r\n\r\nfunction returnObjectValue(name) {\r\n    let info = quick.Quick.toDecimal(components[name].qValue, \".\");\r\n    if (info && info != 0) {\r\n        return info\r\n    } else {\r\n        return null;\r\n    }\r\n}",
+					"C": true,
+					"EV": true,
+					"HL": "TS"
 				}
 			},
 			"C": {},
@@ -573,7 +579,7 @@ let pjson = {
 																			},
 																			"E": {
 																				"change": {
-																					"H": "debugger;\r\n\r\nconst componentNames = [\r\n    \"Reklam Panosu\",\r\n    \"Bina-Kanopi\",\r\n    \"Bina\",\r\n    \"Nakit Para ve Kıymetli Evrak\",\r\n    \"Dekorasyon\",\r\n    \"Demirbaş\",\r\n    \"Yakıt Emtiası\",\r\n    \"Elektronik Cihaz\",\r\n    \"Market Emtiası\",\r\n    \"Emtia\",\r\n    \"Cam Kırılması\",\r\n    \"Cam\",\r\n    \"Makine-Tesisat\"\r\n];\r\n\r\ncomponentNames.forEach(name => {\r\n    arrangeTextBox(name);\r\n});\r\n\r\nfunction arrangeTextBox(rowName) {\r\n    if ((<any>components[\"cbox_Selected_q_\" + rowName]).qValue && !(<any>components[\"cbox_Selected_q_\" + rowName]).disabled) {\r\n        (<any>components[\"txt_amount_q_\" + rowName]).qValue = 0;\r\n        (<any>components[\"txt_amount_q_\" + rowName]).suffix = \"TRY\";\r\n        (<any>components[\"txt_amount_q_\" + rowName]).disabled = false;\r\n    } else {\r\n        (<any>components[\"txt_amount_q_\" + rowName]).qValue = null;\r\n        (<any>components[\"txt_amount_q_\" + rowName]).suffix = null;\r\n        (<any>components[\"txt_amount_q_\" + rowName]).disabled = true;\r\n    }\r\n}\r\n",
+																					"H": "debugger;\r\nlet item;\r\narrangeTextBox(item.text);\r\n\r\nfunction arrangeTextBox(rowName) {\r\n    if ((<any>components[\"cbox_Selected_q_\" + rowName]).qValue && !(<any>components[\"cbox_Selected_q_\" + rowName]).disabled) {\r\n        (<any>components[\"txt_amount_q_\" + rowName]).qValue = 0;\r\n        (<any>components[\"txt_amount_q_\" + rowName]).suffix = \"TRY\";\r\n        (<any>components[\"txt_amount_q_\" + rowName]).disabled = false;\r\n    } else {\r\n        (<any>components[\"txt_amount_q_\" + rowName]).qValue = null;\r\n        (<any>components[\"txt_amount_q_\" + rowName]).suffix = null;\r\n        (<any>components[\"txt_amount_q_\" + rowName]).disabled = true;\r\n    }\r\n}\r\n",
 																					"P": "checked:unknown | undefined",
 																					"HL": "TS"
 																				}
@@ -1146,6 +1152,11 @@ let pjson = {
 																	"H": "true",
 																	"T": "prop",
 																	"HL": "QS"
+																},
+																"format": {
+																	"H": "'number'",
+																	"T": "attr",
+																	"HL": "QS"
 																}
 															},
 															"E": {},
@@ -1270,6 +1281,11 @@ let pjson = {
 																"disabled": {
 																	"H": "true",
 																	"T": "prop",
+																	"HL": "QS"
+																},
+																"format": {
+																	"H": "'number'",
+																	"T": "attr",
 																	"HL": "QS"
 																}
 															},
@@ -1418,6 +1434,11 @@ let pjson = {
 																	"H": "true",
 																	"T": "prop",
 																	"HL": "QS"
+																},
+																"format": {
+																	"H": "'number'",
+																	"T": "attr",
+																	"HL": "QS"
 																}
 															},
 															"E": {},
@@ -1542,6 +1563,11 @@ let pjson = {
 																"disabled": {
 																	"H": "true",
 																	"T": "prop",
+																	"HL": "QS"
+																},
+																"format": {
+																	"H": "'number'",
+																	"T": "attr",
 																	"HL": "QS"
 																}
 															},
@@ -1690,6 +1716,11 @@ let pjson = {
 																	"H": "true",
 																	"T": "prop",
 																	"HL": "QS"
+																},
+																"format": {
+																	"H": "'number'",
+																	"T": "attr",
+																	"HL": "QS"
 																}
 															},
 															"E": {},
@@ -1814,6 +1845,11 @@ let pjson = {
 																"disabled": {
 																	"H": "true",
 																	"T": "prop",
+																	"HL": "QS"
+																},
+																"format": {
+																	"H": "'number'",
+																	"T": "attr",
 																	"HL": "QS"
 																}
 															},
@@ -1961,6 +1997,11 @@ let pjson = {
 																"disabled": {
 																	"H": "true",
 																	"T": "prop",
+																	"HL": "QS"
+																},
+																"format": {
+																	"H": "'number'",
+																	"T": "attr",
 																	"HL": "QS"
 																}
 															},
@@ -2110,6 +2151,11 @@ let pjson = {
 																"disabled": {
 																	"H": "true",
 																	"T": "prop",
+																	"HL": "QS"
+																},
+																"format": {
+																	"H": "'number'",
+																	"T": "attr",
 																	"HL": "QS"
 																}
 															},
@@ -2443,6 +2489,12 @@ let pjson = {
 				},
 				"enableComponents": {
 					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\ncomponents.vauto_fieldOfActivity.disabled = false;\r\nresetComponent(\"Reklam Panosu\");\r\nresetComponent(\"Bina-Kanopi\");\r\nresetComponent(\"Bina\");\r\nresetComponent(\"Nakit Para ve Kıymetli Evrak\");\r\nresetComponent(\"Dekorasyon\");\r\nresetComponent(\"Demirbaş\");\r\nresetComponent(\"Yakıt Emtiası\");\r\nresetComponent(\"Elektronik Cihaz\");\r\nresetComponent(\"Market Emtiası\");\r\nresetComponent(\"Emtia\");\r\nresetComponent(\"Cam Kırılması\");\r\nresetComponent(\"Cam\");\r\nresetComponent(\"Makine-Tesisat\");\r\ncomponents.cbox_liability.qValue = false;\r\ncomponents.cbox_liability.disabled = true;\r\ncomponents.cbox_personalAccident.qValue = false;\r\ncomponents.cbox_personalAccident.disabled = true;\r\ncomponents.txt_numberOfSubcontractorEmployees.disabled = true;\r\ncomponents.txt_totalAnnualGrossLaborWages.disabled = true;\r\ncomponents.txt_totalAnnualGrossLaborWagesOfTheSubcontractor.disabled = true;\r\ncomponents.txt_totalAnnualTurnover.disabled = true;\r\ncomponents.txt_totalNumberOfEmployees.disabled = true;\r\ncomponents.txt_numberOfSubcontractorEmployees.qValue = null;\r\ncomponents.txt_totalAnnualGrossLaborWages.qValue = null;\r\ncomponents.txt_totalAnnualGrossLaborWagesOfTheSubcontractor.qValue = null;\r\ncomponents.txt_totalAnnualTurnover.qValue = null;\r\ncomponents.txt_totalNumberOfEmployees.qValue = null;\r\ncomponents.txt_numberOfEmployees.disabled = true;\r\ncomponents.txt_numberOfStudents.disabled = true;\r\ncomponents.txt_bedCapacity.disabled = true;\r\ncomponents.txt_numberOfEmployees.qValue = null;\r\ncomponents.txt_numberOfStudents.qValue = null;\r\ncomponents.txt_bedCapacity.qValue = null;\r\nfunction resetComponent(rowName) {\r\n    components[\"cbox_Selected_q_\" + rowName].disabled = true;\r\n    components[\"cbox_Selected_q_\" + rowName].qValue = false;\r\n    components[\"txt_amount_q_\" + rowName].qValue = null;\r\n    components[\"txt_amount_q_\" + rowName].suffix = null;\r\n    components[\"txt_amount_q_\" + rowName].disabled = true;\r\n}\r\n",
+					"C": true,
+					"EV": true,
+					"HL": "JS"
+				},
+				"getAdditionalInfo": {
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nquick.return({\r\n    \"fieldOfActivity\": components.vauto_fieldOfActivity.qValue,\r\n    \"additionalInfoLiability\": {\r\n        \"annualTotalTurnover\": returnObjectValue(\"txt_totalAnnualTurnover\"),\r\n        \"numberofEmployees\": components.txt_totalNumberOfEmployees.qValue,\r\n        \"numberofsubcontractorEmployees\": components.txt_numberOfSubcontractorEmployees.qValue,\r\n        \"subcontractorAnnualGrossLaborWage\": returnObjectValue(\"txt_totalAnnualGrossLaborWages\"),\r\n        \"totalAnnualGrossLaborWages\": returnObjectValue(\"txt_totalAnnualGrossLaborWagesOfTheSubcontractor\"),\r\n    },\r\n    \"additionalInfoPersonalAccident\": {\r\n        \"bedCapacity\": components.txt_bedCapacity.qValue,\r\n        \"numberofEmployees\": components.txt_numberOfEmployees.qValue,\r\n        \"numberofStudents\": components.txt_numberOfStudents.qValue\r\n    },\r\n    \"insuredObjectInfo\": {\r\n        \"billboardTotemSumInsured\": returnInsuredObjectInfo(\"Reklam Panosu\"),\r\n        \"buildingCanoSumInsured\": returnInsuredObjectInfo(\"Bina-Kanopi\"),\r\n        \"buildingSumInsured\": returnInsuredObjectInfo(\"Bina\"),\r\n        \"cashNegotiableSecuritiesSumInsured\": returnInsuredObjectInfo(\"Nakit Para ve Kıymetli Evrak\"),\r\n        \"decorationSumInsured\": returnInsuredObjectInfo(\"Dekorasyon\"),\r\n        \"electronicEquipmentSumInsured\": returnInsuredObjectInfo(\"Elektronik Cihaz\"),\r\n        \"fixturesSumInsured\": returnInsuredObjectInfo(\"Demirbaş\"),\r\n        \"fuelStocksSumInsured\": returnInsuredObjectInfo(\"Yakıt Emtiası\"),\r\n        \"glassBreakageSumInsured\": returnInsuredObjectInfo(\"Cam Kırılması\"),\r\n        \"glassFireSumInsured\": returnInsuredObjectInfo(\"Cam\"),\r\n        \"machinerySumInsured\": returnInsuredObjectInfo(\"Makine-Tesisat\"),\r\n        \"stockMarketSumInsured\": returnInsuredObjectInfo(\"Market Emtiası\"),\r\n        \"stocksSumInsured\": returnInsuredObjectInfo(\"Emtia\")\r\n    }\r\n});\r\nfunction returnInsuredObjectInfo(name) {\r\n    var info = quick.Quick.toDecimal(components[\"txt_amount_q_\" + name].qValue, \".\");\r\n    if (info && info != 0) {\r\n        return info;\r\n    }\r\n    else {\r\n        return null;\r\n    }\r\n}\r\nfunction returnObjectValue(name) {\r\n    var info = quick.Quick.toDecimal(components[name].qValue, \".\");\r\n    if (info && info != 0) {\r\n        return info;\r\n    }\r\n    else {\r\n        return null;\r\n    }\r\n}\r\n",
 					"C": true,
 					"EV": true,
 					"HL": "JS"
@@ -2997,7 +3049,7 @@ let pjson = {
 																			},
 																			"E": {
 																				"change": {
-																					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\ndebugger;\r\nvar componentNames = [\r\n    \"Reklam Panosu\",\r\n    \"Bina-Kanopi\",\r\n    \"Bina\",\r\n    \"Nakit Para ve Kıymetli Evrak\",\r\n    \"Dekorasyon\",\r\n    \"Demirbaş\",\r\n    \"Yakıt Emtiası\",\r\n    \"Elektronik Cihaz\",\r\n    \"Market Emtiası\",\r\n    \"Emtia\",\r\n    \"Cam Kırılması\",\r\n    \"Cam\",\r\n    \"Makine-Tesisat\"\r\n];\r\ncomponentNames.forEach(function (name) {\r\n    arrangeTextBox(name);\r\n});\r\nfunction arrangeTextBox(rowName) {\r\n    if (components[\"cbox_Selected_q_\" + rowName].qValue && !components[\"cbox_Selected_q_\" + rowName].disabled) {\r\n        components[\"txt_amount_q_\" + rowName].qValue = 0;\r\n        components[\"txt_amount_q_\" + rowName].suffix = \"TRY\";\r\n        components[\"txt_amount_q_\" + rowName].disabled = false;\r\n    }\r\n    else {\r\n        components[\"txt_amount_q_\" + rowName].qValue = null;\r\n        components[\"txt_amount_q_\" + rowName].suffix = null;\r\n        components[\"txt_amount_q_\" + rowName].disabled = true;\r\n    }\r\n}\r\n",
+																					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\ndebugger;\r\nvar item;\r\narrangeTextBox(item.text);\r\nfunction arrangeTextBox(rowName) {\r\n    if (components[\"cbox_Selected_q_\" + rowName].qValue && !components[\"cbox_Selected_q_\" + rowName].disabled) {\r\n        components[\"txt_amount_q_\" + rowName].qValue = 0;\r\n        components[\"txt_amount_q_\" + rowName].suffix = \"TRY\";\r\n        components[\"txt_amount_q_\" + rowName].disabled = false;\r\n    }\r\n    else {\r\n        components[\"txt_amount_q_\" + rowName].qValue = null;\r\n        components[\"txt_amount_q_\" + rowName].suffix = null;\r\n        components[\"txt_amount_q_\" + rowName].disabled = true;\r\n    }\r\n}\r\n",
 																					"P": "checked:unknown | undefined",
 																					"HL": "JS"
 																				}
@@ -3580,6 +3632,11 @@ let pjson = {
 																	"H": "╬true╩╩",
 																	"T": "prop",
 																	"HL": "QS"
+																},
+																"format": {
+																	"H": "╬'number'╩╩",
+																	"T": "attr",
+																	"HL": "QS"
 																}
 															},
 															"E": {},
@@ -3706,6 +3763,11 @@ let pjson = {
 																"disabled": {
 																	"H": "╬true╩╩",
 																	"T": "prop",
+																	"HL": "QS"
+																},
+																"format": {
+																	"H": "╬'number'╩╩",
+																	"T": "attr",
 																	"HL": "QS"
 																}
 															},
@@ -3857,6 +3919,11 @@ let pjson = {
 																	"H": "╬true╩╩",
 																	"T": "prop",
 																	"HL": "QS"
+																},
+																"format": {
+																	"H": "╬'number'╩╩",
+																	"T": "attr",
+																	"HL": "QS"
 																}
 															},
 															"E": {},
@@ -3983,6 +4050,11 @@ let pjson = {
 																"disabled": {
 																	"H": "╬true╩╩",
 																	"T": "prop",
+																	"HL": "QS"
+																},
+																"format": {
+																	"H": "╬'number'╩╩",
+																	"T": "attr",
 																	"HL": "QS"
 																}
 															},
@@ -4134,6 +4206,11 @@ let pjson = {
 																	"H": "╬true╩╩",
 																	"T": "prop",
 																	"HL": "QS"
+																},
+																"format": {
+																	"H": "╬'number'╩╩",
+																	"T": "attr",
+																	"HL": "QS"
 																}
 															},
 															"E": {},
@@ -4260,6 +4337,11 @@ let pjson = {
 																"disabled": {
 																	"H": "╬true╩╩",
 																	"T": "prop",
+																	"HL": "QS"
+																},
+																"format": {
+																	"H": "╬'number'╩╩",
+																	"T": "attr",
 																	"HL": "QS"
 																}
 															},
@@ -4410,6 +4492,11 @@ let pjson = {
 																"disabled": {
 																	"H": "╬true╩╩",
 																	"T": "prop",
+																	"HL": "QS"
+																},
+																"format": {
+																	"H": "╬'number'╩╩",
+																	"T": "attr",
 																	"HL": "QS"
 																}
 															},
@@ -4562,6 +4649,11 @@ let pjson = {
 																"disabled": {
 																	"H": "╬true╩╩",
 																	"T": "prop",
+																	"HL": "QS"
+																},
+																"format": {
+																	"H": "╬'number'╩╩",
+																	"T": "attr",
 																	"HL": "QS"
 																}
 															},

@@ -44,7 +44,7 @@ let pjson = {
 					"HL": "TS"
 				},
 				"getAssuranceOwnerInfo": {
-					"H": "let customerInfoData = quick.store.get('$customerInfo');\r\nlet phoneNumber = (components.txt_phoneNumber.qValue.substr(3));\r\nlet cityAreaCode = components.txt_phoneNumber.qValue.substr(0, 3);\r\nlet customerInfoType = customerInfoData?.basicInfo?.entityType?.code == \"MUSTP_BIREYSEL\" ? \"INDIVIDUAL\" : \"COMMERCIAL\";\r\nlet phoneType;\r\nlet addressType;\r\nlet employmentStatus;\r\nlet maritalStatus;\r\nlet occupationType;\r\nlet idCardInfo;\r\nlet birthDate;\r\nlet birthPlace;\r\nlet name;\r\nlet surname;\r\nlet fatherName;\r\nlet motherName;\r\nlet gender;\r\nlet citizenId;\r\nlet insuranceFirmType;\r\nlet taxId;\r\nlet taxOffice;\r\nlet title;\r\nlet nationalityCode;\r\n\r\nif (customerInfoType == \"INDIVIDUAL\") {\r\n    birthDate = customerInfoData?.individualInfo?.birthDate.split('T')[0];\r\n    birthPlace = customerInfoData?.individualInfo?.birthPlace;\r\n    fatherName = customerInfoData?.individualInfo?.fatherName.firstName;\r\n    motherName = customerInfoData?.individualInfo?.motherName.firstName;\r\n\r\n    if (customerInfoData?.individualInfo?.fullName?.middleName) {\r\n        name = customerInfoData?.individualInfo?.fullName?.firstName + ' ' + customerInfoData?.individualInfo?.fullName?.middleName;\r\n    }\r\n    else {\r\n        name = customerInfoData?.individualInfo?.fullName?.firstName;\r\n    }\r\n    surname = customerInfoData?.individualInfo?.fullName?.lastName;\r\n    occupationType = components.vauto_profession.qValue;\r\n    citizenId = components.txt_idNumber.qValue;\r\n    employmentStatus = {\r\n        code: customerInfoData?.individualInfo?.educationInfo.educationLevel.code,\r\n        category: customerInfoData?.individualInfo?.educationInfo.educationLevel.category\r\n    };\r\n    maritalStatus = {\r\n        code: customerInfoData?.individualInfo?.maritalStatus.code,\r\n        category: customerInfoData?.individualInfo?.maritalStatus.category\r\n    };\r\n    gender = {\r\n        code: customerInfoData?.individualInfo?.gender.code,\r\n        category: customerInfoData?.individualInfo?.gender.category\r\n    };\r\n    idCardInfo = {\r\n        type: customerInfoData?.individualInfo?.idCard?.type?.code\r\n    };\r\n    nationalityCode = {\r\n        code: customerInfoData?.individualInfo?.nationality?.code,\r\n        category: customerInfoData?.individualInfo?.nationality?.category\r\n    }\r\n\r\n} else {\r\n    taxId = customerInfoData?.organizationalInfo?.taxId;\r\n    taxOffice = customerInfoData?.taxPayerInfo?.taxOfficeName;\r\n    title = customerInfoData?.organizationalInfo?.fullName;\r\n}\r\n\r\nif (components.vauto_phoneType.qValue?.code == \"TELTP_CEPTELEFON\"\r\n    || components.vauto_phoneType.qValue == \"TELTP_CEPTELEFON\") {\r\n    phoneType = \"MOBILE\";\r\n\r\n} else if (components.vauto_phoneType.qValue?.code == \"TELTP_EVTELEFON\"\r\n    || components.vauto_phoneType.qValue == \"TELTP_EVTELEFON\") {\r\n    phoneType = \"HOME\";\r\n\r\n} else if (components.vauto_phoneType.qValue?.code == \"TELTP_ISTELEFON\"\r\n    || components.vauto_phoneType.qValue?.code == \"TELTP_MERKEZTELEFON\"\r\n    || components.vauto_phoneType.qValue?.code == \"TELTP_DIGERTELEFON\"\r\n    || components.vauto_phoneType.qValue == \"TELTP_ISTELEFON\"\r\n    || components.vauto_phoneType.qValue == \"TELTP_MERKEZTELEFON\"\r\n    || components.vauto_phoneType.qValue == \"TELTP_DIGERTELEFON\") {\r\n    phoneType = \"WORK\";\r\n}\r\nif (components.vauto_adressType.qValue?.code == \"ADRTP_EVADRES\"\r\n    || components.vauto_adressType.qValue?.code == \"ADRTP_IKAMETADRES\"\r\n    || components.vauto_adressType.qValue == \"ADRTP_EVADRES\"\r\n    || components.vauto_adressType.qValue == \"ADRTP_IKAMETADRES\") {\r\n    addressType = \"HOME\";\r\n\r\n} else if (components.vauto_adressType.qValue?.code == \"ADRTP_ISADRES\"\r\n    || components.vauto_adressType.qValue?.code == \"ADRTP_MERKEZADRES\"\r\n    || components.vauto_adressType.qValue == \"ADRTP_ISADRES\"\r\n    || components.vauto_adressType.qValue == \"ADRTP_MERKEZADRES\") {\r\n    addressType = \"WORK\";\r\n}\r\n\r\nquick.return({\r\n    customerInfoType: customerInfoType,\r\n    contactRole: \"INSURER\",\r\n    customerNumber: components.txt_customerNumber.qValue,\r\n    taxId: taxId,\r\n    taxOffice: taxOffice,\r\n    title: title,\r\n    addressList: {\r\n        addressType: addressType,\r\n        address: {\r\n            line: components.txt_address.qValue,\r\n            zipCode: components.txt_postCode.qValue, //postakodu\r\n            cityId: {\r\n                code: components.vauto_city.qValue?.code,\r\n                category: \"CITY\"\r\n            },\r\n            cityName: components.vauto_city.qValue?.name,\r\n            districtId: {\r\n                code: components.vauto_district.qValue?.code,\r\n                category: \"DISTRICT\"\r\n            },\r\n            districtName: components.vauto_district.qValue?.name,\r\n            countryId: {\r\n                code: components.vauto_country.qValue.code,\r\n                category: \"COUNTRY\"\r\n            }\r\n        }\r\n    },\r\n    phoneList: {\r\n        phoneType: phoneType,\r\n        phoneNumber: {\r\n            countryAreaCode: components.txt_countryCode.qValue,\r\n            cityAreaCode: cityAreaCode,\r\n            phoneNumber: phoneNumber\r\n        }\r\n    },\r\n    emailList: {\r\n        emailType: \"PRIVATE\",\r\n        emailAddress: components.txt_email.qValue\r\n    },\r\n    nationalityCode: nationalityCode,\r\n    citizenId: citizenId,\r\n    idCardInfo: idCardInfo,\r\n    gender: gender,\r\n    name: name,\r\n    surname: surname,\r\n    birthDate: birthDate,\r\n    birthPlace: birthPlace,\r\n    fatherName: fatherName,\r\n    motherName: motherName,\r\n    employmentStatus: employmentStatus,\r\n    maritalStatus: maritalStatus,\r\n    occupationType: occupationType\r\n})",
+					"H": "let customerInfoData = quick.store.get('$customerInfo');\r\nlet phoneNumber = (components.txt_phoneNumber.qValue.substr(3));\r\nlet cityAreaCode = components.txt_phoneNumber.qValue.substr(0, 3);\r\nlet customerInfoType = customerInfoData?.basicInfo?.entityType?.code == \"MUSTP_BIREYSEL\" ? \"INDIVIDUAL\" : \"COMMERCIAL\";\r\nlet phoneType;\r\nlet addressType;\r\nlet employmentStatus;\r\nlet maritalStatus;\r\nlet occupationType;\r\nlet idCardInfo;\r\nlet birthDate;\r\nlet birthPlace;\r\nlet name;\r\nlet surname;\r\nlet fatherName;\r\nlet motherName;\r\nlet gender;\r\nlet citizenId;\r\nlet insuranceFirmType;\r\nlet taxId;\r\nlet taxOffice;\r\nlet title;\r\nlet nationalityCode;\r\n\r\nif (customerInfoType == \"INDIVIDUAL\") {\r\n    birthDate = customerInfoData?.individualInfo?.birthDate.split('T')[0];\r\n    birthPlace = customerInfoData?.individualInfo?.birthPlace;\r\n    fatherName = customerInfoData?.individualInfo?.fatherName.firstName;\r\n    motherName = customerInfoData?.individualInfo?.motherName.firstName;\r\n\r\n    if (customerInfoData?.individualInfo?.fullName?.middleName) {\r\n        name = customerInfoData?.individualInfo?.fullName?.firstName + ' ' + customerInfoData?.individualInfo?.fullName?.middleName;\r\n    }\r\n    else {\r\n        name = customerInfoData?.individualInfo?.fullName?.firstName;\r\n    }\r\n    surname = customerInfoData?.individualInfo?.fullName?.lastName;\r\n    occupationType = components.vauto_profession.qValue;\r\n    citizenId = components.txt_idNumber.qValue;\r\n    employmentStatus = {\r\n        code: customerInfoData?.individualInfo?.educationInfo.educationLevel.code,\r\n        category: customerInfoData?.individualInfo?.educationInfo.educationLevel.category\r\n    };\r\n    maritalStatus = {\r\n        code: customerInfoData?.individualInfo?.maritalStatus.code,\r\n        category: customerInfoData?.individualInfo?.maritalStatus.category\r\n    };\r\n    gender = {\r\n        code: customerInfoData?.individualInfo?.gender.code,\r\n        category: customerInfoData?.individualInfo?.gender.category\r\n    };\r\n    idCardInfo = {\r\n        type: customerInfoData?.individualInfo?.idCard?.type?.code\r\n    };\r\n    nationalityCode = {\r\n        code: customerInfoData?.individualInfo?.nationality?.code,\r\n        category: customerInfoData?.individualInfo?.nationality?.category\r\n    }\r\n\r\n} else {\r\n    taxId = customerInfoData?.organizationalInfo?.taxId;\r\n    taxOffice = customerInfoData?.taxPayerInfo?.taxOfficeName;\r\n    title = customerInfoData?.organizationalInfo?.fullName;\r\n}\r\n\r\nif (components.vauto_phoneType.qValue?.code == \"TELTP_CEPTELEFON\"\r\n    || components.vauto_phoneType.qValue == \"TELTP_CEPTELEFON\") {\r\n    phoneType = \"MOBILE\";\r\n\r\n} else if (components.vauto_phoneType.qValue?.code == \"TELTP_EVTELEFON\"\r\n    || components.vauto_phoneType.qValue == \"TELTP_EVTELEFON\") {\r\n    phoneType = \"HOME\";\r\n\r\n} else if (components.vauto_phoneType.qValue?.code == \"TELTP_ISTELEFON\"\r\n    || components.vauto_phoneType.qValue?.code == \"TELTP_MERKEZTELEFON\"\r\n    || components.vauto_phoneType.qValue?.code == \"TELTP_DIGERTELEFON\"\r\n    || components.vauto_phoneType.qValue == \"TELTP_ISTELEFON\"\r\n    || components.vauto_phoneType.qValue == \"TELTP_MERKEZTELEFON\"\r\n    || components.vauto_phoneType.qValue == \"TELTP_DIGERTELEFON\") {\r\n    phoneType = \"WORK\";\r\n}\r\nif (components.vauto_adressType.qValue?.code == \"ADRTP_EVADRES\"\r\n    || components.vauto_adressType.qValue?.code == \"ADRTP_IKAMETADRES\"\r\n    || components.vauto_adressType.qValue == \"ADRTP_EVADRES\"\r\n    || components.vauto_adressType.qValue == \"ADRTP_IKAMETADRES\") {\r\n    addressType = \"HOME\";\r\n\r\n} else if (components.vauto_adressType.qValue?.code == \"ADRTP_ISADRES\"\r\n    || components.vauto_adressType.qValue?.code == \"ADRTP_MERKEZADRES\"\r\n    || components.vauto_adressType.qValue == \"ADRTP_ISADRES\"\r\n    || components.vauto_adressType.qValue == \"ADRTP_MERKEZADRES\") {\r\n    addressType = \"WORK\";\r\n}\r\n\r\n\r\nlet info = {\r\n    customerInfoType: customerInfoType,\r\n    contactRole: \"INSURER\",\r\n    customerNumber: components.txt_customerNumber.qValue,\r\n    taxId: taxId,\r\n    taxOffice: taxOffice,\r\n    title: title,\r\n    addressList: {\r\n        addressType: addressType,\r\n        address: {\r\n            line: components.txt_address.qValue,\r\n            zipCode: components.txt_postCode.qValue, //postakodu\r\n            cityId: {\r\n                code: components.vauto_city.qValue?.code,\r\n                category: \"CITY\"\r\n            },\r\n            cityName: components.vauto_city.qValue?.name,\r\n            districtId: {\r\n                code: components.vauto_district.qValue?.code,\r\n                category: \"DISTRICT\"\r\n            },\r\n            districtName: components.vauto_district.qValue?.name,\r\n            countryId: {\r\n                code: components.vauto_country.qValue.code,\r\n                category: \"COUNTRY\"\r\n            }\r\n        }\r\n    },\r\n    phoneList: {\r\n        phoneType: phoneType,\r\n        phoneNumber: {\r\n            countryAreaCode: components.txt_countryCode.qValue,\r\n            cityAreaCode: cityAreaCode,\r\n            phoneNumber: phoneNumber\r\n        }\r\n    },\r\n    emailList: {\r\n        emailType: \"PRIVATE\",\r\n        emailAddress: components.txt_email.qValue\r\n    },\r\n    nationalityCode: nationalityCode,\r\n    citizenId: citizenId,\r\n    idCardInfo: idCardInfo,\r\n    gender: gender,\r\n    name: name,\r\n    surname: surname,\r\n    birthDate: birthDate,\r\n    birthPlace: birthPlace,\r\n    fatherName: fatherName,\r\n    motherName: motherName,\r\n    employmentStatus: employmentStatus,\r\n    maritalStatus: maritalStatus,\r\n    occupationType: occupationType\r\n}\r\nquick.store.set(\"$getAssuranceOwnerInfo\", info);\r\nquick.return(info);",
 					"C": true,
 					"EV": true,
 					"HL": "TS"
@@ -18768,7 +18768,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"QJsonPath": {
-					"H": "'<<qjson:4ofxpzue-4tgt-xn8v-tb9d-he40maps7nna>>'",
+					"H": "'/static/ui-bankasASDask/common/as_alertCustomComp.qjson'",
 					"T": "prop",
 					"HL": "QS"
 				},
@@ -18846,7 +18846,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"QJsonPath": {
-					"H": "'<<qjson:uqhpjdpa-lkdx-zekn-h042-yuw0maps7npk>>'",
+					"H": "'/static/ui-bankasASDask/common/as_loadingCustomComp.qjson'",
 					"T": "prop",
 					"HL": "QS"
 				}
@@ -18930,7 +18930,7 @@ let pjson = {
 					"HL": "JS"
 				},
 				"getAssuranceOwnerInfo": {
-					"H": "var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nvar customerInfoData = quick.store.get('$customerInfo');\r\nvar phoneNumber = (components.txt_phoneNumber.qValue.substr(3));\r\nvar cityAreaCode = components.txt_phoneNumber.qValue.substr(0, 3);\r\nvar customerInfoType = ((_b = (_a = customerInfoData === null || customerInfoData === void 0 ? void 0 : customerInfoData.basicInfo) === null || _a === void 0 ? void 0 : _a.entityType) === null || _b === void 0 ? void 0 : _b.code) == \"MUSTP_BIREYSEL\" ? \"INDIVIDUAL\" : \"COMMERCIAL\";\r\nvar phoneType;\r\nvar addressType;\r\nvar employmentStatus;\r\nvar maritalStatus;\r\nvar occupationType;\r\nvar idCardInfo;\r\nvar birthDate;\r\nvar birthPlace;\r\nvar name;\r\nvar surname;\r\nvar fatherName;\r\nvar motherName;\r\nvar gender;\r\nvar citizenId;\r\nvar insuranceFirmType;\r\nvar taxId;\r\nvar taxOffice;\r\nvar title;\r\nvar nationalityCode;\r\nif (customerInfoType == \"INDIVIDUAL\") {\r\n    birthDate = (_c = customerInfoData === null || customerInfoData === void 0 ? void 0 : customerInfoData.individualInfo) === null || _c === void 0 ? void 0 : _c.birthDate.split('T')[0];\r\n    birthPlace = (_d = customerInfoData === null || customerInfoData === void 0 ? void 0 : customerInfoData.individualInfo) === null || _d === void 0 ? void 0 : _d.birthPlace;\r\n    fatherName = (_e = customerInfoData === null || customerInfoData === void 0 ? void 0 : customerInfoData.individualInfo) === null || _e === void 0 ? void 0 : _e.fatherName.firstName;\r\n    motherName = (_f = customerInfoData === null || customerInfoData === void 0 ? void 0 : customerInfoData.individualInfo) === null || _f === void 0 ? void 0 : _f.motherName.firstName;\r\n    if ((_h = (_g = customerInfoData === null || customerInfoData === void 0 ? void 0 : customerInfoData.individualInfo) === null || _g === void 0 ? void 0 : _g.fullName) === null || _h === void 0 ? void 0 : _h.middleName) {\r\n        name = ((_k = (_j = customerInfoData === null || customerInfoData === void 0 ? void 0 : customerInfoData.individualInfo) === null || _j === void 0 ? void 0 : _j.fullName) === null || _k === void 0 ? void 0 : _k.firstName) + ' ' + ((_m = (_l = customerInfoData === null || customerInfoData === void 0 ? void 0 : customerInfoData.individualInfo) === null || _l === void 0 ? void 0 : _l.fullName) === null || _m === void 0 ? void 0 : _m.middleName);\r\n    }\r\n    else {\r\n        name = (_p = (_o = customerInfoData === null || customerInfoData === void 0 ? void 0 : customerInfoData.individualInfo) === null || _o === void 0 ? void 0 : _o.fullName) === null || _p === void 0 ? void 0 : _p.firstName;\r\n    }\r\n    surname = (_r = (_q = customerInfoData === null || customerInfoData === void 0 ? void 0 : customerInfoData.individualInfo) === null || _q === void 0 ? void 0 : _q.fullName) === null || _r === void 0 ? void 0 : _r.lastName;\r\n    occupationType = components.vauto_profession.qValue;\r\n    citizenId = components.txt_idNumber.qValue;\r\n    employmentStatus = {\r\n        code: (_s = customerInfoData === null || customerInfoData === void 0 ? void 0 : customerInfoData.individualInfo) === null || _s === void 0 ? void 0 : _s.educationInfo.educationLevel.code,\r\n        category: (_t = customerInfoData === null || customerInfoData === void 0 ? void 0 : customerInfoData.individualInfo) === null || _t === void 0 ? void 0 : _t.educationInfo.educationLevel.category\r\n    };\r\n    maritalStatus = {\r\n        code: (_u = customerInfoData === null || customerInfoData === void 0 ? void 0 : customerInfoData.individualInfo) === null || _u === void 0 ? void 0 : _u.maritalStatus.code,\r\n        category: (_v = customerInfoData === null || customerInfoData === void 0 ? void 0 : customerInfoData.individualInfo) === null || _v === void 0 ? void 0 : _v.maritalStatus.category\r\n    };\r\n    gender = {\r\n        code: (_w = customerInfoData === null || customerInfoData === void 0 ? void 0 : customerInfoData.individualInfo) === null || _w === void 0 ? void 0 : _w.gender.code,\r\n        category: (_x = customerInfoData === null || customerInfoData === void 0 ? void 0 : customerInfoData.individualInfo) === null || _x === void 0 ? void 0 : _x.gender.category\r\n    };\r\n    idCardInfo = {\r\n        type: (_0 = (_z = (_y = customerInfoData === null || customerInfoData === void 0 ? void 0 : customerInfoData.individualInfo) === null || _y === void 0 ? void 0 : _y.idCard) === null || _z === void 0 ? void 0 : _z.type) === null || _0 === void 0 ? void 0 : _0.code\r\n    };\r\n    nationalityCode = {\r\n        code: (_2 = (_1 = customerInfoData === null || customerInfoData === void 0 ? void 0 : customerInfoData.individualInfo) === null || _1 === void 0 ? void 0 : _1.nationality) === null || _2 === void 0 ? void 0 : _2.code,\r\n        category: (_4 = (_3 = customerInfoData === null || customerInfoData === void 0 ? void 0 : customerInfoData.individualInfo) === null || _3 === void 0 ? void 0 : _3.nationality) === null || _4 === void 0 ? void 0 : _4.category\r\n    };\r\n}\r\nelse {\r\n    taxId = (_5 = customerInfoData === null || customerInfoData === void 0 ? void 0 : customerInfoData.organizationalInfo) === null || _5 === void 0 ? void 0 : _5.taxId;\r\n    taxOffice = (_6 = customerInfoData === null || customerInfoData === void 0 ? void 0 : customerInfoData.taxPayerInfo) === null || _6 === void 0 ? void 0 : _6.taxOfficeName;\r\n    title = (_7 = customerInfoData === null || customerInfoData === void 0 ? void 0 : customerInfoData.organizationalInfo) === null || _7 === void 0 ? void 0 : _7.fullName;\r\n}\r\nif (((_8 = components.vauto_phoneType.qValue) === null || _8 === void 0 ? void 0 : _8.code) == \"TELTP_CEPTELEFON\"\r\n    || components.vauto_phoneType.qValue == \"TELTP_CEPTELEFON\") {\r\n    phoneType = \"MOBILE\";\r\n}\r\nelse if (((_9 = components.vauto_phoneType.qValue) === null || _9 === void 0 ? void 0 : _9.code) == \"TELTP_EVTELEFON\"\r\n    || components.vauto_phoneType.qValue == \"TELTP_EVTELEFON\") {\r\n    phoneType = \"HOME\";\r\n}\r\nelse if (((_10 = components.vauto_phoneType.qValue) === null || _10 === void 0 ? void 0 : _10.code) == \"TELTP_ISTELEFON\"\r\n    || ((_11 = components.vauto_phoneType.qValue) === null || _11 === void 0 ? void 0 : _11.code) == \"TELTP_MERKEZTELEFON\"\r\n    || ((_12 = components.vauto_phoneType.qValue) === null || _12 === void 0 ? void 0 : _12.code) == \"TELTP_DIGERTELEFON\"\r\n    || components.vauto_phoneType.qValue == \"TELTP_ISTELEFON\"\r\n    || components.vauto_phoneType.qValue == \"TELTP_MERKEZTELEFON\"\r\n    || components.vauto_phoneType.qValue == \"TELTP_DIGERTELEFON\") {\r\n    phoneType = \"WORK\";\r\n}\r\nif (((_13 = components.vauto_adressType.qValue) === null || _13 === void 0 ? void 0 : _13.code) == \"ADRTP_EVADRES\"\r\n    || ((_14 = components.vauto_adressType.qValue) === null || _14 === void 0 ? void 0 : _14.code) == \"ADRTP_IKAMETADRES\"\r\n    || components.vauto_adressType.qValue == \"ADRTP_EVADRES\"\r\n    || components.vauto_adressType.qValue == \"ADRTP_IKAMETADRES\") {\r\n    addressType = \"HOME\";\r\n}\r\nelse if (((_15 = components.vauto_adressType.qValue) === null || _15 === void 0 ? void 0 : _15.code) == \"ADRTP_ISADRES\"\r\n    || ((_16 = components.vauto_adressType.qValue) === null || _16 === void 0 ? void 0 : _16.code) == \"ADRTP_MERKEZADRES\"\r\n    || components.vauto_adressType.qValue == \"ADRTP_ISADRES\"\r\n    || components.vauto_adressType.qValue == \"ADRTP_MERKEZADRES\") {\r\n    addressType = \"WORK\";\r\n}\r\nquick.return({\r\n    customerInfoType: customerInfoType,\r\n    contactRole: \"INSURER\",\r\n    customerNumber: components.txt_customerNumber.qValue,\r\n    taxId: taxId,\r\n    taxOffice: taxOffice,\r\n    title: title,\r\n    addressList: {\r\n        addressType: addressType,\r\n        address: {\r\n            line: components.txt_address.qValue,\r\n            zipCode: components.txt_postCode.qValue,\r\n            cityId: {\r\n                code: (_17 = components.vauto_city.qValue) === null || _17 === void 0 ? void 0 : _17.code,\r\n                category: \"CITY\"\r\n            },\r\n            cityName: (_18 = components.vauto_city.qValue) === null || _18 === void 0 ? void 0 : _18.name,\r\n            districtId: {\r\n                code: (_19 = components.vauto_district.qValue) === null || _19 === void 0 ? void 0 : _19.code,\r\n                category: \"DISTRICT\"\r\n            },\r\n            districtName: (_20 = components.vauto_district.qValue) === null || _20 === void 0 ? void 0 : _20.name,\r\n            countryId: {\r\n                code: components.vauto_country.qValue.code,\r\n                category: \"COUNTRY\"\r\n            }\r\n        }\r\n    },\r\n    phoneList: {\r\n        phoneType: phoneType,\r\n        phoneNumber: {\r\n            countryAreaCode: components.txt_countryCode.qValue,\r\n            cityAreaCode: cityAreaCode,\r\n            phoneNumber: phoneNumber\r\n        }\r\n    },\r\n    emailList: {\r\n        emailType: \"PRIVATE\",\r\n        emailAddress: components.txt_email.qValue\r\n    },\r\n    nationalityCode: nationalityCode,\r\n    citizenId: citizenId,\r\n    idCardInfo: idCardInfo,\r\n    gender: gender,\r\n    name: name,\r\n    surname: surname,\r\n    birthDate: birthDate,\r\n    birthPlace: birthPlace,\r\n    fatherName: fatherName,\r\n    motherName: motherName,\r\n    employmentStatus: employmentStatus,\r\n    maritalStatus: maritalStatus,\r\n    occupationType: occupationType\r\n});\r\n",
+					"H": "var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nvar customerInfoData = quick.store.get('$customerInfo');\r\nvar phoneNumber = (components.txt_phoneNumber.qValue.substr(3));\r\nvar cityAreaCode = components.txt_phoneNumber.qValue.substr(0, 3);\r\nvar customerInfoType = ((_b = (_a = customerInfoData === null || customerInfoData === void 0 ? void 0 : customerInfoData.basicInfo) === null || _a === void 0 ? void 0 : _a.entityType) === null || _b === void 0 ? void 0 : _b.code) == \"MUSTP_BIREYSEL\" ? \"INDIVIDUAL\" : \"COMMERCIAL\";\r\nvar phoneType;\r\nvar addressType;\r\nvar employmentStatus;\r\nvar maritalStatus;\r\nvar occupationType;\r\nvar idCardInfo;\r\nvar birthDate;\r\nvar birthPlace;\r\nvar name;\r\nvar surname;\r\nvar fatherName;\r\nvar motherName;\r\nvar gender;\r\nvar citizenId;\r\nvar insuranceFirmType;\r\nvar taxId;\r\nvar taxOffice;\r\nvar title;\r\nvar nationalityCode;\r\nif (customerInfoType == \"INDIVIDUAL\") {\r\n    birthDate = (_c = customerInfoData === null || customerInfoData === void 0 ? void 0 : customerInfoData.individualInfo) === null || _c === void 0 ? void 0 : _c.birthDate.split('T')[0];\r\n    birthPlace = (_d = customerInfoData === null || customerInfoData === void 0 ? void 0 : customerInfoData.individualInfo) === null || _d === void 0 ? void 0 : _d.birthPlace;\r\n    fatherName = (_e = customerInfoData === null || customerInfoData === void 0 ? void 0 : customerInfoData.individualInfo) === null || _e === void 0 ? void 0 : _e.fatherName.firstName;\r\n    motherName = (_f = customerInfoData === null || customerInfoData === void 0 ? void 0 : customerInfoData.individualInfo) === null || _f === void 0 ? void 0 : _f.motherName.firstName;\r\n    if ((_h = (_g = customerInfoData === null || customerInfoData === void 0 ? void 0 : customerInfoData.individualInfo) === null || _g === void 0 ? void 0 : _g.fullName) === null || _h === void 0 ? void 0 : _h.middleName) {\r\n        name = ((_k = (_j = customerInfoData === null || customerInfoData === void 0 ? void 0 : customerInfoData.individualInfo) === null || _j === void 0 ? void 0 : _j.fullName) === null || _k === void 0 ? void 0 : _k.firstName) + ' ' + ((_m = (_l = customerInfoData === null || customerInfoData === void 0 ? void 0 : customerInfoData.individualInfo) === null || _l === void 0 ? void 0 : _l.fullName) === null || _m === void 0 ? void 0 : _m.middleName);\r\n    }\r\n    else {\r\n        name = (_p = (_o = customerInfoData === null || customerInfoData === void 0 ? void 0 : customerInfoData.individualInfo) === null || _o === void 0 ? void 0 : _o.fullName) === null || _p === void 0 ? void 0 : _p.firstName;\r\n    }\r\n    surname = (_r = (_q = customerInfoData === null || customerInfoData === void 0 ? void 0 : customerInfoData.individualInfo) === null || _q === void 0 ? void 0 : _q.fullName) === null || _r === void 0 ? void 0 : _r.lastName;\r\n    occupationType = components.vauto_profession.qValue;\r\n    citizenId = components.txt_idNumber.qValue;\r\n    employmentStatus = {\r\n        code: (_s = customerInfoData === null || customerInfoData === void 0 ? void 0 : customerInfoData.individualInfo) === null || _s === void 0 ? void 0 : _s.educationInfo.educationLevel.code,\r\n        category: (_t = customerInfoData === null || customerInfoData === void 0 ? void 0 : customerInfoData.individualInfo) === null || _t === void 0 ? void 0 : _t.educationInfo.educationLevel.category\r\n    };\r\n    maritalStatus = {\r\n        code: (_u = customerInfoData === null || customerInfoData === void 0 ? void 0 : customerInfoData.individualInfo) === null || _u === void 0 ? void 0 : _u.maritalStatus.code,\r\n        category: (_v = customerInfoData === null || customerInfoData === void 0 ? void 0 : customerInfoData.individualInfo) === null || _v === void 0 ? void 0 : _v.maritalStatus.category\r\n    };\r\n    gender = {\r\n        code: (_w = customerInfoData === null || customerInfoData === void 0 ? void 0 : customerInfoData.individualInfo) === null || _w === void 0 ? void 0 : _w.gender.code,\r\n        category: (_x = customerInfoData === null || customerInfoData === void 0 ? void 0 : customerInfoData.individualInfo) === null || _x === void 0 ? void 0 : _x.gender.category\r\n    };\r\n    idCardInfo = {\r\n        type: (_0 = (_z = (_y = customerInfoData === null || customerInfoData === void 0 ? void 0 : customerInfoData.individualInfo) === null || _y === void 0 ? void 0 : _y.idCard) === null || _z === void 0 ? void 0 : _z.type) === null || _0 === void 0 ? void 0 : _0.code\r\n    };\r\n    nationalityCode = {\r\n        code: (_2 = (_1 = customerInfoData === null || customerInfoData === void 0 ? void 0 : customerInfoData.individualInfo) === null || _1 === void 0 ? void 0 : _1.nationality) === null || _2 === void 0 ? void 0 : _2.code,\r\n        category: (_4 = (_3 = customerInfoData === null || customerInfoData === void 0 ? void 0 : customerInfoData.individualInfo) === null || _3 === void 0 ? void 0 : _3.nationality) === null || _4 === void 0 ? void 0 : _4.category\r\n    };\r\n}\r\nelse {\r\n    taxId = (_5 = customerInfoData === null || customerInfoData === void 0 ? void 0 : customerInfoData.organizationalInfo) === null || _5 === void 0 ? void 0 : _5.taxId;\r\n    taxOffice = (_6 = customerInfoData === null || customerInfoData === void 0 ? void 0 : customerInfoData.taxPayerInfo) === null || _6 === void 0 ? void 0 : _6.taxOfficeName;\r\n    title = (_7 = customerInfoData === null || customerInfoData === void 0 ? void 0 : customerInfoData.organizationalInfo) === null || _7 === void 0 ? void 0 : _7.fullName;\r\n}\r\nif (((_8 = components.vauto_phoneType.qValue) === null || _8 === void 0 ? void 0 : _8.code) == \"TELTP_CEPTELEFON\"\r\n    || components.vauto_phoneType.qValue == \"TELTP_CEPTELEFON\") {\r\n    phoneType = \"MOBILE\";\r\n}\r\nelse if (((_9 = components.vauto_phoneType.qValue) === null || _9 === void 0 ? void 0 : _9.code) == \"TELTP_EVTELEFON\"\r\n    || components.vauto_phoneType.qValue == \"TELTP_EVTELEFON\") {\r\n    phoneType = \"HOME\";\r\n}\r\nelse if (((_10 = components.vauto_phoneType.qValue) === null || _10 === void 0 ? void 0 : _10.code) == \"TELTP_ISTELEFON\"\r\n    || ((_11 = components.vauto_phoneType.qValue) === null || _11 === void 0 ? void 0 : _11.code) == \"TELTP_MERKEZTELEFON\"\r\n    || ((_12 = components.vauto_phoneType.qValue) === null || _12 === void 0 ? void 0 : _12.code) == \"TELTP_DIGERTELEFON\"\r\n    || components.vauto_phoneType.qValue == \"TELTP_ISTELEFON\"\r\n    || components.vauto_phoneType.qValue == \"TELTP_MERKEZTELEFON\"\r\n    || components.vauto_phoneType.qValue == \"TELTP_DIGERTELEFON\") {\r\n    phoneType = \"WORK\";\r\n}\r\nif (((_13 = components.vauto_adressType.qValue) === null || _13 === void 0 ? void 0 : _13.code) == \"ADRTP_EVADRES\"\r\n    || ((_14 = components.vauto_adressType.qValue) === null || _14 === void 0 ? void 0 : _14.code) == \"ADRTP_IKAMETADRES\"\r\n    || components.vauto_adressType.qValue == \"ADRTP_EVADRES\"\r\n    || components.vauto_adressType.qValue == \"ADRTP_IKAMETADRES\") {\r\n    addressType = \"HOME\";\r\n}\r\nelse if (((_15 = components.vauto_adressType.qValue) === null || _15 === void 0 ? void 0 : _15.code) == \"ADRTP_ISADRES\"\r\n    || ((_16 = components.vauto_adressType.qValue) === null || _16 === void 0 ? void 0 : _16.code) == \"ADRTP_MERKEZADRES\"\r\n    || components.vauto_adressType.qValue == \"ADRTP_ISADRES\"\r\n    || components.vauto_adressType.qValue == \"ADRTP_MERKEZADRES\") {\r\n    addressType = \"WORK\";\r\n}\r\nvar info = {\r\n    customerInfoType: customerInfoType,\r\n    contactRole: \"INSURER\",\r\n    customerNumber: components.txt_customerNumber.qValue,\r\n    taxId: taxId,\r\n    taxOffice: taxOffice,\r\n    title: title,\r\n    addressList: {\r\n        addressType: addressType,\r\n        address: {\r\n            line: components.txt_address.qValue,\r\n            zipCode: components.txt_postCode.qValue,\r\n            cityId: {\r\n                code: (_17 = components.vauto_city.qValue) === null || _17 === void 0 ? void 0 : _17.code,\r\n                category: \"CITY\"\r\n            },\r\n            cityName: (_18 = components.vauto_city.qValue) === null || _18 === void 0 ? void 0 : _18.name,\r\n            districtId: {\r\n                code: (_19 = components.vauto_district.qValue) === null || _19 === void 0 ? void 0 : _19.code,\r\n                category: \"DISTRICT\"\r\n            },\r\n            districtName: (_20 = components.vauto_district.qValue) === null || _20 === void 0 ? void 0 : _20.name,\r\n            countryId: {\r\n                code: components.vauto_country.qValue.code,\r\n                category: \"COUNTRY\"\r\n            }\r\n        }\r\n    },\r\n    phoneList: {\r\n        phoneType: phoneType,\r\n        phoneNumber: {\r\n            countryAreaCode: components.txt_countryCode.qValue,\r\n            cityAreaCode: cityAreaCode,\r\n            phoneNumber: phoneNumber\r\n        }\r\n    },\r\n    emailList: {\r\n        emailType: \"PRIVATE\",\r\n        emailAddress: components.txt_email.qValue\r\n    },\r\n    nationalityCode: nationalityCode,\r\n    citizenId: citizenId,\r\n    idCardInfo: idCardInfo,\r\n    gender: gender,\r\n    name: name,\r\n    surname: surname,\r\n    birthDate: birthDate,\r\n    birthPlace: birthPlace,\r\n    fatherName: fatherName,\r\n    motherName: motherName,\r\n    employmentStatus: employmentStatus,\r\n    maritalStatus: maritalStatus,\r\n    occupationType: occupationType\r\n};\r\nquick.store.set(\"$getAssuranceOwnerInfo\", info);\r\nquick.return(info);\r\n",
 					"C": true,
 					"EV": true,
 					"HL": "JS"
@@ -26265,7 +26265,7 @@ let pjson = {
 																																	},
 																																	"class": "ml-5 text-h6"
 																																},
-																																"compDomClasses": "q-label ml-5 text-h6 newDropBorder"
+																																"compDomClasses": "q-label  ml-5 text-h6"
 																															}
 																														}
 																													],
@@ -26297,7 +26297,7 @@ let pjson = {
 																													},
 																													"class": "d-flex flex-column pb-3 pt-3 pl-3 pr-3"
 																												},
-																												"compDomClasses": "col d-flex flex-column pb-3 pt-3 pl-3 pr-3 pb-0 newDropBorder"
+																												"compDomClasses": "col d-flex flex-column pb-3 pt-3 pl-3 pr-3 pb-0"
 																											}
 																										}
 																									],
@@ -26309,7 +26309,7 @@ let pjson = {
 																							},
 																							"O": {
 																								"cType": "slot",
-																								"compDomClasses": "row newDropBorder"
+																								"compDomClasses": "row"
 																							}
 																						}
 																					],
@@ -26327,7 +26327,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-card v-card--flat v-sheet theme--dark rounded-b-0 primary newDropBorder"
+																				"compDomClasses": "v-card v-card--flat v-sheet theme--dark rounded-b-0 primary"
 																			}
 																		}
 																	],
@@ -26359,7 +26359,7 @@ let pjson = {
 																	},
 																	"class": "d-flex flex-column pb-3 pt-0 pl-0 pr-0"
 																},
-																"compDomClasses": "col d-flex flex-column pb-3 pt-0 pl-0 pr-0 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex flex-column pb-3 pt-0 pl-0 pr-0 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -26443,7 +26443,7 @@ let pjson = {
 											},
 											"O": {
 												"cType": "slot",
-												"compDomClasses": "row newDropBorder"
+												"compDomClasses": "row"
 											}
 										},
 										{
@@ -26635,7 +26635,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
 																			}
 																		}
 																	],
@@ -26667,7 +26667,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 col-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -26825,7 +26825,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0 newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0"
 																			}
 																		}
 																	],
@@ -26857,7 +26857,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 col-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -26960,7 +26960,7 @@ let pjson = {
 																									},
 																									"class": "text-body-1 font-weight-regular"
 																								},
-																								"compDomClasses": "q-label text-body-1 font-weight-regular newDropBorder"
+																								"compDomClasses": "q-label  text-body-1 font-weight-regular"
 																							},
 																							"S": {
 																								"xs-xl": {
@@ -27075,7 +27075,7 @@ let pjson = {
 																					},
 																					"class": "mr-1"
 																				},
-																				"compDomClasses": "v-btn v-btn--depressed v-btn--rounded theme--dark v-size--default mr-1 newDropBorder"
+																				"compDomClasses": "v-btn v-btn--depressed v-btn--rounded theme--dark v-size--default mr-1"
 																			}
 																		}
 																	],
@@ -27107,7 +27107,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 col-1"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-1 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-1 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -27137,7 +27137,7 @@ let pjson = {
 											},
 											"O": {
 												"cType": "slot",
-												"compDomClasses": "row newDropBorder"
+												"compDomClasses": "row"
 											},
 											"S": {
 												"xs-xl": {
@@ -27309,7 +27309,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined"
 																			}
 																		}
 																	],
@@ -27341,7 +27341,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 col-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -27497,7 +27497,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0 newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0"
 																			}
 																		}
 																	],
@@ -27529,7 +27529,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 col-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -27685,7 +27685,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined"
 																			}
 																		}
 																	],
@@ -27717,7 +27717,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 col-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -27875,7 +27875,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined"
 																			}
 																		}
 																	],
@@ -27907,7 +27907,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 col-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -27937,7 +27937,7 @@ let pjson = {
 											},
 											"O": {
 												"cType": "slot",
-												"compDomClasses": "row newDropBorder"
+												"compDomClasses": "row"
 											},
 											"S": {
 												"xs-xl": {
@@ -28113,7 +28113,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined"
 																			}
 																		}
 																	],
@@ -28145,7 +28145,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 col-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -28302,7 +28302,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined"
 																			}
 																		}
 																	],
@@ -28334,7 +28334,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 col-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -28491,7 +28491,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined"
 																			}
 																		}
 																	],
@@ -28523,7 +28523,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 col-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -28680,7 +28680,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined"
 																			}
 																		}
 																	],
@@ -28712,7 +28712,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 col-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -28742,7 +28742,7 @@ let pjson = {
 											},
 											"O": {
 												"cType": "slot",
-												"compDomClasses": "row newDropBorder"
+												"compDomClasses": "row"
 											},
 											"S": {
 												"xs-xl": {
@@ -28944,7 +28944,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
 																			}
 																		}
 																	],
@@ -28976,7 +28976,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 col-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -29156,7 +29156,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--prefix v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded pt-0 undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--prefix v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded pt-0 undefined"
 																			}
 																		}
 																	],
@@ -29187,7 +29187,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pb-3 col-1 pr-0"
 																},
-																"compDomClasses": "col d-flex pt-3 pb-3 col-1 pr-0 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pb-3 col-1 pr-0 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -29355,7 +29355,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0 newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0"
 																			}
 																		}
 																	],
@@ -29386,7 +29386,7 @@ let pjson = {
 																	},
 																	"class": "d-flex flex-row col-2 pt-3 pb-3"
 																},
-																"compDomClasses": "col d-flex flex-row col-2 pt-3 pb-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex flex-row col-2 pt-3 pb-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -29572,7 +29572,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
 																			}
 																		}
 																	],
@@ -29604,7 +29604,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 col-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -29790,7 +29790,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
 																			}
 																		}
 																	],
@@ -29822,7 +29822,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 col-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -29852,7 +29852,7 @@ let pjson = {
 											},
 											"O": {
 												"cType": "slot",
-												"compDomClasses": "row newDropBorder"
+												"compDomClasses": "row"
 											},
 											"S": {
 												"xs-xl": {
@@ -30031,7 +30031,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0 newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0"
 																			}
 																		}
 																	],
@@ -30063,7 +30063,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 col-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -30249,7 +30249,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
 																			}
 																		}
 																	],
@@ -30281,7 +30281,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 col-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -30439,7 +30439,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0 newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0"
 																			}
 																		}
 																	],
@@ -30470,7 +30470,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -30500,7 +30500,7 @@ let pjson = {
 											},
 											"O": {
 												"cType": "slot",
-												"compDomClasses": "row newDropBorder"
+												"compDomClasses": "row"
 											},
 											"S": {
 												"xs-xl": {
@@ -30707,7 +30707,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
 																			}
 																		}
 																	],
@@ -30739,7 +30739,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 col-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -30925,7 +30925,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
 																			}
 																		}
 																	],
@@ -30957,7 +30957,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 col-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -31138,7 +31138,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
 																			}
 																		}
 																	],
@@ -31170,7 +31170,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 col-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -31344,7 +31344,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0 newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0"
 																			}
 																		}
 																	],
@@ -31376,7 +31376,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 col-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -31406,7 +31406,7 @@ let pjson = {
 											},
 											"O": {
 												"cType": "slot",
-												"compDomClasses": "row newDropBorder"
+												"compDomClasses": "row"
 											},
 											"S": {
 												"xs-xl": {
@@ -31445,7 +31445,7 @@ let pjson = {
 									},
 									"class": "pt-0 pb-0 pl-3 pr-3"
 								},
-								"compDomClasses": "v-card v-sheet theme--light elevation-0 white pt-0 pb-0 pl-3 pr-3 newDropBorder"
+								"compDomClasses": "v-card v-sheet theme--light elevation-0 white pt-0 pb-0 pl-3 pr-3"
 							}
 						},
 						{
@@ -31599,7 +31599,7 @@ let pjson = {
 																					},
 																					"class": "mt-0"
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-input--selection-controls v-input--checkbox mt-0 newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-input--selection-controls v-input--checkbox mt-0"
 																			}
 																		},
 																		{
@@ -31691,7 +31691,7 @@ let pjson = {
 																							},
 																							"O": {
 																								"cType": "slot",
-																								"compDomClasses": "v-icon notranslate v-icon--link mdi mdi-plus theme--light newDropBorder"
+																								"compDomClasses": "v-icon notranslate v-icon--link mdi mdi-plus theme--light"
 																							}
 																						}
 																					],
@@ -31750,7 +31750,7 @@ let pjson = {
 																					},
 																					"class": "ml-5 mt-1"
 																				},
-																				"compDomClasses": "tooltip-force ml-5 mt-1 newDropBorder"
+																				"compDomClasses": "tooltip-force ml-5 mt-1"
 																			}
 																		}
 																	],
@@ -31782,7 +31782,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 col-4 pl-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 col-4 pl-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 col-4 pl-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -31812,7 +31812,7 @@ let pjson = {
 											},
 											"O": {
 												"cType": "slot",
-												"compDomClasses": "row newDropBorder"
+												"compDomClasses": "row"
 											},
 											"S": {
 												"xs-xl": {
@@ -31851,7 +31851,7 @@ let pjson = {
 									},
 									"class": "pb-0 pt-0 pl-3 pr-3"
 								},
-								"compDomClasses": "v-card v-sheet theme--light elevation-0 white pb-0 pt-0 pl-3 pr-3 newDropBorder"
+								"compDomClasses": "v-card v-sheet theme--light elevation-0 white pb-0 pt-0 pl-3 pr-3"
 							}
 						}
 					],
@@ -32178,7 +32178,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
 																			}
 																		}
 																	],
@@ -32218,7 +32218,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pl-3 pt-3 pr-3 pb-3 justify-center flex-row align-start col-4"
 																},
-																"compDomClasses": "col d-flex pl-3 pt-3 pr-3 pb-3 justify-center flex-row align-start col-4 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pl-3 pt-3 pr-3 pb-3 justify-center flex-row align-start col-4 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -32237,7 +32237,7 @@ let pjson = {
 											},
 											"O": {
 												"cType": "slot",
-												"compDomClasses": "row newDropBorder"
+												"compDomClasses": "row"
 											},
 											"S": {
 												"xs-xl": {
@@ -32276,7 +32276,7 @@ let pjson = {
 									},
 									"class": "pb-0 pt-0 pl-3 pr-3"
 								},
-								"compDomClasses": "v-card v-sheet theme--light elevation-0 white pb-0 pt-0 pl-3 pr-3 newDropBorder"
+								"compDomClasses": "v-card v-sheet theme--light elevation-0 white pb-0 pt-0 pl-3 pr-3"
 							}
 						}
 					],
@@ -32299,7 +32299,7 @@ let pjson = {
 					},
 					"class": "pl-0 pt-0 pr-0 pb-0"
 				},
-				"compDomClasses": "container container--fluid pl-0 pt-0 pr-0 pb-0 newDropBorder"
+				"compDomClasses": "container container--fluid pl-0 pt-0 pr-0 pb-0 container container--fluid"
 			},
 			"S": {
 				"xs-xl": {
@@ -32420,7 +32420,7 @@ let pjson = {
 																	},
 																	"class": "ml-5 text-h6"
 																},
-																"compDomClasses": "q-label ml-5 text-h6 newDropBorder"
+																"compDomClasses": "q-label  ml-5 text-h6"
 															}
 														}
 													],
@@ -32432,7 +32432,7 @@ let pjson = {
 											},
 											"O": {
 												"cType": "child",
-												"compDomClasses": "v-expansion-panel-header primary newDropBorder"
+												"compDomClasses": "v-expansion-panel-header primary"
 											}
 										},
 										{
@@ -37848,7 +37848,7 @@ let pjson = {
 							},
 							"O": {
 								"cType": "slot",
-								"compDomClasses": "v-expansion-panel newDropBorder"
+								"compDomClasses": "v-expansion-panel"
 							}
 						}
 					],
@@ -37860,7 +37860,7 @@ let pjson = {
 			},
 			"O": {
 				"cType": "slot",
-				"compDomClasses": "v-item-group theme--light v-expansion-panels newDropBorder"
+				"compDomClasses": "v-item-group theme--light v-expansion-panels"
 			}
 		},
 		{
@@ -37872,7 +37872,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"QJsonPath": {
-					"H": "╬'<<qjson:4ofxpzue-4tgt-xn8v-tb9d-he40maps7nna>>'╩╩",
+					"H": "╬'/static/ui-bankasASDask/common/as_alertCustomComp.qjson'╩╩",
 					"T": "prop",
 					"HL": "QS"
 				},
@@ -37952,7 +37952,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"QJsonPath": {
-					"H": "╬'<<qjson:uqhpjdpa-lkdx-zekn-h042-yuw0maps7npk>>'╩╩",
+					"H": "╬'/static/ui-bankasASDask/common/as_loadingCustomComp.qjson'╩╩",
 					"T": "prop",
 					"HL": "QS"
 				}

@@ -65,7 +65,7 @@ let pjson = {
 					"HL": "TS"
 				},
 				"getBuildingUavtCompInfo": {
-					"H": "\r\nif (components.txt_adressNumber.qValue != '' || components.txt_adressNumber.qValue != null) {\r\n  let addressInfoData = quick.store.get('addressInfoData')\r\n\r\n  quick.return({\r\n      uavtAddressCode: +(components.txt_adressNumber.qValue), //uavt adres kodu kısmı gönderilecek.\r\n      cityCode: addressInfoData.cityCodeTest,\r\n      streetCode: addressInfoData.streetCode,\r\n      districtCode: addressInfoData.districtCode,\r\n      villageCode: addressInfoData.villageCode,\r\n      countyCode: addressInfoData.countyCode, // bu nerden geliyor bilmiyooommmm!!--TR olduğu için sabit olaiblir.\r\n  })\r\n}",
+					"H": "\r\nif (components.txt_adressNumber.qValue != '' || components.txt_adressNumber.qValue != null) {\r\n  let addressInfoData = quick.store.get('addressInfoData')\r\n\r\n  quick.return({\r\n    uavtAddressCode: +(components.txt_adressNumber.qValue), //uavt adres kodu kısmı gönderilecek.\r\n    cityCode: addressInfoData.cityCodeTest,\r\n    streetCode: addressInfoData.streetCode,\r\n    districtCode: addressInfoData.districtCode,\r\n    villageCode: addressInfoData.villageCode,\r\n    countyCode: addressInfoData.countyCode, // bu nerden geliyor bilmiyooommmm!!--TR olduğu için sabit olaiblir.\r\n    storey: components.vauto_storey.itemText,\r\n    storeyCode: components.vauto_storey.qValue,\r\n    storeyNo: components.txt_storeyNo.qValue\r\n  })\r\n}",
 					"C": true,
 					"EV": true,
 					"HL": "TS"
@@ -6205,7 +6205,7 @@ let pjson = {
 					"HL": "JS"
 				},
 				"getBuildingUavtCompInfo": {
-					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nif (components.txt_adressNumber.qValue != '' || components.txt_adressNumber.qValue != null) {\r\n    var addressInfoData = quick.store.get('addressInfoData');\r\n    quick.return({\r\n        uavtAddressCode: +(components.txt_adressNumber.qValue),\r\n        cityCode: addressInfoData.cityCodeTest,\r\n        streetCode: addressInfoData.streetCode,\r\n        districtCode: addressInfoData.districtCode,\r\n        villageCode: addressInfoData.villageCode,\r\n        countyCode: addressInfoData.countyCode, // bu nerden geliyor bilmiyooommmm!!--TR olduğu için sabit olaiblir.\r\n    });\r\n}\r\n",
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nif (components.txt_adressNumber.qValue != '' || components.txt_adressNumber.qValue != null) {\r\n    var addressInfoData = quick.store.get('addressInfoData');\r\n    quick.return({\r\n        uavtAddressCode: +(components.txt_adressNumber.qValue),\r\n        cityCode: addressInfoData.cityCodeTest,\r\n        streetCode: addressInfoData.streetCode,\r\n        districtCode: addressInfoData.districtCode,\r\n        villageCode: addressInfoData.villageCode,\r\n        countyCode: addressInfoData.countyCode,\r\n        storey: components.vauto_storey.itemText,\r\n        storeyCode: components.vauto_storey.qValue,\r\n        storeyNo: components.txt_storeyNo.qValue\r\n    });\r\n}\r\n",
 					"C": true,
 					"EV": true,
 					"HL": "JS"

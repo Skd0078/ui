@@ -1,0 +1,3094 @@
+let pjson = {
+	"pJson": [
+		{
+			"T": "Messaging",
+			"P": {
+				"ID": {
+					"H": "PageComp",
+					"T": "prop"
+				},
+				"triggerOnRestored": {
+					"H": "false",
+					"T": "prop"
+				}
+			},
+			"E": {
+				"PostRender": {
+					"H": "// debugger;\r\ncomponents.as_collectionInfoPremiumCollection.consumerCode = 'TANE.BANKASUR';\r\ncomponents.as_collectionInfoPremiumCollection.screenName = 'DCFIRE';\r\ncomponents.as_policyInfoPremiumCollection.consumerCode = 'TANE.BANKASUR';\r\ncomponents.as_policyInfoPremiumCollection.screenName = 'DCFIRE';\r\nquick.MM.trigger('setFirstPageDatas');",
+					"TO": 1,
+					"HL": "TS"
+				},
+				"retrieveCustomerAccounts": {
+					"H": "debugger;\r\ncomponents.as_loadingCustomComp.open();\r\n//Tahsilat şekli Hesaptan seçildi\r\nlet requestData = {\r\n  \"customerNumber\": quick.store.get('$customerInfo').customerNumber, //(<any>quick.containerServices).getCustomerContext().customerNumber,\r\n  \"accountType\": [\r\n    {\r\n      \"code\": \"DEMAND\"\r\n    }\r\n  ],\r\n  \"statusCode\": {\r\n    \"code\": \"OPEN\"\r\n  }\r\n};\r\nquick.MM.trigger('setDatasConsumerAndScreenInfo');\r\nlet serviceRequest: any = {};\r\nserviceRequest.blockRender = '';\r\nserviceRequest.data = requestData;\r\nserviceRequest.url = '/api/uiclient/retrieveCustomerAccounts';\r\nserviceRequest.http = 'POST';\r\nserviceRequest.headers = {};\r\nserviceRequest.responseField = {};\r\nlet responseField: any = 'retrieveCustomerAccountsResponse';\r\nserviceRequest.responseField = responseField;\r\nserviceRequest.onSuccess = 'retrieveCustomerAccountsSuccess';\r\nserviceRequest.onFail = 'retrieveCustomerAccountsFail';\r\nquick.Request.async(serviceRequest);",
+					"C": true,
+					"HL": "TS"
+				},
+				"retrieveCustomerAccountsSuccess": {
+					"H": "debugger;\r\nlet decimal;\r\nlet amountBalance;\r\nlet accountList = response.retrieveCustomerAccountsResponse.accountList.account;\r\ncomponents.as_collectionInfoPremiumCollection.setAccountListVisible({ visible: true });\r\nlet tmpList = [];\r\n\r\nlet overDraft = response?.retrieveCustomerAccountsResponse?.accountList?.account[0]?.overdraft;\r\nif (overDraft == true) {\r\n    (<any>components.as_collectionInfoPremiumCollection).setUseOverDraftVisible({ visible: true });\r\n}\r\nelse{\r\n    (<any>components.as_collectionInfoPremiumCollection).setUseOverDraftVisible({ visible: false });\r\n}\r\n\r\nfor (var i = 0; i < accountList.length; i++) {\r\n    amountBalance = quick.Quick.toMoney(Number(accountList[i].balance)); //'124.0';\r\n    if (amountBalance.split(',')[1]) { }\r\n    else {\r\n        decimal = ',00';\r\n        amountBalance = amountBalance + decimal;\r\n    }\r\n\r\n    let data = {\r\n        name: accountList[i].number?.branchCode + '-' + accountList[i].number?.number + ' - Vadesiz TL - ' + amountBalance + ' TRY',\r\n        code: accountList[i]\r\n    }\r\n    tmpList.push(data);\r\n}\r\n(<any>components.as_collectionInfoPremiumCollection).setAccountList({ items: tmpList });\r\ncomponents.as_loadingCustomComp.close();",
+					"C": true,
+					"HL": "TS"
+				},
+				"retrieveCustomerAccountsFail": {
+					"H": "debugger;\r\ncomponents.as_loadingCustomComp.close();\r\n// if (components.as_alertCustomComp.qValue == true) {\r\n    components.as_alertCustomComp.close();\r\n// }\r\ndeclare let error;\r\nlet errorMessage = error?.response?.data?.responseMessage ?? 'Bir hata oluştu.';\r\n(<any>components.as_alertCustomComp).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\ncomponents.as_alertCustomComp.open();",
+					"C": true,
+					"HL": "TS"
+				},
+				"retrieveCreditCardList": {
+					"H": "debugger;\r\ncomponents.as_loadingCustomComp.open();\r\n//Tahsilat şekli Kredi kartı seçildi\r\nlet requestData = {\r\n  \"customerNo\": quick.store.get('$customerInfo').customerNumber, //(<any>quick.containerServices).getCustomerContext().customerNumber,\r\n  \"branchCode\": 0,\r\n  \"accountNo\": 0,\r\n  \"pageSize\": 0,\r\n  \"pageNumber\": 0,\r\n  \"transactionType\": \"S\"\r\n};\r\nquick.MM.trigger('setDatasConsumerAndScreenInfo');\r\nlet serviceRequest: any = {};\r\nserviceRequest.blockRender = '';\r\nserviceRequest.data = requestData;\r\nserviceRequest.url = '/api/uiclient/retrieveCreditCardList';\r\nserviceRequest.http = 'POST';\r\nserviceRequest.responseField = {};\r\nlet responseField: any = 'retrieveCreditCardListResponse';\r\nserviceRequest.responseField = responseField;\r\nserviceRequest.onSuccess = 'retrieveCreditCardListSuccess';\r\nserviceRequest.onFail = 'retrieveCreditCardListFail';\r\nquick.Request.async(serviceRequest);",
+					"C": true,
+					"HL": "TS"
+				},
+				"retrieveCreditCardListSuccess": {
+					"H": "debugger;\r\nlet decimal\r\nlet availableLimit;\r\nlet cardList = response.retrieveCreditCardListResponse.cardInfo;\r\nlet tmpList = [];\r\nfor (var i = 0; i < cardList.length; i++) {\r\n    if (cardList[i].cardStatCode == \"N\" || cardList[i].cardStatCode == \"CR\" || cardList[i].cardStatCode == \"SG\") {\r\n        if (cardList[i].cardType != \"V\" && cardList[i].cardNo == cardList[i].mainCardNo) {\r\n            availableLimit = quick.Quick.toMoney(Number(cardList[i].availableLimit)); //'124.0';\r\n            if (availableLimit.split(',')[1]) { }\r\n            else {\r\n                decimal = ',00';\r\n                availableLimit = availableLimit + decimal;\r\n            }\r\n\r\n            let data = {\r\n                name: cardList[i].cardNo + ' (' + availableLimit + ') ' + cardList[i].embossName,\r\n                code: cardList[i]\r\n            }\r\n            tmpList.push(data);\r\n        }\r\n    }\r\n}\r\n(<any>components.as_collectionInfoPremiumCollection).setAccountList({ items: tmpList });\r\ncomponents.as_loadingCustomComp.close();",
+					"C": true,
+					"HL": "TS"
+				},
+				"retrieveCreditCardListFail": {
+					"H": "debugger;\r\ncomponents.as_loadingCustomComp.close();\r\n// if (components.as_alertCustomComp.qValue == true) {\r\n    components.as_alertCustomComp.close();\r\n// }\r\ndeclare let error;\r\nlet errorMessage = error?.response?.data?.responseMessage ?? 'Bir hata oluştu.';\r\n(<any>components.as_alertCustomComp).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\ncomponents.as_alertCustomComp.open();",
+					"C": true,
+					"HL": "TS"
+				},
+				"setFirstPageDatas": {
+					"H": "debugger;\r\nlet datas;\r\nif (quick.store.get(\"$calculatePremiumResponseList\")) {\r\n    datas = quick.store.get(\"$calculatePremiumResponseList\");\r\n}\r\n\r\n//Toplam Tutar\r\nlet grossPremiumAmount;\r\nlet commissionFeeAmount;\r\nlet decimal;\r\nif (datas?.grossPremiumAmount?.amountTL?.amount) {\r\n    grossPremiumAmount = quick.Quick.toMoney(Number(datas.grossPremiumAmount.amountTL.amount)); //'124.0';\r\n    if (grossPremiumAmount.split(',')[1]) { }\r\n    else {\r\n        decimal = ',00';\r\n        grossPremiumAmount = grossPremiumAmount + decimal;\r\n    }\r\n    quick.store.set('$totalAmount', grossPremiumAmount);\r\n\r\n    commissionFeeAmount = quick.Quick.toMoney(Number(datas.commissionFeeAmount.amountTL.amount)); //'124.0';\r\n    if (commissionFeeAmount.split(',')[1]) { }\r\n    else {\r\n        decimal = ',00';\r\n        commissionFeeAmount = commissionFeeAmount + decimal;\r\n    }\r\n    quick.store.set('$commissionFeeAmount', commissionFeeAmount);\r\n}\r\n\r\nlet newData;\r\nlet newData2;\r\nlet newDatasReceiptType = [];\r\nlet newDatasPaymentMethodList = [];\r\nlet payMethod = datas?.paymentTerms?.paymentTermList?.paymentMethod;\r\nif(payMethod){\r\n    for (let i = 0; i < payMethod.length; i++) {\r\n        if (payMethod[i].paymentCode) {\r\n            newData = { value: payMethod[i].paymentCode.id, text: payMethod[i].paymentCode.type };\r\n            newDatasReceiptType.push(newData);\r\n\r\n            newData2 = {\r\n                idPaymentCode: payMethod[i].paymentCode.id,\r\n                typePaymentCode: payMethod[i].paymentCode.type,\r\n                codeExtCode: payMethod[i].extCode.code,\r\n                valueExtCode: payMethod[i].extCode.value\r\n            }\r\n            newDatasPaymentMethodList.push(newData2);\r\n        }\r\n    }\r\n}\r\nquick.store.set('$itemsReceiptType', newDatasReceiptType);\r\nquick.store.set('$paymentMethodList', newDatasPaymentMethodList);\r\n\r\ndebugger;\r\nlet newDatasInstallmentCountCash = [];\r\nlet newDatasInstallmentCountCredit = [];\r\nlet newDatasInstallmentCountAccount = [];\r\nlet newDatasInstallmentCountCreditInstallment = [];\r\nlet newDatasInstallmentCountAccountInstallment = [];\r\nlet installmentTerm = datas?.paymentTerms?.installmentTypeList?.installmentTerm;\r\nlet typeInstallmentTerm;\r\nlet installmentTermList = [];\r\nlet newInstallmentTerm;\r\nlet installmentGrossPremiumAmount;\r\nif (datas?.paymentTerms?.installmentTypeList?.installmentTerm) {\r\n    for (let i = 0; i < installmentTerm.length; i++) {\r\n        if (installmentTerm[i].installmentPremiumInfo) {\r\n            installmentGrossPremiumAmount = quick.Quick.toMoney(Number(installmentTerm[i]?.installmentPremiumInfo?.grossPremium)); //Tahsil Edilecek tutar\r\n            if (installmentGrossPremiumAmount.split(',')[1]) { }\r\n            else {\r\n                decimal = ',00';\r\n                installmentGrossPremiumAmount = installmentGrossPremiumAmount + decimal;\r\n            }\r\n        }\r\n        else{\r\n            installmentGrossPremiumAmount = grossPremiumAmount;\r\n        }\r\n\r\n        newInstallmentTerm = {\r\n            codeExtCode: installmentTerm[i].extCode.code,\r\n            valueExtcode: installmentTerm[i].extCode.value,\r\n            paymentMethodCode: installmentTerm[i].paymentMethod.extCode.code,\r\n            paymentMethodType: installmentTerm[i].paymentMethod.paymentCode.type,\r\n            paymentMethodId: installmentTerm[i].paymentMethod.paymentCode.id,\r\n            premiumInfoGrossPremium: installmentGrossPremiumAmount\r\n        }\r\n        installmentTermList.push(newInstallmentTerm);\r\n\r\n        typeInstallmentTerm = (installmentTerm[i].paymentMethod.paymentCode.type).toLowerCase();\r\n        if (typeInstallmentTerm.includes(\"taksit\")) {\r\n            if(typeInstallmentTerm.includes(\"cari\")){\r\n                newData = { value: installmentTerm[i].extCode.code, text: installmentTerm[i].extCode.value };\r\n                newDatasInstallmentCountAccountInstallment.push(newData);\r\n            }\r\n            else if(typeInstallmentTerm.includes(\"kredi\")){\r\n                newData = { value: installmentTerm[i].extCode.code, text: installmentTerm[i].extCode.value };\r\n                newDatasInstallmentCountCreditInstallment.push(newData);\r\n            }\r\n        }\r\n        else{\r\n            if(typeInstallmentTerm.includes(\"cari\")){\r\n                newData = { value: installmentTerm[i].extCode.code, text: installmentTerm[i].extCode.value };\r\n                newDatasInstallmentCountAccount.push(newData);\r\n            }\r\n            else if(typeInstallmentTerm.includes(\"kredi\")){\r\n                newData = { value: installmentTerm[i].extCode.code, text: installmentTerm[i].extCode.value };\r\n                newDatasInstallmentCountCredit.push(newData);\r\n            }\r\n            else{ //Nakit\r\n                newData = { value: installmentTerm[i].extCode.code, text: installmentTerm[i].extCode.value };\r\n                newDatasInstallmentCountCash.push(newData);\r\n            }\r\n        }\r\n    }\r\n}\r\nquick.store.set('$installmentTermList', installmentTermList);\r\nquick.store.set('$itemsInstallmentCountCredit', newDatasInstallmentCountCredit);\r\nquick.store.set('$itemsInstallmentCountAccount', newDatasInstallmentCountAccount);\r\nquick.store.set('$itemsInstallmentCountCreditInstallment', newDatasInstallmentCountCreditInstallment);\r\nquick.store.set('$itemsInstallmentCountAccountInstallment', newDatasInstallmentCountAccountInstallment);\r\nquick.store.set('$itemsInstallmentCountCash', newDatasInstallmentCountCash);",
+					"C": true,
+					"HL": "TS"
+				},
+				"setDatasConsumerAndScreenInfo": {
+					"H": "debugger;\r\nlet consumer = components.as_collectionInfoPremiumCollection.consumerCode;\r\nlet screen = components.as_collectionInfoPremiumCollection.screenName;\r\nquick.store.set('$customConsumerCode', consumer);\r\nquick.store.set('$customScreenName', screen);\r\n// (components.as_collectionInfoPremiumCollection as any).setConsumerAndScreenInfo({consumerCode: consumer, screenName: screen});",
+					"C": true,
+					"EV": true,
+					"HL": "TS"
+				},
+				"createPolicyWithCreditCardPayment": {
+					"H": "debugger;\r\n//createPolicyPayment\r\ncomponents.as_loadingCustomComp.open();\r\nlet paymentType;\r\nlet installmentTermList;\r\nlet paymentMethodList;\r\nlet installmentTypeCode;\r\nlet paymentOptionCode;\r\nlet amount;\r\nlet installment;\r\nlet installmentTypeCodeNew;\r\nlet year = components.as_collectionInfoPremiumCollection.getSelectedAccountItem().code.expireDate.substring(0, 2);\r\nlet month = components.as_collectionInfoPremiumCollection.getSelectedAccountItem().code.expireDate.substring(2, 4);\r\nlet expireDate = month + '/' + year;\r\n\r\nconst currentDate = new Date();\r\nlet today = currentDate.toISOString();\r\n\r\namount = components.as_collectionInfoPremiumCollection.getSelectedReceiptAmountItem();\r\namount = amount.replace('.', '');\r\namount = amount.replace(',', '.');\r\n\r\n// let control = (components.as_collectionInfoPremiumCollection.getSelectedReceiptType().text).toLowerCase();\r\n// if(control.includes('peşin')){\r\n//     amount = quick.store.get('$cashPaymentAmount');\r\n// }\r\n// else{\r\n//     amount = quick.store.get('$installmentPaymentAmount');\r\n// }\r\n\r\npaymentType = quick.store.get('$paymentType');\r\ninstallmentTermList = quick.store.get('$installmentTermList');\r\npaymentMethodList = quick.store.get('$paymentMethodList');\r\n\r\ninstallment = components.as_collectionInfoPremiumCollection.getSelectedInstallmentCountInternalSearch();\r\nquick.store.set('$installmentForResultPage', installment);\r\nif (installment) { //Taksitlidir\r\n    installment = Number((components.as_collectionInfoPremiumCollection.getSelectedInstallmentCountInternalSearch()).split(' ')[0]);\r\n    installmentTypeCodeNew = (components.as_collectionInfoPremiumCollection.getSelectedInstallmentCountItem())?.installment?.value;\r\n}\r\nelse {\r\n    installment = 0;\r\n    if (quick.store.get('$paymentType') == 'kredi kartı sanal pos (peşin)') {\r\n        installmentTypeCodeNew = quick.store.get('$itemsInstallmentCountCredit');\r\n        installmentTypeCodeNew = installmentTypeCodeNew[0]?.value;\r\n    }\r\n    else if (quick.store.get('$paymentType') == 'cari hesap (peşin)') {\r\n        installmentTypeCodeNew = quick.store.get('$itemsInstallmentCountAccount');\r\n        installmentTypeCodeNew = installmentTypeCodeNew[0]?.value;\r\n    }\r\n    else if (quick.store.get('$paymentType') == 'nakit') {\r\n        installmentTypeCodeNew = quick.store.get('$itemsInstallmentCountCash');\r\n        installmentTypeCodeNew = installmentTypeCodeNew[0]?.value;\r\n    }\r\n}\r\n\r\npaymentMethodList = quick.store.get('$selectedPaymentMethodList');\r\npaymentOptionCode = paymentMethodList.idPaymentCode;\r\n\r\ninstallmentTermList = quick.store.get('$selectedInstallmentTermList');\r\ninstallmentTypeCode = installmentTermList.codeExtCode;\r\n\r\nlet renewPolicy;\r\nlet getAutoRenew = components.as_collectionInfoPremiumCollection.getSelectedAutoRenew();\r\nif (getAutoRenew == 1) {\r\n    renewPolicy = true;\r\n}\r\nelse {\r\n    renewPolicy = false;\r\n}\r\n\r\nlet digital;\r\nlet digitalControl = quick.store.get('$digital');\r\nif (digitalControl == 'E') {\r\n    digital = true;\r\n} else {\r\n    digital = false;\r\n}\r\n\r\nlet requestData;\r\nif (installment) { //Taksitlidir\r\n    requestData = {\r\n        \"creditCardPaymentInputType\": {\r\n            \"policyType\": \"DCFIRE\",\r\n            \"applicationId\": 'BRANCH',\r\n            \"bankRefId\": quick.store.get('$bankRefId').bankRefId,\r\n            \"clientId\": \"700100000\",\r\n            \"customerNumber\": quick.store.get('$customerInfo').customerNumber,\r\n            \"creditCardInfo\": {\r\n                \"customerName\": components.as_collectionInfoPremiumCollection.getSelectedAccountItem().code.embossName,\r\n                \"ccNumber\": components.as_collectionInfoPremiumCollection.getSelectedAccountItem().code.cardNo,\r\n                \"expires\": expireDate\r\n            },\r\n            \"amount\": {\r\n                \"amount\": Number(amount), //amount,\r\n                \"currency\": \"949\"\r\n            },\r\n            \"renewPolicy\": renewPolicy,\r\n            \"paymentOptionCode\": paymentOptionCode,\r\n            \"installmentTypeCode\": installmentTypeCodeNew,\r\n            \"installment\": installment,\r\n            \"policyStartDate\": quick.store.get('$policyStartDate'),\r\n            \"policyEndDate\": quick.store.get('$policyEndDate'),\r\n            \"policyIssueDate\": today,\r\n            \"isDigitalApproved\": digital\r\n        }\r\n    };\r\n}\r\nelse {\r\n    requestData = {\r\n        \"creditCardPaymentInputType\": {\r\n            \"policyType\": \"DCFIRE\",\r\n            \"applicationId\": 'BRANCH',\r\n            \"bankRefId\": quick.store.get('$bankRefId').bankRefId,\r\n            \"clientId\": \"700100000\",\r\n            \"customerNumber\": quick.store.get('$customerInfo').customerNumber,\r\n            \"creditCardInfo\": {\r\n                \"customerName\": components.as_collectionInfoPremiumCollection.getSelectedAccountItem().code.embossName,\r\n                \"ccNumber\": components.as_collectionInfoPremiumCollection.getSelectedAccountItem().code.cardNo,\r\n                \"expires\": expireDate\r\n            },\r\n            \"amount\": {\r\n                \"amount\": Number(amount), //amount,\r\n                \"currency\": \"949\"\r\n            },\r\n            \"renewPolicy\": renewPolicy,\r\n            \"paymentOptionCode\": paymentOptionCode,\r\n            \"installmentTypeCode\": installmentTypeCodeNew,\r\n            \"policyStartDate\": quick.store.get('$policyStartDate'),\r\n            \"policyEndDate\": quick.store.get('$policyEndDate'),\r\n            \"policyIssueDate\": today,\r\n            \"isDigitalApproved\": digital\r\n        }\r\n    };\r\n}\r\nquick.MM.trigger('setDatasConsumerAndScreenInfo');\r\nlet serviceRequest: IRequest = {\r\n    url: '/api/wrapperclient/createPolicyWithCreditCardPayment',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n}\r\nquick.Request.async(serviceRequest)?.then((resp) => {\r\n    if (resp?.data) {\r\n        quick.store.set('creditPaymentSuccess', resp.data); //{amount: \"500.00\", bankRefId: \"30239963\", overdraftDrawnAmount: \"0.00\", status: \"Complete\"}\r\n        let paymentResult = resp?.data?.createPolicyWithCreditCardPaymentResult;\r\n        quick.store.set('$policyNumber', paymentResult?.dischargedPolicyResult?.policyNo);\r\n        quick.store.set('$renewalNumber', paymentResult?.dischargedPolicyResult?.renewalNo);\r\n        quick.store.set('$eventSourceId', paymentResult?.creditCardPaymentReceipt?.receipt?.transactionNo);\r\n        components.as_loadingCustomComp.close();\r\n        quick.Quick.go(\"/static/ui-bankasASPACC/atworkCommercialProtectionPages/compAtworkCommercialResult.qjson\"); //Sonuç ekranı\r\n    }\r\n})\r\n    .catch((err) => {\r\n        components.as_loadingCustomComp.close();\r\n        let errorMessage = err?.response?.data?.responseMessage ?? 'Bir hata oluştu.';\r\n        (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n        components.as_alertCustomComp.open();\r\n    });",
+					"C": true,
+					"HL": "TS"
+				},
+				"createPolicyWithCashPayment": {
+					"H": "debugger;\r\n//createPolicyPayment\r\ncomponents.as_loadingCustomComp.open();\r\nlet paymentType;\r\nlet installmentTermList;\r\nlet paymentMethodList;\r\nlet installmentTypeCode;\r\nlet paymentOptionCode;\r\nlet amount;\r\nlet installment;\r\n\r\nconst currentDate = new Date();\r\nlet today = currentDate.toISOString();\r\n\r\npaymentMethodList = quick.store.get('$selectedPaymentMethodList');\r\npaymentOptionCode = paymentMethodList.idPaymentCode;\r\n\r\ninstallmentTermList = quick.store.get('$selectedInstallmentTermList');\r\ninstallmentTypeCode = installmentTermList.codeExtCode;\r\n\r\namount = components.as_collectionInfoPremiumCollection.getSelectedReceiptAmountItem();\r\namount = amount.replace('.', '');\r\namount = amount.replace(',', '.');\r\n\r\nlet renewPolicy;\r\nlet getAutoRenew = components.as_collectionInfoPremiumCollection.getSelectedAutoRenew();\r\nif (getAutoRenew == 1) {\r\n    renewPolicy = true;\r\n}\r\nelse {\r\n    renewPolicy = false;\r\n}\r\n\r\nlet installmentTypeCodeNew = quick.store.get('$itemsInstallmentCountCash');\r\ninstallmentTypeCodeNew = installmentTypeCodeNew[0]?.value;\r\n\r\nlet digital;\r\nlet digitalControl = quick.store.get('$digital');\r\nif (digitalControl == 'E') {\r\n    digital = true;\r\n} else {\r\n    digital = false;\r\n}\r\n\r\nlet requestData = {\r\n    \"cashPaymentInputType\": {\r\n        \"policyType\": \"DCFIRE\",\r\n        \"bankRefId\": Number(quick.store.get('$bankRefId').bankRefId),\r\n        \"customerNumber\": quick.store.get('$customerInfo').customerNumber,\r\n        \"amount\": {\r\n            \"amount\": amount, //quick.store.get('$cashPaymentAmount'),\r\n            \"currency\": \"949\"\r\n        },\r\n        \"renewPolicy\": renewPolicy,\r\n        \"paymentOptionCode\": paymentOptionCode,\r\n        \"installmentTypeCode\": installmentTypeCodeNew,\r\n        \"policyStartDate\": quick.store.get('$policyStartDate'),\r\n        \"policyEndDate\": quick.store.get('$policyEndDate'),\r\n        \"policyIssueDate\": quick.store.get('$policyStartDate'), //today,\r\n        \"isDigitalApproved\": digital\r\n    }\r\n}\r\nquick.MM.trigger('setDatasConsumerAndScreenInfo');\r\nlet serviceRequest: IRequest = {\r\n    url: '/api/wrapperclient/createPolicyWithCashPayment',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n}\r\nquick.Request.async(serviceRequest)?.then((resp) => {\r\n    quick.EM.trace(resp?.data);\r\n    if (resp?.data) {\r\n        quick.store.set('cashPaymentSuccess', resp.data); //{amount: \"500.00\", bankRefId: \"30239963\", overdraftDrawnAmount: \"0.00\", status: \"Complete\"}\r\n        let paymentResult = resp?.data?.createPolicyWithCashPaymentResult;\r\n        quick.store.set('$policyNumber', paymentResult?.dischargedPolicyResult?.policyNo);\r\n        quick.store.set('$renewalNumber', paymentResult?.dischargedPolicyResult?.renewalNo);\r\n        quick.store.set('$eventSourceId', paymentResult?.cashPaymentReceipt?.receipt?.transactionNo);\r\n        components.as_loadingCustomComp.close();\r\n        quick.Quick.go(\"/static/ui-bankasASPACC/atworkCommercialProtectionPages/compAtworkCommercialResult.qjson\"); //Sonuç ekranı\r\n    }\r\n})\r\n    .catch((err) => {\r\n        components.as_loadingCustomComp.close();\r\n        let errorMessage = err?.response?.data?.responseMessage ?? 'Bir hata oluştu.';\r\n        (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n        components.as_alertCustomComp.open();\r\n    });",
+					"C": true,
+					"HL": "TS"
+				},
+				"createPolicyWithAccountPayment": {
+					"H": "debugger;\r\n//createPolicyPayment\r\ncomponents.as_loadingCustomComp.open();\r\nlet paymentType;\r\nlet installmentTermList;\r\nlet paymentMethodList;\r\nlet installmentTypeCode;\r\nlet paymentOptionCode;\r\nlet amount;\r\nlet installment;\r\nlet installmentTypeCodeNew;\r\n// let control = (components.as_collectionInfoPremiumCollection.getSelectedReceiptType().text).toLowerCase();\r\n// if(control.includes('peşin')){\r\n//     amount = quick.store.get('$cashPaymentAmount');\r\n// }\r\n// else{\r\n//     amount = quick.store.get('$installmentPaymentAmount');\r\n// }\r\n\r\namount = components.as_collectionInfoPremiumCollection.getSelectedReceiptAmountItem();\r\namount = amount.replace('.', '');\r\namount = amount.replace(',', '.');\r\n\r\ninstallment = components.as_collectionInfoPremiumCollection.getSelectedInstallmentCountInternalSearch();\r\nquick.store.set('$installmentForResultPage', installment);\r\nif (installment) { //Taksitlidir\r\n    installment = Number((components.as_collectionInfoPremiumCollection.getSelectedInstallmentCountInternalSearch()).split(' ')[0]);\r\n    installmentTypeCodeNew = (components.as_collectionInfoPremiumCollection.getSelectedInstallmentCountItem())?.installment?.value;\r\n}\r\nelse {\r\n    installment = 0;\r\n    if (quick.store.get('$paymentType') == 'kredi kartı sanal pos (peşin)') {\r\n        installmentTypeCodeNew = quick.store.get('$itemsInstallmentCountCredit');\r\n        installmentTypeCodeNew = installmentTypeCodeNew[0]?.value;\r\n    }\r\n    else if (quick.store.get('$paymentType') == 'cari hesap (peşin)') {\r\n        installmentTypeCodeNew = quick.store.get('$itemsInstallmentCountAccount');\r\n        installmentTypeCodeNew = installmentTypeCodeNew[0]?.value;\r\n    }\r\n    else if (quick.store.get('$paymentType') == 'nakit') {\r\n        installmentTypeCodeNew = quick.store.get('$itemsInstallmentCountCash');\r\n        installmentTypeCodeNew = installmentTypeCodeNew[0]?.value;\r\n    }\r\n}\r\n\r\nconst currentDate = new Date();\r\nlet today = currentDate.toISOString();\r\n\r\npaymentMethodList = quick.store.get('$selectedPaymentMethodList');\r\npaymentOptionCode = paymentMethodList.idPaymentCode;\r\n\r\ninstallmentTermList = quick.store.get('$selectedInstallmentTermList');\r\ninstallmentTypeCode = installmentTermList.codeExtCode;\r\n\r\nlet renewPolicy;\r\nlet getAutoRenew = components.as_collectionInfoPremiumCollection.getSelectedAutoRenew();\r\nif (getAutoRenew == 1) {\r\n    renewPolicy = true;\r\n}\r\nelse {\r\n    renewPolicy = false;\r\n}\r\n\r\nlet useOverdraft;\r\nlet getUseOverdraft = components.as_collectionInfoPremiumCollection.getSelectedUseOverDraft();\r\nif (getUseOverdraft?.value == 1) {\r\n    useOverdraft = true;\r\n}\r\nelse {\r\n    useOverdraft = false;\r\n}\r\n\r\nlet digital;\r\nlet digitalControl = quick.store.get('$digital');\r\nif (digitalControl == 'E') {\r\n    digital = true;\r\n} else {\r\n    digital = false;\r\n}\r\n\r\nlet requestData;\r\nif (installment) { //Taksitlidir\r\n    requestData = {\r\n        \"accountPaymentInputType\": {\r\n            \"policyType\": 'DCFIRE',\r\n            \"bankRefId\": Number(quick.store.get('$bankRefId').bankRefId),\r\n            \"customerNumber\": quick.store.get('$customerInfo').customerNumber,\r\n            \"currentAccountNumber\": {\r\n                \"branchCode\": components.as_collectionInfoPremiumCollection.getSelectedAccountItem().code.number.branchCode,\r\n                \"number\": components.as_collectionInfoPremiumCollection.getSelectedAccountItem().code.number.number\r\n            },\r\n            \"useInvestmentAccount\": false,\r\n            \"useOverdraft\": useOverdraft,\r\n            \"amount\": {\r\n                \"amount\": amount,\r\n                \"currency\": \"949\"\r\n            },\r\n            \"renewPolicy\": renewPolicy,\r\n            \"paymentOptionCode\": String(paymentOptionCode),\r\n            \"installmentTypeCode\": installmentTypeCodeNew,\r\n            \"installment\": installment,\r\n            \"policyStartDate\": quick.store.get('$policyStartDate'),\r\n            \"policyEndDate\": quick.store.get('$policyEndDate'),\r\n            \"policyIssueDate\": (today).split('T')[0],\r\n            \"isDigitalApproved\": digital\r\n        }\r\n    };\r\n}\r\nelse {\r\n    requestData = {\r\n        \"accountPaymentInputType\": {\r\n            \"policyType\": 'DCFIRE',\r\n            \"bankRefId\": Number(quick.store.get('$bankRefId').bankRefId),\r\n            \"customerNumber\": quick.store.get('$customerInfo').customerNumber,\r\n            \"currentAccountNumber\": {\r\n                \"branchCode\": components.as_collectionInfoPremiumCollection.getSelectedAccountItem().code.number.branchCode,\r\n                \"number\": components.as_collectionInfoPremiumCollection.getSelectedAccountItem().code.number.number\r\n            },\r\n            \"useInvestmentAccount\": false,\r\n            \"useOverdraft\": useOverdraft,\r\n            \"amount\": {\r\n                \"amount\": amount,\r\n                \"currency\": \"949\"\r\n            },\r\n            \"renewPolicy\": renewPolicy,\r\n            \"paymentOptionCode\": String(paymentOptionCode),\r\n            \"installmentTypeCode\": installmentTypeCodeNew,\r\n            \"policyStartDate\": quick.store.get('$policyStartDate'),\r\n            \"policyEndDate\": quick.store.get('$policyEndDate'),\r\n            \"policyIssueDate\": (today).split('T')[0],\r\n            \"isDigitalApproved\": digital\r\n        }\r\n    };\r\n}\r\nquick.MM.trigger('setDatasConsumerAndScreenInfo');\r\nlet serviceRequest: IRequest = {\r\n    url: '/api/wrapperclient/createPolicyWithAccountPayment',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n}\r\nquick.Request.async(serviceRequest)?.then((resp) => {\r\n    if (resp?.data) {\r\n        quick.store.set('accountPaymentSuccess', resp.data); //{amount: \"500.00\", bankRefId: \"30239963\", overdraftDrawnAmount: \"0.00\", status: \"Complete\"}\r\n        let paymentResult = resp?.data?.createPolicyWithAccountPaymentResult;\r\n        quick.store.set('$policyNumber', paymentResult?.dischargedPolicyResult?.policyNo);\r\n        quick.store.set('$renewalNumber', paymentResult?.dischargedPolicyResult?.renewalNo);\r\n        quick.store.set('$eventSourceId', paymentResult?.accountPaymentReceipt?.receipt?.transactionNo);\r\n        components.as_loadingCustomComp.close();\r\n        quick.Quick.go(\"/static/ui-bankasASPACC/atworkCommercialProtectionPages/compAtworkCommercialResult.qjson\"); //Sonuç ekranı\r\n    }\r\n})\r\n    .catch((err) => {\r\n        components.as_loadingCustomComp.close();\r\n        let errorMessage = err?.response?.data?.responseMessage ?? 'Bir hata oluştu.';\r\n        (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n        components.as_alertCustomComp.open();\r\n    });",
+					"C": true,
+					"HL": "TS"
+				},
+				"createContractRequest": {
+					"H": "debugger;\r\nlet paymentType;\r\nlet paymentMethodList;\r\nlet paymentOptionType;\r\nlet useOverDraft;\r\nlet installment;\r\nlet insuredName;\r\nlet insuredNo;\r\nlet insuredEmail;\r\nlet phoneNumber;\r\nlet phoneNumberList = [];\r\nlet customerInfo = quick.store.get('$customerInfo');\r\nlet digital;\r\nlet digitalControl = quick.store.get('$digital');\r\nif (digitalControl == 'E') {\r\n  digital = true;\r\n} else {\r\n  digital = false;\r\n}\r\n\r\n////\r\nlet tc2 = quick.store.get('$primaryId2');\r\nlet customerInfo2;\r\nif (tc2) { //insurer-insured farklı\r\n  customerInfo2 = quick.store.get('$customerInfo2');\r\n  insuredName = customerInfo2?.basicInfo?.fullName;\r\n  insuredNo = customerInfo2?.customerNumber;\r\n  phoneNumber = customerInfo2?.communicationInfo.phoneNumbers;\r\n  for(let i=0; i<phoneNumber.length; i++){\r\n    let data = {\r\n        \"fieldKey\": \"insuredPhone\" + (i+1),\r\n        \"fieldValue\": customerInfo2?.communicationInfo.phoneNumbers[i].number //5079935636\r\n    }\r\n    phoneNumberList.push(data);\r\n  };\r\n  insuredEmail = customerInfo2?.communicationInfo?.emailAddresses[0]?.address;\r\n}\r\nelse {\r\n  insuredName = customerInfo?.basicInfo.fullName;\r\n  insuredNo = customerInfo?.customerNumber;\r\n  phoneNumber = customerInfo?.communicationInfo.phoneNumbers;\r\n  for(let i=0; i<phoneNumber.length; i++){\r\n    let data = {\r\n        \"fieldKey\": \"insuredPhone\" + (i+1),\r\n        \"fieldValue\": customerInfo?.communicationInfo.phoneNumbers[i].number //5079935636\r\n    }\r\n    phoneNumberList.push(data);\r\n  };\r\n  insuredEmail = customerInfo?.communicationInfo?.emailAddresses[0]?.address;\r\n}\r\n//////\r\n\r\ninstallment = components.as_collectionInfoPremiumCollection.getSelectedInstallmentCountInternalSearch();\r\nif (installment) { //Taksitlidir\r\n  installment = Number((components.as_collectionInfoPremiumCollection.getSelectedInstallmentCountInternalSearch()).split(' ')[0]);\r\n}\r\nelse {\r\n  installment = 0;\r\n}\r\n\r\nuseOverDraft = components.as_collectionInfoPremiumCollection.getSelectedUseOverDraft();\r\nif (useOverDraft) {\r\n  if (useOverDraft.value == 0 || useOverDraft.value == 1) {\r\n    if (useOverDraft.value == 1) { //Ek hesap kullanılsın evet seçilmiş\r\n      useOverDraft = 'Evet';\r\n    }\r\n    else {\r\n      useOverDraft = 'Hayır';\r\n    }\r\n  }\r\n  else {\r\n    useOverDraft = '';\r\n  }\r\n}\r\nelse {\r\n  useOverDraft = '';\r\n}\r\ndebugger;\r\npaymentType = quick.store.get('$paymentType');\r\npaymentMethodList = quick.store.get('$paymentMethodList');\r\nif (paymentMethodList.length > 0) {\r\n  for (let i = 0; i < paymentMethodList.length; i++) {\r\n    if (paymentType == (paymentMethodList[i].typePaymentCode).toLowerCase()) {\r\n      paymentOptionType = paymentMethodList[i].typePaymentCode;\r\n      break;\r\n    }\r\n  }\r\n}\r\n\r\n//Otomatik yenilensin\r\nlet hasAutoRenew = false;\r\n\r\nlet premiumAmount;\r\npremiumAmount = components.as_collectionInfoPremiumCollection.getSelectedReceiptAmountItem();\r\npremiumAmount = premiumAmount.replace('.', '');\r\npremiumAmount = premiumAmount.replace(',', '.')\r\n\r\nlet requestData = {\r\n  \"fieldList\": {\r\n    \"field\": [\r\n      {\r\n        \"fieldKey\": \"insuredName\",\r\n        \"fieldValue\": insuredName //quick.store.get('$customerInfo').basicInfo.fullName\r\n      },\r\n      {\r\n        \"fieldKey\": \"insuredNo\",\r\n        \"fieldValue\": insuredNo //quick.store.get('$customerInfo').customerNumber\r\n      },\r\n      {\r\n        \"fieldKey\": \"insurerName\", //sigorta ettiren adı (ilk ekrandan setlenecek)\r\n        \"fieldValue\": quick.store.get('$customerInfo').basicInfo.fullName //\"SELATTİNŞÇİĞ ATİKŞÇİĞ\"\r\n      },\r\n      {\r\n        \"fieldKey\": \"premiumAmount\",\r\n        \"fieldValue\": Number(premiumAmount)\r\n      },\r\n      {\r\n        \"fieldKey\": \"grossPremiumAmount\",\r\n        \"fieldValue\": Number(premiumAmount)\r\n      },\r\n      {\r\n        \"fieldKey\": \"useOverdraft\",\r\n        \"fieldValue\": useOverDraft //\"Hayir\"\r\n      },\r\n      {\r\n        \"fieldKey\": \"premiumPaymentType\",\r\n        \"fieldValue\": paymentOptionType //\"Cari Hesap (Peşin)\"\r\n      },\r\n      {\r\n        \"fieldKey\": \"hasAutoRenew\",\r\n        \"fieldValue\": hasAutoRenew //0-1-null\r\n      },\r\n    ]\r\n  }\r\n};\r\n\r\nquick.store.set('$createContractRequestFieldlist', requestData.fieldList);",
+					"C": true,
+					"HL": "TS"
+				},
+				"PreRender": {
+					"H": "quick.Quick.screen.toTop();",
+					"I": true,
+					"HL": "TS"
+				}
+			},
+			"C": {},
+			"_Editor": {
+				"eID": "EdtrComp_1"
+			},
+			"O": {
+				"cType": "child"
+			},
+			"S": {
+				"xs-xl": {
+					"pageBackgroundColor": "#ffffff",
+					"statusBarColor": "#ffffff"
+				}
+			}
+		},
+		{
+			"T": "VRow",
+			"P": {
+				"ID": {
+					"H": "EdtrComp_28",
+					"T": "prop"
+				},
+				"visible": {
+					"H": "false",
+					"T": "prop",
+					"HL": "QS"
+				}
+			},
+			"E": {},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "VCol",
+							"C": {
+								"default": {
+									"c": [
+										{
+											"T": "QLabel",
+											"P": {
+												"ID": {
+													"H": "EdtrComp_4",
+													"T": "prop"
+												},
+												"tagType": {
+													"H": "'span'",
+													"T": "prop"
+												},
+												"text": {
+													"H": "'PRİM TAHSİLAT'",
+													"T": "prop",
+													"HL": "QS"
+												},
+												"visible": {
+													"H": "true",
+													"T": "prop"
+												},
+												"processHtml": {
+													"H": "false",
+													"T": "prop"
+												}
+											},
+											"E": {},
+											"C": {},
+											"_Editor": {
+												"eID": "EdtrComp_4"
+											},
+											"O": {
+												"cType": "slot",
+												"layout": {
+													"dOpt": {
+														"xs": [
+															"te:font-weight-bold"
+														]
+													},
+													"class": "font-weight-bold"
+												}
+											}
+										}
+									],
+									"cType": "slot"
+								}
+							},
+							"E": {},
+							"P": {
+								"ID": {
+									"H": "EdtrComp_43",
+									"T": "prop"
+								}
+							},
+							"_Editor": {
+								"eID": "EdtrComp_43"
+							},
+							"O": {
+								"cType": "slot",
+								"layout": {
+									"dOpt": {
+										"xs": [
+											"d:d-flex",
+											"fd:flex-column"
+										]
+									},
+									"class": "d-flex flex-column"
+								}
+							}
+						}
+					],
+					"cType": "slot"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_28"
+			},
+			"O": {
+				"cType": "slot"
+			}
+		},
+		{
+			"T": "VContainer",
+			"P": {
+				"ID": {
+					"H": "containerPolicyInfo",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"class": {
+					"H": "'container'",
+					"T": "class"
+				},
+				"visible": {
+					"H": "true",
+					"T": "prop"
+				},
+				"eager": {
+					"H": "true",
+					"T": "prop"
+				}
+			},
+			"E": {},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "VRow",
+							"P": {
+								"ID": {
+									"H": "EdtrComp_22",
+									"T": "prop"
+								}
+							},
+							"E": {},
+							"C": {
+								"default": {
+									"c": [
+										{
+											"T": "VCol",
+											"C": {
+												"default": {
+													"c": [
+														{
+															"T": "CustomComponent",
+															"P": {
+																"ID": {
+																	"H": "as_policyInfoPremiumCollection",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"QJsonPath": {
+																	"H": "'/static/ui-bnkasAsDCFire/common/as_policyInfoPremiumCollection.qjson'",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"policyNo": {
+																	"H": "false",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"assurancePackage": {
+																	"H": "false",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"offerNo": {
+																	"H": "false",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"assuranceType": {
+																	"H": "true",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"consumerCode": {
+																	"H": "'TANE.BANKASUR'",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"screenName": {
+																	"H": "'DCFIRE'",
+																	"T": "prop",
+																	"HL": "QS"
+																}
+															},
+															"E": {
+																"onLoad": {
+																	"H": "debugger;\r\n// Poliçe Bilgileri Onload\r\nlet assurance;\r\nlet policy;\r\n\r\nif(quick.store.get('$policyType')){\r\n    assurance = quick.store.get('$policyType');\r\n}\r\nif(quick.store.get('$reservePolicyNumber')){\r\n    policy = quick.store.get('$reservePolicyNumber').reservePolicyNumber;\r\n}\r\n\r\nlet premiumCollectionItems = {\r\n    assuranceType: assurance,\r\n    policyNo: policy,\r\n};\r\n(<any>components.as_policyInfoPremiumCollection).setData({ data: premiumCollectionItems });",
+																	"HL": "TS"
+																}
+															},
+															"C": {
+																"default": {
+																	"c": [
+																		{
+																			"T": "Ghost",
+																			"P": {
+																				"ID": {
+																					"H": "EdtrComp_19",
+																					"T": "prop"
+																				}
+																			},
+																			"E": {},
+																			"C": {},
+																			"_Editor": {
+																				"eID": "EdtrComp_19"
+																			},
+																			"O": {
+																				"cType": "child"
+																			}
+																		}
+																	],
+																	"cType": "child"
+																}
+															},
+															"_Editor": {
+																"eID": "EdtrComp_11"
+															},
+															"O": {
+																"cType": "child",
+																"dynProps": true
+															}
+														}
+													],
+													"cType": "slot"
+												}
+											},
+											"E": {},
+											"P": {
+												"ID": {
+													"H": "EdtrComp_23",
+													"T": "prop"
+												}
+											},
+											"_Editor": {
+												"eID": "EdtrComp_23"
+											},
+											"O": {
+												"cType": "slot",
+												"layout": {
+													"dOpt": {
+														"xs": [
+															"d:d-flex",
+															"sp:pt-0",
+															"fd:flex-column"
+														]
+													},
+													"class": "d-flex pt-0 flex-column"
+												}
+											},
+											"S": {
+												"xs-xl": {
+													"col": "",
+													"flexDirection": "column",
+													"alignItems": "",
+													"justifyContent": "",
+													"marginLeft": "",
+													"marginRight": "",
+													"marginBottom": "",
+													"marginTop": "",
+													"paddingTop": "12px",
+													"paddingBottom": "12px",
+													"paddingLeft": "12px",
+													"paddingRight": "12px",
+													"backgroundColor": "#ffffff",
+													"boxShadow": ""
+												}
+											}
+										}
+									],
+									"cType": "slot"
+								}
+							},
+							"_Editor": {
+								"eID": "EdtrComp_22"
+							},
+							"O": {
+								"cType": "slot"
+							},
+							"S": {
+								"xs-xl": {
+									"marginLeft": "0px",
+									"marginRight": "0px",
+									"marginBottom": "0px",
+									"marginTop": "0px",
+									"paddingTop": "",
+									"paddingBottom": "",
+									"paddingLeft": "",
+									"paddingRight": "",
+									"width": "",
+									"height": "",
+									"backgroundColor": "#ffffff",
+									"boxShadow": ""
+								}
+							}
+						}
+					],
+					"cType": "slot"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_21"
+			},
+			"O": {
+				"cType": "slot",
+				"layout": {
+					"dOpt": {
+						"xs": [
+							"sp:pt-0"
+						]
+					},
+					"class": "pt-0"
+				}
+			},
+			"S": {
+				"xs-xl": {
+					"marginLeft": "",
+					"marginRight": "",
+					"marginBottom": "",
+					"marginTop": "",
+					"paddingTop": "12px",
+					"paddingBottom": "12px",
+					"paddingLeft": "12px",
+					"paddingRight": "12px",
+					"width": "",
+					"height": "",
+					"backgroundColor": "#ffffff",
+					"boxShadow": ""
+				}
+			}
+		},
+		{
+			"T": "VContainer",
+			"P": {
+				"ID": {
+					"H": "containerAssuranceOwnerInfo",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"class": {
+					"H": "'container'",
+					"T": "class"
+				},
+				"visible": {
+					"H": "true",
+					"T": "prop"
+				},
+				"eager": {
+					"H": "true",
+					"T": "prop"
+				}
+			},
+			"E": {},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "VRow",
+							"P": {
+								"ID": {
+									"H": "EdtrComp_7",
+									"T": "prop"
+								}
+							},
+							"E": {},
+							"C": {
+								"default": {
+									"c": [
+										{
+											"T": "VCol",
+											"C": {
+												"default": {
+													"c": [
+														{
+															"T": "CustomComponent",
+															"P": {
+																"ID": {
+																	"H": "as_assuranceOwnerInfoPremiumCollection",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"insurerHolderRole": {
+																	"H": "false",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"QJsonPath": {
+																	"H": "'/static/ui-bnkasAsDCFire/common/as_assuranceOwnerInfoPremiumCollection.qjson'",
+																	"T": "prop",
+																	"HL": "QS"
+																}
+															},
+															"E": {
+																"onLoad": {
+																	"H": "debugger;\r\nlet data;\r\nlet tc2 = quick.store.get('$primaryId2');\r\nlet insuredCustomerNumber = quick.store.get('$insuredCustomerNumber');\r\nif (tc2 && insuredCustomerNumber) { //Sigorta ettiren farklı seçilmiştir.\r\n    let customerInfo = quick.store.get('$customerInfo2');\r\n    if (customerInfo?.organizationalInfo) {\r\n        components.as_assuranceOwnerInfoPremiumCollection.setVknOrTcknUser({ citizenNumberLabel: 'VKN', nameSurnameLabel: 'Unvan', colTaxOfficeVisible: true });\r\n        data = {\r\n            customerNumber: customerInfo?.customerNumber,\r\n            citizenNumber: customerInfo?.organizationalInfo?.taxId,\r\n            taxOffice: customerInfo?.taxPayerInfo?.taxOfficeName,\r\n            nameSurname: customerInfo?.organizationalInfo?.fullName\r\n        };\r\n    }\r\n    else {\r\n        if (quick.store.get('$isTrueYKN') == true) {\r\n            components.as_assuranceOwnerInfoPremiumCollection.setVknOrTcknUser({ citizenNumberLabel: 'YKN', nameSurnameLabel: 'Ad Soyad', colTaxOfficeVisible: false });\r\n        }\r\n        else {\r\n            components.as_assuranceOwnerInfoPremiumCollection.setVknOrTcknUser({ citizenNumberLabel: 'TCKN', nameSurnameLabel: 'Ad Soyad', colTaxOfficeVisible: false });\r\n        }\r\n        data = {\r\n            customerNumber: customerInfo?.customerNumber,\r\n            citizenNumber: customerInfo?.basicInfo?.primaryId?.value,\r\n            nameSurname: customerInfo?.basicInfo?.fullName\r\n        };\r\n    }\r\n    (<any>components.as_assuranceOwnerInfoPremiumCollection).setData({ data: data });\r\n}\r\nelse {\r\n    let customerInfo = quick.store.get('$customerInfo');\r\n    if (customerInfo?.organizationalInfo) {\r\n        components.as_assuranceOwnerInfoPremiumCollection.setVknOrTcknUser({ citizenNumberLabel: 'VKN', nameSurnameLabel: 'Unvan', colTaxOfficeVisible: true });\r\n        data = {\r\n            customerNumber: customerInfo?.customerNumber,\r\n            citizenNumber: customerInfo?.organizationalInfo?.taxId,\r\n            taxOffice: customerInfo?.taxPayerInfo?.taxOfficeName,\r\n            nameSurname: customerInfo?.organizationalInfo?.fullName\r\n        };\r\n    }\r\n    else {\r\n        if (quick.store.get('$isTrueYKN') == true) {\r\n            components.as_assuranceOwnerInfoPremiumCollection.setVknOrTcknUser({ citizenNumberLabel: 'YKN', nameSurnameLabel: 'Ad Soyad', colTaxOfficeVisible: false });\r\n        }\r\n        else {\r\n            components.as_assuranceOwnerInfoPremiumCollection.setVknOrTcknUser({ citizenNumberLabel: 'TCKN', nameSurnameLabel: 'Ad Soyad', colTaxOfficeVisible: false });\r\n        }\r\n        data = {\r\n            customerNumber: customerInfo?.customerNumber,\r\n            citizenNumber: customerInfo?.basicInfo?.primaryId?.value,\r\n            nameSurname: customerInfo?.basicInfo?.fullName\r\n        };\r\n    }\r\n    (<any>components.as_assuranceOwnerInfoPremiumCollection).setData({ data: data });\r\n}",
+																	"HL": "TS"
+																}
+															},
+															"C": {
+																"default": {
+																	"c": [
+																		{
+																			"T": "Ghost",
+																			"P": {
+																				"ID": {
+																					"H": "EdtrComp_17",
+																					"T": "prop"
+																				}
+																			},
+																			"E": {},
+																			"C": {},
+																			"_Editor": {
+																				"eID": "EdtrComp_17"
+																			},
+																			"O": {
+																				"cType": "child"
+																			}
+																		}
+																	],
+																	"cType": "child"
+																}
+															},
+															"_Editor": {
+																"eID": "EdtrComp_10"
+															},
+															"O": {
+																"cType": "child",
+																"dynProps": true
+															}
+														}
+													],
+													"cType": "slot"
+												}
+											},
+											"E": {},
+											"P": {
+												"ID": {
+													"H": "EdtrComp_8",
+													"T": "prop"
+												}
+											},
+											"_Editor": {
+												"eID": "EdtrComp_8"
+											},
+											"O": {
+												"cType": "slot",
+												"layout": {
+													"dOpt": {
+														"xs": [
+															"d:d-flex",
+															"fd:flex-column"
+														]
+													},
+													"class": "d-flex flex-column"
+												}
+											},
+											"S": {
+												"xs-xl": {
+													"col": "",
+													"flexDirection": "column",
+													"alignItems": "",
+													"justifyContent": "",
+													"marginLeft": "",
+													"marginRight": "",
+													"marginBottom": "",
+													"marginTop": "",
+													"paddingTop": "12px",
+													"paddingBottom": "12px",
+													"paddingLeft": "12px",
+													"paddingRight": "12px",
+													"backgroundColor": "#ffffff",
+													"boxShadow": ""
+												}
+											}
+										}
+									],
+									"cType": "slot"
+								}
+							},
+							"_Editor": {
+								"eID": "EdtrComp_7"
+							},
+							"O": {
+								"cType": "slot"
+							},
+							"S": {
+								"xs-xl": {
+									"marginLeft": "0px",
+									"marginRight": "0px",
+									"marginBottom": "0px",
+									"marginTop": "0px",
+									"paddingTop": "",
+									"paddingBottom": "",
+									"paddingLeft": "",
+									"paddingRight": "",
+									"width": "",
+									"height": "",
+									"backgroundColor": "#ffffff",
+									"boxShadow": ""
+								}
+							}
+						}
+					],
+					"cType": "slot"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_2"
+			},
+			"O": {
+				"cType": "slot",
+				"layout": {
+					"dOpt": {
+						"xs": [
+							"sp:pt-0"
+						]
+					},
+					"class": "pt-0"
+				}
+			},
+			"S": {
+				"xs-xl": {
+					"marginLeft": "",
+					"marginRight": "",
+					"marginBottom": "",
+					"marginTop": "",
+					"paddingTop": "12px",
+					"paddingBottom": "12px",
+					"paddingLeft": "12px",
+					"paddingRight": "12px",
+					"width": "",
+					"height": "",
+					"backgroundColor": "#ffffff",
+					"boxShadow": ""
+				}
+			}
+		},
+		{
+			"T": "VContainer",
+			"P": {
+				"ID": {
+					"H": "containerCollectionInfo",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"class": {
+					"H": "'container'",
+					"T": "class"
+				},
+				"visible": {
+					"H": "true",
+					"T": "prop"
+				},
+				"eager": {
+					"H": "true",
+					"T": "prop"
+				}
+			},
+			"E": {},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "VRow",
+							"P": {
+								"ID": {
+									"H": "EdtrComp_63",
+									"T": "prop"
+								}
+							},
+							"E": {},
+							"C": {
+								"default": {
+									"c": [
+										{
+											"T": "VCol",
+											"C": {
+												"default": {
+													"c": [
+														{
+															"T": "CustomComponent",
+															"P": {
+																"ID": {
+																	"H": "as_collectionInfoPremiumCollection",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"installmentCountVisible": {
+																	"H": "false",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"accountListLabel": {
+																	"H": "''",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"autoRenewPersonalAttribute": {
+																	"H": "false",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"QJsonPath": {
+																	"H": "'/static/ui-bnkasAsDCFire/common/as_collectionInfoPremiumCollection.qjson'",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"consumerCode": {
+																	"H": "'TANE.BANKASUR'",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"screenName": {
+																	"H": "'DCFIRE'",
+																	"T": "prop",
+																	"HL": "QS"
+																}
+															},
+															"E": {
+																"receiptTypeChangeEvent": {
+																	"H": "debugger;\r\n//receiptTypeChangeEvent\r\n(<any>components.as_collectionInfoPremiumCollection).setUseOverDraftVisible({ visible: false });\r\nlet control = components.as_collectionInfoPremiumCollection.getSelectedReceiptType();\r\ncontrol = (control.text).toLowerCase();\r\n\r\nif ((control).includes('kredi')) {\r\n    quick.MM.trigger('retrieveCreditCardList');\r\n} else if ((control).includes('cari')) {\r\n    quick.MM.trigger('retrieveCustomerAccounts');\r\n}\r\n\r\nlet installment;\r\n//Taksit türü\r\nif ((control).includes('taksit')) {\r\n    quick.store.set('$installmentIsTrue', true); //Sonuç ekranı için\r\n    if ((control).includes('kredi')) {\r\n        quick.store.set('$paymentType', 'kredi kartı sanal pos (taksitli)');\r\n        // Ekrandaki itemsların doldurulması.\r\n        installment = quick.store.get('$itemsInstallmentCountCreditInstallment');\r\n        let premiumCollectionItems = {\r\n            installmentCount: installment\r\n        };\r\n        (<any>components.as_collectionInfoPremiumCollection).setData({ data: premiumCollectionItems });\r\n    }\r\n    else if ((control).includes('cari')) {\r\n        quick.store.set('$paymentType', 'cari hesap (taksitli)');\r\n        // Ekrandaki itemsların doldurulması.\r\n        installment = quick.store.get('$itemsInstallmentCountAccountInstallment');\r\n        let premiumCollectionItems = {\r\n            installmentCount: installment\r\n        };\r\n        (<any>components.as_collectionInfoPremiumCollection).setData({ data: premiumCollectionItems });\r\n    }\r\n}\r\nelse if ((control).includes('peşin')) {\r\n    quick.store.set('$installmentIsTrue', false); //Sonuç ekranı için\r\n    if ((control).includes('kredi')) {\r\n        quick.store.set('$paymentType', 'kredi kartı sanal pos (peşin)');\r\n    }\r\n    else if ((control).includes('cari')) {\r\n        quick.store.set('$paymentType', 'cari hesap (peşin)');\r\n    }\r\n}\r\nelse {\r\n    quick.store.set('$installmentIsTrue', false); //Sonuç ekranı için\r\n    quick.store.set('$paymentType', 'nakit');\r\n}",
+																	"C": true,
+																	"HL": "TS"
+																},
+																"onLoad": {
+																	"H": "debugger;\r\n//Tahsilat Bilgileri Onload\r\nlet receipt;\r\nlet installment;\r\nlet totalAmount;\r\nlet personalAttribute;\r\nlet hasPledgee;\r\nlet useOverDraft;\r\n\r\n// Form sadece bireysel nitelikli evet ise imzalatılacak?\r\n// Rehinli alacaklı hayır ise -> Müşteri otomatik yenilemeyi evet/hayır tercihi girebilir ve kredi bağlantılı sigorta bilgi formu imzalatılmaz\r\n// Rehinli alacaklı evet ve Bireysel nitelikli hayır ise -> Evet seçili geliyor ve değiştirilemiyor, müşteriye hiçbir belge imzalatılmıyor.\r\nhasPledgee = 0; // quick.store.get('$hasPledgee'); Rehinli Alacaklı\r\npersonalAttribute = 0; //quick.store.get('$creditAssociated'); Bireysel Nitelikli\r\n\r\nif (hasPledgee == 1) { //Rehinli alacaklı EVET\r\n    if (personalAttribute == 1) { //Bireysel nitelikli EVET\r\n        quick.store.set('isFormTrue', true); // Form imzalatılır\r\n        (<any>components.as_collectionInfoPremiumCollection).setAutoRenewVisible({ visible: false });\r\n        (<any>components.as_collectionInfoPremiumCollection).setAutoRenewPersonalAttributeVisible({ visible: true });\r\n    }\r\n    else { //Bireysel nitelikli HAYIR\r\n        (<any>components.as_collectionInfoPremiumCollection).setAutoRenewVisible({ visible: true });\r\n        (<any>components.as_collectionInfoPremiumCollection).setAutoRenewalDisabled({ disable: true });\r\n        let premiumData = {\r\n            autoRenew: { text: 'Evet', value: 1 }\r\n        };\r\n        (<any>components.as_collectionInfoPremiumCollection).setDataPremiumCollection({ data: premiumData });\r\n        (<any>components.as_collectionInfoPremiumCollection).setAutoRenewPersonalAttributeVisible({ visible: false });\r\n    }\r\n}\r\nelse { //Rehinli alacaklı HAYIR\r\n    // Rehinli evet değilse bireysel nitelikli seçilemez.\r\n    (<any>components.as_collectionInfoPremiumCollection).setAutoRenewVisible({ visible: true });\r\n    (<any>components.as_collectionInfoPremiumCollection).setAutoRenewPersonalAttributeVisible({ visible: false });\r\n}\r\n\r\nif (quick.store.get('$itemsReceiptType')) {\r\n    receipt = quick.store.get('$itemsReceiptType');\r\n}\r\nif (quick.store.get('$itemsInstallmentCount')) {\r\n    installment = quick.store.get('$itemsInstallmentCount');\r\n}\r\nif (quick.store.get('$totalAmount')) {\r\n    totalAmount = quick.store.get('$totalAmount');\r\n}\r\n\r\n// Ekrandaki itemsların doldurulması.\r\nlet premiumCollectionItems = {\r\n    receiptType: receipt,\r\n    installmentCount: installment\r\n};\r\n(<any>components.as_collectionInfoPremiumCollection).setData({ data: premiumCollectionItems });\r\n\r\n// Ekrandaki bilgilerin çekilmesi.\r\nlet premiumData = {\r\n    totalAmount: totalAmount, //Toplam Tutar\r\n};\r\n(<any>components.as_collectionInfoPremiumCollection).setDataPremiumCollection({ data: premiumData });",
+																	"HL": "TS"
+																}
+															},
+															"C": {
+																"default": {
+																	"c": [
+																		{
+																			"T": "Ghost",
+																			"P": {
+																				"ID": {
+																					"H": "EdtrComp_53",
+																					"T": "prop"
+																				}
+																			},
+																			"E": {},
+																			"C": {},
+																			"_Editor": {
+																				"eID": "EdtrComp_53"
+																			},
+																			"O": {
+																				"cType": "child"
+																			}
+																		}
+																	],
+																	"cType": "child"
+																}
+															},
+															"_Editor": {
+																"eID": "EdtrComp_44"
+															},
+															"O": {
+																"cType": "child",
+																"dynProps": true
+															}
+														}
+													],
+													"cType": "slot"
+												}
+											},
+											"E": {},
+											"P": {
+												"ID": {
+													"H": "EdtrComp_64",
+													"T": "prop"
+												}
+											},
+											"_Editor": {
+												"eID": "EdtrComp_64"
+											},
+											"O": {
+												"cType": "slot",
+												"layout": {
+													"dOpt": {
+														"xs": [
+															"d:d-flex",
+															"sp:pb-0",
+															"fd:flex-column"
+														]
+													},
+													"class": "d-flex pb-0 flex-column"
+												}
+											},
+											"S": {
+												"xs-xl": {
+													"col": "",
+													"flexDirection": "column",
+													"alignItems": "",
+													"justifyContent": "",
+													"marginLeft": "",
+													"marginRight": "",
+													"marginBottom": "",
+													"marginTop": "",
+													"paddingTop": "12px",
+													"paddingBottom": "12px",
+													"paddingLeft": "12px",
+													"paddingRight": "12px",
+													"backgroundColor": "#ffffff",
+													"boxShadow": ""
+												}
+											}
+										}
+									],
+									"cType": "slot"
+								}
+							},
+							"_Editor": {
+								"eID": "EdtrComp_63"
+							},
+							"O": {
+								"cType": "slot"
+							},
+							"S": {
+								"xs-xl": {
+									"marginLeft": "0px",
+									"marginRight": "0px",
+									"marginBottom": "0px",
+									"marginTop": "0px",
+									"paddingTop": "",
+									"paddingBottom": "",
+									"paddingLeft": "",
+									"paddingRight": "",
+									"width": "",
+									"height": "",
+									"backgroundColor": "#ffffff",
+									"boxShadow": ""
+								}
+							}
+						}
+					],
+					"cType": "slot"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_62"
+			},
+			"O": {
+				"cType": "slot",
+				"layout": {
+					"dOpt": {
+						"xs": [
+							"sp:pt-0",
+							"sp:pb-0"
+						]
+					},
+					"class": "pt-0 pb-0"
+				}
+			},
+			"S": {
+				"xs-xl": {
+					"marginLeft": "",
+					"marginRight": "",
+					"marginBottom": "",
+					"marginTop": "",
+					"paddingTop": "12px",
+					"paddingBottom": "12px",
+					"paddingLeft": "12px",
+					"paddingRight": "12px",
+					"width": "",
+					"height": "",
+					"backgroundColor": "#ffffff",
+					"boxShadow": ""
+				}
+			}
+		},
+		{
+			"T": "VContainer",
+			"P": {
+				"ID": {
+					"H": "containerButtons",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"class": {
+					"H": "'container'",
+					"T": "class"
+				},
+				"visible": {
+					"H": "true",
+					"T": "prop"
+				},
+				"eager": {
+					"H": "true",
+					"T": "prop"
+				}
+			},
+			"E": {},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "VRow",
+							"P": {
+								"ID": {
+									"H": "EdtrComp_13",
+									"T": "prop"
+								}
+							},
+							"E": {},
+							"C": {
+								"default": {
+									"c": [
+										{
+											"T": "VCol",
+											"C": {
+												"default": {
+													"c": [
+														{
+															"T": "VBtn",
+															"P": {
+																"ID": {
+																	"H": "btn_calculatePremium",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"depressed": {
+																	"H": "true",
+																	"T": "prop"
+																},
+																"visible": {
+																	"H": "true",
+																	"T": "prop"
+																},
+																"DiscardSettings": {
+																	"H": "true",
+																	"T": "prop"
+																},
+																"color": {
+																	"H": "'white'",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"dark": {
+																	"H": "true",
+																	"T": "prop"
+																},
+																"height": {
+																	"H": "'40px'",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"rounded": {
+																	"H": "true",
+																	"T": "prop"
+																}
+															},
+															"E": {
+																"click": {
+																	"H": "// debugger;\r\nquick.store.set('$backBtnTrue', true);\r\nquick.Quick.go(\"/static/ui-bankasASPACC/atworkCommercialProtectionPages/compAtworkCommercialProtection.qjson\"); //Prim Hesaplama",
+																	"P": "mouseEvent:unknown | undefined",
+																	"HL": "TS"
+																}
+															},
+															"C": {
+																"default": {
+																	"c": [
+																		{
+																			"T": "QLabel",
+																			"C": {},
+																			"E": {},
+																			"P": {
+																				"ID": {
+																					"H": "EdtrComp_31",
+																					"T": "prop"
+																				},
+																				"text": {
+																					"H": "'Geri'",
+																					"T": "prop",
+																					"HL": "QS"
+																				}
+																			},
+																			"_Editor": {
+																				"eID": "EdtrComp_31"
+																			},
+																			"O": {
+																				"cType": "child",
+																				"layout": {
+																					"dOpt": {
+																						"xs": [
+																							"tt:text-body-1",
+																							"tc:primary--text",
+																							"te:font-weight-bold"
+																						]
+																					},
+																					"class": "text-body-1 primary--text font-weight-bold"
+																				}
+																			},
+																			"S": {
+																				"xs-xl": {
+																					"marginTop": "",
+																					"marginRight": "",
+																					"marginBottom": "",
+																					"marginLeft": "",
+																					"paddingTop": "",
+																					"paddingRight": "",
+																					"paddingBottom": "",
+																					"paddingLeft": "",
+																					"fontColor": "#000000",
+																					"fontFamily": "Roboto",
+																					"fontSize": "16px",
+																					"fontStyle": "normal",
+																					"fontWeight": "400",
+																					"combinedFont": "Roboto-Regular",
+																					"ThemeFont": "Custom",
+																					"lineHeight": "20px"
+																				}
+																			}
+																		}
+																	],
+																	"cType": "slot"
+																}
+															},
+															"_Editor": {
+																"eID": "EdtrComp_30"
+															},
+															"S": {
+																"xs-xl": {
+																	"marginTop": "",
+																	"marginRight": "10px",
+																	"marginBottom": "",
+																	"marginLeft": "",
+																	"paddingTop": "",
+																	"paddingRight": "16px",
+																	"paddingBottom": "",
+																	"paddingLeft": "16px",
+																	"width": "",
+																	"height": "",
+																	"maxWidth": "",
+																	"maxHeight": "",
+																	"minWidth": "",
+																	"minHeight": "",
+																	"unlink": "false",
+																	"unlinkMax": "false",
+																	"unlinkMin": "false",
+																	"isSizeCollapsed": "false",
+																	"fontColor": "#ffffff",
+																	"fontFamily": "Roboto",
+																	"fontSize": "16px",
+																	"fontStyle": "normal",
+																	"fontWeight": "400",
+																	"combinedFont": "Roboto-Regular",
+																	"ThemeFont": "Custom",
+																	"lineHeight": "20px",
+																	"backgroundColor": "#1976D2",
+																	"disabledBackgroundColor": "rgba(0,0,0,.12)",
+																	"boxShadow": "",
+																	"boxSizing": "",
+																	"borderTopStyle": "solid",
+																	"borderRightStyle": "solid",
+																	"borderBottomStyle": "solid",
+																	"borderLeftStyle": "solid",
+																	"borderTopLeftRadius": "4px",
+																	"borderTopRightRadius": "4px",
+																	"borderBottomLeftRadius": "4px",
+																	"borderBottomRightRadius": "4px",
+																	"borderTopWidth": "0px",
+																	"borderRightWidth": "0px",
+																	"borderBottomWidth": "0px",
+																	"borderLeftWidth": "0px",
+																	"defaultBorderColor": "",
+																	"sides": "Top,Right,Bottom,Left"
+																}
+															},
+															"SC": {
+																"fontColor": {
+																	"VIcon": "iconColor",
+																	"QLabel": "fontColor"
+																},
+																"fontStyle": {
+																	"QLabel": "fontStyle"
+																},
+																"fontSize": {
+																	"QLabel": "fontSize"
+																},
+																"fontFamily": {
+																	"QLabel": "fontFamily"
+																},
+																"fontWeight": {
+																	"QLabel": "fontWeight"
+																},
+																"combinedFont": {
+																	"QLabel": "combinedFont"
+																},
+																"lineHeight": {
+																	"QLabel": "lineHeight"
+																},
+																"bacgroundColor": {
+																	"VIcon": "backgroundColor"
+																}
+															},
+															"O": {
+																"cType": "slot",
+																"layout": {
+																	"dOpt": {
+																		"xs": [
+																			"sp:mr-3"
+																		]
+																	},
+																	"class": "mr-3"
+																}
+															}
+														},
+														{
+															"T": "VBtn",
+															"P": {
+																"ID": {
+																	"H": "EdtrComp_77",
+																	"T": "prop"
+																},
+																"depressed": {
+																	"H": "true",
+																	"T": "prop"
+																},
+																"visible": {
+																	"H": "true",
+																	"T": "prop"
+																},
+																"DiscardSettings": {
+																	"H": "true",
+																	"T": "prop"
+																},
+																"color": {
+																	"H": "'#2171DC'",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"dark": {
+																	"H": "true",
+																	"T": "prop"
+																},
+																"height": {
+																	"H": "'40px'",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"rounded": {
+																	"H": "true",
+																	"T": "prop"
+																}
+															},
+															"E": {
+																"click": {
+																	"H": "debugger;\r\n//Devam Et butonu\r\nlet result = quick.Quick.validateAll(false, true);\r\nlet control;\r\nlet paymentType;\r\nlet installmentTermList;\r\nlet paymentMethodList;\r\nif (result) {\r\n    paymentType = quick.store.get('$paymentType');\r\n    installmentTermList = quick.store.get('$installmentTermList');\r\n    paymentMethodList = quick.store.get('$paymentMethodList');\r\n\r\n    if (installmentTermList.length > 0) {\r\n        for (let i = 0; i < installmentTermList.length; i++) {\r\n            if (paymentType == (installmentTermList[i].paymentMethodType).toLowerCase()) {\r\n                quick.store.set('$selectedInstallmentTermList', installmentTermList[i]);\r\n                break;\r\n            }\r\n        }\r\n    }\r\n\r\n    if (paymentMethodList.length > 0) {\r\n        for (let i = 0; i < paymentMethodList.length; i++) {\r\n            if (paymentType == (paymentMethodList[i].typePaymentCode).toLowerCase()) {\r\n                quick.store.set('$selectedPaymentMethodList', paymentMethodList[i])\r\n                break;\r\n            }\r\n        }\r\n    }\r\n    quick.MM.trigger('createContractRequest');\r\n    control = (components.as_collectionInfoPremiumCollection.getSelectedReceiptType().text).toLowerCase();\r\n\r\n    debugger;\r\n    let receiptAmount = components.as_collectionInfoPremiumCollection.getSelectedReceiptAmountItem();\r\n    let totalAmount = components.as_collectionInfoPremiumCollection.getSelectedTotalAmountItem();\r\n    quick.store.set('$receiptAmountForResultPage', receiptAmount);\r\n    quick.store.set('$totalAmountForResultPage', totalAmount);\r\n    \r\n    if (control.includes('kredi')) { //Kredi\r\n        quick.MM.trigger('createPolicyWithCreditCardPayment');\r\n    } else if (control.includes('nakit')) { //Nakit\r\n        quick.MM.trigger('createPolicyWithCashPayment');\r\n    } else if (control.includes('cari')) { //Hesaptan\r\n        quick.MM.trigger('createPolicyWithAccountPayment');\r\n    }\r\n\r\n} else {\r\n    (<any>components.as_alertCustomComp).setLabelText({ labelData: { name: 'lbl_700_1', text: 'Lütfen zorunlu alanları doldurunuz.' } });\r\n    components.as_alertCustomComp.open();\r\n    quick.EM.trace(\"Zorunlu alanları doldurmanız gerekmektedir.\");\r\n}\r\n\r\nquick.store.set('$receiptPremium', components.as_collectionInfoPremiumCollection.getSelectedReceiptAmountItem());",
+																	"P": "mouseEvent:unknown | undefined",
+																	"HL": "TS"
+																}
+															},
+															"C": {
+																"default": {
+																	"c": [
+																		{
+																			"T": "QLabel",
+																			"C": {},
+																			"E": {},
+																			"P": {
+																				"ID": {
+																					"H": "EdtrComp_78",
+																					"T": "prop"
+																				},
+																				"text": {
+																					"H": "'Devam Et'",
+																					"T": "prop",
+																					"HL": "QS"
+																				}
+																			},
+																			"_Editor": {
+																				"eID": "EdtrComp_78"
+																			},
+																			"O": {
+																				"cType": "child",
+																				"layout": {
+																					"dOpt": {
+																						"xs": [
+																							"tt:text-body-1",
+																							"te:font-weight-regular"
+																						]
+																					},
+																					"class": "text-body-1 font-weight-regular"
+																				}
+																			},
+																			"S": {
+																				"xs-xl": {
+																					"marginTop": "",
+																					"marginRight": "",
+																					"marginBottom": "",
+																					"marginLeft": "",
+																					"paddingTop": "",
+																					"paddingRight": "",
+																					"paddingBottom": "",
+																					"paddingLeft": "",
+																					"fontColor": "#000000",
+																					"fontFamily": "Roboto",
+																					"fontSize": "16px",
+																					"fontStyle": "normal",
+																					"fontWeight": "400",
+																					"combinedFont": "Roboto-Regular",
+																					"ThemeFont": "Custom",
+																					"lineHeight": "20px"
+																				}
+																			}
+																		}
+																	],
+																	"cType": "slot"
+																}
+															},
+															"_Editor": {
+																"eID": "EdtrComp_77"
+															},
+															"S": {
+																"xs-xl": {
+																	"marginTop": "",
+																	"marginRight": "10px",
+																	"marginBottom": "",
+																	"marginLeft": "",
+																	"paddingTop": "",
+																	"paddingRight": "16px",
+																	"paddingBottom": "",
+																	"paddingLeft": "16px",
+																	"width": "",
+																	"height": "",
+																	"maxWidth": "",
+																	"maxHeight": "",
+																	"minWidth": "",
+																	"minHeight": "",
+																	"unlink": "false",
+																	"unlinkMax": "false",
+																	"unlinkMin": "false",
+																	"isSizeCollapsed": "false",
+																	"fontColor": "#ffffff",
+																	"fontFamily": "Roboto",
+																	"fontSize": "16px",
+																	"fontStyle": "normal",
+																	"fontWeight": "400",
+																	"combinedFont": "Roboto-Regular",
+																	"ThemeFont": "Custom",
+																	"lineHeight": "20px",
+																	"backgroundColor": "#1976D2",
+																	"disabledBackgroundColor": "rgba(0,0,0,.12)",
+																	"boxShadow": "",
+																	"boxSizing": "",
+																	"borderTopStyle": "solid",
+																	"borderRightStyle": "solid",
+																	"borderBottomStyle": "solid",
+																	"borderLeftStyle": "solid",
+																	"borderTopLeftRadius": "4px",
+																	"borderTopRightRadius": "4px",
+																	"borderBottomLeftRadius": "4px",
+																	"borderBottomRightRadius": "4px",
+																	"borderTopWidth": "0px",
+																	"borderRightWidth": "0px",
+																	"borderBottomWidth": "0px",
+																	"borderLeftWidth": "0px",
+																	"defaultBorderColor": "",
+																	"sides": "Top,Right,Bottom,Left"
+																}
+															},
+															"SC": {
+																"fontColor": {
+																	"VIcon": "iconColor",
+																	"QLabel": "fontColor"
+																},
+																"fontStyle": {
+																	"QLabel": "fontStyle"
+																},
+																"fontSize": {
+																	"QLabel": "fontSize"
+																},
+																"fontFamily": {
+																	"QLabel": "fontFamily"
+																},
+																"fontWeight": {
+																	"QLabel": "fontWeight"
+																},
+																"combinedFont": {
+																	"QLabel": "combinedFont"
+																},
+																"lineHeight": {
+																	"QLabel": "lineHeight"
+																},
+																"bacgroundColor": {
+																	"VIcon": "backgroundColor"
+																}
+															},
+															"O": {
+																"cType": "slot",
+																"layout": {
+																	"dOpt": {
+																		"xs": [
+																			"sp:mr-1"
+																		]
+																	},
+																	"class": "mr-1"
+																}
+															}
+														}
+													],
+													"cType": "slot"
+												}
+											},
+											"E": {},
+											"P": {
+												"ID": {
+													"H": "EdtrComp_14",
+													"T": "prop"
+												}
+											},
+											"_Editor": {
+												"eID": "EdtrComp_14"
+											},
+											"O": {
+												"cType": "slot",
+												"layout": {
+													"dOpt": {
+														"xs": [
+															"d:d-flex",
+															"j:justify-end",
+															"sp:pb-3"
+														]
+													},
+													"class": "d-flex justify-end pb-3"
+												}
+											},
+											"S": {
+												"xs-xl": {
+													"col": "",
+													"flexDirection": "column",
+													"alignItems": "",
+													"justifyContent": "",
+													"marginLeft": "",
+													"marginRight": "",
+													"marginBottom": "",
+													"marginTop": "",
+													"paddingTop": "12px",
+													"paddingBottom": "12px",
+													"paddingLeft": "12px",
+													"paddingRight": "12px",
+													"backgroundColor": "#ffffff",
+													"boxShadow": ""
+												}
+											}
+										}
+									],
+									"cType": "slot"
+								}
+							},
+							"_Editor": {
+								"eID": "EdtrComp_13"
+							},
+							"O": {
+								"cType": "slot"
+							},
+							"S": {
+								"xs-xl": {
+									"marginLeft": "0px",
+									"marginRight": "0px",
+									"marginBottom": "0px",
+									"marginTop": "0px",
+									"paddingTop": "",
+									"paddingBottom": "",
+									"paddingLeft": "",
+									"paddingRight": "",
+									"width": "",
+									"height": "",
+									"backgroundColor": "#ffffff",
+									"boxShadow": ""
+								}
+							}
+						}
+					],
+					"cType": "slot"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_12"
+			},
+			"O": {
+				"cType": "slot"
+			},
+			"S": {
+				"xs-xl": {
+					"marginLeft": "",
+					"marginRight": "",
+					"marginBottom": "",
+					"marginTop": "",
+					"paddingTop": "12px",
+					"paddingBottom": "12px",
+					"paddingLeft": "12px",
+					"paddingRight": "12px",
+					"width": "",
+					"height": "",
+					"backgroundColor": "#ffffff",
+					"boxShadow": ""
+				}
+			}
+		},
+		{
+			"T": "CustomComponent",
+			"P": {
+				"ID": {
+					"H": "as_alertCustomComp",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"QJsonPath": {
+					"H": "'/static/ui-bankasASPACC/common/as_alertCustomComp.qjson'",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"alertType": {
+					"H": "'error'",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"lbl_700_1_visible": {
+					"H": "true",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"lbl_btn_1": {
+					"H": "'Tamam'",
+					"T": "prop",
+					"HL": "QS"
+				}
+			},
+			"E": {
+				"clickOutsideEvent": {
+					"H": "components.as_alertCustomComp.close();",
+					"C": true,
+					"HL": "TS"
+				},
+				"btn1ClickEvent": {
+					"H": "// debugger;\r\ncomponents.as_alertCustomComp.close();\r\n\r\n// let control = (components.as_collectionInfoPremiumCollection.getSelectedReceiptType().text).toLowerCase();\r\n// if (control.includes('kredi')) { //Kredi\r\n//     quick.MM.trigger('createPolicyWithCreditCardPayment');\r\n// } else if (control.includes('nakit')) { //Nakit\r\n//     quick.MM.trigger('createPolicyWithCashPayment');\r\n// } else if (control.includes('cari')) { //Hesaptan\r\n//     quick.MM.trigger('createPolicyWithAccountPayment');\r\n// }\r\n",
+					"C": true,
+					"HL": "TS"
+				},
+				"btn2ClickEvent": {
+					"H": "components.as_alertCustomComp.close();",
+					"C": true,
+					"HL": "TS"
+				}
+			},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "Ghost",
+							"P": {
+								"ID": {
+									"H": "EdtrComp_34",
+									"T": "prop"
+								}
+							},
+							"E": {},
+							"C": {},
+							"_Editor": {
+								"eID": "EdtrComp_34"
+							},
+							"O": {
+								"cType": "child"
+							}
+						}
+					],
+					"cType": "child"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_20"
+			},
+			"O": {
+				"cType": "child",
+				"dynProps": true
+			}
+		},
+		{
+			"T": "CustomComponent",
+			"P": {
+				"ID": {
+					"H": "as_loadingCustomComp",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"QJsonPath": {
+					"H": "'/static/ui-bankasASPACC/common/as_loadingCustomComp.qjson'",
+					"T": "prop",
+					"HL": "QS"
+				}
+			},
+			"E": {},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "Ghost",
+							"P": {
+								"ID": {
+									"H": "EdtrComp_50",
+									"T": "prop"
+								}
+							},
+							"E": {},
+							"C": {},
+							"_Editor": {
+								"eID": "EdtrComp_50"
+							},
+							"O": {
+								"cType": "child"
+							}
+						}
+					],
+					"cType": "child"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_37"
+			},
+			"O": {
+				"cType": "child",
+				"dynProps": true
+			}
+		}
+	],
+	"cJson": [
+		{
+			"T": "Messaging",
+			"P": {
+				"ID": {
+					"H": "PageComp",
+					"T": "prop"
+				},
+				"triggerOnRestored": {
+					"H": "╬false╩╩",
+					"T": "prop"
+				}
+			},
+			"E": {
+				"PostRender": {
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n; // debugger;\r\ncomponents.as_collectionInfoPremiumCollection.consumerCode = 'TANE.BANKASUR';\r\ncomponents.as_collectionInfoPremiumCollection.screenName = 'DCFIRE';\r\ncomponents.as_policyInfoPremiumCollection.consumerCode = 'TANE.BANKASUR';\r\ncomponents.as_policyInfoPremiumCollection.screenName = 'DCFIRE';\r\nquick.MM.trigger('setFirstPageDatas');\r\n",
+					"TO": 1,
+					"HL": "JS"
+				},
+				"retrieveCustomerAccounts": {
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\ncomponents.as_loadingCustomComp.open();\r\n//Tahsilat şekli Hesaptan seçildi\r\nvar requestData = {\r\n    \"customerNumber\": quick.store.get('$customerInfo').customerNumber,\r\n    \"accountType\": [\r\n        {\r\n            \"code\": \"DEMAND\"\r\n        }\r\n    ],\r\n    \"statusCode\": {\r\n        \"code\": \"OPEN\"\r\n    }\r\n};\r\nquick.MM.trigger('setDatasConsumerAndScreenInfo');\r\nvar serviceRequest = {};\r\nserviceRequest.blockRender = '';\r\nserviceRequest.data = requestData;\r\nserviceRequest.url = '/api/uiclient/retrieveCustomerAccounts';\r\nserviceRequest.http = 'POST';\r\nserviceRequest.headers = {};\r\nserviceRequest.responseField = {};\r\nvar responseField = 'retrieveCustomerAccountsResponse';\r\nserviceRequest.responseField = responseField;\r\nserviceRequest.onSuccess = 'retrieveCustomerAccountsSuccess';\r\nserviceRequest.onFail = 'retrieveCustomerAccountsFail';\r\nquick.Request.async(serviceRequest);\r\n",
+					"C": true,
+					"HL": "JS"
+				},
+				"retrieveCustomerAccountsSuccess": {
+					"H": "var _a, _b, _c, _d, _e;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nvar decimal;\r\nvar amountBalance;\r\nvar accountList = response.retrieveCustomerAccountsResponse.accountList.account;\r\ncomponents.as_collectionInfoPremiumCollection.setAccountListVisible({ visible: true });\r\nvar tmpList = [];\r\nvar overDraft = (_c = (_b = (_a = response === null || response === void 0 ? void 0 : response.retrieveCustomerAccountsResponse) === null || _a === void 0 ? void 0 : _a.accountList) === null || _b === void 0 ? void 0 : _b.account[0]) === null || _c === void 0 ? void 0 : _c.overdraft;\r\nif (overDraft == true) {\r\n    components.as_collectionInfoPremiumCollection.setUseOverDraftVisible({ visible: true });\r\n}\r\nelse {\r\n    components.as_collectionInfoPremiumCollection.setUseOverDraftVisible({ visible: false });\r\n}\r\nfor (var i = 0; i < accountList.length; i++) {\r\n    amountBalance = quick.Quick.toMoney(Number(accountList[i].balance)); //'124.0';\r\n    if (amountBalance.split(',')[1]) { }\r\n    else {\r\n        decimal = ',00';\r\n        amountBalance = amountBalance + decimal;\r\n    }\r\n    var data = {\r\n        name: ((_d = accountList[i].number) === null || _d === void 0 ? void 0 : _d.branchCode) + '-' + ((_e = accountList[i].number) === null || _e === void 0 ? void 0 : _e.number) + ' - Vadesiz TL - ' + amountBalance + ' TRY',\r\n        code: accountList[i]\r\n    };\r\n    tmpList.push(data);\r\n}\r\ncomponents.as_collectionInfoPremiumCollection.setAccountList({ items: tmpList });\r\ncomponents.as_loadingCustomComp.close();\r\n",
+					"C": true,
+					"HL": "JS"
+				},
+				"retrieveCustomerAccountsFail": {
+					"H": "var _a, _b, _c;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\ncomponents.as_loadingCustomComp.close();\r\n// if (components.as_alertCustomComp.qValue == true) {\r\ncomponents.as_alertCustomComp.close();\r\nvar errorMessage = (_c = (_b = (_a = error === null || error === void 0 ? void 0 : error.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.responseMessage) !== null && _c !== void 0 ? _c : 'Bir hata oluştu.';\r\ncomponents.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\ncomponents.as_alertCustomComp.open();\r\n",
+					"C": true,
+					"HL": "JS"
+				},
+				"retrieveCreditCardList": {
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\ncomponents.as_loadingCustomComp.open();\r\n//Tahsilat şekli Kredi kartı seçildi\r\nvar requestData = {\r\n    \"customerNo\": quick.store.get('$customerInfo').customerNumber,\r\n    \"branchCode\": 0,\r\n    \"accountNo\": 0,\r\n    \"pageSize\": 0,\r\n    \"pageNumber\": 0,\r\n    \"transactionType\": \"S\"\r\n};\r\nquick.MM.trigger('setDatasConsumerAndScreenInfo');\r\nvar serviceRequest = {};\r\nserviceRequest.blockRender = '';\r\nserviceRequest.data = requestData;\r\nserviceRequest.url = '/api/uiclient/retrieveCreditCardList';\r\nserviceRequest.http = 'POST';\r\nserviceRequest.responseField = {};\r\nvar responseField = 'retrieveCreditCardListResponse';\r\nserviceRequest.responseField = responseField;\r\nserviceRequest.onSuccess = 'retrieveCreditCardListSuccess';\r\nserviceRequest.onFail = 'retrieveCreditCardListFail';\r\nquick.Request.async(serviceRequest);\r\n",
+					"C": true,
+					"HL": "JS"
+				},
+				"retrieveCreditCardListSuccess": {
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nvar decimal;\r\nvar availableLimit;\r\nvar cardList = response.retrieveCreditCardListResponse.cardInfo;\r\nvar tmpList = [];\r\nfor (var i = 0; i < cardList.length; i++) {\r\n    if (cardList[i].cardStatCode == \"N\" || cardList[i].cardStatCode == \"CR\" || cardList[i].cardStatCode == \"SG\") {\r\n        if (cardList[i].cardType != \"V\" && cardList[i].cardNo == cardList[i].mainCardNo) {\r\n            availableLimit = quick.Quick.toMoney(Number(cardList[i].availableLimit)); //'124.0';\r\n            if (availableLimit.split(',')[1]) { }\r\n            else {\r\n                decimal = ',00';\r\n                availableLimit = availableLimit + decimal;\r\n            }\r\n            var data = {\r\n                name: cardList[i].cardNo + ' (' + availableLimit + ') ' + cardList[i].embossName,\r\n                code: cardList[i]\r\n            };\r\n            tmpList.push(data);\r\n        }\r\n    }\r\n}\r\ncomponents.as_collectionInfoPremiumCollection.setAccountList({ items: tmpList });\r\ncomponents.as_loadingCustomComp.close();\r\n",
+					"C": true,
+					"HL": "JS"
+				},
+				"retrieveCreditCardListFail": {
+					"H": "var _a, _b, _c;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\ncomponents.as_loadingCustomComp.close();\r\n// if (components.as_alertCustomComp.qValue == true) {\r\ncomponents.as_alertCustomComp.close();\r\nvar errorMessage = (_c = (_b = (_a = error === null || error === void 0 ? void 0 : error.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.responseMessage) !== null && _c !== void 0 ? _c : 'Bir hata oluştu.';\r\ncomponents.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\ncomponents.as_alertCustomComp.open();\r\n",
+					"C": true,
+					"HL": "JS"
+				},
+				"setFirstPageDatas": {
+					"H": "var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nvar datas;\r\nif (quick.store.get(\"$calculatePremiumResponseList\")) {\r\n    datas = quick.store.get(\"$calculatePremiumResponseList\");\r\n}\r\n//Toplam Tutar\r\nvar grossPremiumAmount;\r\nvar commissionFeeAmount;\r\nvar decimal;\r\nif ((_b = (_a = datas === null || datas === void 0 ? void 0 : datas.grossPremiumAmount) === null || _a === void 0 ? void 0 : _a.amountTL) === null || _b === void 0 ? void 0 : _b.amount) {\r\n    grossPremiumAmount = quick.Quick.toMoney(Number(datas.grossPremiumAmount.amountTL.amount)); //'124.0';\r\n    if (grossPremiumAmount.split(',')[1]) { }\r\n    else {\r\n        decimal = ',00';\r\n        grossPremiumAmount = grossPremiumAmount + decimal;\r\n    }\r\n    quick.store.set('$totalAmount', grossPremiumAmount);\r\n    commissionFeeAmount = quick.Quick.toMoney(Number(datas.commissionFeeAmount.amountTL.amount)); //'124.0';\r\n    if (commissionFeeAmount.split(',')[1]) { }\r\n    else {\r\n        decimal = ',00';\r\n        commissionFeeAmount = commissionFeeAmount + decimal;\r\n    }\r\n    quick.store.set('$commissionFeeAmount', commissionFeeAmount);\r\n}\r\nvar newData;\r\nvar newData2;\r\nvar newDatasReceiptType = [];\r\nvar newDatasPaymentMethodList = [];\r\nvar payMethod = (_d = (_c = datas === null || datas === void 0 ? void 0 : datas.paymentTerms) === null || _c === void 0 ? void 0 : _c.paymentTermList) === null || _d === void 0 ? void 0 : _d.paymentMethod;\r\nif (payMethod) {\r\n    for (var i = 0; i < payMethod.length; i++) {\r\n        if (payMethod[i].paymentCode) {\r\n            newData = { value: payMethod[i].paymentCode.id, text: payMethod[i].paymentCode.type };\r\n            newDatasReceiptType.push(newData);\r\n            newData2 = {\r\n                idPaymentCode: payMethod[i].paymentCode.id,\r\n                typePaymentCode: payMethod[i].paymentCode.type,\r\n                codeExtCode: payMethod[i].extCode.code,\r\n                valueExtCode: payMethod[i].extCode.value\r\n            };\r\n            newDatasPaymentMethodList.push(newData2);\r\n        }\r\n    }\r\n}\r\nquick.store.set('$itemsReceiptType', newDatasReceiptType);\r\nquick.store.set('$paymentMethodList', newDatasPaymentMethodList);\r\ndebugger;\r\nvar newDatasInstallmentCountCash = [];\r\nvar newDatasInstallmentCountCredit = [];\r\nvar newDatasInstallmentCountAccount = [];\r\nvar newDatasInstallmentCountCreditInstallment = [];\r\nvar newDatasInstallmentCountAccountInstallment = [];\r\nvar installmentTerm = (_f = (_e = datas === null || datas === void 0 ? void 0 : datas.paymentTerms) === null || _e === void 0 ? void 0 : _e.installmentTypeList) === null || _f === void 0 ? void 0 : _f.installmentTerm;\r\nvar typeInstallmentTerm;\r\nvar installmentTermList = [];\r\nvar newInstallmentTerm;\r\nvar installmentGrossPremiumAmount;\r\nif ((_h = (_g = datas === null || datas === void 0 ? void 0 : datas.paymentTerms) === null || _g === void 0 ? void 0 : _g.installmentTypeList) === null || _h === void 0 ? void 0 : _h.installmentTerm) {\r\n    for (var i = 0; i < installmentTerm.length; i++) {\r\n        if (installmentTerm[i].installmentPremiumInfo) {\r\n            installmentGrossPremiumAmount = quick.Quick.toMoney(Number((_k = (_j = installmentTerm[i]) === null || _j === void 0 ? void 0 : _j.installmentPremiumInfo) === null || _k === void 0 ? void 0 : _k.grossPremium)); //Tahsil Edilecek tutar\r\n            if (installmentGrossPremiumAmount.split(',')[1]) { }\r\n            else {\r\n                decimal = ',00';\r\n                installmentGrossPremiumAmount = installmentGrossPremiumAmount + decimal;\r\n            }\r\n        }\r\n        else {\r\n            installmentGrossPremiumAmount = grossPremiumAmount;\r\n        }\r\n        newInstallmentTerm = {\r\n            codeExtCode: installmentTerm[i].extCode.code,\r\n            valueExtcode: installmentTerm[i].extCode.value,\r\n            paymentMethodCode: installmentTerm[i].paymentMethod.extCode.code,\r\n            paymentMethodType: installmentTerm[i].paymentMethod.paymentCode.type,\r\n            paymentMethodId: installmentTerm[i].paymentMethod.paymentCode.id,\r\n            premiumInfoGrossPremium: installmentGrossPremiumAmount\r\n        };\r\n        installmentTermList.push(newInstallmentTerm);\r\n        typeInstallmentTerm = (installmentTerm[i].paymentMethod.paymentCode.type).toLowerCase();\r\n        if (typeInstallmentTerm.includes(\"taksit\")) {\r\n            if (typeInstallmentTerm.includes(\"cari\")) {\r\n                newData = { value: installmentTerm[i].extCode.code, text: installmentTerm[i].extCode.value };\r\n                newDatasInstallmentCountAccountInstallment.push(newData);\r\n            }\r\n            else if (typeInstallmentTerm.includes(\"kredi\")) {\r\n                newData = { value: installmentTerm[i].extCode.code, text: installmentTerm[i].extCode.value };\r\n                newDatasInstallmentCountCreditInstallment.push(newData);\r\n            }\r\n        }\r\n        else {\r\n            if (typeInstallmentTerm.includes(\"cari\")) {\r\n                newData = { value: installmentTerm[i].extCode.code, text: installmentTerm[i].extCode.value };\r\n                newDatasInstallmentCountAccount.push(newData);\r\n            }\r\n            else if (typeInstallmentTerm.includes(\"kredi\")) {\r\n                newData = { value: installmentTerm[i].extCode.code, text: installmentTerm[i].extCode.value };\r\n                newDatasInstallmentCountCredit.push(newData);\r\n            }\r\n            else { //Nakit\r\n                newData = { value: installmentTerm[i].extCode.code, text: installmentTerm[i].extCode.value };\r\n                newDatasInstallmentCountCash.push(newData);\r\n            }\r\n        }\r\n    }\r\n}\r\nquick.store.set('$installmentTermList', installmentTermList);\r\nquick.store.set('$itemsInstallmentCountCredit', newDatasInstallmentCountCredit);\r\nquick.store.set('$itemsInstallmentCountAccount', newDatasInstallmentCountAccount);\r\nquick.store.set('$itemsInstallmentCountCreditInstallment', newDatasInstallmentCountCreditInstallment);\r\nquick.store.set('$itemsInstallmentCountAccountInstallment', newDatasInstallmentCountAccountInstallment);\r\nquick.store.set('$itemsInstallmentCountCash', newDatasInstallmentCountCash);\r\n",
+					"C": true,
+					"HL": "JS"
+				},
+				"setDatasConsumerAndScreenInfo": {
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nvar consumer = components.as_collectionInfoPremiumCollection.consumerCode;\r\nvar screen = components.as_collectionInfoPremiumCollection.screenName;\r\nquick.store.set('$customConsumerCode', consumer);\r\nquick.store.set('$customScreenName', screen);\r\n",
+					"C": true,
+					"EV": true,
+					"HL": "JS"
+				},
+				"createPolicyWithCreditCardPayment": {
+					"H": "var _a, _b, _c, _d, _e, _f;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\n//createPolicyPayment\r\ncomponents.as_loadingCustomComp.open();\r\nvar paymentType;\r\nvar installmentTermList;\r\nvar paymentMethodList;\r\nvar installmentTypeCode;\r\nvar paymentOptionCode;\r\nvar amount;\r\nvar installment;\r\nvar installmentTypeCodeNew;\r\nvar year = components.as_collectionInfoPremiumCollection.getSelectedAccountItem().code.expireDate.substring(0, 2);\r\nvar month = components.as_collectionInfoPremiumCollection.getSelectedAccountItem().code.expireDate.substring(2, 4);\r\nvar expireDate = month + '/' + year;\r\nvar currentDate = new Date();\r\nvar today = currentDate.toISOString();\r\namount = components.as_collectionInfoPremiumCollection.getSelectedReceiptAmountItem();\r\namount = amount.replace('.', '');\r\namount = amount.replace(',', '.');\r\n// let control = (components.as_collectionInfoPremiumCollection.getSelectedReceiptType().text).toLowerCase();\r\n// if(control.includes('peşin')){\r\n//     amount = quick.store.get('$cashPaymentAmount');\r\n// }\r\n// else{\r\n//     amount = quick.store.get('$installmentPaymentAmount');\r\n// }\r\npaymentType = quick.store.get('$paymentType');\r\ninstallmentTermList = quick.store.get('$installmentTermList');\r\npaymentMethodList = quick.store.get('$paymentMethodList');\r\ninstallment = components.as_collectionInfoPremiumCollection.getSelectedInstallmentCountInternalSearch();\r\nquick.store.set('$installmentForResultPage', installment);\r\nif (installment) { //Taksitlidir\r\n    installment = Number((components.as_collectionInfoPremiumCollection.getSelectedInstallmentCountInternalSearch()).split(' ')[0]);\r\n    installmentTypeCodeNew = (_b = (_a = (components.as_collectionInfoPremiumCollection.getSelectedInstallmentCountItem())) === null || _a === void 0 ? void 0 : _a.installment) === null || _b === void 0 ? void 0 : _b.value;\r\n}\r\nelse {\r\n    installment = 0;\r\n    if (quick.store.get('$paymentType') == 'kredi kartı sanal pos (peşin)') {\r\n        installmentTypeCodeNew = quick.store.get('$itemsInstallmentCountCredit');\r\n        installmentTypeCodeNew = (_c = installmentTypeCodeNew[0]) === null || _c === void 0 ? void 0 : _c.value;\r\n    }\r\n    else if (quick.store.get('$paymentType') == 'cari hesap (peşin)') {\r\n        installmentTypeCodeNew = quick.store.get('$itemsInstallmentCountAccount');\r\n        installmentTypeCodeNew = (_d = installmentTypeCodeNew[0]) === null || _d === void 0 ? void 0 : _d.value;\r\n    }\r\n    else if (quick.store.get('$paymentType') == 'nakit') {\r\n        installmentTypeCodeNew = quick.store.get('$itemsInstallmentCountCash');\r\n        installmentTypeCodeNew = (_e = installmentTypeCodeNew[0]) === null || _e === void 0 ? void 0 : _e.value;\r\n    }\r\n}\r\npaymentMethodList = quick.store.get('$selectedPaymentMethodList');\r\npaymentOptionCode = paymentMethodList.idPaymentCode;\r\ninstallmentTermList = quick.store.get('$selectedInstallmentTermList');\r\ninstallmentTypeCode = installmentTermList.codeExtCode;\r\nvar renewPolicy;\r\nvar getAutoRenew = components.as_collectionInfoPremiumCollection.getSelectedAutoRenew();\r\nif (getAutoRenew == 1) {\r\n    renewPolicy = true;\r\n}\r\nelse {\r\n    renewPolicy = false;\r\n}\r\nvar digital;\r\nvar digitalControl = quick.store.get('$digital');\r\nif (digitalControl == 'E') {\r\n    digital = true;\r\n}\r\nelse {\r\n    digital = false;\r\n}\r\nvar requestData;\r\nif (installment) { //Taksitlidir\r\n    requestData = {\r\n        \"creditCardPaymentInputType\": {\r\n            \"policyType\": \"DCFIRE\",\r\n            \"applicationId\": 'BRANCH',\r\n            \"bankRefId\": quick.store.get('$bankRefId').bankRefId,\r\n            \"clientId\": \"700100000\",\r\n            \"customerNumber\": quick.store.get('$customerInfo').customerNumber,\r\n            \"creditCardInfo\": {\r\n                \"customerName\": components.as_collectionInfoPremiumCollection.getSelectedAccountItem().code.embossName,\r\n                \"ccNumber\": components.as_collectionInfoPremiumCollection.getSelectedAccountItem().code.cardNo,\r\n                \"expires\": expireDate\r\n            },\r\n            \"amount\": {\r\n                \"amount\": Number(amount),\r\n                \"currency\": \"949\"\r\n            },\r\n            \"renewPolicy\": renewPolicy,\r\n            \"paymentOptionCode\": paymentOptionCode,\r\n            \"installmentTypeCode\": installmentTypeCodeNew,\r\n            \"installment\": installment,\r\n            \"policyStartDate\": quick.store.get('$policyStartDate'),\r\n            \"policyEndDate\": quick.store.get('$policyEndDate'),\r\n            \"policyIssueDate\": today,\r\n            \"isDigitalApproved\": digital\r\n        }\r\n    };\r\n}\r\nelse {\r\n    requestData = {\r\n        \"creditCardPaymentInputType\": {\r\n            \"policyType\": \"DCFIRE\",\r\n            \"applicationId\": 'BRANCH',\r\n            \"bankRefId\": quick.store.get('$bankRefId').bankRefId,\r\n            \"clientId\": \"700100000\",\r\n            \"customerNumber\": quick.store.get('$customerInfo').customerNumber,\r\n            \"creditCardInfo\": {\r\n                \"customerName\": components.as_collectionInfoPremiumCollection.getSelectedAccountItem().code.embossName,\r\n                \"ccNumber\": components.as_collectionInfoPremiumCollection.getSelectedAccountItem().code.cardNo,\r\n                \"expires\": expireDate\r\n            },\r\n            \"amount\": {\r\n                \"amount\": Number(amount),\r\n                \"currency\": \"949\"\r\n            },\r\n            \"renewPolicy\": renewPolicy,\r\n            \"paymentOptionCode\": paymentOptionCode,\r\n            \"installmentTypeCode\": installmentTypeCodeNew,\r\n            \"policyStartDate\": quick.store.get('$policyStartDate'),\r\n            \"policyEndDate\": quick.store.get('$policyEndDate'),\r\n            \"policyIssueDate\": today,\r\n            \"isDigitalApproved\": digital\r\n        }\r\n    };\r\n}\r\nquick.MM.trigger('setDatasConsumerAndScreenInfo');\r\nvar serviceRequest = {\r\n    url: '/api/wrapperclient/createPolicyWithCreditCardPayment',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n};\r\n(_f = quick.Request.async(serviceRequest)) === null || _f === void 0 ? void 0 : _f.then(function (resp) {\r\n    var _a, _b, _c, _d, _e;\r\n    if (resp === null || resp === void 0 ? void 0 : resp.data) {\r\n        quick.store.set('creditPaymentSuccess', resp.data); //{amount: \"500.00\", bankRefId: \"30239963\", overdraftDrawnAmount: \"0.00\", status: \"Complete\"}\r\n        var paymentResult = (_a = resp === null || resp === void 0 ? void 0 : resp.data) === null || _a === void 0 ? void 0 : _a.createPolicyWithCreditCardPaymentResult;\r\n        quick.store.set('$policyNumber', (_b = paymentResult === null || paymentResult === void 0 ? void 0 : paymentResult.dischargedPolicyResult) === null || _b === void 0 ? void 0 : _b.policyNo);\r\n        quick.store.set('$renewalNumber', (_c = paymentResult === null || paymentResult === void 0 ? void 0 : paymentResult.dischargedPolicyResult) === null || _c === void 0 ? void 0 : _c.renewalNo);\r\n        quick.store.set('$eventSourceId', (_e = (_d = paymentResult === null || paymentResult === void 0 ? void 0 : paymentResult.creditCardPaymentReceipt) === null || _d === void 0 ? void 0 : _d.receipt) === null || _e === void 0 ? void 0 : _e.transactionNo);\r\n        components.as_loadingCustomComp.close();\r\n        quick.Quick.go(\"/static/ui-bankasASPACC/atworkCommercialProtectionPages/compAtworkCommercialResult.qjson\"); //Sonuç ekranı\r\n    }\r\n}).catch(function (err) {\r\n    var _a, _b, _c;\r\n    components.as_loadingCustomComp.close();\r\n    var errorMessage = (_c = (_b = (_a = err === null || err === void 0 ? void 0 : err.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.responseMessage) !== null && _c !== void 0 ? _c : 'Bir hata oluştu.';\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n});\r\n",
+					"C": true,
+					"HL": "JS"
+				},
+				"createPolicyWithCashPayment": {
+					"H": "var _a, _b;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\n//createPolicyPayment\r\ncomponents.as_loadingCustomComp.open();\r\nvar paymentType;\r\nvar installmentTermList;\r\nvar paymentMethodList;\r\nvar installmentTypeCode;\r\nvar paymentOptionCode;\r\nvar amount;\r\nvar installment;\r\nvar currentDate = new Date();\r\nvar today = currentDate.toISOString();\r\npaymentMethodList = quick.store.get('$selectedPaymentMethodList');\r\npaymentOptionCode = paymentMethodList.idPaymentCode;\r\ninstallmentTermList = quick.store.get('$selectedInstallmentTermList');\r\ninstallmentTypeCode = installmentTermList.codeExtCode;\r\namount = components.as_collectionInfoPremiumCollection.getSelectedReceiptAmountItem();\r\namount = amount.replace('.', '');\r\namount = amount.replace(',', '.');\r\nvar renewPolicy;\r\nvar getAutoRenew = components.as_collectionInfoPremiumCollection.getSelectedAutoRenew();\r\nif (getAutoRenew == 1) {\r\n    renewPolicy = true;\r\n}\r\nelse {\r\n    renewPolicy = false;\r\n}\r\nvar installmentTypeCodeNew = quick.store.get('$itemsInstallmentCountCash');\r\ninstallmentTypeCodeNew = (_a = installmentTypeCodeNew[0]) === null || _a === void 0 ? void 0 : _a.value;\r\nvar digital;\r\nvar digitalControl = quick.store.get('$digital');\r\nif (digitalControl == 'E') {\r\n    digital = true;\r\n}\r\nelse {\r\n    digital = false;\r\n}\r\nvar requestData = {\r\n    \"cashPaymentInputType\": {\r\n        \"policyType\": \"DCFIRE\",\r\n        \"bankRefId\": Number(quick.store.get('$bankRefId').bankRefId),\r\n        \"customerNumber\": quick.store.get('$customerInfo').customerNumber,\r\n        \"amount\": {\r\n            \"amount\": amount,\r\n            \"currency\": \"949\"\r\n        },\r\n        \"renewPolicy\": renewPolicy,\r\n        \"paymentOptionCode\": paymentOptionCode,\r\n        \"installmentTypeCode\": installmentTypeCodeNew,\r\n        \"policyStartDate\": quick.store.get('$policyStartDate'),\r\n        \"policyEndDate\": quick.store.get('$policyEndDate'),\r\n        \"policyIssueDate\": quick.store.get('$policyStartDate'),\r\n        \"isDigitalApproved\": digital\r\n    }\r\n};\r\nquick.MM.trigger('setDatasConsumerAndScreenInfo');\r\nvar serviceRequest = {\r\n    url: '/api/wrapperclient/createPolicyWithCashPayment',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n};\r\n(_b = quick.Request.async(serviceRequest)) === null || _b === void 0 ? void 0 : _b.then(function (resp) {\r\n    var _a, _b, _c, _d, _e;\r\n    quick.EM.trace(resp === null || resp === void 0 ? void 0 : resp.data);\r\n    if (resp === null || resp === void 0 ? void 0 : resp.data) {\r\n        quick.store.set('cashPaymentSuccess', resp.data); //{amount: \"500.00\", bankRefId: \"30239963\", overdraftDrawnAmount: \"0.00\", status: \"Complete\"}\r\n        var paymentResult = (_a = resp === null || resp === void 0 ? void 0 : resp.data) === null || _a === void 0 ? void 0 : _a.createPolicyWithCashPaymentResult;\r\n        quick.store.set('$policyNumber', (_b = paymentResult === null || paymentResult === void 0 ? void 0 : paymentResult.dischargedPolicyResult) === null || _b === void 0 ? void 0 : _b.policyNo);\r\n        quick.store.set('$renewalNumber', (_c = paymentResult === null || paymentResult === void 0 ? void 0 : paymentResult.dischargedPolicyResult) === null || _c === void 0 ? void 0 : _c.renewalNo);\r\n        quick.store.set('$eventSourceId', (_e = (_d = paymentResult === null || paymentResult === void 0 ? void 0 : paymentResult.cashPaymentReceipt) === null || _d === void 0 ? void 0 : _d.receipt) === null || _e === void 0 ? void 0 : _e.transactionNo);\r\n        components.as_loadingCustomComp.close();\r\n        quick.Quick.go(\"/static/ui-bankasASPACC/atworkCommercialProtectionPages/compAtworkCommercialResult.qjson\"); //Sonuç ekranı\r\n    }\r\n}).catch(function (err) {\r\n    var _a, _b, _c;\r\n    components.as_loadingCustomComp.close();\r\n    var errorMessage = (_c = (_b = (_a = err === null || err === void 0 ? void 0 : err.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.responseMessage) !== null && _c !== void 0 ? _c : 'Bir hata oluştu.';\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n});\r\n",
+					"C": true,
+					"HL": "JS"
+				},
+				"createPolicyWithAccountPayment": {
+					"H": "var _a, _b, _c, _d, _e, _f;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\n//createPolicyPayment\r\ncomponents.as_loadingCustomComp.open();\r\nvar paymentType;\r\nvar installmentTermList;\r\nvar paymentMethodList;\r\nvar installmentTypeCode;\r\nvar paymentOptionCode;\r\nvar amount;\r\nvar installment;\r\nvar installmentTypeCodeNew;\r\n// let control = (components.as_collectionInfoPremiumCollection.getSelectedReceiptType().text).toLowerCase();\r\n// if(control.includes('peşin')){\r\n//     amount = quick.store.get('$cashPaymentAmount');\r\n// }\r\n// else{\r\n//     amount = quick.store.get('$installmentPaymentAmount');\r\n// }\r\namount = components.as_collectionInfoPremiumCollection.getSelectedReceiptAmountItem();\r\namount = amount.replace('.', '');\r\namount = amount.replace(',', '.');\r\ninstallment = components.as_collectionInfoPremiumCollection.getSelectedInstallmentCountInternalSearch();\r\nquick.store.set('$installmentForResultPage', installment);\r\nif (installment) { //Taksitlidir\r\n    installment = Number((components.as_collectionInfoPremiumCollection.getSelectedInstallmentCountInternalSearch()).split(' ')[0]);\r\n    installmentTypeCodeNew = (_b = (_a = (components.as_collectionInfoPremiumCollection.getSelectedInstallmentCountItem())) === null || _a === void 0 ? void 0 : _a.installment) === null || _b === void 0 ? void 0 : _b.value;\r\n}\r\nelse {\r\n    installment = 0;\r\n    if (quick.store.get('$paymentType') == 'kredi kartı sanal pos (peşin)') {\r\n        installmentTypeCodeNew = quick.store.get('$itemsInstallmentCountCredit');\r\n        installmentTypeCodeNew = (_c = installmentTypeCodeNew[0]) === null || _c === void 0 ? void 0 : _c.value;\r\n    }\r\n    else if (quick.store.get('$paymentType') == 'cari hesap (peşin)') {\r\n        installmentTypeCodeNew = quick.store.get('$itemsInstallmentCountAccount');\r\n        installmentTypeCodeNew = (_d = installmentTypeCodeNew[0]) === null || _d === void 0 ? void 0 : _d.value;\r\n    }\r\n    else if (quick.store.get('$paymentType') == 'nakit') {\r\n        installmentTypeCodeNew = quick.store.get('$itemsInstallmentCountCash');\r\n        installmentTypeCodeNew = (_e = installmentTypeCodeNew[0]) === null || _e === void 0 ? void 0 : _e.value;\r\n    }\r\n}\r\nvar currentDate = new Date();\r\nvar today = currentDate.toISOString();\r\npaymentMethodList = quick.store.get('$selectedPaymentMethodList');\r\npaymentOptionCode = paymentMethodList.idPaymentCode;\r\ninstallmentTermList = quick.store.get('$selectedInstallmentTermList');\r\ninstallmentTypeCode = installmentTermList.codeExtCode;\r\nvar renewPolicy;\r\nvar getAutoRenew = components.as_collectionInfoPremiumCollection.getSelectedAutoRenew();\r\nif (getAutoRenew == 1) {\r\n    renewPolicy = true;\r\n}\r\nelse {\r\n    renewPolicy = false;\r\n}\r\nvar useOverdraft;\r\nvar getUseOverdraft = components.as_collectionInfoPremiumCollection.getSelectedUseOverDraft();\r\nif ((getUseOverdraft === null || getUseOverdraft === void 0 ? void 0 : getUseOverdraft.value) == 1) {\r\n    useOverdraft = true;\r\n}\r\nelse {\r\n    useOverdraft = false;\r\n}\r\nvar digital;\r\nvar digitalControl = quick.store.get('$digital');\r\nif (digitalControl == 'E') {\r\n    digital = true;\r\n}\r\nelse {\r\n    digital = false;\r\n}\r\nvar requestData;\r\nif (installment) { //Taksitlidir\r\n    requestData = {\r\n        \"accountPaymentInputType\": {\r\n            \"policyType\": 'DCFIRE',\r\n            \"bankRefId\": Number(quick.store.get('$bankRefId').bankRefId),\r\n            \"customerNumber\": quick.store.get('$customerInfo').customerNumber,\r\n            \"currentAccountNumber\": {\r\n                \"branchCode\": components.as_collectionInfoPremiumCollection.getSelectedAccountItem().code.number.branchCode,\r\n                \"number\": components.as_collectionInfoPremiumCollection.getSelectedAccountItem().code.number.number\r\n            },\r\n            \"useInvestmentAccount\": false,\r\n            \"useOverdraft\": useOverdraft,\r\n            \"amount\": {\r\n                \"amount\": amount,\r\n                \"currency\": \"949\"\r\n            },\r\n            \"renewPolicy\": renewPolicy,\r\n            \"paymentOptionCode\": String(paymentOptionCode),\r\n            \"installmentTypeCode\": installmentTypeCodeNew,\r\n            \"installment\": installment,\r\n            \"policyStartDate\": quick.store.get('$policyStartDate'),\r\n            \"policyEndDate\": quick.store.get('$policyEndDate'),\r\n            \"policyIssueDate\": (today).split('T')[0],\r\n            \"isDigitalApproved\": digital\r\n        }\r\n    };\r\n}\r\nelse {\r\n    requestData = {\r\n        \"accountPaymentInputType\": {\r\n            \"policyType\": 'DCFIRE',\r\n            \"bankRefId\": Number(quick.store.get('$bankRefId').bankRefId),\r\n            \"customerNumber\": quick.store.get('$customerInfo').customerNumber,\r\n            \"currentAccountNumber\": {\r\n                \"branchCode\": components.as_collectionInfoPremiumCollection.getSelectedAccountItem().code.number.branchCode,\r\n                \"number\": components.as_collectionInfoPremiumCollection.getSelectedAccountItem().code.number.number\r\n            },\r\n            \"useInvestmentAccount\": false,\r\n            \"useOverdraft\": useOverdraft,\r\n            \"amount\": {\r\n                \"amount\": amount,\r\n                \"currency\": \"949\"\r\n            },\r\n            \"renewPolicy\": renewPolicy,\r\n            \"paymentOptionCode\": String(paymentOptionCode),\r\n            \"installmentTypeCode\": installmentTypeCodeNew,\r\n            \"policyStartDate\": quick.store.get('$policyStartDate'),\r\n            \"policyEndDate\": quick.store.get('$policyEndDate'),\r\n            \"policyIssueDate\": (today).split('T')[0],\r\n            \"isDigitalApproved\": digital\r\n        }\r\n    };\r\n}\r\nquick.MM.trigger('setDatasConsumerAndScreenInfo');\r\nvar serviceRequest = {\r\n    url: '/api/wrapperclient/createPolicyWithAccountPayment',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n};\r\n(_f = quick.Request.async(serviceRequest)) === null || _f === void 0 ? void 0 : _f.then(function (resp) {\r\n    var _a, _b, _c, _d, _e;\r\n    if (resp === null || resp === void 0 ? void 0 : resp.data) {\r\n        quick.store.set('accountPaymentSuccess', resp.data); //{amount: \"500.00\", bankRefId: \"30239963\", overdraftDrawnAmount: \"0.00\", status: \"Complete\"}\r\n        var paymentResult = (_a = resp === null || resp === void 0 ? void 0 : resp.data) === null || _a === void 0 ? void 0 : _a.createPolicyWithAccountPaymentResult;\r\n        quick.store.set('$policyNumber', (_b = paymentResult === null || paymentResult === void 0 ? void 0 : paymentResult.dischargedPolicyResult) === null || _b === void 0 ? void 0 : _b.policyNo);\r\n        quick.store.set('$renewalNumber', (_c = paymentResult === null || paymentResult === void 0 ? void 0 : paymentResult.dischargedPolicyResult) === null || _c === void 0 ? void 0 : _c.renewalNo);\r\n        quick.store.set('$eventSourceId', (_e = (_d = paymentResult === null || paymentResult === void 0 ? void 0 : paymentResult.accountPaymentReceipt) === null || _d === void 0 ? void 0 : _d.receipt) === null || _e === void 0 ? void 0 : _e.transactionNo);\r\n        components.as_loadingCustomComp.close();\r\n        quick.Quick.go(\"/static/ui-bankasASPACC/atworkCommercialProtectionPages/compAtworkCommercialResult.qjson\"); //Sonuç ekranı\r\n    }\r\n}).catch(function (err) {\r\n    var _a, _b, _c;\r\n    components.as_loadingCustomComp.close();\r\n    var errorMessage = (_c = (_b = (_a = err === null || err === void 0 ? void 0 : err.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.responseMessage) !== null && _c !== void 0 ? _c : 'Bir hata oluştu.';\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n});\r\n",
+					"C": true,
+					"HL": "JS"
+				},
+				"createContractRequest": {
+					"H": "var _a, _b, _c, _d, _e;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nvar paymentType;\r\nvar paymentMethodList;\r\nvar paymentOptionType;\r\nvar useOverDraft;\r\nvar installment;\r\nvar insuredName;\r\nvar insuredNo;\r\nvar insuredEmail;\r\nvar phoneNumber;\r\nvar phoneNumberList = [];\r\nvar customerInfo = quick.store.get('$customerInfo');\r\nvar digital;\r\nvar digitalControl = quick.store.get('$digital');\r\nif (digitalControl == 'E') {\r\n    digital = true;\r\n}\r\nelse {\r\n    digital = false;\r\n}\r\n////\r\nvar tc2 = quick.store.get('$primaryId2');\r\nvar customerInfo2;\r\nif (tc2) { //insurer-insured farklı\r\n    customerInfo2 = quick.store.get('$customerInfo2');\r\n    insuredName = (_a = customerInfo2 === null || customerInfo2 === void 0 ? void 0 : customerInfo2.basicInfo) === null || _a === void 0 ? void 0 : _a.fullName;\r\n    insuredNo = customerInfo2 === null || customerInfo2 === void 0 ? void 0 : customerInfo2.customerNumber;\r\n    phoneNumber = customerInfo2 === null || customerInfo2 === void 0 ? void 0 : customerInfo2.communicationInfo.phoneNumbers;\r\n    for (var i = 0; i < phoneNumber.length; i++) {\r\n        var data = {\r\n            \"fieldKey\": \"insuredPhone\" + (i + 1),\r\n            \"fieldValue\": customerInfo2 === null || customerInfo2 === void 0 ? void 0 : customerInfo2.communicationInfo.phoneNumbers[i].number //5079935636\r\n        };\r\n        phoneNumberList.push(data);\r\n    }\r\n    ;\r\n    insuredEmail = (_c = (_b = customerInfo2 === null || customerInfo2 === void 0 ? void 0 : customerInfo2.communicationInfo) === null || _b === void 0 ? void 0 : _b.emailAddresses[0]) === null || _c === void 0 ? void 0 : _c.address;\r\n}\r\nelse {\r\n    insuredName = customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.basicInfo.fullName;\r\n    insuredNo = customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.customerNumber;\r\n    phoneNumber = customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.communicationInfo.phoneNumbers;\r\n    for (var i = 0; i < phoneNumber.length; i++) {\r\n        var data = {\r\n            \"fieldKey\": \"insuredPhone\" + (i + 1),\r\n            \"fieldValue\": customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.communicationInfo.phoneNumbers[i].number //5079935636\r\n        };\r\n        phoneNumberList.push(data);\r\n    }\r\n    ;\r\n    insuredEmail = (_e = (_d = customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.communicationInfo) === null || _d === void 0 ? void 0 : _d.emailAddresses[0]) === null || _e === void 0 ? void 0 : _e.address;\r\n}\r\n//////\r\ninstallment = components.as_collectionInfoPremiumCollection.getSelectedInstallmentCountInternalSearch();\r\nif (installment) { //Taksitlidir\r\n    installment = Number((components.as_collectionInfoPremiumCollection.getSelectedInstallmentCountInternalSearch()).split(' ')[0]);\r\n}\r\nelse {\r\n    installment = 0;\r\n}\r\nuseOverDraft = components.as_collectionInfoPremiumCollection.getSelectedUseOverDraft();\r\nif (useOverDraft) {\r\n    if (useOverDraft.value == 0 || useOverDraft.value == 1) {\r\n        if (useOverDraft.value == 1) { //Ek hesap kullanılsın evet seçilmiş\r\n            useOverDraft = 'Evet';\r\n        }\r\n        else {\r\n            useOverDraft = 'Hayır';\r\n        }\r\n    }\r\n    else {\r\n        useOverDraft = '';\r\n    }\r\n}\r\nelse {\r\n    useOverDraft = '';\r\n}\r\ndebugger;\r\npaymentType = quick.store.get('$paymentType');\r\npaymentMethodList = quick.store.get('$paymentMethodList');\r\nif (paymentMethodList.length > 0) {\r\n    for (var i = 0; i < paymentMethodList.length; i++) {\r\n        if (paymentType == (paymentMethodList[i].typePaymentCode).toLowerCase()) {\r\n            paymentOptionType = paymentMethodList[i].typePaymentCode;\r\n            break;\r\n        }\r\n    }\r\n}\r\n//Otomatik yenilensin\r\nvar hasAutoRenew = false;\r\nvar premiumAmount;\r\npremiumAmount = components.as_collectionInfoPremiumCollection.getSelectedReceiptAmountItem();\r\npremiumAmount = premiumAmount.replace('.', '');\r\npremiumAmount = premiumAmount.replace(',', '.');\r\nvar requestData = {\r\n    \"fieldList\": {\r\n        \"field\": [\r\n            {\r\n                \"fieldKey\": \"insuredName\",\r\n                \"fieldValue\": insuredName //quick.store.get('$customerInfo').basicInfo.fullName\r\n            },\r\n            {\r\n                \"fieldKey\": \"insuredNo\",\r\n                \"fieldValue\": insuredNo //quick.store.get('$customerInfo').customerNumber\r\n            },\r\n            {\r\n                \"fieldKey\": \"insurerName\",\r\n                \"fieldValue\": quick.store.get('$customerInfo').basicInfo.fullName //\"SELATTİNŞÇİĞ ATİKŞÇİĞ\"\r\n            },\r\n            {\r\n                \"fieldKey\": \"premiumAmount\",\r\n                \"fieldValue\": Number(premiumAmount)\r\n            },\r\n            {\r\n                \"fieldKey\": \"grossPremiumAmount\",\r\n                \"fieldValue\": Number(premiumAmount)\r\n            },\r\n            {\r\n                \"fieldKey\": \"useOverdraft\",\r\n                \"fieldValue\": useOverDraft //\"Hayir\"\r\n            },\r\n            {\r\n                \"fieldKey\": \"premiumPaymentType\",\r\n                \"fieldValue\": paymentOptionType //\"Cari Hesap (Peşin)\"\r\n            },\r\n            {\r\n                \"fieldKey\": \"hasAutoRenew\",\r\n                \"fieldValue\": hasAutoRenew //0-1-null\r\n            },\r\n        ]\r\n    }\r\n};\r\nquick.store.set('$createContractRequestFieldlist', requestData.fieldList);\r\n",
+					"C": true,
+					"HL": "JS"
+				},
+				"PreRender": {
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nquick.Quick.screen.toTop();\r\n",
+					"I": true,
+					"HL": "JS"
+				}
+			},
+			"C": {},
+			"_Editor": {
+				"eID": "EdtrComp_1"
+			},
+			"O": {
+				"cType": "child",
+				"compDomClasses": "newDropBorder"
+			},
+			"S": {
+				"xs-xl": {
+					"pageBackgroundColor": "#ffffff",
+					"statusBarColor": "#ffffff"
+				}
+			}
+		},
+		{
+			"T": "VRow",
+			"P": {
+				"ID": {
+					"H": "EdtrComp_28",
+					"T": "prop"
+				},
+				"visible": {
+					"H": "╬false╩╩",
+					"T": "prop",
+					"HL": "QS"
+				}
+			},
+			"E": {},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "VCol",
+							"C": {
+								"default": {
+									"c": [
+										{
+											"T": "QLabel",
+											"P": {
+												"ID": {
+													"H": "EdtrComp_4",
+													"T": "prop"
+												},
+												"tagType": {
+													"H": "╬'span'╩╩",
+													"T": "prop"
+												},
+												"text": {
+													"H": "╬'PRİM TAHSİLAT'╩╩",
+													"T": "prop",
+													"HL": "QS"
+												},
+												"visible": {
+													"H": "╬true╩╩",
+													"T": "prop"
+												},
+												"processHtml": {
+													"H": "╬false╩╩",
+													"T": "prop"
+												}
+											},
+											"E": {},
+											"C": {},
+											"_Editor": {
+												"eID": "EdtrComp_4"
+											},
+											"O": {
+												"cType": "slot",
+												"layout": {
+													"dOpt": {
+														"xs": [
+															"te:font-weight-bold"
+														]
+													},
+													"class": "font-weight-bold"
+												},
+												"compDomClasses": "q-label font-weight-bold newDropBorder"
+											}
+										}
+									],
+									"cType": "slot"
+								}
+							},
+							"E": {},
+							"P": {
+								"ID": {
+									"H": "EdtrComp_43",
+									"T": "prop"
+								}
+							},
+							"_Editor": {
+								"eID": "EdtrComp_43"
+							},
+							"O": {
+								"cType": "slot",
+								"layout": {
+									"dOpt": {
+										"xs": [
+											"d:d-flex",
+											"fd:flex-column"
+										]
+									},
+									"class": "d-flex flex-column"
+								},
+								"compDomClasses": "col d-flex flex-column pb-0 newDropBorder"
+							}
+						}
+					],
+					"cType": "slot"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_28"
+			},
+			"O": {
+				"cType": "slot",
+				"compDomClasses": "row newDropBorder"
+			}
+		},
+		{
+			"T": "VContainer",
+			"P": {
+				"ID": {
+					"H": "containerPolicyInfo",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"class": {
+					"H": "╬'container'╩╩",
+					"T": "class"
+				},
+				"visible": {
+					"H": "╬true╩╩",
+					"T": "prop"
+				},
+				"eager": {
+					"H": "╬true╩╩",
+					"T": "prop"
+				}
+			},
+			"E": {},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "VRow",
+							"P": {
+								"ID": {
+									"H": "EdtrComp_22",
+									"T": "prop"
+								}
+							},
+							"E": {},
+							"C": {
+								"default": {
+									"c": [
+										{
+											"T": "VCol",
+											"C": {
+												"default": {
+													"c": [
+														{
+															"T": "CustomComponent",
+															"P": {
+																"ID": {
+																	"H": "as_policyInfoPremiumCollection",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"QJsonPath": {
+																	"H": "╬'/static/ui-bnkasAsDCFire/common/as_policyInfoPremiumCollection.qjson'╩╩",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"policyNo": {
+																	"H": "╬false╩╩",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"assurancePackage": {
+																	"H": "╬false╩╩",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"offerNo": {
+																	"H": "╬false╩╩",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"assuranceType": {
+																	"H": "╬true╩╩",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"consumerCode": {
+																	"H": "╬'TANE.BANKASUR'╩╩",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"screenName": {
+																	"H": "╬'DCFIRE'╩╩",
+																	"T": "prop",
+																	"HL": "QS"
+																}
+															},
+															"E": {
+																"onLoad": {
+																	"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\n// Poliçe Bilgileri Onload\r\nvar assurance;\r\nvar policy;\r\nif (quick.store.get('$policyType')) {\r\n    assurance = quick.store.get('$policyType');\r\n}\r\nif (quick.store.get('$reservePolicyNumber')) {\r\n    policy = quick.store.get('$reservePolicyNumber').reservePolicyNumber;\r\n}\r\nvar premiumCollectionItems = {\r\n    assuranceType: assurance,\r\n    policyNo: policy,\r\n};\r\ncomponents.as_policyInfoPremiumCollection.setData({ data: premiumCollectionItems });\r\n",
+																	"HL": "JS"
+																}
+															},
+															"C": {
+																"default": {
+																	"c": [
+																		{
+																			"T": "Ghost",
+																			"P": {
+																				"ID": {
+																					"H": "EdtrComp_19",
+																					"T": "prop"
+																				}
+																			},
+																			"E": {},
+																			"C": {},
+																			"_Editor": {
+																				"eID": "EdtrComp_19"
+																			},
+																			"O": {
+																				"cType": "child",
+																				"compDomClasses": "editor-ghost-comp"
+																			}
+																		}
+																	],
+																	"cType": "child"
+																}
+															},
+															"_Editor": {
+																"eID": "EdtrComp_11"
+															},
+															"O": {
+																"cType": "child",
+																"dynProps": true,
+																"compDomClasses": "newDropBorder"
+															}
+														}
+													],
+													"cType": "slot"
+												}
+											},
+											"E": {},
+											"P": {
+												"ID": {
+													"H": "EdtrComp_23",
+													"T": "prop"
+												}
+											},
+											"_Editor": {
+												"eID": "EdtrComp_23"
+											},
+											"O": {
+												"cType": "slot",
+												"layout": {
+													"dOpt": {
+														"xs": [
+															"d:d-flex",
+															"sp:pt-0",
+															"fd:flex-column"
+														]
+													},
+													"class": "d-flex pt-0 flex-column"
+												},
+												"compDomClasses": "col d-flex pt-0 flex-column pb-0 newDropBorder"
+											},
+											"S": {
+												"xs-xl": {
+													"col": "",
+													"flexDirection": "column",
+													"alignItems": "",
+													"justifyContent": "",
+													"marginLeft": "",
+													"marginRight": "",
+													"marginBottom": "",
+													"marginTop": "",
+													"paddingTop": "12px",
+													"paddingBottom": "12px",
+													"paddingLeft": "12px",
+													"paddingRight": "12px",
+													"backgroundColor": "#ffffff",
+													"boxShadow": ""
+												}
+											}
+										}
+									],
+									"cType": "slot"
+								}
+							},
+							"_Editor": {
+								"eID": "EdtrComp_22"
+							},
+							"O": {
+								"cType": "slot",
+								"compDomClasses": "row newDropBorder"
+							},
+							"S": {
+								"xs-xl": {
+									"marginLeft": "0px",
+									"marginRight": "0px",
+									"marginBottom": "0px",
+									"marginTop": "0px",
+									"paddingTop": "",
+									"paddingBottom": "",
+									"paddingLeft": "",
+									"paddingRight": "",
+									"width": "",
+									"height": "",
+									"backgroundColor": "#ffffff",
+									"boxShadow": ""
+								}
+							}
+						}
+					],
+					"cType": "slot"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_21"
+			},
+			"O": {
+				"cType": "slot",
+				"layout": {
+					"dOpt": {
+						"xs": [
+							"sp:pt-0"
+						]
+					},
+					"class": "pt-0"
+				},
+				"compDomClasses": "container pt-0 container--fluid newDropBorder"
+			},
+			"S": {
+				"xs-xl": {
+					"marginLeft": "",
+					"marginRight": "",
+					"marginBottom": "",
+					"marginTop": "",
+					"paddingTop": "12px",
+					"paddingBottom": "12px",
+					"paddingLeft": "12px",
+					"paddingRight": "12px",
+					"width": "",
+					"height": "",
+					"backgroundColor": "#ffffff",
+					"boxShadow": ""
+				}
+			}
+		},
+		{
+			"T": "VContainer",
+			"P": {
+				"ID": {
+					"H": "containerAssuranceOwnerInfo",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"class": {
+					"H": "╬'container'╩╩",
+					"T": "class"
+				},
+				"visible": {
+					"H": "╬true╩╩",
+					"T": "prop"
+				},
+				"eager": {
+					"H": "╬true╩╩",
+					"T": "prop"
+				}
+			},
+			"E": {},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "VRow",
+							"P": {
+								"ID": {
+									"H": "EdtrComp_7",
+									"T": "prop"
+								}
+							},
+							"E": {},
+							"C": {
+								"default": {
+									"c": [
+										{
+											"T": "VCol",
+											"C": {
+												"default": {
+													"c": [
+														{
+															"T": "CustomComponent",
+															"P": {
+																"ID": {
+																	"H": "as_assuranceOwnerInfoPremiumCollection",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"insurerHolderRole": {
+																	"H": "╬false╩╩",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"QJsonPath": {
+																	"H": "╬'/static/ui-bnkasAsDCFire/common/as_assuranceOwnerInfoPremiumCollection.qjson'╩╩",
+																	"T": "prop",
+																	"HL": "QS"
+																}
+															},
+															"E": {
+																"onLoad": {
+																	"H": "var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nvar data;\r\nvar tc2 = quick.store.get('$primaryId2');\r\nvar insuredCustomerNumber = quick.store.get('$insuredCustomerNumber');\r\nif (tc2 && insuredCustomerNumber) { //Sigorta ettiren farklı seçilmiştir.\r\n    var customerInfo = quick.store.get('$customerInfo2');\r\n    if (customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.organizationalInfo) {\r\n        components.as_assuranceOwnerInfoPremiumCollection.setVknOrTcknUser({ citizenNumberLabel: 'VKN', nameSurnameLabel: 'Unvan', colTaxOfficeVisible: true });\r\n        data = {\r\n            customerNumber: customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.customerNumber,\r\n            citizenNumber: (_a = customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.organizationalInfo) === null || _a === void 0 ? void 0 : _a.taxId,\r\n            taxOffice: (_b = customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.taxPayerInfo) === null || _b === void 0 ? void 0 : _b.taxOfficeName,\r\n            nameSurname: (_c = customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.organizationalInfo) === null || _c === void 0 ? void 0 : _c.fullName\r\n        };\r\n    }\r\n    else {\r\n        if (quick.store.get('$isTrueYKN') == true) {\r\n            components.as_assuranceOwnerInfoPremiumCollection.setVknOrTcknUser({ citizenNumberLabel: 'YKN', nameSurnameLabel: 'Ad Soyad', colTaxOfficeVisible: false });\r\n        }\r\n        else {\r\n            components.as_assuranceOwnerInfoPremiumCollection.setVknOrTcknUser({ citizenNumberLabel: 'TCKN', nameSurnameLabel: 'Ad Soyad', colTaxOfficeVisible: false });\r\n        }\r\n        data = {\r\n            customerNumber: customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.customerNumber,\r\n            citizenNumber: (_e = (_d = customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.basicInfo) === null || _d === void 0 ? void 0 : _d.primaryId) === null || _e === void 0 ? void 0 : _e.value,\r\n            nameSurname: (_f = customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.basicInfo) === null || _f === void 0 ? void 0 : _f.fullName\r\n        };\r\n    }\r\n    components.as_assuranceOwnerInfoPremiumCollection.setData({ data: data });\r\n}\r\nelse {\r\n    var customerInfo = quick.store.get('$customerInfo');\r\n    if (customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.organizationalInfo) {\r\n        components.as_assuranceOwnerInfoPremiumCollection.setVknOrTcknUser({ citizenNumberLabel: 'VKN', nameSurnameLabel: 'Unvan', colTaxOfficeVisible: true });\r\n        data = {\r\n            customerNumber: customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.customerNumber,\r\n            citizenNumber: (_g = customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.organizationalInfo) === null || _g === void 0 ? void 0 : _g.taxId,\r\n            taxOffice: (_h = customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.taxPayerInfo) === null || _h === void 0 ? void 0 : _h.taxOfficeName,\r\n            nameSurname: (_j = customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.organizationalInfo) === null || _j === void 0 ? void 0 : _j.fullName\r\n        };\r\n    }\r\n    else {\r\n        if (quick.store.get('$isTrueYKN') == true) {\r\n            components.as_assuranceOwnerInfoPremiumCollection.setVknOrTcknUser({ citizenNumberLabel: 'YKN', nameSurnameLabel: 'Ad Soyad', colTaxOfficeVisible: false });\r\n        }\r\n        else {\r\n            components.as_assuranceOwnerInfoPremiumCollection.setVknOrTcknUser({ citizenNumberLabel: 'TCKN', nameSurnameLabel: 'Ad Soyad', colTaxOfficeVisible: false });\r\n        }\r\n        data = {\r\n            customerNumber: customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.customerNumber,\r\n            citizenNumber: (_l = (_k = customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.basicInfo) === null || _k === void 0 ? void 0 : _k.primaryId) === null || _l === void 0 ? void 0 : _l.value,\r\n            nameSurname: (_m = customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.basicInfo) === null || _m === void 0 ? void 0 : _m.fullName\r\n        };\r\n    }\r\n    components.as_assuranceOwnerInfoPremiumCollection.setData({ data: data });\r\n}\r\n",
+																	"HL": "JS"
+																}
+															},
+															"C": {
+																"default": {
+																	"c": [
+																		{
+																			"T": "Ghost",
+																			"P": {
+																				"ID": {
+																					"H": "EdtrComp_17",
+																					"T": "prop"
+																				}
+																			},
+																			"E": {},
+																			"C": {},
+																			"_Editor": {
+																				"eID": "EdtrComp_17"
+																			},
+																			"O": {
+																				"cType": "child",
+																				"compDomClasses": "editor-ghost-comp"
+																			}
+																		}
+																	],
+																	"cType": "child"
+																}
+															},
+															"_Editor": {
+																"eID": "EdtrComp_10"
+															},
+															"O": {
+																"cType": "child",
+																"dynProps": true,
+																"compDomClasses": "newDropBorder"
+															}
+														}
+													],
+													"cType": "slot"
+												}
+											},
+											"E": {},
+											"P": {
+												"ID": {
+													"H": "EdtrComp_8",
+													"T": "prop"
+												}
+											},
+											"_Editor": {
+												"eID": "EdtrComp_8"
+											},
+											"O": {
+												"cType": "slot",
+												"layout": {
+													"dOpt": {
+														"xs": [
+															"d:d-flex",
+															"fd:flex-column"
+														]
+													},
+													"class": "d-flex flex-column"
+												},
+												"compDomClasses": "col d-flex flex-column pb-0 newDropBorder"
+											},
+											"S": {
+												"xs-xl": {
+													"col": "",
+													"flexDirection": "column",
+													"alignItems": "",
+													"justifyContent": "",
+													"marginLeft": "",
+													"marginRight": "",
+													"marginBottom": "",
+													"marginTop": "",
+													"paddingTop": "12px",
+													"paddingBottom": "12px",
+													"paddingLeft": "12px",
+													"paddingRight": "12px",
+													"backgroundColor": "#ffffff",
+													"boxShadow": ""
+												}
+											}
+										}
+									],
+									"cType": "slot"
+								}
+							},
+							"_Editor": {
+								"eID": "EdtrComp_7"
+							},
+							"O": {
+								"cType": "slot",
+								"compDomClasses": "row newDropBorder"
+							},
+							"S": {
+								"xs-xl": {
+									"marginLeft": "0px",
+									"marginRight": "0px",
+									"marginBottom": "0px",
+									"marginTop": "0px",
+									"paddingTop": "",
+									"paddingBottom": "",
+									"paddingLeft": "",
+									"paddingRight": "",
+									"width": "",
+									"height": "",
+									"backgroundColor": "#ffffff",
+									"boxShadow": ""
+								}
+							}
+						}
+					],
+					"cType": "slot"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_2"
+			},
+			"O": {
+				"cType": "slot",
+				"layout": {
+					"dOpt": {
+						"xs": [
+							"sp:pt-0"
+						]
+					},
+					"class": "pt-0"
+				},
+				"compDomClasses": "container pt-0 container--fluid newDropBorder"
+			},
+			"S": {
+				"xs-xl": {
+					"marginLeft": "",
+					"marginRight": "",
+					"marginBottom": "",
+					"marginTop": "",
+					"paddingTop": "12px",
+					"paddingBottom": "12px",
+					"paddingLeft": "12px",
+					"paddingRight": "12px",
+					"width": "",
+					"height": "",
+					"backgroundColor": "#ffffff",
+					"boxShadow": ""
+				}
+			}
+		},
+		{
+			"T": "VContainer",
+			"P": {
+				"ID": {
+					"H": "containerCollectionInfo",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"class": {
+					"H": "╬'container'╩╩",
+					"T": "class"
+				},
+				"visible": {
+					"H": "╬true╩╩",
+					"T": "prop"
+				},
+				"eager": {
+					"H": "╬true╩╩",
+					"T": "prop"
+				}
+			},
+			"E": {},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "VRow",
+							"P": {
+								"ID": {
+									"H": "EdtrComp_63",
+									"T": "prop"
+								}
+							},
+							"E": {},
+							"C": {
+								"default": {
+									"c": [
+										{
+											"T": "VCol",
+											"C": {
+												"default": {
+													"c": [
+														{
+															"T": "CustomComponent",
+															"P": {
+																"ID": {
+																	"H": "as_collectionInfoPremiumCollection",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"installmentCountVisible": {
+																	"H": "╬false╩╩",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"accountListLabel": {
+																	"H": "╬''╩╩",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"autoRenewPersonalAttribute": {
+																	"H": "╬false╩╩",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"QJsonPath": {
+																	"H": "╬'/static/ui-bnkasAsDCFire/common/as_collectionInfoPremiumCollection.qjson'╩╩",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"consumerCode": {
+																	"H": "╬'TANE.BANKASUR'╩╩",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"screenName": {
+																	"H": "╬'DCFIRE'╩╩",
+																	"T": "prop",
+																	"HL": "QS"
+																}
+															},
+															"E": {
+																"receiptTypeChangeEvent": {
+																	"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\n//receiptTypeChangeEvent\r\ncomponents.as_collectionInfoPremiumCollection.setUseOverDraftVisible({ visible: false });\r\nvar control = components.as_collectionInfoPremiumCollection.getSelectedReceiptType();\r\ncontrol = (control.text).toLowerCase();\r\nif ((control).includes('kredi')) {\r\n    quick.MM.trigger('retrieveCreditCardList');\r\n}\r\nelse if ((control).includes('cari')) {\r\n    quick.MM.trigger('retrieveCustomerAccounts');\r\n}\r\nvar installment;\r\n//Taksit türü\r\nif ((control).includes('taksit')) {\r\n    quick.store.set('$installmentIsTrue', true); //Sonuç ekranı için\r\n    if ((control).includes('kredi')) {\r\n        quick.store.set('$paymentType', 'kredi kartı sanal pos (taksitli)');\r\n        // Ekrandaki itemsların doldurulması.\r\n        installment = quick.store.get('$itemsInstallmentCountCreditInstallment');\r\n        var premiumCollectionItems = {\r\n            installmentCount: installment\r\n        };\r\n        components.as_collectionInfoPremiumCollection.setData({ data: premiumCollectionItems });\r\n    }\r\n    else if ((control).includes('cari')) {\r\n        quick.store.set('$paymentType', 'cari hesap (taksitli)');\r\n        // Ekrandaki itemsların doldurulması.\r\n        installment = quick.store.get('$itemsInstallmentCountAccountInstallment');\r\n        var premiumCollectionItems = {\r\n            installmentCount: installment\r\n        };\r\n        components.as_collectionInfoPremiumCollection.setData({ data: premiumCollectionItems });\r\n    }\r\n}\r\nelse if ((control).includes('peşin')) {\r\n    quick.store.set('$installmentIsTrue', false); //Sonuç ekranı için\r\n    if ((control).includes('kredi')) {\r\n        quick.store.set('$paymentType', 'kredi kartı sanal pos (peşin)');\r\n    }\r\n    else if ((control).includes('cari')) {\r\n        quick.store.set('$paymentType', 'cari hesap (peşin)');\r\n    }\r\n}\r\nelse {\r\n    quick.store.set('$installmentIsTrue', false); //Sonuç ekranı için\r\n    quick.store.set('$paymentType', 'nakit');\r\n}\r\n",
+																	"C": true,
+																	"HL": "JS"
+																},
+																"onLoad": {
+																	"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\n//Tahsilat Bilgileri Onload\r\nvar receipt;\r\nvar installment;\r\nvar totalAmount;\r\nvar personalAttribute;\r\nvar hasPledgee;\r\nvar useOverDraft;\r\n// Form sadece bireysel nitelikli evet ise imzalatılacak?\r\n// Rehinli alacaklı hayır ise -> Müşteri otomatik yenilemeyi evet/hayır tercihi girebilir ve kredi bağlantılı sigorta bilgi formu imzalatılmaz\r\n// Rehinli alacaklı evet ve Bireysel nitelikli hayır ise -> Evet seçili geliyor ve değiştirilemiyor, müşteriye hiçbir belge imzalatılmıyor.\r\nhasPledgee = 0; // quick.store.get('$hasPledgee'); Rehinli Alacaklı\r\npersonalAttribute = 0; //quick.store.get('$creditAssociated'); Bireysel Nitelikli\r\nif (hasPledgee == 1) { //Rehinli alacaklı EVET\r\n    if (personalAttribute == 1) { //Bireysel nitelikli EVET\r\n        quick.store.set('isFormTrue', true); // Form imzalatılır\r\n        components.as_collectionInfoPremiumCollection.setAutoRenewVisible({ visible: false });\r\n        components.as_collectionInfoPremiumCollection.setAutoRenewPersonalAttributeVisible({ visible: true });\r\n    }\r\n    else { //Bireysel nitelikli HAYIR\r\n        components.as_collectionInfoPremiumCollection.setAutoRenewVisible({ visible: true });\r\n        components.as_collectionInfoPremiumCollection.setAutoRenewalDisabled({ disable: true });\r\n        var premiumData_1 = {\r\n            autoRenew: { text: 'Evet', value: 1 }\r\n        };\r\n        components.as_collectionInfoPremiumCollection.setDataPremiumCollection({ data: premiumData_1 });\r\n        components.as_collectionInfoPremiumCollection.setAutoRenewPersonalAttributeVisible({ visible: false });\r\n    }\r\n}\r\nelse { //Rehinli alacaklı HAYIR\r\n    // Rehinli evet değilse bireysel nitelikli seçilemez.\r\n    components.as_collectionInfoPremiumCollection.setAutoRenewVisible({ visible: true });\r\n    components.as_collectionInfoPremiumCollection.setAutoRenewPersonalAttributeVisible({ visible: false });\r\n}\r\nif (quick.store.get('$itemsReceiptType')) {\r\n    receipt = quick.store.get('$itemsReceiptType');\r\n}\r\nif (quick.store.get('$itemsInstallmentCount')) {\r\n    installment = quick.store.get('$itemsInstallmentCount');\r\n}\r\nif (quick.store.get('$totalAmount')) {\r\n    totalAmount = quick.store.get('$totalAmount');\r\n}\r\n// Ekrandaki itemsların doldurulması.\r\nvar premiumCollectionItems = {\r\n    receiptType: receipt,\r\n    installmentCount: installment\r\n};\r\ncomponents.as_collectionInfoPremiumCollection.setData({ data: premiumCollectionItems });\r\n// Ekrandaki bilgilerin çekilmesi.\r\nvar premiumData = {\r\n    totalAmount: totalAmount, //Toplam Tutar\r\n};\r\ncomponents.as_collectionInfoPremiumCollection.setDataPremiumCollection({ data: premiumData });\r\n",
+																	"HL": "JS"
+																}
+															},
+															"C": {
+																"default": {
+																	"c": [
+																		{
+																			"T": "Ghost",
+																			"P": {
+																				"ID": {
+																					"H": "EdtrComp_53",
+																					"T": "prop"
+																				}
+																			},
+																			"E": {},
+																			"C": {},
+																			"_Editor": {
+																				"eID": "EdtrComp_53"
+																			},
+																			"O": {
+																				"cType": "child",
+																				"compDomClasses": "editor-ghost-comp"
+																			}
+																		}
+																	],
+																	"cType": "child"
+																}
+															},
+															"_Editor": {
+																"eID": "EdtrComp_44"
+															},
+															"O": {
+																"cType": "child",
+																"dynProps": true,
+																"compDomClasses": ""
+															}
+														}
+													],
+													"cType": "slot"
+												}
+											},
+											"E": {},
+											"P": {
+												"ID": {
+													"H": "EdtrComp_64",
+													"T": "prop"
+												}
+											},
+											"_Editor": {
+												"eID": "EdtrComp_64"
+											},
+											"O": {
+												"cType": "slot",
+												"layout": {
+													"dOpt": {
+														"xs": [
+															"d:d-flex",
+															"sp:pb-0",
+															"fd:flex-column"
+														]
+													},
+													"class": "d-flex pb-0 flex-column"
+												},
+												"compDomClasses": "col d-flex pb-0 flex-column newDropBorder"
+											},
+											"S": {
+												"xs-xl": {
+													"col": "",
+													"flexDirection": "column",
+													"alignItems": "",
+													"justifyContent": "",
+													"marginLeft": "",
+													"marginRight": "",
+													"marginBottom": "",
+													"marginTop": "",
+													"paddingTop": "12px",
+													"paddingBottom": "12px",
+													"paddingLeft": "12px",
+													"paddingRight": "12px",
+													"backgroundColor": "#ffffff",
+													"boxShadow": ""
+												}
+											}
+										}
+									],
+									"cType": "slot"
+								}
+							},
+							"_Editor": {
+								"eID": "EdtrComp_63"
+							},
+							"O": {
+								"cType": "slot",
+								"compDomClasses": "row newDropBorder"
+							},
+							"S": {
+								"xs-xl": {
+									"marginLeft": "0px",
+									"marginRight": "0px",
+									"marginBottom": "0px",
+									"marginTop": "0px",
+									"paddingTop": "",
+									"paddingBottom": "",
+									"paddingLeft": "",
+									"paddingRight": "",
+									"width": "",
+									"height": "",
+									"backgroundColor": "#ffffff",
+									"boxShadow": ""
+								}
+							}
+						}
+					],
+					"cType": "slot"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_62"
+			},
+			"O": {
+				"cType": "slot",
+				"layout": {
+					"dOpt": {
+						"xs": [
+							"sp:pt-0",
+							"sp:pb-0"
+						]
+					},
+					"class": "pt-0 pb-0"
+				},
+				"compDomClasses": "container pt-0 pb-0 container--fluid newDropBorder"
+			},
+			"S": {
+				"xs-xl": {
+					"marginLeft": "",
+					"marginRight": "",
+					"marginBottom": "",
+					"marginTop": "",
+					"paddingTop": "12px",
+					"paddingBottom": "12px",
+					"paddingLeft": "12px",
+					"paddingRight": "12px",
+					"width": "",
+					"height": "",
+					"backgroundColor": "#ffffff",
+					"boxShadow": ""
+				}
+			}
+		},
+		{
+			"T": "VContainer",
+			"P": {
+				"ID": {
+					"H": "containerButtons",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"class": {
+					"H": "╬'container'╩╩",
+					"T": "class"
+				},
+				"visible": {
+					"H": "╬true╩╩",
+					"T": "prop"
+				},
+				"eager": {
+					"H": "╬true╩╩",
+					"T": "prop"
+				}
+			},
+			"E": {},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "VRow",
+							"P": {
+								"ID": {
+									"H": "EdtrComp_13",
+									"T": "prop"
+								}
+							},
+							"E": {},
+							"C": {
+								"default": {
+									"c": [
+										{
+											"T": "VCol",
+											"C": {
+												"default": {
+													"c": [
+														{
+															"T": "VBtn",
+															"P": {
+																"ID": {
+																	"H": "btn_calculatePremium",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"depressed": {
+																	"H": "╬true╩╩",
+																	"T": "prop"
+																},
+																"visible": {
+																	"H": "╬true╩╩",
+																	"T": "prop"
+																},
+																"DiscardSettings": {
+																	"H": "╬true╩╩",
+																	"T": "prop"
+																},
+																"color": {
+																	"H": "╬'white'╩╩",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"dark": {
+																	"H": "╬true╩╩",
+																	"T": "prop"
+																},
+																"height": {
+																	"H": "╬'40px'╩╩",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"rounded": {
+																	"H": "╬true╩╩",
+																	"T": "prop"
+																}
+															},
+															"E": {
+																"click": {
+																	"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\nquick.store.set('$backBtnTrue', true);\r\nquick.Quick.go(\"/static/ui-bankasASPACC/atworkCommercialProtectionPages/compAtworkCommercialProtection.qjson\"); //Prim Hesaplama\r\n",
+																	"P": "mouseEvent:unknown | undefined",
+																	"HL": "JS"
+																}
+															},
+															"C": {
+																"default": {
+																	"c": [
+																		{
+																			"T": "QLabel",
+																			"C": {},
+																			"E": {},
+																			"P": {
+																				"ID": {
+																					"H": "EdtrComp_31",
+																					"T": "prop"
+																				},
+																				"text": {
+																					"H": "╬'Geri'╩╩",
+																					"T": "prop",
+																					"HL": "QS"
+																				}
+																			},
+																			"_Editor": {
+																				"eID": "EdtrComp_31"
+																			},
+																			"O": {
+																				"cType": "child",
+																				"layout": {
+																					"dOpt": {
+																						"xs": [
+																							"tt:text-body-1",
+																							"tc:primary--text",
+																							"te:font-weight-bold"
+																						]
+																					},
+																					"class": "text-body-1 primary--text font-weight-bold"
+																				},
+																				"compDomClasses": "q-label text-body-1 primary--text font-weight-bold newDropBorder"
+																			},
+																			"S": {
+																				"xs-xl": {
+																					"marginTop": "",
+																					"marginRight": "",
+																					"marginBottom": "",
+																					"marginLeft": "",
+																					"paddingTop": "",
+																					"paddingRight": "",
+																					"paddingBottom": "",
+																					"paddingLeft": "",
+																					"fontColor": "#000000",
+																					"fontFamily": "Roboto",
+																					"fontSize": "16px",
+																					"fontStyle": "normal",
+																					"fontWeight": "400",
+																					"combinedFont": "Roboto-Regular",
+																					"ThemeFont": "Custom",
+																					"lineHeight": "20px"
+																				}
+																			}
+																		}
+																	],
+																	"cType": "slot"
+																}
+															},
+															"_Editor": {
+																"eID": "EdtrComp_30"
+															},
+															"S": {
+																"xs-xl": {
+																	"marginTop": "",
+																	"marginRight": "10px",
+																	"marginBottom": "",
+																	"marginLeft": "",
+																	"paddingTop": "",
+																	"paddingRight": "16px",
+																	"paddingBottom": "",
+																	"paddingLeft": "16px",
+																	"width": "",
+																	"height": "",
+																	"maxWidth": "",
+																	"maxHeight": "",
+																	"minWidth": "",
+																	"minHeight": "",
+																	"unlink": "false",
+																	"unlinkMax": "false",
+																	"unlinkMin": "false",
+																	"isSizeCollapsed": "false",
+																	"fontColor": "#ffffff",
+																	"fontFamily": "Roboto",
+																	"fontSize": "16px",
+																	"fontStyle": "normal",
+																	"fontWeight": "400",
+																	"combinedFont": "Roboto-Regular",
+																	"ThemeFont": "Custom",
+																	"lineHeight": "20px",
+																	"backgroundColor": "#1976D2",
+																	"disabledBackgroundColor": "rgba(0,0,0,.12)",
+																	"boxShadow": "",
+																	"boxSizing": "",
+																	"borderTopStyle": "solid",
+																	"borderRightStyle": "solid",
+																	"borderBottomStyle": "solid",
+																	"borderLeftStyle": "solid",
+																	"borderTopLeftRadius": "4px",
+																	"borderTopRightRadius": "4px",
+																	"borderBottomLeftRadius": "4px",
+																	"borderBottomRightRadius": "4px",
+																	"borderTopWidth": "0px",
+																	"borderRightWidth": "0px",
+																	"borderBottomWidth": "0px",
+																	"borderLeftWidth": "0px",
+																	"defaultBorderColor": "",
+																	"sides": "Top,Right,Bottom,Left"
+																}
+															},
+															"SC": {
+																"fontColor": {
+																	"VIcon": "iconColor",
+																	"QLabel": "fontColor"
+																},
+																"fontStyle": {
+																	"QLabel": "fontStyle"
+																},
+																"fontSize": {
+																	"QLabel": "fontSize"
+																},
+																"fontFamily": {
+																	"QLabel": "fontFamily"
+																},
+																"fontWeight": {
+																	"QLabel": "fontWeight"
+																},
+																"combinedFont": {
+																	"QLabel": "combinedFont"
+																},
+																"lineHeight": {
+																	"QLabel": "lineHeight"
+																},
+																"bacgroundColor": {
+																	"VIcon": "backgroundColor"
+																}
+															},
+															"O": {
+																"cType": "slot",
+																"layout": {
+																	"dOpt": {
+																		"xs": [
+																			"sp:mr-3"
+																		]
+																	},
+																	"class": "mr-3"
+																},
+																"compDomClasses": "v-btn v-btn--depressed v-btn--rounded theme--dark v-size--default white mr-3 newDropBorder"
+															}
+														},
+														{
+															"T": "VBtn",
+															"P": {
+																"ID": {
+																	"H": "EdtrComp_77",
+																	"T": "prop"
+																},
+																"depressed": {
+																	"H": "╬true╩╩",
+																	"T": "prop"
+																},
+																"visible": {
+																	"H": "╬true╩╩",
+																	"T": "prop"
+																},
+																"DiscardSettings": {
+																	"H": "╬true╩╩",
+																	"T": "prop"
+																},
+																"color": {
+																	"H": "╬'#2171DC'╩╩",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"dark": {
+																	"H": "╬true╩╩",
+																	"T": "prop"
+																},
+																"height": {
+																	"H": "╬'40px'╩╩",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"rounded": {
+																	"H": "╬true╩╩",
+																	"T": "prop"
+																}
+															},
+															"E": {
+																"click": {
+																	"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\ndebugger;\r\n//Devam Et butonu\r\nvar result = quick.Quick.validateAll(false, true);\r\nvar control;\r\nvar paymentType;\r\nvar installmentTermList;\r\nvar paymentMethodList;\r\nif (result) {\r\n    paymentType = quick.store.get('$paymentType');\r\n    installmentTermList = quick.store.get('$installmentTermList');\r\n    paymentMethodList = quick.store.get('$paymentMethodList');\r\n    if (installmentTermList.length > 0) {\r\n        for (var i = 0; i < installmentTermList.length; i++) {\r\n            if (paymentType == (installmentTermList[i].paymentMethodType).toLowerCase()) {\r\n                quick.store.set('$selectedInstallmentTermList', installmentTermList[i]);\r\n                break;\r\n            }\r\n        }\r\n    }\r\n    if (paymentMethodList.length > 0) {\r\n        for (var i = 0; i < paymentMethodList.length; i++) {\r\n            if (paymentType == (paymentMethodList[i].typePaymentCode).toLowerCase()) {\r\n                quick.store.set('$selectedPaymentMethodList', paymentMethodList[i]);\r\n                break;\r\n            }\r\n        }\r\n    }\r\n    quick.MM.trigger('createContractRequest');\r\n    control = (components.as_collectionInfoPremiumCollection.getSelectedReceiptType().text).toLowerCase();\r\n    debugger;\r\n    var receiptAmount = components.as_collectionInfoPremiumCollection.getSelectedReceiptAmountItem();\r\n    var totalAmount = components.as_collectionInfoPremiumCollection.getSelectedTotalAmountItem();\r\n    quick.store.set('$receiptAmountForResultPage', receiptAmount);\r\n    quick.store.set('$totalAmountForResultPage', totalAmount);\r\n    if (control.includes('kredi')) { //Kredi\r\n        quick.MM.trigger('createPolicyWithCreditCardPayment');\r\n    }\r\n    else if (control.includes('nakit')) { //Nakit\r\n        quick.MM.trigger('createPolicyWithCashPayment');\r\n    }\r\n    else if (control.includes('cari')) { //Hesaptan\r\n        quick.MM.trigger('createPolicyWithAccountPayment');\r\n    }\r\n}\r\nelse {\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: 'Lütfen zorunlu alanları doldurunuz.' } });\r\n    components.as_alertCustomComp.open();\r\n    quick.EM.trace(\"Zorunlu alanları doldurmanız gerekmektedir.\");\r\n}\r\nquick.store.set('$receiptPremium', components.as_collectionInfoPremiumCollection.getSelectedReceiptAmountItem());\r\n",
+																	"P": "mouseEvent:unknown | undefined",
+																	"HL": "JS"
+																}
+															},
+															"C": {
+																"default": {
+																	"c": [
+																		{
+																			"T": "QLabel",
+																			"C": {},
+																			"E": {},
+																			"P": {
+																				"ID": {
+																					"H": "EdtrComp_78",
+																					"T": "prop"
+																				},
+																				"text": {
+																					"H": "╬'Devam Et'╩╩",
+																					"T": "prop",
+																					"HL": "QS"
+																				}
+																			},
+																			"_Editor": {
+																				"eID": "EdtrComp_78"
+																			},
+																			"O": {
+																				"cType": "child",
+																				"layout": {
+																					"dOpt": {
+																						"xs": [
+																							"tt:text-body-1",
+																							"te:font-weight-regular"
+																						]
+																					},
+																					"class": "text-body-1 font-weight-regular"
+																				},
+																				"compDomClasses": "q-label text-body-1 font-weight-regular newDropBorder"
+																			},
+																			"S": {
+																				"xs-xl": {
+																					"marginTop": "",
+																					"marginRight": "",
+																					"marginBottom": "",
+																					"marginLeft": "",
+																					"paddingTop": "",
+																					"paddingRight": "",
+																					"paddingBottom": "",
+																					"paddingLeft": "",
+																					"fontColor": "#000000",
+																					"fontFamily": "Roboto",
+																					"fontSize": "16px",
+																					"fontStyle": "normal",
+																					"fontWeight": "400",
+																					"combinedFont": "Roboto-Regular",
+																					"ThemeFont": "Custom",
+																					"lineHeight": "20px"
+																				}
+																			}
+																		}
+																	],
+																	"cType": "slot"
+																}
+															},
+															"_Editor": {
+																"eID": "EdtrComp_77"
+															},
+															"S": {
+																"xs-xl": {
+																	"marginTop": "",
+																	"marginRight": "10px",
+																	"marginBottom": "",
+																	"marginLeft": "",
+																	"paddingTop": "",
+																	"paddingRight": "16px",
+																	"paddingBottom": "",
+																	"paddingLeft": "16px",
+																	"width": "",
+																	"height": "",
+																	"maxWidth": "",
+																	"maxHeight": "",
+																	"minWidth": "",
+																	"minHeight": "",
+																	"unlink": "false",
+																	"unlinkMax": "false",
+																	"unlinkMin": "false",
+																	"isSizeCollapsed": "false",
+																	"fontColor": "#ffffff",
+																	"fontFamily": "Roboto",
+																	"fontSize": "16px",
+																	"fontStyle": "normal",
+																	"fontWeight": "400",
+																	"combinedFont": "Roboto-Regular",
+																	"ThemeFont": "Custom",
+																	"lineHeight": "20px",
+																	"backgroundColor": "#1976D2",
+																	"disabledBackgroundColor": "rgba(0,0,0,.12)",
+																	"boxShadow": "",
+																	"boxSizing": "",
+																	"borderTopStyle": "solid",
+																	"borderRightStyle": "solid",
+																	"borderBottomStyle": "solid",
+																	"borderLeftStyle": "solid",
+																	"borderTopLeftRadius": "4px",
+																	"borderTopRightRadius": "4px",
+																	"borderBottomLeftRadius": "4px",
+																	"borderBottomRightRadius": "4px",
+																	"borderTopWidth": "0px",
+																	"borderRightWidth": "0px",
+																	"borderBottomWidth": "0px",
+																	"borderLeftWidth": "0px",
+																	"defaultBorderColor": "",
+																	"sides": "Top,Right,Bottom,Left"
+																}
+															},
+															"SC": {
+																"fontColor": {
+																	"VIcon": "iconColor",
+																	"QLabel": "fontColor"
+																},
+																"fontStyle": {
+																	"QLabel": "fontStyle"
+																},
+																"fontSize": {
+																	"QLabel": "fontSize"
+																},
+																"fontFamily": {
+																	"QLabel": "fontFamily"
+																},
+																"fontWeight": {
+																	"QLabel": "fontWeight"
+																},
+																"combinedFont": {
+																	"QLabel": "combinedFont"
+																},
+																"lineHeight": {
+																	"QLabel": "lineHeight"
+																},
+																"bacgroundColor": {
+																	"VIcon": "backgroundColor"
+																}
+															},
+															"O": {
+																"cType": "slot",
+																"layout": {
+																	"dOpt": {
+																		"xs": [
+																			"sp:mr-1"
+																		]
+																	},
+																	"class": "mr-1"
+																},
+																"compDomClasses": "v-btn v-btn--depressed v-btn--rounded theme--dark v-size--default mr-1 newDropBorder"
+															}
+														}
+													],
+													"cType": "slot"
+												}
+											},
+											"E": {},
+											"P": {
+												"ID": {
+													"H": "EdtrComp_14",
+													"T": "prop"
+												}
+											},
+											"_Editor": {
+												"eID": "EdtrComp_14"
+											},
+											"O": {
+												"cType": "slot",
+												"layout": {
+													"dOpt": {
+														"xs": [
+															"d:d-flex",
+															"j:justify-end",
+															"sp:pb-3"
+														]
+													},
+													"class": "d-flex justify-end pb-3"
+												},
+												"compDomClasses": "col d-flex justify-end pb-3 pb-0 newDropBorder"
+											},
+											"S": {
+												"xs-xl": {
+													"col": "",
+													"flexDirection": "column",
+													"alignItems": "",
+													"justifyContent": "",
+													"marginLeft": "",
+													"marginRight": "",
+													"marginBottom": "",
+													"marginTop": "",
+													"paddingTop": "12px",
+													"paddingBottom": "12px",
+													"paddingLeft": "12px",
+													"paddingRight": "12px",
+													"backgroundColor": "#ffffff",
+													"boxShadow": ""
+												}
+											}
+										}
+									],
+									"cType": "slot"
+								}
+							},
+							"_Editor": {
+								"eID": "EdtrComp_13"
+							},
+							"O": {
+								"cType": "slot",
+								"compDomClasses": "row newDropBorder"
+							},
+							"S": {
+								"xs-xl": {
+									"marginLeft": "0px",
+									"marginRight": "0px",
+									"marginBottom": "0px",
+									"marginTop": "0px",
+									"paddingTop": "",
+									"paddingBottom": "",
+									"paddingLeft": "",
+									"paddingRight": "",
+									"width": "",
+									"height": "",
+									"backgroundColor": "#ffffff",
+									"boxShadow": ""
+								}
+							}
+						}
+					],
+					"cType": "slot"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_12"
+			},
+			"O": {
+				"cType": "slot",
+				"compDomClasses": "container container--fluid newDropBorder"
+			},
+			"S": {
+				"xs-xl": {
+					"marginLeft": "",
+					"marginRight": "",
+					"marginBottom": "",
+					"marginTop": "",
+					"paddingTop": "12px",
+					"paddingBottom": "12px",
+					"paddingLeft": "12px",
+					"paddingRight": "12px",
+					"width": "",
+					"height": "",
+					"backgroundColor": "#ffffff",
+					"boxShadow": ""
+				}
+			}
+		},
+		{
+			"T": "CustomComponent",
+			"P": {
+				"ID": {
+					"H": "as_alertCustomComp",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"QJsonPath": {
+					"H": "╬'/static/ui-bankasASPACC/common/as_alertCustomComp.qjson'╩╩",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"alertType": {
+					"H": "╬'error'╩╩",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"lbl_700_1_visible": {
+					"H": "╬true╩╩",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"lbl_btn_1": {
+					"H": "╬'Tamam'╩╩",
+					"T": "prop",
+					"HL": "QS"
+				}
+			},
+			"E": {
+				"clickOutsideEvent": {
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ncomponents.as_alertCustomComp.close();\r\n",
+					"C": true,
+					"HL": "JS"
+				},
+				"btn1ClickEvent": {
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n; // debugger;\r\ncomponents.as_alertCustomComp.close();\r\n",
+					"C": true,
+					"HL": "JS"
+				},
+				"btn2ClickEvent": {
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ncomponents.as_alertCustomComp.close();\r\n",
+					"C": true,
+					"HL": "JS"
+				}
+			},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "Ghost",
+							"P": {
+								"ID": {
+									"H": "EdtrComp_34",
+									"T": "prop"
+								}
+							},
+							"E": {},
+							"C": {},
+							"_Editor": {
+								"eID": "EdtrComp_34"
+							},
+							"O": {
+								"cType": "child",
+								"compDomClasses": "editor-ghost-comp"
+							}
+						}
+					],
+					"cType": "child"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_20"
+			},
+			"O": {
+				"cType": "child",
+				"dynProps": true,
+				"compDomClasses": ""
+			}
+		},
+		{
+			"T": "CustomComponent",
+			"P": {
+				"ID": {
+					"H": "as_loadingCustomComp",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"QJsonPath": {
+					"H": "╬'/static/ui-bankasASPACC/common/as_loadingCustomComp.qjson'╩╩",
+					"T": "prop",
+					"HL": "QS"
+				}
+			},
+			"E": {},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "Ghost",
+							"P": {
+								"ID": {
+									"H": "EdtrComp_50",
+									"T": "prop"
+								}
+							},
+							"E": {},
+							"C": {},
+							"_Editor": {
+								"eID": "EdtrComp_50"
+							},
+							"O": {
+								"cType": "child",
+								"compDomClasses": "editor-ghost-comp"
+							}
+						}
+					],
+					"cType": "child"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_37"
+			},
+			"O": {
+				"cType": "child",
+				"dynProps": true,
+				"compDomClasses": ""
+			}
+		}
+	],
+	"lrids": {},
+	"clrids": {},
+	"opt": {}
+};
+export default pjson

@@ -56,7 +56,7 @@ let pjson = {
 					"HL": "TS"
 				},
 				"getAssuranceCompInfo": {
-					"H": "debugger;\r\n\r\nlet redirectorId = components.vauto_redirector.qValue.split('-')[0]\r\nlet branchCode = components.vauto_branchCode.qValue.split(' - ')[0];\r\nlet branchName = components.vauto_branchCode.qValue.split(' - ')[1];\r\n\r\n\r\nquick.return({\r\n    assuranceType: components.txt_assuranceType.qValue,\r\n    branchCode: branchCode,\r\n    branchName: branchName,\r\n    redirector: redirectorId\r\n})",
+					"H": "debugger;\r\n\r\nlet redirectorId = components.vauto_redirector.qValue.split('-')[0]\r\nlet branchCode = components.vauto_branchCode.qValue.split(' - ')[0];\r\nlet branchName = components.vauto_branchCode.qValue.split(' - ')[1];\r\nlet info = {\r\n    assuranceType: components.txt_assuranceType.qValue,\r\n    branchCode: branchCode,\r\n    branchName: branchName,\r\n    redirector: redirectorId\r\n}\r\nquick.store.set(\"$getAssuranceCompInfo\", info);\r\nquick.return(info);",
 					"C": true,
 					"EV": true,
 					"HL": "TS"
@@ -1729,7 +1729,7 @@ let pjson = {
 					"HL": "JS"
 				},
 				"getAssuranceCompInfo": {
-					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nvar redirectorId = components.vauto_redirector.qValue.split('-')[0];\r\nvar branchCode = components.vauto_branchCode.qValue.split(' - ')[0];\r\nvar branchName = components.vauto_branchCode.qValue.split(' - ')[1];\r\nquick.return({\r\n    assuranceType: components.txt_assuranceType.qValue,\r\n    branchCode: branchCode,\r\n    branchName: branchName,\r\n    redirector: redirectorId\r\n});\r\n",
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nvar redirectorId = components.vauto_redirector.qValue.split('-')[0];\r\nvar branchCode = components.vauto_branchCode.qValue.split(' - ')[0];\r\nvar branchName = components.vauto_branchCode.qValue.split(' - ')[1];\r\nvar info = {\r\n    assuranceType: components.txt_assuranceType.qValue,\r\n    branchCode: branchCode,\r\n    branchName: branchName,\r\n    redirector: redirectorId\r\n};\r\nquick.store.set(\"$getAssuranceCompInfo\", info);\r\nquick.return(info);\r\n",
 					"C": true,
 					"EV": true,
 					"HL": "JS"
@@ -2217,7 +2217,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined"
+																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -2445,7 +2445,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -2656,7 +2656,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
 																			}
 																		}
 																	],

@@ -43,6 +43,12 @@ let pjson = {
 					"C": true,
 					"EV": true,
 					"HL": "TS"
+				},
+				"getInsuredStatus": {
+					"H": "debugger;\r\n\r\nquick.return({\r\n    insuredStatus: components.vauto_insuredStatus.qValue\r\n})",
+					"C": true,
+					"EV": true,
+					"HL": "TS"
 				}
 			},
 			"C": {},
@@ -820,6 +826,12 @@ let pjson = {
 				},
 				"validateComponents": {
 					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nvar validationErrors = [];\r\nvar vauto_insuredStatus = quick.Quick.validate(\"vauto_insuredStatus\", false, false);\r\nif (!vauto_insuredStatus)\r\n    validationErrors.push(\"Sigorta Sıfatı boş olamaz\");\r\nquick.parent.props.validationErrors = validationErrors;\r\n",
+					"C": true,
+					"EV": true,
+					"HL": "JS"
+				},
+				"getInsuredStatus": {
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nquick.return({\r\n    insuredStatus: components.vauto_insuredStatus.qValue\r\n});\r\n",
 					"C": true,
 					"EV": true,
 					"HL": "JS"
