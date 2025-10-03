@@ -700,15 +700,7 @@ let pjson = {
 		}
 	],
 	"lrids": {},
-	"clrids": {
-		"tr-TR": {
-			"yes": "╬'Evet'╩╩",
-			"no": "╬'Hayır'╩╩"
-		},
-		"en-US": {
-			"no": "╩"
-		}
-	},
+	"clrids": {},
 	"opt": {
 		"V": 2.2
 	}

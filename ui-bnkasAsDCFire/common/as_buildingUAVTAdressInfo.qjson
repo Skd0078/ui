@@ -6100,7 +6100,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"QJsonPath": {
-					"H": "'/static/ui-bankasASDask/common/as_loadingCustomComp.qjson'",
+					"H": "'/static/ui-bnkasAsDCFire/common/as_loadingCustomComp.qjson'",
 					"T": "prop",
 					"HL": "QS"
 				}
@@ -12327,7 +12327,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"QJsonPath": {
-					"H": "╬'/static/ui-bankasASDask/common/as_loadingCustomComp.qjson'╩╩",
+					"H": "╬'/static/ui-bnkasAsDCFire/common/as_loadingCustomComp.qjson'╩╩",
 					"T": "prop",
 					"HL": "QS"
 				}

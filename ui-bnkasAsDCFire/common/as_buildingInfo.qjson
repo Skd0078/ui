@@ -1819,7 +1819,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"QJsonPath": {
-					"H": "'/static/ui-bankasASDask/common/as_alertCustomComp.qjson'",
+					"H": "'/static/ui-bnkasAsDCFire/common/as_alertCustomComp.qjson'",
 					"T": "prop",
 					"HL": "QS"
 				},
@@ -1897,7 +1897,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"QJsonPath": {
-					"H": "'/static/ui-bankasASDask/common/as_loadingCustomComp.qjson'",
+					"H": "'/static/ui-bnkasAsDCFire/common/as_loadingCustomComp.qjson'",
 					"T": "prop",
 					"HL": "QS"
 				}
@@ -2499,7 +2499,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -2729,7 +2729,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--placeholder v-text-field--rounded v-select v-autocomplete undefined"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--placeholder v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -2949,7 +2949,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--placeholder v-text-field--rounded v-select v-autocomplete undefined"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--placeholder v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -3186,7 +3186,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -3406,7 +3406,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--placeholder v-text-field--rounded v-select v-autocomplete undefined"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--placeholder v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -3636,7 +3636,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--placeholder v-text-field--rounded v-select v-autocomplete undefined"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--placeholder v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -3780,7 +3780,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"QJsonPath": {
-					"H": "╬'/static/ui-bankasASDask/common/as_alertCustomComp.qjson'╩╩",
+					"H": "╬'/static/ui-bnkasAsDCFire/common/as_alertCustomComp.qjson'╩╩",
 					"T": "prop",
 					"HL": "QS"
 				},
@@ -3860,7 +3860,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"QJsonPath": {
-					"H": "╬'/static/ui-bankasASDask/common/as_loadingCustomComp.qjson'╩╩",
+					"H": "╬'/static/ui-bnkasAsDCFire/common/as_loadingCustomComp.qjson'╩╩",
 					"T": "prop",
 					"HL": "QS"
 				}

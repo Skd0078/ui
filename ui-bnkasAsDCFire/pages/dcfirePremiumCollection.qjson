@@ -1411,7 +1411,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"QJsonPath": {
-					"H": "'/static/ui-bankasASPACC/common/as_alertCustomComp.qjson'",
+					"H": "'/static/ui-bnkasAsDCFire/common/as_alertCustomComp.qjson'",
 					"T": "prop",
 					"HL": "QS"
 				},
@@ -1489,7 +1489,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"QJsonPath": {
-					"H": "'/static/ui-bankasASPACC/common/as_loadingCustomComp.qjson'",
+					"H": "'/static/ui-bnkasAsDCFire/common/as_loadingCustomComp.qjson'",
 					"T": "prop",
 					"HL": "QS"
 				}
@@ -2305,7 +2305,7 @@ let pjson = {
 															"O": {
 																"cType": "child",
 																"dynProps": true,
-																"compDomClasses": ""
+																"compDomClasses": "newDropBorder"
 															}
 														}
 													],
@@ -2966,7 +2966,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"QJsonPath": {
-					"H": "╬'/static/ui-bankasASPACC/common/as_alertCustomComp.qjson'╩╩",
+					"H": "╬'/static/ui-bnkasAsDCFire/common/as_alertCustomComp.qjson'╩╩",
 					"T": "prop",
 					"HL": "QS"
 				},
@@ -3034,7 +3034,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": ""
+				"compDomClasses": "newDropBorder"
 			}
 		},
 		{
@@ -3046,7 +3046,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"QJsonPath": {
-					"H": "╬'/static/ui-bankasASPACC/common/as_loadingCustomComp.qjson'╩╩",
+					"H": "╬'/static/ui-bnkasAsDCFire/common/as_loadingCustomComp.qjson'╩╩",
 					"T": "prop",
 					"HL": "QS"
 				}
@@ -3083,7 +3083,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": ""
+				"compDomClasses": "newDropBorder"
 			}
 		}
 	],

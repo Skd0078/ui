@@ -656,13 +656,7 @@ let pjson = {
 																					"HL": "QS"
 																				}
 																			},
-																			"E": {
-																				"click": {
-																					"H": "quick.parent.events.validateAllComponents();\r\nlet valid = quick.store.get(\"$allComponentsValid\");\r\nlet requestData = quick.store.get(\"$dcFireRequestData\");\r\nif (valid) {\r\n    let serviceRequest: IRequest = {\r\n        url: '/api/wrapperclient/getCoverDetails',\r\n        http: 'POST',\r\n        data: requestData,\r\n        onFail: 'empty',\r\n        onSuccess: 'empty',\r\n        responseField: 'empty',\r\n        blockRender: false,\r\n    }\r\n\r\n    quick.Request.async(serviceRequest)?.then((resp) => {\r\n        quick.EM.trace(resp?.data);\r\n        components.as_loadingCustomComp.close();\r\n    })\r\n        .catch((err) => {\r\n            components.as_loadingCustomComp.close();\r\n            let errorMessage = err?.response?.data?.responseMessage ?? 'Bir hata oluştu.';\r\n            (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n            components.as_alertCustomComp.open();\r\n        });\r\n}\r\n",
-																					"P": "mouseEvent:unknown | undefined",
-																					"HL": "TS"
-																				}
-																			},
+																			"E": {},
 																			"C": {
 																				"default": {
 																					"c": [
@@ -930,131 +924,6 @@ let pjson = {
 					"backgroundColor": "#ffffff",
 					"boxShadow": ""
 				}
-			}
-		},
-		{
-			"T": "CustomComponent",
-			"P": {
-				"ID": {
-					"H": "as_alertCustomComp",
-					"T": "prop",
-					"HL": "QS"
-				},
-				"QJsonPath": {
-					"H": "'/static/ui-bnkasAsDCFire/common/as_alertCustomComp.qjson'",
-					"T": "prop",
-					"HL": "QS"
-				},
-				"lbl_700_1": {
-					"H": "true",
-					"T": "prop",
-					"HL": "QS"
-				},
-				"lbl_700_1_visible": {
-					"H": "true",
-					"T": "prop",
-					"HL": "QS"
-				},
-				"lbl_btn_1": {
-					"H": "'Tamam'",
-					"T": "prop",
-					"HL": "QS"
-				},
-				"alertType": {
-					"H": "'error'",
-					"T": "prop",
-					"HL": "QS"
-				}
-			},
-			"E": {
-				"clickOutsideEvent": {
-					"H": "components.as_alertCustomComp.close();",
-					"C": true,
-					"HL": "TS"
-				},
-				"btn1ClickEvent": {
-					"H": "components.as_alertCustomComp.close();",
-					"C": true,
-					"HL": "TS"
-				}
-			},
-			"C": {
-				"default": {
-					"c": [
-						{
-							"T": "Ghost",
-							"P": {
-								"ID": {
-									"H": "EdtrComp_37",
-									"T": "prop"
-								}
-							},
-							"E": {},
-							"C": {},
-							"_Editor": {
-								"eID": "EdtrComp_37"
-							},
-							"O": {
-								"cType": "child"
-							}
-						}
-					],
-					"cType": "child"
-				}
-			},
-			"_Editor": {
-				"eID": "EdtrComp_29"
-			},
-			"O": {
-				"cType": "child",
-				"dynProps": true
-			}
-		},
-		{
-			"T": "CustomComponent",
-			"P": {
-				"ID": {
-					"H": "as_loadingCustomComp",
-					"T": "prop",
-					"HL": "QS"
-				},
-				"QJsonPath": {
-					"H": "'/static/ui-bnkasAsDCFire/common/as_loadingCustomComp.qjson'",
-					"T": "prop",
-					"HL": "QS"
-				}
-			},
-			"E": {},
-			"C": {
-				"default": {
-					"c": [
-						{
-							"T": "Ghost",
-							"P": {
-								"ID": {
-									"H": "EdtrComp_36",
-									"T": "prop"
-								}
-							},
-							"E": {},
-							"C": {},
-							"_Editor": {
-								"eID": "EdtrComp_36"
-							},
-							"O": {
-								"cType": "child"
-							}
-						}
-					],
-					"cType": "child"
-				}
-			},
-			"_Editor": {
-				"eID": "EdtrComp_28"
-			},
-			"O": {
-				"cType": "child",
-				"dynProps": true
 			}
 		}
 	],
@@ -1727,13 +1596,7 @@ let pjson = {
 																					"HL": "QS"
 																				}
 																			},
-																			"E": {
-																				"click": {
-																					"H": "var _a;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\nquick.parent.events.validateAllComponents();\r\nvar valid = quick.store.get(\"$allComponentsValid\");\r\nvar requestData = quick.store.get(\"$dcFireRequestData\");\r\nif (valid) {\r\n    var serviceRequest = {\r\n        url: '/api/wrapperclient/getCoverDetails',\r\n        http: 'POST',\r\n        data: requestData,\r\n        onFail: 'empty',\r\n        onSuccess: 'empty',\r\n        responseField: 'empty',\r\n        blockRender: false,\r\n    };\r\n    (_a = quick.Request.async(serviceRequest)) === null || _a === void 0 ? void 0 : _a.then(function (resp) {\r\n        quick.EM.trace(resp === null || resp === void 0 ? void 0 : resp.data);\r\n        components.as_loadingCustomComp.close();\r\n    }).catch(function (err) {\r\n        var _a, _b, _c;\r\n        components.as_loadingCustomComp.close();\r\n        var errorMessage = (_c = (_b = (_a = err === null || err === void 0 ? void 0 : err.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.responseMessage) !== null && _c !== void 0 ? _c : 'Bir hata oluştu.';\r\n        components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n        components.as_alertCustomComp.open();\r\n    });\r\n}\r\n",
-																					"P": "mouseEvent:unknown | undefined",
-																					"HL": "JS"
-																				}
-																			},
+																			"E": {},
 																			"C": {
 																				"default": {
 																					"c": [
@@ -2009,135 +1872,6 @@ let pjson = {
 					"backgroundColor": "#ffffff",
 					"boxShadow": ""
 				}
-			}
-		},
-		{
-			"T": "CustomComponent",
-			"P": {
-				"ID": {
-					"H": "as_alertCustomComp",
-					"T": "prop",
-					"HL": "QS"
-				},
-				"QJsonPath": {
-					"H": "╬'/static/ui-bnkasAsDCFire/common/as_alertCustomComp.qjson'╩╩",
-					"T": "prop",
-					"HL": "QS"
-				},
-				"lbl_700_1": {
-					"H": "╬true╩╩",
-					"T": "prop",
-					"HL": "QS"
-				},
-				"lbl_700_1_visible": {
-					"H": "╬true╩╩",
-					"T": "prop",
-					"HL": "QS"
-				},
-				"lbl_btn_1": {
-					"H": "╬'Tamam'╩╩",
-					"T": "prop",
-					"HL": "QS"
-				},
-				"alertType": {
-					"H": "╬'error'╩╩",
-					"T": "prop",
-					"HL": "QS"
-				}
-			},
-			"E": {
-				"clickOutsideEvent": {
-					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ncomponents.as_alertCustomComp.close();\r\n",
-					"C": true,
-					"HL": "JS"
-				},
-				"btn1ClickEvent": {
-					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ncomponents.as_alertCustomComp.close();\r\n",
-					"C": true,
-					"HL": "JS"
-				}
-			},
-			"C": {
-				"default": {
-					"c": [
-						{
-							"T": "Ghost",
-							"P": {
-								"ID": {
-									"H": "EdtrComp_37",
-									"T": "prop"
-								}
-							},
-							"E": {},
-							"C": {},
-							"_Editor": {
-								"eID": "EdtrComp_37"
-							},
-							"O": {
-								"cType": "child",
-								"compDomClasses": "editor-ghost-comp"
-							}
-						}
-					],
-					"cType": "child"
-				}
-			},
-			"_Editor": {
-				"eID": "EdtrComp_29"
-			},
-			"O": {
-				"cType": "child",
-				"dynProps": true,
-				"compDomClasses": "newDropBorder"
-			}
-		},
-		{
-			"T": "CustomComponent",
-			"P": {
-				"ID": {
-					"H": "as_loadingCustomComp",
-					"T": "prop",
-					"HL": "QS"
-				},
-				"QJsonPath": {
-					"H": "╬'/static/ui-bnkasAsDCFire/common/as_loadingCustomComp.qjson'╩╩",
-					"T": "prop",
-					"HL": "QS"
-				}
-			},
-			"E": {},
-			"C": {
-				"default": {
-					"c": [
-						{
-							"T": "Ghost",
-							"P": {
-								"ID": {
-									"H": "EdtrComp_36",
-									"T": "prop"
-								}
-							},
-							"E": {},
-							"C": {},
-							"_Editor": {
-								"eID": "EdtrComp_36"
-							},
-							"O": {
-								"cType": "child",
-								"compDomClasses": "editor-ghost-comp"
-							}
-						}
-					],
-					"cType": "child"
-				}
-			},
-			"_Editor": {
-				"eID": "EdtrComp_28"
-			},
-			"O": {
-				"cType": "child",
-				"dynProps": true,
-				"compDomClasses": "newDropBorder"
 			}
 		}
 	],

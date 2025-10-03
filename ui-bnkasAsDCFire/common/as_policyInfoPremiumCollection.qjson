@@ -1427,7 +1427,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"QJsonPath": {
-					"H": "'<<qjson:8cmefzme-twlk-kqse-e12x-4vs0m9gnyo91>>'",
+					"H": "'/static/ui-bnkasAsDCFire/common/as_alertCustomComp.qjson'",
 					"T": "prop",
 					"HL": "QS"
 				},
@@ -1517,35 +1517,35 @@ let pjson = {
 			},
 			"E": {
 				"PostRender": {
-					"H": "var _a, _b, _c, _d, _e, _f, _g, _h;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\ndebugger;\r\ncomponents.col_assuranceType.visible = (_b = (_a = quick === null || quick === void 0 ? void 0 : quick.parent) === null || _a === void 0 ? void 0 : _a.props) === null || _b === void 0 ? void 0 : _b.assuranceType;\r\ncomponents.col_policyNo.visible = (_d = (_c = quick === null || quick === void 0 ? void 0 : quick.parent) === null || _c === void 0 ? void 0 : _c.props) === null || _d === void 0 ? void 0 : _d.policyNo;\r\ncomponents.col_assurancePackage.visible = (_f = (_e = quick === null || quick === void 0 ? void 0 : quick.parent) === null || _e === void 0 ? void 0 : _e.props) === null || _f === void 0 ? void 0 : _f.assurancePackage;\r\ncomponents.col_offerNo.visible = (_h = (_g = quick === null || quick === void 0 ? void 0 : quick.parent) === null || _g === void 0 ? void 0 : _g.props) === null || _h === void 0 ? void 0 : _h.offerNo;\r\n",
+					"H": "var _a, _b, _c, _d, _e, _f, _g, _h;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\ncomponents.col_assuranceType.visible = (_b = (_a = quick === null || quick === void 0 ? void 0 : quick.parent) === null || _a === void 0 ? void 0 : _a.props) === null || _b === void 0 ? void 0 : _b.assuranceType;\r\ncomponents.col_policyNo.visible = (_d = (_c = quick === null || quick === void 0 ? void 0 : quick.parent) === null || _c === void 0 ? void 0 : _c.props) === null || _d === void 0 ? void 0 : _d.policyNo;\r\ncomponents.col_assurancePackage.visible = (_f = (_e = quick === null || quick === void 0 ? void 0 : quick.parent) === null || _e === void 0 ? void 0 : _e.props) === null || _f === void 0 ? void 0 : _f.assurancePackage;\r\ncomponents.col_offerNo.visible = (_h = (_g = quick === null || quick === void 0 ? void 0 : quick.parent) === null || _g === void 0 ? void 0 : _g.props) === null || _h === void 0 ? void 0 : _h.offerNo;\r\n",
 					"TO": 1,
 					"HL": "JS"
 				},
 				"retrieveCodeStrings": {
-					"H": "var _a;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\ndebugger;\r\nvar requestData = {\r\n    \"codeStringCategory\": \"INSURANCE_TYPE\"\r\n};\r\nquick.MM.trigger('setConsumerAndScreenInfo');\r\nvar serviceRequest = {\r\n    url: '/api/bnkasgeneral/retrieveCodeStrings',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n};\r\nfunction getCodeString(response) {\r\n    for (var i = 0; i < response.length; i++) {\r\n        if (codeString == response[i].codeString) {\r\n            return response[i].value;\r\n        }\r\n    }\r\n    return null;\r\n}\r\n(_a = quick.Request.async(serviceRequest)) === null || _a === void 0 ? void 0 : _a.then(function (resp) {\r\n    var _a, _b;\r\n    quick.EM.trace(resp === null || resp === void 0 ? void 0 : resp.data);\r\n    if ((_a = resp === null || resp === void 0 ? void 0 : resp.data) === null || _a === void 0 ? void 0 : _a.codeStringsDtoList) {\r\n        var codeStringValue = void 0;\r\n        codeStringValue = getCodeString((_b = resp === null || resp === void 0 ? void 0 : resp.data) === null || _b === void 0 ? void 0 : _b.codeStringsDtoList);\r\n        components.txt_assuranceType.qValue = codeStringValue;\r\n    }\r\n}).catch(function (err) {\r\n    var _a, _b, _c;\r\n    var errorMessage = (_c = (_b = (_a = err === null || err === void 0 ? void 0 : err.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.responseMessage) !== null && _c !== void 0 ? _c : 'Bir hata oluştu.';\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n});\r\n",
+					"H": "var _a;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nvar requestData = {\r\n    \"codeStringCategory\": \"INSURANCE_TYPE\"\r\n};\r\nquick.MM.trigger('setConsumerAndScreenInfo');\r\nvar serviceRequest = {\r\n    url: '/api/bnkasgeneral/retrieveCodeStrings',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n};\r\nfunction getCodeString(response) {\r\n    for (var i = 0; i < response.length; i++) {\r\n        if (codeString == response[i].codeString) {\r\n            return response[i].value;\r\n        }\r\n    }\r\n    return null;\r\n}\r\n(_a = quick.Request.async(serviceRequest)) === null || _a === void 0 ? void 0 : _a.then(function (resp) {\r\n    var _a, _b;\r\n    quick.EM.trace(resp === null || resp === void 0 ? void 0 : resp.data);\r\n    if ((_a = resp === null || resp === void 0 ? void 0 : resp.data) === null || _a === void 0 ? void 0 : _a.codeStringsDtoList) {\r\n        var codeStringValue = void 0;\r\n        codeStringValue = getCodeString((_b = resp === null || resp === void 0 ? void 0 : resp.data) === null || _b === void 0 ? void 0 : _b.codeStringsDtoList);\r\n        components.txt_assuranceType.qValue = codeStringValue;\r\n    }\r\n}).catch(function (err) {\r\n    var _a, _b, _c;\r\n    var errorMessage = (_c = (_b = (_a = err === null || err === void 0 ? void 0 : err.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.responseMessage) !== null && _c !== void 0 ? _c : 'Bir hata oluştu.';\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n});\r\n",
 					"C": true,
 					"EV": true,
 					"HL": "JS"
 				},
 				"setData": {
-					"H": "var _a, _b;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\ncomponents.txt_assuranceType.qValue = (_a = data === null || data === void 0 ? void 0 : data.assuranceType) !== null && _a !== void 0 ? _a : components.txt_assuranceType.qValue;\r\ncomponents.txt_policyNo.qValue = (_b = data === null || data === void 0 ? void 0 : data.policyNo) !== null && _b !== void 0 ? _b : components.txt_policyNo.qValue;\r\n",
+					"H": "var _a, _b;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n; // debugger;\r\ncomponents.txt_assuranceType.qValue = (_a = data === null || data === void 0 ? void 0 : data.assuranceType) !== null && _a !== void 0 ? _a : components.txt_assuranceType.qValue;\r\ncomponents.txt_policyNo.qValue = (_b = data === null || data === void 0 ? void 0 : data.policyNo) !== null && _b !== void 0 ? _b : components.txt_policyNo.qValue;\r\n",
 					"C": true,
 					"EV": true,
 					"HL": "JS"
 				},
 				"setConsumerAndScreenInfo": {
-					"H": "var _a, _b, _c, _d;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\ndebugger; //setConsumerAndScreenInfo\r\nvar consumerCode = (_b = (_a = quick === null || quick === void 0 ? void 0 : quick.parent) === null || _a === void 0 ? void 0 : _a.props) === null || _b === void 0 ? void 0 : _b.consumerCode;\r\nvar screenName = (_d = (_c = quick === null || quick === void 0 ? void 0 : quick.parent) === null || _c === void 0 ? void 0 : _c.props) === null || _d === void 0 ? void 0 : _d.screenName;\r\nquick.store.set('$customConsumerCode', consumerCode);\r\nquick.store.set('$customScreenName', screenName);\r\n",
+					"H": "var _a, _b, _c, _d;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger; //setConsumerAndScreenInfo\r\nvar consumerCode = (_b = (_a = quick === null || quick === void 0 ? void 0 : quick.parent) === null || _a === void 0 ? void 0 : _a.props) === null || _b === void 0 ? void 0 : _b.consumerCode;\r\nvar screenName = (_d = (_c = quick === null || quick === void 0 ? void 0 : quick.parent) === null || _c === void 0 ? void 0 : _c.props) === null || _d === void 0 ? void 0 : _d.screenName;\r\nquick.store.set('$customConsumerCode', consumerCode);\r\nquick.store.set('$customScreenName', screenName);\r\n",
 					"C": true,
 					"EV": true,
 					"HL": "JS"
 				},
 				"setBlockCompConsumerAndScreen": {
-					"H": "var _a, _b, _c, _d;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n//KULLANILMIYOR\r\n// debugger; //setBlockCompConsumerAndScreen\r\nvar consumerCode = (_b = (_a = quick === null || quick === void 0 ? void 0 : quick.parent) === null || _a === void 0 ? void 0 : _a.props) === null || _b === void 0 ? void 0 : _b.consumerCode;\r\nvar screenName = (_d = (_c = quick === null || quick === void 0 ? void 0 : quick.parent) === null || _c === void 0 ? void 0 : _c.props) === null || _d === void 0 ? void 0 : _d.screenName;\r\nquick.MM.trigger(\"setConsumerAndScreenInfo\", [{ consumerCode: consumerCode, screenName: screenName }]);\r\n",
+					"H": "var _a, _b, _c, _d;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n; //KULLANILMIYOR\r\n// debugger; //setBlockCompConsumerAndScreen\r\nvar consumerCode = (_b = (_a = quick === null || quick === void 0 ? void 0 : quick.parent) === null || _a === void 0 ? void 0 : _a.props) === null || _b === void 0 ? void 0 : _b.consumerCode;\r\nvar screenName = (_d = (_c = quick === null || quick === void 0 ? void 0 : quick.parent) === null || _c === void 0 ? void 0 : _c.props) === null || _d === void 0 ? void 0 : _d.screenName;\r\nquick.MM.trigger(\"setConsumerAndScreenInfo\", [{ consumerCode: consumerCode, screenName: screenName }]);\r\n",
 					"C": true,
 					"HL": "JS"
 				},
 				"getAssuranceType": {
-					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n// debugger;\r\nquick.return(components.txt_assuranceType.qValue);\r\n",
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n; // debugger;\r\nquick.return(components.txt_assuranceType.qValue);\r\n",
 					"C": true,
 					"EV": true,
 					"HL": "JS"
@@ -2947,7 +2947,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"QJsonPath": {
-					"H": "╬'<<qjson:8cmefzme-twlk-kqse-e12x-4vs0m9gnyo91>>'╩╩",
+					"H": "╬'/static/ui-bnkasAsDCFire/common/as_alertCustomComp.qjson'╩╩",
 					"T": "prop",
 					"HL": "QS"
 				},
@@ -2974,12 +2974,12 @@ let pjson = {
 			},
 			"E": {
 				"clickOutsideEvent": {
-					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\ncomponents.as_alertCustomComp.close();\r\n",
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ncomponents.as_alertCustomComp.close();\r\n",
 					"C": true,
 					"HL": "JS"
 				},
 				"btn1ClickEvent": {
-					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\ncomponents.as_alertCustomComp.close();\r\n",
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ncomponents.as_alertCustomComp.close();\r\n",
 					"C": true,
 					"HL": "JS"
 				}
