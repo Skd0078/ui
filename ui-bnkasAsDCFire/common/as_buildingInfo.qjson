@@ -1147,6 +1147,11 @@ let pjson = {
 																					"H": "[Quick.validation.required('Lütfen Bina İnşa Yılı giriniz.')]",
 																					"T": "prop",
 																					"HL": "QS"
+																				},
+																				"maxlength": {
+																					"H": "4",
+																					"T": "attr",
+																					"HL": "QS"
 																				}
 																			},
 																			"E": {},
@@ -3098,6 +3103,11 @@ let pjson = {
 																				"rules": {
 																					"H": "╬[]╠()╣.╣.╣Quick╩╠validation╩╩╠required╩╩╠'Lütfen Bina İnşa Yılı giriniz.'╩╩╩╩",
 																					"T": "prop",
+																					"HL": "QS"
+																				},
+																				"maxlength": {
+																					"H": "╬4╩╩",
+																					"T": "attr",
 																					"HL": "QS"
 																				}
 																			},

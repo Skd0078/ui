@@ -656,7 +656,13 @@ let pjson = {
 																					"HL": "QS"
 																				}
 																			},
-																			"E": {},
+																			"E": {
+																				"click": {
+																					"H": "quick.parent.events.validateAllComponents();",
+																					"P": "mouseEvent:unknown | undefined",
+																					"HL": "TS"
+																				}
+																			},
 																			"C": {
 																				"default": {
 																					"c": [
@@ -1596,7 +1602,13 @@ let pjson = {
 																					"HL": "QS"
 																				}
 																			},
-																			"E": {},
+																			"E": {
+																				"click": {
+																					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\nquick.parent.events.validateAllComponents();\r\n",
+																					"P": "mouseEvent:unknown | undefined",
+																					"HL": "JS"
+																				}
+																			},
 																			"C": {
 																				"default": {
 																					"c": [

@@ -19,7 +19,7 @@ let pjson = {
 			},
 			"E": {
 				"retrieveCustomerByCustomerNumber": {
-					"H": "let requestData = {\r\n    \"customerNumber\": [\r\n        (<any>quick.containerServices).getCustomerContext().customerNumber\r\n        // 164229554\r\n        // 164149981\r\n        // 164204540\r\n        // 164204524\r\n        // 164201235\r\n        //164176484\r\n        //163838188\r\n        //164019676 //şevval reyhan\r\n        //160224783//---güzin er\r\n        //164049679 //mustafa\r\n        //164160655 //yenileme turgut \r\n        //164013014 //ONUR\r\n        //164093782 //yenileme\r\n        //164100966 //yenileme gülşah\r\n        //163986303 //--- ticari müştr\r\n        //164159645 // ticari berna\r\n        //164160663 // yenileme ismail\r\n        //164172848 //Yenileme Cevdet\r\n        //164175925 // yenileme\r\n        //164178922\r\n        //164187565\r\n        //164013014\r\n    ],\r\n    \"retrieveOptionsDto\": {\r\n        \"multipleRecordBehaviourCode\": {\r\n            \"code\": \"COKKT_ILK\",\r\n            \"category\": \"MUS_COKKT\"\r\n        },\r\n        \"applicationKey\": quick.store.get('$applicationKey')\r\n    }\r\n}\r\nquick.MM.trigger('setConsumerAndScreenInfo'); //consumerCode ve screenName setlendi.\r\nlet serviceRequest: IRequest = {\r\n    url: '/api/uiclient/retrieveCustomerByCustomerNumber',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n}\r\n\r\nquick.Request.async(serviceRequest)?.then((resp) => {\r\n    if (resp?.data?.customerList) {\r\n        let customerInfo = resp?.data?.customerList[0];\r\n        let addressInfo = customerInfo.communicationInfo.postalAddresses[0];\r\n        quick.store.set('adressInfo', addressInfo);\r\n        let occupationalStatus = customerInfo?.individualInfo?.employmentInfo?.occupationalStatus\r\n        let customerType = customerInfo.basicInfo?.primaryId?.type.code;\r\n        let phoneNumbers = customerInfo.communicationInfo?.phoneNumbers;\r\n        let selectedPhoneInfo = null;\r\n        let primaryId = customerInfo.basicInfo?.primaryId?.value;\r\n\r\n        if (customerType === \"RFKTP_TCKN\") {\r\n            //müşteri tipi bireysel ise            \r\n            components.txt_taxId.visible = false;\r\n            components.txt_taxId.qValue = '';\r\n            components.txt_idNumber.label = \"TCKN\";\r\n            components.txt_nameSurname.label = \"AD Soyad\"\r\n            components.row_individualInfo.visible = true;\r\n            components.vauto_profession.visible = true;\r\n            components.vauto_employmentStatus.visible = true;\r\n\r\n            components.vauto_employmentStatus.qValue = components.vauto_employmentStatus.items.filter(item => item.code === occupationalStatus.code)[0]\r\n            components.txt_nameSurname.qValue = customerInfo.basicInfo.fullName;\r\n\r\n            let formattedDate = customerInfo?.individualInfo.birthDate.substr(0, 10).split(\"-\")\r\n            components.txt_birthday.qValue = formattedDate[2] + \"-\" + formattedDate[1] + \"-\" + formattedDate[0];\r\n            components.txt_birthdayPlace.qValue = customerInfo?.individualInfo?.birthPlace;\r\n\r\n            if (customerInfo.individualInfo?.citizenId != null) {\r\n                primaryId = customerInfo.individualInfo?.citizenId;\r\n            } else if (customerInfo.individualInfo?.kktcId != null) {\r\n                primaryId = customerInfo.individualInfo?.kktcId;\r\n            } else if (customerInfo.individualInfo?.foreignerId != null) {\r\n                primaryId = customerInfo.individualInfo?.foreignerId\r\n            }\r\n\r\n            if (customerInfo.individualInfo?.gender.code == \"CNSYT_KADIN\") {\r\n                components.txt_gender.qValue = 'Kadın'\r\n            } else if (customerInfo.individualInfo?.gender.code == \"CNSYT_ERKEK\") {\r\n                components.txt_gender.qValue = 'Erkek'\r\n            }\r\n\r\n            if (customerInfo.individualInfo?.maritalStatus.code == \"MDNDR_EVLI\") {\r\n                components.txt_maritalStatus.qValue = 'Evli'\r\n            } else if (customerInfo.individualInfo?.maritalStatus.code == \"MDNDR_BEKAR\") {\r\n                components.txt_maritalStatus.qValue = 'Bekar'\r\n            }\r\n\r\n        } else {\r\n            //müşteri tipi ticari ise\r\n            components.txt_taxId.visible = true;\r\n            components.txt_idNumber.label = \"VKN\";\r\n            components.txt_nameSurname.label = \"Unvan\"\r\n            components.row_individualInfo.visible = false;\r\n            components.vauto_profession.visible = false;\r\n            components.vauto_employmentStatus.visible = false;\r\n            components.txt_nameSurname.qValue = customerInfo.organizationalInfo?.fullName;\r\n\r\n            if (customerInfo.organizationalInfo?.taxId != null) {\r\n                primaryId = customerInfo.organizationalInfo?.taxId;\r\n            }\r\n\r\n            if (customerInfo?.taxPayerInfo != null) {\r\n                components.txt_taxId.qValue = customerInfo?.taxPayerInfo?.taxOfficeName;\r\n            }\r\n\r\n        }\r\n\r\n        for (var i = 0; i < phoneNumbers.length; i++) {\r\n            if (phoneNumbers[i].updateInfo?.verificationType.code == 1 && phoneNumbers[i].usageType.code == \"TELTP_CEPTELEFON\") {\r\n                selectedPhoneInfo = customerInfo.communicationInfo.phoneNumbers[i].number;\r\n                components.vauto_phoneType.qValue = components.vauto_phoneType.items.filter(item => item.code === phoneNumbers[i].usageType.code)[0]\r\n                components.txt_countryCode.qValue = phoneNumbers[i].countryCallingCode.code\r\n                break;\r\n\r\n            } else if (phoneNumbers[i].usageType.code == \"TELTP_CEPTELEFON\") {\r\n                components.vauto_phoneType.qValue = components.vauto_phoneType.items.filter(item => item.code === phoneNumbers[i].usageType.code)[0]\r\n                components.txt_countryCode.qValue = phoneNumbers[i].countryCallingCode.code\r\n                selectedPhoneInfo = customerInfo.communicationInfo.phoneNumbers[i].number;\r\n            }\r\n        }\r\n\r\n        //tahsilat ekranında kullanılacak.\r\n        quick.store.set('$primaryId', primaryId);\r\n        quick.store.set('$customerInfo', customerInfo); // bu ekranda da kullanılıyor.\r\n\r\n        //address\r\n        let address = '';\r\n        if (null != addressInfo?.subdistrict) {\r\n            address = addressInfo?.subdistrict\r\n        }\r\n        if (null != addressInfo?.address) {\r\n            address = address + ' ' + addressInfo?.address\r\n        }\r\n        if (null != addressInfo?.buildingNo) {\r\n            address = address + ' ' + addressInfo?.buildingNo\r\n        }\r\n        if (null != addressInfo?.doorNo) {\r\n            address = address + '/' + addressInfo?.doorNo\r\n        }\r\n        address = address + ' ' + addressInfo?.district?.value + '/' + addressInfo?.city?.value\r\n\r\n        components.vauto_adressType.qValue = components.vauto_adressType.items.filter(item => item.code === addressInfo.usageType.code)[0]\r\n        components.vauto_country.qValue = components.vauto_country.items.filter(item => item.code === addressInfo.countryCode.code)[0]\r\n\r\n        if (addressInfo.countryCode.code == 'TR') {\r\n            quick.MM.trigger('retrieveReferenceDataList', [{ categoryPath: 'COUNTRY(' + 'TR' + ')/CITY' }]);\r\n            quick.store.set('flagSuccess', true);\r\n        }\r\n        debugger;\r\n        if(components.txt_postCode.qValue){\r\n        }\r\n        else{\r\n            components.txt_postCode.qValue = addressInfo?.zipCode;\r\n        }\r\n        components.txt_customerNumber.qValue = customerInfo.customerNumber;\r\n        components.txt_idNumber.qValue = primaryId;\r\n        //quick.store.get('$bnkas_utils').getEmploymentStatus(customerInfo.individualInfo?.employmentInfo?.occupationalStatus?.code);\r\n        components.txt_phoneNumber.qValue = selectedPhoneInfo;\r\n        components.txt_email.qValue = customerInfo?.communicationInfo.emailAddresses[0]?.address;\r\n        components.txt_address.qValue = address;\r\n\r\n        // sigorta ettiren ve eklenen sigortalıların ekleneceği bir liste oluşturuldu.        \r\n        let assuranceList = [];\r\n\r\n        let firstCustomer = {\r\n            customerType: customerType,\r\n            primaryId: primaryId\r\n        };\r\n\r\n        assuranceList.push(firstCustomer);\r\n        quick.store.set('assuranceList', assuranceList);\r\n        quick.store.set('$assuranceList', assuranceList);\r\n\r\n        if (quick.store.get('screenNameAS') == 'HINS' || quick.store.get('screenNameAS') == 'IHINS' || quick.store.get('screenNameAS') == 'SHINS') {\r\n            quick?.parent?.events?.retrieveReferenceData({ customerResponse: customerInfo });\r\n\r\n        }\r\n    }\r\n})\r\n    .catch((err) => {\r\n\r\n        let errorMessage = err?.response?.data?.responseMessage ?? 'Bir hata oluştu.';\r\n        (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n        components.as_alertCustomComp.open();\r\n    });",
+					"H": "let requestData = {\r\n    \"customerNumber\": [\r\n        (<any>quick.containerServices).getCustomerContext().customerNumber\r\n        // 164229554\r\n        // 164149981\r\n        // 164204540\r\n        // 164204524\r\n        // 164201235\r\n        //164176484\r\n        //163838188\r\n        //164019676 //şevval reyhan\r\n        //160224783//---güzin er\r\n        //164049679 //mustafa\r\n        //164160655 //yenileme turgut \r\n        //164013014 //ONUR\r\n        //164093782 //yenileme\r\n        //164100966 //yenileme gülşah\r\n        //163986303 //--- ticari müştr\r\n        //164159645 // ticari berna\r\n        //164160663 // yenileme ismail\r\n        //164172848 //Yenileme Cevdet\r\n        //164175925 // yenileme\r\n        //164178922\r\n        //164187565\r\n        //164013014\r\n    ],\r\n    \"retrieveOptionsDto\": {\r\n        \"multipleRecordBehaviourCode\": {\r\n            \"code\": \"COKKT_ILK\",\r\n            \"category\": \"MUS_COKKT\"\r\n        },\r\n        \"applicationKey\": quick.store.get('$applicationKey')\r\n    }\r\n}\r\nquick.MM.trigger('setConsumerAndScreenInfo'); //consumerCode ve screenName setlendi.\r\nlet serviceRequest: IRequest = {\r\n    url: '/api/uiclient/retrieveCustomerByCustomerNumber',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n}\r\n\r\nquick.Request.async(serviceRequest)?.then((resp) => {\r\n    if (resp?.data?.customerList) {\r\n        let customerInfo = resp?.data?.customerList[0];\r\n        let addressInfo = customerInfo.communicationInfo.postalAddresses[0];\r\n        quick.store.set('adressInfo', addressInfo);\r\n        let occupationalStatus = customerInfo?.individualInfo?.employmentInfo?.occupationalStatus\r\n        let customerType = customerInfo.basicInfo?.primaryId?.type.code;\r\n        let phoneNumbers = customerInfo.communicationInfo?.phoneNumbers;\r\n        let selectedPhoneInfo = null;\r\n        let primaryId = customerInfo.basicInfo?.primaryId?.value;\r\n\r\n        if (customerType === \"RFKTP_TCKN\") {\r\n            //müşteri tipi bireysel ise            \r\n            components.txt_taxId.visible = false;\r\n            components.txt_taxId.qValue = '';\r\n            components.txt_idNumber.label = \"TCKN\";\r\n            components.txt_nameSurname.label = \"AD Soyad\"\r\n            components.row_individualInfo.visible = true;\r\n            components.vauto_profession.visible = true;\r\n            components.vauto_employmentStatus.visible = true;\r\n\r\n            components.vauto_employmentStatus.qValue = components.vauto_employmentStatus.items.filter(item => item.code === occupationalStatus?.code)[0]\r\n            components.txt_nameSurname.qValue = customerInfo.basicInfo.fullName;\r\n\r\n            let formattedDate = customerInfo?.individualInfo.birthDate.substr(0, 10).split(\"-\")\r\n            components.txt_birthday.qValue = formattedDate[2] + \"-\" + formattedDate[1] + \"-\" + formattedDate[0];\r\n            components.txt_birthdayPlace.qValue = customerInfo?.individualInfo?.birthPlace;\r\n\r\n            if (customerInfo.individualInfo?.citizenId != null) {\r\n                primaryId = customerInfo.individualInfo?.citizenId;\r\n            } else if (customerInfo.individualInfo?.kktcId != null) {\r\n                primaryId = customerInfo.individualInfo?.kktcId;\r\n            } else if (customerInfo.individualInfo?.foreignerId != null) {\r\n                primaryId = customerInfo.individualInfo?.foreignerId\r\n            }\r\n\r\n            if (customerInfo.individualInfo?.gender.code == \"CNSYT_KADIN\") {\r\n                components.txt_gender.qValue = 'Kadın'\r\n            } else if (customerInfo.individualInfo?.gender.code == \"CNSYT_ERKEK\") {\r\n                components.txt_gender.qValue = 'Erkek'\r\n            }\r\n\r\n            if (customerInfo.individualInfo?.maritalStatus.code == \"MDNDR_EVLI\") {\r\n                components.txt_maritalStatus.qValue = 'Evli'\r\n            } else if (customerInfo.individualInfo?.maritalStatus.code == \"MDNDR_BEKAR\") {\r\n                components.txt_maritalStatus.qValue = 'Bekar'\r\n            }\r\n\r\n        } else {\r\n            //müşteri tipi ticari ise\r\n            components.txt_taxId.visible = true;\r\n            components.txt_idNumber.label = \"VKN\";\r\n            components.txt_nameSurname.label = \"Unvan\"\r\n            components.row_individualInfo.visible = false;\r\n            components.vauto_profession.visible = false;\r\n            components.vauto_employmentStatus.visible = false;\r\n            components.txt_nameSurname.qValue = customerInfo.organizationalInfo?.fullName;\r\n\r\n            if (customerInfo.organizationalInfo?.taxId != null) {\r\n                primaryId = customerInfo.organizationalInfo?.taxId;\r\n            }\r\n\r\n            if (customerInfo?.taxPayerInfo != null) {\r\n                components.txt_taxId.qValue = customerInfo?.taxPayerInfo?.taxOfficeName;\r\n            }\r\n\r\n        }\r\n\r\n        for (var i = 0; i < phoneNumbers.length; i++) {\r\n            if (phoneNumbers[i].updateInfo?.verificationType.code == 1 && phoneNumbers[i].usageType.code == \"TELTP_CEPTELEFON\") {\r\n                selectedPhoneInfo = customerInfo.communicationInfo.phoneNumbers[i].number;\r\n                components.vauto_phoneType.qValue = components.vauto_phoneType.items.filter(item => item.code === phoneNumbers[i].usageType.code)[0]\r\n                components.txt_countryCode.qValue = phoneNumbers[i].countryCallingCode.code\r\n                break;\r\n\r\n            } else if (phoneNumbers[i].usageType.code == \"TELTP_CEPTELEFON\") {\r\n                components.vauto_phoneType.qValue = components.vauto_phoneType.items.filter(item => item.code === phoneNumbers[i].usageType.code)[0]\r\n                components.txt_countryCode.qValue = phoneNumbers[i].countryCallingCode.code\r\n                selectedPhoneInfo = customerInfo.communicationInfo.phoneNumbers[i].number;\r\n            }\r\n        }\r\n\r\n        //tahsilat ekranında kullanılacak.\r\n        quick.store.set('$primaryId', primaryId);\r\n        quick.store.set('$customerInfo', customerInfo); // bu ekranda da kullanılıyor.\r\n\r\n        //address\r\n        let address = '';\r\n        if (null != addressInfo?.subdistrict) {\r\n            address = addressInfo?.subdistrict\r\n        }\r\n        if (null != addressInfo?.address) {\r\n            address = address + ' ' + addressInfo?.address\r\n        }\r\n        if (null != addressInfo?.buildingNo) {\r\n            address = address + ' ' + addressInfo?.buildingNo\r\n        }\r\n        if (null != addressInfo?.doorNo) {\r\n            address = address + '/' + addressInfo?.doorNo\r\n        }\r\n        address = address + ' ' + addressInfo?.district?.value + '/' + addressInfo?.city?.value\r\n\r\n        components.vauto_adressType.qValue = components.vauto_adressType.items.filter(item => item.code === addressInfo.usageType.code)[0]\r\n        components.vauto_country.qValue = components.vauto_country.items.filter(item => item.code === addressInfo.countryCode.code)[0]\r\n\r\n        if (addressInfo.countryCode.code == 'TR') {\r\n            quick.MM.trigger('retrieveReferenceDataList', [{ categoryPath: 'COUNTRY(' + 'TR' + ')/CITY' }]);\r\n            quick.store.set('flagSuccess', true);\r\n        }\r\n        debugger;\r\n        if(components.txt_postCode.qValue){\r\n        }\r\n        else{\r\n            components.txt_postCode.qValue = addressInfo?.zipCode;\r\n        }\r\n        components.txt_customerNumber.qValue = customerInfo.customerNumber;\r\n        components.txt_idNumber.qValue = primaryId;\r\n        //quick.store.get('$bnkas_utils').getEmploymentStatus(customerInfo.individualInfo?.employmentInfo?.occupationalStatus?.code);\r\n        components.txt_phoneNumber.qValue = selectedPhoneInfo;\r\n        components.txt_email.qValue = customerInfo?.communicationInfo.emailAddresses[0]?.address;\r\n        components.txt_address.qValue = address;\r\n\r\n        // sigorta ettiren ve eklenen sigortalıların ekleneceği bir liste oluşturuldu.        \r\n        let assuranceList = [];\r\n\r\n        let firstCustomer = {\r\n            customerType: customerType,\r\n            primaryId: primaryId\r\n        };\r\n\r\n        assuranceList.push(firstCustomer);\r\n        quick.store.set('assuranceList', assuranceList);\r\n        quick.store.set('$assuranceList', assuranceList);\r\n\r\n        if (quick.store.get('screenNameAS') == 'HINS' || quick.store.get('screenNameAS') == 'IHINS' || quick.store.get('screenNameAS') == 'SHINS') {\r\n            quick?.parent?.events?.retrieveReferenceData({ customerResponse: customerInfo });\r\n\r\n        }\r\n    }\r\n})\r\n    .catch((err) => {\r\n\r\n        let errorMessage = err?.response?.data?.responseMessage ?? 'Bir hata oluştu.';\r\n        (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n        components.as_alertCustomComp.open();\r\n    });",
 					"C": true,
 					"HL": "TS"
 				},
@@ -50,7 +50,7 @@ let pjson = {
 					"HL": "TS"
 				},
 				"retrieveCustomerByReferenceId": {
-					"H": "\r\ndeclare let idType; //TCKN - VKN\r\ndeclare let citizenNo;\r\nlet qID;\r\n\r\nlet requestData = {\r\n    \"referenceId\": {\r\n        \"type\": {\r\n            \"code\": idType.code,\r\n            \"category\": \"MUS_RFKTP\"\r\n        },\r\n        \"value\": citizenNo\r\n    },\r\n    \"retrieveOptions\": {\r\n        \"multipleRecordBehaviourCode\": {\r\n            \"code\": \"COKKT_ILK\",\r\n            \"category\": \"MUS_COKKT\"\r\n        },\r\n        \"applicationKey\": quick.store.get('$applicationKey')\r\n    }\r\n}\r\n\r\n//consumerCode ve screenName setlendi.\r\nquick.MM.trigger('setConsumerAndScreenInfo');\r\n\r\nlet serviceRequest: IRequest = {\r\n    url: '/api/uiclient/retrieveCustomerByReferenceId',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n}\r\n\r\ndebugger\r\nquick.Request.async(serviceRequest)?.then((resp) => {\r\n    quick.EM.trace(resp?.data);\r\n\r\n    if (qID) {\r\n        quick.MM.trigger('setRetrieveCustomerByReferenceId', [{ data: resp?.data?.customer, qID }])\r\n\r\n    } else {\r\n        if (resp?.data?.customer?.length > 0) {\r\n            components.row_assuranceInfo5.visible = true;\r\n            components.row_assuranceInfo6.visible = true;\r\n            components.row_assuranceInfo1.visible = false;\r\n\r\n            let customerInfo = resp?.data?.customer[0];\r\n            let addressInfo = customerInfo.communicationInfo.postalAddresses[0];\r\n            quick.store.set('adressInfo', addressInfo);\r\n            let occupationalStatus = customerInfo.individualInfo.employmentInfo?.occupationalStatus\r\n            let customerType = customerInfo.basicInfo?.primaryId?.type.code;\r\n            let phoneNumbers = customerInfo.communicationInfo?.phoneNumbers;\r\n            let selectedPhoneInfo = null;\r\n            let primaryId = customerInfo.basicInfo?.primaryId?.value;\r\n\r\n            if (customerType === \"RFKTP_TCKN\") {\r\n                //müşteri tipi bireysel ise            \r\n                components.txt_taxId2.visible = false;\r\n                components.txt_taxId2.qValue = '';\r\n                components.txt_idNumber2.label = \"TCKN\";\r\n                components.txt_nameSurname2.label = \"Ad Soyad\"\r\n                components.row_assuranceInfo6.visible = true;\r\n                components.vauto_profession2.visible = true;\r\n                components.vauto_employmentStatus2.visible = true;\r\n\r\n                components.vauto_employmentStatus2.qValue = components.vauto_employmentStatus2.items.filter(item => item.code === occupationalStatus.code)[0]\r\n                components.txt_nameSurname2.qValue = customerInfo.basicInfo.fullName;\r\n\r\n                let formattedDate = customerInfo?.individualInfo.birthDate.substr(0, 10).split(\"-\")\r\n                components.txt_birthday2.qValue = formattedDate[2] + \"-\" + formattedDate[1] + \"-\" + formattedDate[0];\r\n                components.txt_birthdayPlace2.qValue = customerInfo?.individualInfo?.birthPlace;\r\n\r\n                if (customerInfo.individualInfo?.citizenId != null) {\r\n                    primaryId = customerInfo.individualInfo?.citizenId;\r\n                } else if (customerInfo.individualInfo?.kktcId != null) {\r\n                    primaryId = customerInfo.individualInfo?.kktcId;\r\n                } else if (customerInfo.individualInfo?.foreignerId != null) {\r\n                    primaryId = customerInfo.individualInfo?.foreignerId\r\n                }\r\n\r\n                if (customerInfo.individualInfo?.gender.code == \"CNSYT_KADIN\") {\r\n                    components.txt_gender2.qValue = 'Kadın'\r\n                } else if (customerInfo.individualInfo?.gender.code == \"CNSYT_ERKEK\") {\r\n                    components.txt_gender2.qValue = 'Erkek'\r\n                }\r\n\r\n                if (customerInfo.individualInfo?.maritalStatus.code == \"MDNDR_EVLI\") {\r\n                    components.txt_maritalStatus2.qValue = 'Evli'\r\n                } else if (customerInfo.individualInfo?.maritalStatus.code == \"MDNDR_BEKAR\") {\r\n                    components.txt_maritalStatus2.qValue = 'Bekar'\r\n                }\r\n\r\n            } else {\r\n                //müşteri tipi ticari ise\r\n                components.txt_taxId2.visible = true;\r\n                components.txt_idNumber2.label = \"VKN\";\r\n                components.txt_nameSurname2.label = \"Unvan\"\r\n                components.row_assuranceInfo6.visible = false;\r\n                components.vauto_profession2.visible = false;\r\n                components.vauto_employmentStatus2.visible = false;\r\n                components.txt_nameSurname2.qValue = customerInfo.organizationalInfo?.fullName;\r\n\r\n                if (customerInfo.organizationalInfo?.taxId != null) {\r\n                    primaryId = customerInfo.organizationalInfo?.taxId;\r\n                }\r\n\r\n                if (customerInfo?.taxPayerInfo != null) {\r\n                    components.txt_taxId2.qValue = customerInfo?.taxPayerInfo?.taxOfficeName;\r\n                }\r\n            }\r\n\r\n            for (var i = 0; i < phoneNumbers.length; i++) {\r\n                if (phoneNumbers[i]?.updateInfo?.verificationType?.code == 1 && phoneNumbers[i]?.usageType?.code == \"TELTP_CEPTELEFON\") {\r\n                    selectedPhoneInfo = customerInfo.communicationInfo.phoneNumbers[i].number;\r\n                    components.vauto_phoneType2.qValue = components.vauto_phoneType2.items.filter(item => item.code === phoneNumbers[i].usageType.code)[0]\r\n                    components.txt_countryCode2.qValue = phoneNumbers[i].countryCallingCode.code\r\n                    break;\r\n                } else if (phoneNumbers[i]?.usageType?.code == \"TELTP_CEPTELEFON\") {\r\n                    components.vauto_phoneType2.qValue = components.vauto_phoneType2.items.filter(item => item.code === phoneNumbers[i].usageType.code)[0]\r\n                    components.txt_countryCode2.qValue = phoneNumbers[i].countryCallingCode.code\r\n                    selectedPhoneInfo = customerInfo.communicationInfo.phoneNumbers[i].number;\r\n                }\r\n            }\r\n\r\n            //tahsilat ekranında kullanılacak.\r\n            quick.store.set('$primaryId2', primaryId);\r\n            quick.store.set('$customerInfo2', customerInfo); // bu ekranda da kullanılıyor.            \r\n            quick.store.set('customerFlag', true); //customerListControl için\r\n\r\n            //address\r\n            let address = '';\r\n            if (null != addressInfo?.subdistrict) {\r\n                address = addressInfo?.subdistrict\r\n            }\r\n            if (null != addressInfo?.address) {\r\n                address = address + ' ' + addressInfo?.address\r\n            }\r\n            if (null != addressInfo?.buildingNo) {\r\n                address = address + ' ' + addressInfo?.buildingNo\r\n            }\r\n            if (null != addressInfo?.doorNo) {\r\n                address = address + '/' + addressInfo?.doorNo\r\n            }\r\n\r\n            address = address + ' ' + addressInfo?.district?.value + '/' + addressInfo?.city?.value\r\n\r\n            components.vauto_adressType2.qValue = components.vauto_adressType2.items.filter(item => item.code === addressInfo.usageType.code)[0]\r\n            components.vauto_country2.qValue = components.vauto_country2.items.filter(item => item.code === addressInfo.countryCode.code)[0]\r\n\r\n            if (addressInfo.countryCode.code == 'TR') {\r\n                quick.MM.trigger('retrieveReferenceDataList', [{ categoryPath: 'COUNTRY(' + 'TR' + ')/CITY' }]);\r\n                quick.store.set('flagSuccess2', true);\r\n            }\r\n\r\n            components.txt_postCode2.qValue = addressInfo?.zipCode;\r\n            components.txt_customerNumber2.qValue = customerInfo.customerNumber;\r\n            components.txt_idNumber2.qValue = primaryId;\r\n            //quick.store.get('$bnkas_utils').getEmploymentStatus(customerInfo.individualInfo?.employmentInfo?.occupationalStatus?.code);\r\n            components.txt_phoneNumber2.qValue = selectedPhoneInfo;\r\n            components.txt_email2.qValue = customerInfo.communicationInfo.emailAddresses[0]?.address;\r\n            components.txt_address2.qValue = address;\r\n\r\n            quick.MM.trigger('customerListControl');\r\n\r\n            //Nefes Sağlık Police Özelinde Diğer Sigortalı Bilgileri \r\n            if (quick.store.get('screenNameAS') == 'HINS' || quick.store.get('screenNameAS') == 'IHINS'|| quick.store.get('screenNameAS') == 'SHINS') {\r\n                quick.store.set(\"$ch_assuranceDifferentStatus\", components.ch_assuranceDifferent.qValue);\r\n                quick?.parent?.events?.setPolicySpecificInsuredInfo({ customerResponse: customerInfo, customerStatus: 'insured' });\r\n            }\r\n        }\r\n        else {\r\n            if (idType.code === \"RFKTP_TCKN\") {\r\n                quick.MM.trigger('retrieveCitizenAndNationalIdCardInfo');\r\n            }\r\n            else {\r\n                quick.MM.trigger('retrieveTaxIdRecordByTaxId');\r\n                quick.MM.trigger('retrieveTaxOfficeListOfTaxPayer');\r\n            }\r\n        }\r\n    }\r\n})\r\n    .catch((err) => {\r\n\r\n        let errorMessage = err?.response?.data?.responseMessage ?? 'Bir hata oluştu.';\r\n        (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n        components.as_alertCustomComp.open();\r\n    });",
+					"H": "\r\ndeclare let idType; //TCKN - VKN\r\ndeclare let citizenNo;\r\nlet qID;\r\n\r\nlet requestData = {\r\n    \"referenceId\": {\r\n        \"type\": {\r\n            \"code\": idType.code,\r\n            \"category\": \"MUS_RFKTP\"\r\n        },\r\n        \"value\": citizenNo\r\n    },\r\n    \"retrieveOptions\": {\r\n        \"multipleRecordBehaviourCode\": {\r\n            \"code\": \"COKKT_ILK\",\r\n            \"category\": \"MUS_COKKT\"\r\n        },\r\n        \"applicationKey\": quick.store.get('$applicationKey')\r\n    }\r\n}\r\n\r\n//consumerCode ve screenName setlendi.\r\nquick.MM.trigger('setConsumerAndScreenInfo');\r\n\r\nlet serviceRequest: IRequest = {\r\n    url: '/api/uiclient/retrieveCustomerByReferenceId',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n}\r\n\r\ndebugger\r\nquick.Request.async(serviceRequest)?.then((resp) => {\r\n    quick.EM.trace(resp?.data);\r\n\r\n    if (qID) {\r\n        quick.MM.trigger('setRetrieveCustomerByReferenceId', [{ data: resp?.data?.customer, qID }])\r\n\r\n    } else {\r\n        if (resp?.data?.customer?.length > 0) {\r\n            components.row_assuranceInfo5.visible = true;\r\n            components.row_assuranceInfo6.visible = true;\r\n            components.row_assuranceInfo1.visible = false;\r\n\r\n            let customerInfo = resp?.data?.customer[0];\r\n            let addressInfo = customerInfo.communicationInfo.postalAddresses[0];\r\n            quick.store.set('adressInfo', addressInfo);\r\n            let occupationalStatus = customerInfo.individualInfo.employmentInfo?.occupationalStatus\r\n            let customerType = customerInfo.basicInfo?.primaryId?.type.code;\r\n            let phoneNumbers = customerInfo.communicationInfo?.phoneNumbers;\r\n            let selectedPhoneInfo = null;\r\n            let primaryId = customerInfo.basicInfo?.primaryId?.value;\r\n\r\n            if (customerType === \"RFKTP_TCKN\") {\r\n                //müşteri tipi bireysel ise            \r\n                components.txt_taxId2.visible = false;\r\n                components.txt_taxId2.qValue = '';\r\n                components.txt_idNumber2.label = \"TCKN\";\r\n                components.txt_nameSurname2.label = \"Ad Soyad\"\r\n                components.row_assuranceInfo6.visible = true;\r\n                components.vauto_profession2.visible = true;\r\n                components.vauto_employmentStatus2.visible = true;\r\n\r\n                components.vauto_employmentStatus2.qValue = components.vauto_employmentStatus2.items.filter(item => item.code === occupationalStatus?.code)[0]\r\n                components.txt_nameSurname2.qValue = customerInfo.basicInfo.fullName;\r\n\r\n                let formattedDate = customerInfo?.individualInfo.birthDate.substr(0, 10).split(\"-\")\r\n                components.txt_birthday2.qValue = formattedDate[2] + \"-\" + formattedDate[1] + \"-\" + formattedDate[0];\r\n                components.txt_birthdayPlace2.qValue = customerInfo?.individualInfo?.birthPlace;\r\n\r\n                if (customerInfo.individualInfo?.citizenId != null) {\r\n                    primaryId = customerInfo.individualInfo?.citizenId;\r\n                } else if (customerInfo.individualInfo?.kktcId != null) {\r\n                    primaryId = customerInfo.individualInfo?.kktcId;\r\n                } else if (customerInfo.individualInfo?.foreignerId != null) {\r\n                    primaryId = customerInfo.individualInfo?.foreignerId\r\n                }\r\n\r\n                if (customerInfo.individualInfo?.gender.code == \"CNSYT_KADIN\") {\r\n                    components.txt_gender2.qValue = 'Kadın'\r\n                } else if (customerInfo.individualInfo?.gender.code == \"CNSYT_ERKEK\") {\r\n                    components.txt_gender2.qValue = 'Erkek'\r\n                }\r\n\r\n                if (customerInfo.individualInfo?.maritalStatus.code == \"MDNDR_EVLI\") {\r\n                    components.txt_maritalStatus2.qValue = 'Evli'\r\n                } else if (customerInfo.individualInfo?.maritalStatus.code == \"MDNDR_BEKAR\") {\r\n                    components.txt_maritalStatus2.qValue = 'Bekar'\r\n                }\r\n\r\n            } else {\r\n                //müşteri tipi ticari ise\r\n                components.txt_taxId2.visible = true;\r\n                components.txt_idNumber2.label = \"VKN\";\r\n                components.txt_nameSurname2.label = \"Unvan\"\r\n                components.row_assuranceInfo6.visible = false;\r\n                components.vauto_profession2.visible = false;\r\n                components.vauto_employmentStatus2.visible = false;\r\n                components.txt_nameSurname2.qValue = customerInfo.organizationalInfo?.fullName;\r\n\r\n                if (customerInfo.organizationalInfo?.taxId != null) {\r\n                    primaryId = customerInfo.organizationalInfo?.taxId;\r\n                }\r\n\r\n                if (customerInfo?.taxPayerInfo != null) {\r\n                    components.txt_taxId2.qValue = customerInfo?.taxPayerInfo?.taxOfficeName;\r\n                }\r\n            }\r\n\r\n            for (var i = 0; i < phoneNumbers.length; i++) {\r\n                if (phoneNumbers[i]?.updateInfo?.verificationType?.code == 1 && phoneNumbers[i]?.usageType?.code == \"TELTP_CEPTELEFON\") {\r\n                    selectedPhoneInfo = customerInfo.communicationInfo.phoneNumbers[i].number;\r\n                    components.vauto_phoneType2.qValue = components.vauto_phoneType2.items.filter(item => item.code === phoneNumbers[i].usageType.code)[0]\r\n                    components.txt_countryCode2.qValue = phoneNumbers[i].countryCallingCode.code\r\n                    break;\r\n                } else if (phoneNumbers[i]?.usageType?.code == \"TELTP_CEPTELEFON\") {\r\n                    components.vauto_phoneType2.qValue = components.vauto_phoneType2.items.filter(item => item.code === phoneNumbers[i].usageType.code)[0]\r\n                    components.txt_countryCode2.qValue = phoneNumbers[i].countryCallingCode.code\r\n                    selectedPhoneInfo = customerInfo.communicationInfo.phoneNumbers[i].number;\r\n                }\r\n            }\r\n\r\n            //tahsilat ekranında kullanılacak.\r\n            quick.store.set('$primaryId2', primaryId);\r\n            quick.store.set('$customerInfo2', customerInfo); // bu ekranda da kullanılıyor.            \r\n            quick.store.set('customerFlag', true); //customerListControl için\r\n\r\n            //address\r\n            let address = '';\r\n            if (null != addressInfo?.subdistrict) {\r\n                address = addressInfo?.subdistrict\r\n            }\r\n            if (null != addressInfo?.address) {\r\n                address = address + ' ' + addressInfo?.address\r\n            }\r\n            if (null != addressInfo?.buildingNo) {\r\n                address = address + ' ' + addressInfo?.buildingNo\r\n            }\r\n            if (null != addressInfo?.doorNo) {\r\n                address = address + '/' + addressInfo?.doorNo\r\n            }\r\n\r\n            address = address + ' ' + addressInfo?.district?.value + '/' + addressInfo?.city?.value\r\n\r\n            components.vauto_adressType2.qValue = components.vauto_adressType2.items.filter(item => item.code === addressInfo.usageType.code)[0]\r\n            components.vauto_country2.qValue = components.vauto_country2.items.filter(item => item.code === addressInfo.countryCode.code)[0]\r\n\r\n            if (addressInfo.countryCode.code == 'TR') {\r\n                quick.MM.trigger('retrieveReferenceDataList', [{ categoryPath: 'COUNTRY(' + 'TR' + ')/CITY' }]);\r\n                quick.store.set('flagSuccess2', true);\r\n            }\r\n\r\n            components.txt_postCode2.qValue = addressInfo?.zipCode;\r\n            components.txt_customerNumber2.qValue = customerInfo.customerNumber;\r\n            components.txt_idNumber2.qValue = primaryId;\r\n            //quick.store.get('$bnkas_utils').getEmploymentStatus(customerInfo.individualInfo?.employmentInfo?.occupationalStatus?.code);\r\n            components.txt_phoneNumber2.qValue = selectedPhoneInfo;\r\n            components.txt_email2.qValue = customerInfo.communicationInfo.emailAddresses[0]?.address;\r\n            components.txt_address2.qValue = address;\r\n\r\n            quick.MM.trigger('customerListControl');\r\n\r\n            //Nefes Sağlık Police Özelinde Diğer Sigortalı Bilgileri \r\n            if (quick.store.get('screenNameAS') == 'HINS' || quick.store.get('screenNameAS') == 'IHINS'|| quick.store.get('screenNameAS') == 'SHINS') {\r\n                quick.store.set(\"$ch_assuranceDifferentStatus\", components.ch_assuranceDifferent.qValue);\r\n                quick?.parent?.events?.setPolicySpecificInsuredInfo({ customerResponse: customerInfo, customerStatus: 'insured' });\r\n            }\r\n        }\r\n        else {\r\n            if (idType.code === \"RFKTP_TCKN\") {\r\n                quick.MM.trigger('retrieveCitizenAndNationalIdCardInfo');\r\n            }\r\n            else {\r\n                quick.MM.trigger('retrieveTaxIdRecordByTaxId');\r\n                quick.MM.trigger('retrieveTaxOfficeListOfTaxPayer');\r\n            }\r\n        }\r\n    }\r\n})\r\n    .catch((err) => {\r\n\r\n        let errorMessage = err?.response?.data?.responseMessage ?? 'Bir hata oluştu.';\r\n        (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n        components.as_alertCustomComp.open();\r\n    });",
 					"C": true,
 					"HL": "TS"
 				},
@@ -102,7 +102,7 @@ let pjson = {
 					"HL": "TS"
 				},
 				"setRetrieveCustomerByReferenceId": {
-					"H": "\r\ndeclare let data, qID;\r\n\r\nlet expansionPanelCountList = quick.store.get('expansionPanelCountList') || [];\r\nlet compQId = quick.store.get('compQId');\r\n\r\nexpansionPanelCountList.push(qID);\r\nquick.store.set('expansionPanelCountList', expansionPanelCountList);\r\n\r\nif (data) {\r\n    components[\"row_otherInfo2_\" + qID].visible = true;\r\n    components[\"row_otherInfo3_\" + qID].visible = true;\r\n    components[\"row_otherInfo1_\" + qID].visible = false;\r\n\r\n    let customerInfo = data[0];\r\n    quick.store.set('$customerInfo_' + qID, customerInfo);\r\n\r\n    let addressInfo = customerInfo.communicationInfo.postalAddresses[0];\r\n    quick.store.set('adressInfo', addressInfo);\r\n    let occupationalStatus = customerInfo.individualInfo.employmentInfo?.occupationalStatus\r\n    let customerType = customerInfo.basicInfo?.primaryId?.type.code;\r\n    let phoneNumbers = customerInfo.communicationInfo?.phoneNumbers;\r\n    let selectedPhoneInfo = null;\r\n    let primaryId = customerInfo.basicInfo?.primaryId?.value;\r\n\r\n    if (customerType === \"RFKTP_TCKN\") {\r\n        //müşteri tipi bireysel ise            \r\n        components[\"txt_taxId3_\" + qID].visible = false;\r\n        components[\"txt_taxId3_\" + qID].qValue = '';\r\n        components[\"txt_idNumber3_\" + qID].label = \"TCKN\";\r\n        components[\"txt_nameSurname3_\" + qID].label = \"Ad Soyad\";\r\n        components[\"row_otherInfo3_\" + qID].visible = true;\r\n        components[\"vauto_profession3_\" + qID].visible = true;\r\n        components[\"vauto_employmentStatus3_\" + qID].visible = true;\r\n\r\n        components[\"vauto_employmentStatus3_\" + qID].qValue = components[\"vauto_employmentStatus3_\" + qID].items.filter(item => item.code === occupationalStatus.code)[0]\r\n        components[\"txt_nameSurname3_\" + qID].qValue = customerInfo.basicInfo.fullName;\r\n\r\n        let formattedDate = customerInfo?.individualInfo.birthDate.substr(0, 10).split(\"-\")\r\n        components[\"txt_birthday3_\" + qID].qValue = formattedDate[2] + \"-\" + formattedDate[1] + \"-\" + formattedDate[0];\r\n        components[\"txt_birthdayPlace3_\" + qID].qValue = customerInfo?.individualInfo?.birthPlace;\r\n\r\n        if (customerInfo.individualInfo?.citizenId != null) {\r\n            primaryId = customerInfo.individualInfo?.citizenId;\r\n        } else if (customerInfo.individualInfo?.kktcId != null) {\r\n            primaryId = customerInfo.individualInfo?.kktcId;\r\n        } else if (customerInfo.individualInfo?.foreignerId != null) {\r\n            primaryId = customerInfo.individualInfo?.foreignerId\r\n        }\r\n\r\n        if (customerInfo.individualInfo?.gender.code == \"CNSYT_KADIN\") {\r\n            components[\"txt_gender3_\" + qID].qValue = 'Kadın'\r\n        } else if (customerInfo.individualInfo?.gender.code == \"CNSYT_ERKEK\") {\r\n            components[\"txt_gender3_\" + qID].qValue = 'Erkek'\r\n        }\r\n\r\n        if (customerInfo.individualInfo?.maritalStatus.code == \"MDNDR_EVLI\") {\r\n            components[\"txt_maritalStatus3_\" + qID].qValue = 'Evli'\r\n        } else if (customerInfo.individualInfo?.maritalStatus.code == \"MDNDR_BEKAR\") {\r\n            components[\"txt_maritalStatus3_\" + qID].qValue = 'Bekar'\r\n        }\r\n\r\n    } else {\r\n        //müşteri tipi ticari ise\r\n        components[\"txt_taxId3_\" + qID].visible = true;\r\n        components[\"txt_idNumber3_\" + qID].label = \"VKN\";\r\n        components[\"txt_nameSurname3_\" + qID].label = \"Unvan\"\r\n        components[\"row_otherInfo3_\" + qID].visible = false;\r\n        components[\"vauto_profession3_\" + qID].visible = false;\r\n        components[\"vauto_employmentStatus3_\" + qID].visible = false;\r\n        components[\"txt_nameSurname3_\" + qID].qValue = customerInfo.organizationalInfo?.fullName;\r\n\r\n        if (customerInfo.organizationalInfo?.taxId != null) {\r\n            primaryId = customerInfo.organizationalInfo?.taxId;\r\n        }\r\n\r\n        if (customerInfo?.taxPayerInfo != null) {\r\n            components[\"txt_taxId3_\" + qID].qValue = customerInfo?.taxPayerInfo?.taxOfficeName;\r\n        }\r\n    }\r\n\r\n    for (var i = 0; i < phoneNumbers.length; i++) {\r\n        if (phoneNumbers[i]?.updateInfo?.verificationType?.code == 1 && phoneNumbers[i]?.usageType?.code == \"TELTP_CEPTELEFON\") {\r\n            selectedPhoneInfo = customerInfo.communicationInfo.phoneNumbers[i].number;\r\n            components[\"vauto_phoneType3_\" + qID].qValue = components[\"vauto_phoneType3_\" + qID].items.filter(item => item.code === phoneNumbers[i].usageType.code)[0]\r\n            components[\"txt_countryCode3_\" + qID].qValue = phoneNumbers[i].countryCallingCode.code\r\n            break;\r\n        } else if (phoneNumbers[i]?.usageType?.code == \"TELTP_CEPTELEFON\") {\r\n            components[\"vauto_phoneType3_\" + qID].qValue = components[\"vauto_phoneType3_\" + qID].items.filter(item => item.code === phoneNumbers[i].usageType.code)[0]\r\n            components[\"txt_countryCode3_\" + qID].qValue = phoneNumbers[i].countryCallingCode.code\r\n            selectedPhoneInfo = customerInfo.communicationInfo.phoneNumbers[i].number;\r\n        }\r\n    }\r\n\r\n    //tahsilat ekranında kullanılacak.\r\n    quick.store.set('$primaryId3_' + qID, primaryId);\r\n    quick.store.set('$vauto_idNumber3_' + qID, customerType);\r\n    quick.store.set('$customerInfo_' + qID, customerInfo); // bu ekranda da kullanılıyor.\r\n    quick.store.set('customerFlag', false); //customerListControl için\r\n\r\n    //address\r\n    let address = '';\r\n    if (null != addressInfo?.subdistrict) {\r\n        address = addressInfo?.subdistrict\r\n    }\r\n    if (null != addressInfo?.address) {\r\n        address = address + ' ' + addressInfo?.address\r\n    }\r\n    if (null != addressInfo?.buildingNo) {\r\n        address = address + ' ' + addressInfo?.buildingNo\r\n    }\r\n    if (null != addressInfo?.doorNo) {\r\n        address = address + '/' + addressInfo?.doorNo\r\n    }\r\n\r\n    address = address + ' ' + addressInfo?.district?.value + '/' + addressInfo?.city?.value\r\n\r\n    components[\"vauto_adressType3_\" + qID].qValue = components[\"vauto_adressType3_\" + qID].items.filter(item => item.code === addressInfo.usageType.code)[0]\r\n    components[\"vauto_country3_\" + qID].qValue = components[\"vauto_country3_\" + qID].items.filter(item => item.code === addressInfo.countryCode.code)[0]\r\n\r\n    if (addressInfo.countryCode.code == 'TR') {\r\n        quick.MM.trigger('retrieveReferenceDataList', [{ categoryPath: 'COUNTRY(' + 'TR' + ')/CITY', qID }]);\r\n        quick.store.set('flagSuccess3', true);\r\n    }\r\n\r\n    components[\"txt_postCode3_\" + qID].qValue = addressInfo?.zipCode;\r\n    components[\"txt_customerNumber3_\" + qID].qValue = customerInfo.customerNumber;\r\n    components[\"txt_idNumber3_\" + qID].qValue = primaryId;\r\n    //quick.store.get('$bnkas_utils').getEmploymentStatus(customerInfo.individualInfo?.employmentInfo?.occupationalStatus?.code);\r\n    components[\"txt_phoneNumber3_\" + qID].qValue = selectedPhoneInfo;\r\n    components[\"txt_email3_\" + qID].qValue = customerInfo.communicationInfo.emailAddresses[0]?.address;\r\n    components[\"txt_address3_\" + qID].qValue = address;\r\n\r\n    quick.MM.trigger('customerListControl');\r\n\r\n    if (quick.store.get('screenNameAS') == 'HINS' || quick.store.get('screenNameAS') == 'IHINS'||quick.store.get('screenNameAS') == 'SHINS') {\r\n        quick.store.set(\"$ch_otherAssuranceStatus\", components.ch_otherAssurance.qValue);\r\n        quick?.parent?.events?.setPolicySpecificInsuredInfo({ customerResponse: customerInfo, customerStatus: 'otherInsured' });\r\n    }\r\n}",
+					"H": "\r\ndeclare let data, qID;\r\n\r\nlet expansionPanelCountList = quick.store.get('expansionPanelCountList') || [];\r\nlet compQId = quick.store.get('compQId');\r\n\r\nexpansionPanelCountList.push(qID);\r\nquick.store.set('expansionPanelCountList', expansionPanelCountList);\r\n\r\nif (data) {\r\n    components[\"row_otherInfo2_\" + qID].visible = true;\r\n    components[\"row_otherInfo3_\" + qID].visible = true;\r\n    components[\"row_otherInfo1_\" + qID].visible = false;\r\n\r\n    let customerInfo = data[0];\r\n    quick.store.set('$customerInfo_' + qID, customerInfo);\r\n\r\n    let addressInfo = customerInfo.communicationInfo.postalAddresses[0];\r\n    quick.store.set('adressInfo', addressInfo);\r\n    let occupationalStatus = customerInfo.individualInfo.employmentInfo?.occupationalStatus\r\n    let customerType = customerInfo.basicInfo?.primaryId?.type.code;\r\n    let phoneNumbers = customerInfo.communicationInfo?.phoneNumbers;\r\n    let selectedPhoneInfo = null;\r\n    let primaryId = customerInfo.basicInfo?.primaryId?.value;\r\n\r\n    if (customerType === \"RFKTP_TCKN\") {\r\n        //müşteri tipi bireysel ise            \r\n        components[\"txt_taxId3_\" + qID].visible = false;\r\n        components[\"txt_taxId3_\" + qID].qValue = '';\r\n        components[\"txt_idNumber3_\" + qID].label = \"TCKN\";\r\n        components[\"txt_nameSurname3_\" + qID].label = \"Ad Soyad\";\r\n        components[\"row_otherInfo3_\" + qID].visible = true;\r\n        components[\"vauto_profession3_\" + qID].visible = true;\r\n        components[\"vauto_employmentStatus3_\" + qID].visible = true;\r\n\r\n        components[\"vauto_employmentStatus3_\" + qID].qValue = components[\"vauto_employmentStatus3_\" + qID].items.filter(item => item.code === occupationalStatus?.code)[0]\r\n        components[\"txt_nameSurname3_\" + qID].qValue = customerInfo.basicInfo.fullName;\r\n\r\n        let formattedDate = customerInfo?.individualInfo.birthDate.substr(0, 10).split(\"-\")\r\n        components[\"txt_birthday3_\" + qID].qValue = formattedDate[2] + \"-\" + formattedDate[1] + \"-\" + formattedDate[0];\r\n        components[\"txt_birthdayPlace3_\" + qID].qValue = customerInfo?.individualInfo?.birthPlace;\r\n\r\n        if (customerInfo.individualInfo?.citizenId != null) {\r\n            primaryId = customerInfo.individualInfo?.citizenId;\r\n        } else if (customerInfo.individualInfo?.kktcId != null) {\r\n            primaryId = customerInfo.individualInfo?.kktcId;\r\n        } else if (customerInfo.individualInfo?.foreignerId != null) {\r\n            primaryId = customerInfo.individualInfo?.foreignerId\r\n        }\r\n\r\n        if (customerInfo.individualInfo?.gender.code == \"CNSYT_KADIN\") {\r\n            components[\"txt_gender3_\" + qID].qValue = 'Kadın'\r\n        } else if (customerInfo.individualInfo?.gender.code == \"CNSYT_ERKEK\") {\r\n            components[\"txt_gender3_\" + qID].qValue = 'Erkek'\r\n        }\r\n\r\n        if (customerInfo.individualInfo?.maritalStatus.code == \"MDNDR_EVLI\") {\r\n            components[\"txt_maritalStatus3_\" + qID].qValue = 'Evli'\r\n        } else if (customerInfo.individualInfo?.maritalStatus.code == \"MDNDR_BEKAR\") {\r\n            components[\"txt_maritalStatus3_\" + qID].qValue = 'Bekar'\r\n        }\r\n\r\n    } else {\r\n        //müşteri tipi ticari ise\r\n        components[\"txt_taxId3_\" + qID].visible = true;\r\n        components[\"txt_idNumber3_\" + qID].label = \"VKN\";\r\n        components[\"txt_nameSurname3_\" + qID].label = \"Unvan\"\r\n        components[\"row_otherInfo3_\" + qID].visible = false;\r\n        components[\"vauto_profession3_\" + qID].visible = false;\r\n        components[\"vauto_employmentStatus3_\" + qID].visible = false;\r\n        components[\"txt_nameSurname3_\" + qID].qValue = customerInfo.organizationalInfo?.fullName;\r\n\r\n        if (customerInfo.organizationalInfo?.taxId != null) {\r\n            primaryId = customerInfo.organizationalInfo?.taxId;\r\n        }\r\n\r\n        if (customerInfo?.taxPayerInfo != null) {\r\n            components[\"txt_taxId3_\" + qID].qValue = customerInfo?.taxPayerInfo?.taxOfficeName;\r\n        }\r\n    }\r\n\r\n    for (var i = 0; i < phoneNumbers.length; i++) {\r\n        if (phoneNumbers[i]?.updateInfo?.verificationType?.code == 1 && phoneNumbers[i]?.usageType?.code == \"TELTP_CEPTELEFON\") {\r\n            selectedPhoneInfo = customerInfo.communicationInfo.phoneNumbers[i].number;\r\n            components[\"vauto_phoneType3_\" + qID].qValue = components[\"vauto_phoneType3_\" + qID].items.filter(item => item.code === phoneNumbers[i].usageType.code)[0]\r\n            components[\"txt_countryCode3_\" + qID].qValue = phoneNumbers[i].countryCallingCode.code\r\n            break;\r\n        } else if (phoneNumbers[i]?.usageType?.code == \"TELTP_CEPTELEFON\") {\r\n            components[\"vauto_phoneType3_\" + qID].qValue = components[\"vauto_phoneType3_\" + qID].items.filter(item => item.code === phoneNumbers[i].usageType.code)[0]\r\n            components[\"txt_countryCode3_\" + qID].qValue = phoneNumbers[i].countryCallingCode.code\r\n            selectedPhoneInfo = customerInfo.communicationInfo.phoneNumbers[i].number;\r\n        }\r\n    }\r\n\r\n    //tahsilat ekranında kullanılacak.\r\n    quick.store.set('$primaryId3_' + qID, primaryId);\r\n    quick.store.set('$vauto_idNumber3_' + qID, customerType);\r\n    quick.store.set('$customerInfo_' + qID, customerInfo); // bu ekranda da kullanılıyor.\r\n    quick.store.set('customerFlag', false); //customerListControl için\r\n\r\n    //address\r\n    let address = '';\r\n    if (null != addressInfo?.subdistrict) {\r\n        address = addressInfo?.subdistrict\r\n    }\r\n    if (null != addressInfo?.address) {\r\n        address = address + ' ' + addressInfo?.address\r\n    }\r\n    if (null != addressInfo?.buildingNo) {\r\n        address = address + ' ' + addressInfo?.buildingNo\r\n    }\r\n    if (null != addressInfo?.doorNo) {\r\n        address = address + '/' + addressInfo?.doorNo\r\n    }\r\n\r\n    address = address + ' ' + addressInfo?.district?.value + '/' + addressInfo?.city?.value\r\n\r\n    components[\"vauto_adressType3_\" + qID].qValue = components[\"vauto_adressType3_\" + qID].items.filter(item => item.code === addressInfo.usageType.code)[0]\r\n    components[\"vauto_country3_\" + qID].qValue = components[\"vauto_country3_\" + qID].items.filter(item => item.code === addressInfo.countryCode.code)[0]\r\n\r\n    if (addressInfo.countryCode.code == 'TR') {\r\n        quick.MM.trigger('retrieveReferenceDataList', [{ categoryPath: 'COUNTRY(' + 'TR' + ')/CITY', qID }]);\r\n        quick.store.set('flagSuccess3', true);\r\n    }\r\n\r\n    components[\"txt_postCode3_\" + qID].qValue = addressInfo?.zipCode;\r\n    components[\"txt_customerNumber3_\" + qID].qValue = customerInfo.customerNumber;\r\n    components[\"txt_idNumber3_\" + qID].qValue = primaryId;\r\n    //quick.store.get('$bnkas_utils').getEmploymentStatus(customerInfo.individualInfo?.employmentInfo?.occupationalStatus?.code);\r\n    components[\"txt_phoneNumber3_\" + qID].qValue = selectedPhoneInfo;\r\n    components[\"txt_email3_\" + qID].qValue = customerInfo.communicationInfo.emailAddresses[0]?.address;\r\n    components[\"txt_address3_\" + qID].qValue = address;\r\n\r\n    quick.MM.trigger('customerListControl');\r\n\r\n    if (quick.store.get('screenNameAS') == 'HINS' || quick.store.get('screenNameAS') == 'IHINS'||quick.store.get('screenNameAS') == 'SHINS') {\r\n        quick.store.set(\"$ch_otherAssuranceStatus\", components.ch_otherAssurance.qValue);\r\n        quick?.parent?.events?.setPolicySpecificInsuredInfo({ customerResponse: customerInfo, customerStatus: 'otherInsured' });\r\n    }\r\n}",
 					"C": true,
 					"HL": "TS"
 				},
@@ -18905,7 +18905,7 @@ let pjson = {
 			},
 			"E": {
 				"retrieveCustomerByCustomerNumber": {
-					"H": "var _a;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nvar requestData = {\r\n    \"customerNumber\": [\r\n        quick.containerServices.getCustomerContext().customerNumber\r\n        // 164229554\r\n        // 164149981\r\n        // 164204540\r\n        // 164204524\r\n        // 164201235\r\n        //164176484\r\n        //163838188\r\n        //164019676 //şevval reyhan\r\n        //160224783//---güzin er\r\n        //164049679 //mustafa\r\n        //164160655 //yenileme turgut \r\n        //164013014 //ONUR\r\n        //164093782 //yenileme\r\n        //164100966 //yenileme gülşah\r\n        //163986303 //--- ticari müştr\r\n        //164159645 // ticari berna\r\n        //164160663 // yenileme ismail\r\n        //164172848 //Yenileme Cevdet\r\n        //164175925 // yenileme\r\n        //164178922\r\n        //164187565\r\n        //164013014\r\n    ],\r\n    \"retrieveOptionsDto\": {\r\n        \"multipleRecordBehaviourCode\": {\r\n            \"code\": \"COKKT_ILK\",\r\n            \"category\": \"MUS_COKKT\"\r\n        },\r\n        \"applicationKey\": quick.store.get('$applicationKey')\r\n    }\r\n};\r\nquick.MM.trigger('setConsumerAndScreenInfo'); //consumerCode ve screenName setlendi.\r\nvar serviceRequest = {\r\n    url: '/api/uiclient/retrieveCustomerByCustomerNumber',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n};\r\n(_a = quick.Request.async(serviceRequest)) === null || _a === void 0 ? void 0 : _a.then(function (resp) {\r\n    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5;\r\n    if ((_a = resp === null || resp === void 0 ? void 0 : resp.data) === null || _a === void 0 ? void 0 : _a.customerList) {\r\n        var customerInfo = (_b = resp === null || resp === void 0 ? void 0 : resp.data) === null || _b === void 0 ? void 0 : _b.customerList[0];\r\n        var addressInfo_1 = customerInfo.communicationInfo.postalAddresses[0];\r\n        quick.store.set('adressInfo', addressInfo_1);\r\n        var occupationalStatus_1 = (_d = (_c = customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.individualInfo) === null || _c === void 0 ? void 0 : _c.employmentInfo) === null || _d === void 0 ? void 0 : _d.occupationalStatus;\r\n        var customerType = (_f = (_e = customerInfo.basicInfo) === null || _e === void 0 ? void 0 : _e.primaryId) === null || _f === void 0 ? void 0 : _f.type.code;\r\n        var phoneNumbers_1 = (_g = customerInfo.communicationInfo) === null || _g === void 0 ? void 0 : _g.phoneNumbers;\r\n        var selectedPhoneInfo = null;\r\n        var primaryId = (_j = (_h = customerInfo.basicInfo) === null || _h === void 0 ? void 0 : _h.primaryId) === null || _j === void 0 ? void 0 : _j.value;\r\n        if (customerType === \"RFKTP_TCKN\") {\r\n            //müşteri tipi bireysel ise            \r\n            components.txt_taxId.visible = false;\r\n            components.txt_taxId.qValue = '';\r\n            components.txt_idNumber.label = \"TCKN\";\r\n            components.txt_nameSurname.label = \"AD Soyad\";\r\n            components.row_individualInfo.visible = true;\r\n            components.vauto_profession.visible = true;\r\n            components.vauto_employmentStatus.visible = true;\r\n            components.vauto_employmentStatus.qValue = components.vauto_employmentStatus.items.filter(function (item) { return item.code === occupationalStatus_1.code; })[0];\r\n            components.txt_nameSurname.qValue = customerInfo.basicInfo.fullName;\r\n            var formattedDate = customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.individualInfo.birthDate.substr(0, 10).split(\"-\");\r\n            components.txt_birthday.qValue = formattedDate[2] + \"-\" + formattedDate[1] + \"-\" + formattedDate[0];\r\n            components.txt_birthdayPlace.qValue = (_k = customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.individualInfo) === null || _k === void 0 ? void 0 : _k.birthPlace;\r\n            if (((_l = customerInfo.individualInfo) === null || _l === void 0 ? void 0 : _l.citizenId) != null) {\r\n                primaryId = (_m = customerInfo.individualInfo) === null || _m === void 0 ? void 0 : _m.citizenId;\r\n            }\r\n            else if (((_o = customerInfo.individualInfo) === null || _o === void 0 ? void 0 : _o.kktcId) != null) {\r\n                primaryId = (_p = customerInfo.individualInfo) === null || _p === void 0 ? void 0 : _p.kktcId;\r\n            }\r\n            else if (((_q = customerInfo.individualInfo) === null || _q === void 0 ? void 0 : _q.foreignerId) != null) {\r\n                primaryId = (_r = customerInfo.individualInfo) === null || _r === void 0 ? void 0 : _r.foreignerId;\r\n            }\r\n            if (((_s = customerInfo.individualInfo) === null || _s === void 0 ? void 0 : _s.gender.code) == \"CNSYT_KADIN\") {\r\n                components.txt_gender.qValue = 'Kadın';\r\n            }\r\n            else if (((_t = customerInfo.individualInfo) === null || _t === void 0 ? void 0 : _t.gender.code) == \"CNSYT_ERKEK\") {\r\n                components.txt_gender.qValue = 'Erkek';\r\n            }\r\n            if (((_u = customerInfo.individualInfo) === null || _u === void 0 ? void 0 : _u.maritalStatus.code) == \"MDNDR_EVLI\") {\r\n                components.txt_maritalStatus.qValue = 'Evli';\r\n            }\r\n            else if (((_v = customerInfo.individualInfo) === null || _v === void 0 ? void 0 : _v.maritalStatus.code) == \"MDNDR_BEKAR\") {\r\n                components.txt_maritalStatus.qValue = 'Bekar';\r\n            }\r\n        }\r\n        else {\r\n            //müşteri tipi ticari ise\r\n            components.txt_taxId.visible = true;\r\n            components.txt_idNumber.label = \"VKN\";\r\n            components.txt_nameSurname.label = \"Unvan\";\r\n            components.row_individualInfo.visible = false;\r\n            components.vauto_profession.visible = false;\r\n            components.vauto_employmentStatus.visible = false;\r\n            components.txt_nameSurname.qValue = (_w = customerInfo.organizationalInfo) === null || _w === void 0 ? void 0 : _w.fullName;\r\n            if (((_x = customerInfo.organizationalInfo) === null || _x === void 0 ? void 0 : _x.taxId) != null) {\r\n                primaryId = (_y = customerInfo.organizationalInfo) === null || _y === void 0 ? void 0 : _y.taxId;\r\n            }\r\n            if ((customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.taxPayerInfo) != null) {\r\n                components.txt_taxId.qValue = (_z = customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.taxPayerInfo) === null || _z === void 0 ? void 0 : _z.taxOfficeName;\r\n            }\r\n        }\r\n        for (var i = 0; i < phoneNumbers_1.length; i++) {\r\n            if (((_0 = phoneNumbers_1[i].updateInfo) === null || _0 === void 0 ? void 0 : _0.verificationType.code) == 1 && phoneNumbers_1[i].usageType.code == \"TELTP_CEPTELEFON\") {\r\n                selectedPhoneInfo = customerInfo.communicationInfo.phoneNumbers[i].number;\r\n                components.vauto_phoneType.qValue = components.vauto_phoneType.items.filter(function (item) { return item.code === phoneNumbers_1[i].usageType.code; })[0];\r\n                components.txt_countryCode.qValue = phoneNumbers_1[i].countryCallingCode.code;\r\n                break;\r\n            }\r\n            else if (phoneNumbers_1[i].usageType.code == \"TELTP_CEPTELEFON\") {\r\n                components.vauto_phoneType.qValue = components.vauto_phoneType.items.filter(function (item) { return item.code === phoneNumbers_1[i].usageType.code; })[0];\r\n                components.txt_countryCode.qValue = phoneNumbers_1[i].countryCallingCode.code;\r\n                selectedPhoneInfo = customerInfo.communicationInfo.phoneNumbers[i].number;\r\n            }\r\n        }\r\n        //tahsilat ekranında kullanılacak.\r\n        quick.store.set('$primaryId', primaryId);\r\n        quick.store.set('$customerInfo', customerInfo); // bu ekranda da kullanılıyor.\r\n        //address\r\n        var address = '';\r\n        if (null != (addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.subdistrict)) {\r\n            address = addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.subdistrict;\r\n        }\r\n        if (null != (addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.address)) {\r\n            address = address + ' ' + (addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.address);\r\n        }\r\n        if (null != (addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.buildingNo)) {\r\n            address = address + ' ' + (addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.buildingNo);\r\n        }\r\n        if (null != (addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.doorNo)) {\r\n            address = address + '/' + (addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.doorNo);\r\n        }\r\n        address = address + ' ' + ((_1 = addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.district) === null || _1 === void 0 ? void 0 : _1.value) + '/' + ((_2 = addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.city) === null || _2 === void 0 ? void 0 : _2.value);\r\n        components.vauto_adressType.qValue = components.vauto_adressType.items.filter(function (item) { return item.code === addressInfo_1.usageType.code; })[0];\r\n        components.vauto_country.qValue = components.vauto_country.items.filter(function (item) { return item.code === addressInfo_1.countryCode.code; })[0];\r\n        if (addressInfo_1.countryCode.code == 'TR') {\r\n            quick.MM.trigger('retrieveReferenceDataList', [{ categoryPath: 'COUNTRY(' + 'TR' + ')/CITY' }]);\r\n            quick.store.set('flagSuccess', true);\r\n        }\r\n        debugger;\r\n        if (components.txt_postCode.qValue) {\r\n        }\r\n        else {\r\n            components.txt_postCode.qValue = addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.zipCode;\r\n        }\r\n        components.txt_customerNumber.qValue = customerInfo.customerNumber;\r\n        components.txt_idNumber.qValue = primaryId;\r\n        //quick.store.get('$bnkas_utils').getEmploymentStatus(customerInfo.individualInfo?.employmentInfo?.occupationalStatus?.code);\r\n        components.txt_phoneNumber.qValue = selectedPhoneInfo;\r\n        components.txt_email.qValue = (_3 = customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.communicationInfo.emailAddresses[0]) === null || _3 === void 0 ? void 0 : _3.address;\r\n        components.txt_address.qValue = address;\r\n        // sigorta ettiren ve eklenen sigortalıların ekleneceği bir liste oluşturuldu.        \r\n        var assuranceList = [];\r\n        var firstCustomer = {\r\n            customerType: customerType,\r\n            primaryId: primaryId\r\n        };\r\n        assuranceList.push(firstCustomer);\r\n        quick.store.set('assuranceList', assuranceList);\r\n        quick.store.set('$assuranceList', assuranceList);\r\n        if (quick.store.get('screenNameAS') == 'HINS' || quick.store.get('screenNameAS') == 'IHINS' || quick.store.get('screenNameAS') == 'SHINS') {\r\n            (_5 = (_4 = quick === null || quick === void 0 ? void 0 : quick.parent) === null || _4 === void 0 ? void 0 : _4.events) === null || _5 === void 0 ? void 0 : _5.retrieveReferenceData({ customerResponse: customerInfo });\r\n        }\r\n    }\r\n}).catch(function (err) {\r\n    var _a, _b, _c;\r\n    var errorMessage = (_c = (_b = (_a = err === null || err === void 0 ? void 0 : err.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.responseMessage) !== null && _c !== void 0 ? _c : 'Bir hata oluştu.';\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n});\r\n",
+					"H": "var _a;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nvar requestData = {\r\n    \"customerNumber\": [\r\n        quick.containerServices.getCustomerContext().customerNumber\r\n        // 164229554\r\n        // 164149981\r\n        // 164204540\r\n        // 164204524\r\n        // 164201235\r\n        //164176484\r\n        //163838188\r\n        //164019676 //şevval reyhan\r\n        //160224783//---güzin er\r\n        //164049679 //mustafa\r\n        //164160655 //yenileme turgut \r\n        //164013014 //ONUR\r\n        //164093782 //yenileme\r\n        //164100966 //yenileme gülşah\r\n        //163986303 //--- ticari müştr\r\n        //164159645 // ticari berna\r\n        //164160663 // yenileme ismail\r\n        //164172848 //Yenileme Cevdet\r\n        //164175925 // yenileme\r\n        //164178922\r\n        //164187565\r\n        //164013014\r\n    ],\r\n    \"retrieveOptionsDto\": {\r\n        \"multipleRecordBehaviourCode\": {\r\n            \"code\": \"COKKT_ILK\",\r\n            \"category\": \"MUS_COKKT\"\r\n        },\r\n        \"applicationKey\": quick.store.get('$applicationKey')\r\n    }\r\n};\r\nquick.MM.trigger('setConsumerAndScreenInfo'); //consumerCode ve screenName setlendi.\r\nvar serviceRequest = {\r\n    url: '/api/uiclient/retrieveCustomerByCustomerNumber',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n};\r\n(_a = quick.Request.async(serviceRequest)) === null || _a === void 0 ? void 0 : _a.then(function (resp) {\r\n    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5;\r\n    if ((_a = resp === null || resp === void 0 ? void 0 : resp.data) === null || _a === void 0 ? void 0 : _a.customerList) {\r\n        var customerInfo = (_b = resp === null || resp === void 0 ? void 0 : resp.data) === null || _b === void 0 ? void 0 : _b.customerList[0];\r\n        var addressInfo_1 = customerInfo.communicationInfo.postalAddresses[0];\r\n        quick.store.set('adressInfo', addressInfo_1);\r\n        var occupationalStatus_1 = (_d = (_c = customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.individualInfo) === null || _c === void 0 ? void 0 : _c.employmentInfo) === null || _d === void 0 ? void 0 : _d.occupationalStatus;\r\n        var customerType = (_f = (_e = customerInfo.basicInfo) === null || _e === void 0 ? void 0 : _e.primaryId) === null || _f === void 0 ? void 0 : _f.type.code;\r\n        var phoneNumbers_1 = (_g = customerInfo.communicationInfo) === null || _g === void 0 ? void 0 : _g.phoneNumbers;\r\n        var selectedPhoneInfo = null;\r\n        var primaryId = (_j = (_h = customerInfo.basicInfo) === null || _h === void 0 ? void 0 : _h.primaryId) === null || _j === void 0 ? void 0 : _j.value;\r\n        if (customerType === \"RFKTP_TCKN\") {\r\n            //müşteri tipi bireysel ise            \r\n            components.txt_taxId.visible = false;\r\n            components.txt_taxId.qValue = '';\r\n            components.txt_idNumber.label = \"TCKN\";\r\n            components.txt_nameSurname.label = \"AD Soyad\";\r\n            components.row_individualInfo.visible = true;\r\n            components.vauto_profession.visible = true;\r\n            components.vauto_employmentStatus.visible = true;\r\n            components.vauto_employmentStatus.qValue = components.vauto_employmentStatus.items.filter(function (item) { return item.code === (occupationalStatus_1 === null || occupationalStatus_1 === void 0 ? void 0 : occupationalStatus_1.code); })[0];\r\n            components.txt_nameSurname.qValue = customerInfo.basicInfo.fullName;\r\n            var formattedDate = customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.individualInfo.birthDate.substr(0, 10).split(\"-\");\r\n            components.txt_birthday.qValue = formattedDate[2] + \"-\" + formattedDate[1] + \"-\" + formattedDate[0];\r\n            components.txt_birthdayPlace.qValue = (_k = customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.individualInfo) === null || _k === void 0 ? void 0 : _k.birthPlace;\r\n            if (((_l = customerInfo.individualInfo) === null || _l === void 0 ? void 0 : _l.citizenId) != null) {\r\n                primaryId = (_m = customerInfo.individualInfo) === null || _m === void 0 ? void 0 : _m.citizenId;\r\n            }\r\n            else if (((_o = customerInfo.individualInfo) === null || _o === void 0 ? void 0 : _o.kktcId) != null) {\r\n                primaryId = (_p = customerInfo.individualInfo) === null || _p === void 0 ? void 0 : _p.kktcId;\r\n            }\r\n            else if (((_q = customerInfo.individualInfo) === null || _q === void 0 ? void 0 : _q.foreignerId) != null) {\r\n                primaryId = (_r = customerInfo.individualInfo) === null || _r === void 0 ? void 0 : _r.foreignerId;\r\n            }\r\n            if (((_s = customerInfo.individualInfo) === null || _s === void 0 ? void 0 : _s.gender.code) == \"CNSYT_KADIN\") {\r\n                components.txt_gender.qValue = 'Kadın';\r\n            }\r\n            else if (((_t = customerInfo.individualInfo) === null || _t === void 0 ? void 0 : _t.gender.code) == \"CNSYT_ERKEK\") {\r\n                components.txt_gender.qValue = 'Erkek';\r\n            }\r\n            if (((_u = customerInfo.individualInfo) === null || _u === void 0 ? void 0 : _u.maritalStatus.code) == \"MDNDR_EVLI\") {\r\n                components.txt_maritalStatus.qValue = 'Evli';\r\n            }\r\n            else if (((_v = customerInfo.individualInfo) === null || _v === void 0 ? void 0 : _v.maritalStatus.code) == \"MDNDR_BEKAR\") {\r\n                components.txt_maritalStatus.qValue = 'Bekar';\r\n            }\r\n        }\r\n        else {\r\n            //müşteri tipi ticari ise\r\n            components.txt_taxId.visible = true;\r\n            components.txt_idNumber.label = \"VKN\";\r\n            components.txt_nameSurname.label = \"Unvan\";\r\n            components.row_individualInfo.visible = false;\r\n            components.vauto_profession.visible = false;\r\n            components.vauto_employmentStatus.visible = false;\r\n            components.txt_nameSurname.qValue = (_w = customerInfo.organizationalInfo) === null || _w === void 0 ? void 0 : _w.fullName;\r\n            if (((_x = customerInfo.organizationalInfo) === null || _x === void 0 ? void 0 : _x.taxId) != null) {\r\n                primaryId = (_y = customerInfo.organizationalInfo) === null || _y === void 0 ? void 0 : _y.taxId;\r\n            }\r\n            if ((customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.taxPayerInfo) != null) {\r\n                components.txt_taxId.qValue = (_z = customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.taxPayerInfo) === null || _z === void 0 ? void 0 : _z.taxOfficeName;\r\n            }\r\n        }\r\n        for (var i = 0; i < phoneNumbers_1.length; i++) {\r\n            if (((_0 = phoneNumbers_1[i].updateInfo) === null || _0 === void 0 ? void 0 : _0.verificationType.code) == 1 && phoneNumbers_1[i].usageType.code == \"TELTP_CEPTELEFON\") {\r\n                selectedPhoneInfo = customerInfo.communicationInfo.phoneNumbers[i].number;\r\n                components.vauto_phoneType.qValue = components.vauto_phoneType.items.filter(function (item) { return item.code === phoneNumbers_1[i].usageType.code; })[0];\r\n                components.txt_countryCode.qValue = phoneNumbers_1[i].countryCallingCode.code;\r\n                break;\r\n            }\r\n            else if (phoneNumbers_1[i].usageType.code == \"TELTP_CEPTELEFON\") {\r\n                components.vauto_phoneType.qValue = components.vauto_phoneType.items.filter(function (item) { return item.code === phoneNumbers_1[i].usageType.code; })[0];\r\n                components.txt_countryCode.qValue = phoneNumbers_1[i].countryCallingCode.code;\r\n                selectedPhoneInfo = customerInfo.communicationInfo.phoneNumbers[i].number;\r\n            }\r\n        }\r\n        //tahsilat ekranında kullanılacak.\r\n        quick.store.set('$primaryId', primaryId);\r\n        quick.store.set('$customerInfo', customerInfo); // bu ekranda da kullanılıyor.\r\n        //address\r\n        var address = '';\r\n        if (null != (addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.subdistrict)) {\r\n            address = addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.subdistrict;\r\n        }\r\n        if (null != (addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.address)) {\r\n            address = address + ' ' + (addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.address);\r\n        }\r\n        if (null != (addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.buildingNo)) {\r\n            address = address + ' ' + (addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.buildingNo);\r\n        }\r\n        if (null != (addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.doorNo)) {\r\n            address = address + '/' + (addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.doorNo);\r\n        }\r\n        address = address + ' ' + ((_1 = addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.district) === null || _1 === void 0 ? void 0 : _1.value) + '/' + ((_2 = addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.city) === null || _2 === void 0 ? void 0 : _2.value);\r\n        components.vauto_adressType.qValue = components.vauto_adressType.items.filter(function (item) { return item.code === addressInfo_1.usageType.code; })[0];\r\n        components.vauto_country.qValue = components.vauto_country.items.filter(function (item) { return item.code === addressInfo_1.countryCode.code; })[0];\r\n        if (addressInfo_1.countryCode.code == 'TR') {\r\n            quick.MM.trigger('retrieveReferenceDataList', [{ categoryPath: 'COUNTRY(' + 'TR' + ')/CITY' }]);\r\n            quick.store.set('flagSuccess', true);\r\n        }\r\n        debugger;\r\n        if (components.txt_postCode.qValue) {\r\n        }\r\n        else {\r\n            components.txt_postCode.qValue = addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.zipCode;\r\n        }\r\n        components.txt_customerNumber.qValue = customerInfo.customerNumber;\r\n        components.txt_idNumber.qValue = primaryId;\r\n        //quick.store.get('$bnkas_utils').getEmploymentStatus(customerInfo.individualInfo?.employmentInfo?.occupationalStatus?.code);\r\n        components.txt_phoneNumber.qValue = selectedPhoneInfo;\r\n        components.txt_email.qValue = (_3 = customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.communicationInfo.emailAddresses[0]) === null || _3 === void 0 ? void 0 : _3.address;\r\n        components.txt_address.qValue = address;\r\n        // sigorta ettiren ve eklenen sigortalıların ekleneceği bir liste oluşturuldu.        \r\n        var assuranceList = [];\r\n        var firstCustomer = {\r\n            customerType: customerType,\r\n            primaryId: primaryId\r\n        };\r\n        assuranceList.push(firstCustomer);\r\n        quick.store.set('assuranceList', assuranceList);\r\n        quick.store.set('$assuranceList', assuranceList);\r\n        if (quick.store.get('screenNameAS') == 'HINS' || quick.store.get('screenNameAS') == 'IHINS' || quick.store.get('screenNameAS') == 'SHINS') {\r\n            (_5 = (_4 = quick === null || quick === void 0 ? void 0 : quick.parent) === null || _4 === void 0 ? void 0 : _4.events) === null || _5 === void 0 ? void 0 : _5.retrieveReferenceData({ customerResponse: customerInfo });\r\n        }\r\n    }\r\n}).catch(function (err) {\r\n    var _a, _b, _c;\r\n    var errorMessage = (_c = (_b = (_a = err === null || err === void 0 ? void 0 : err.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.responseMessage) !== null && _c !== void 0 ? _c : 'Bir hata oluştu.';\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n});\r\n",
 					"C": true,
 					"HL": "JS"
 				},
@@ -18936,7 +18936,7 @@ let pjson = {
 					"HL": "JS"
 				},
 				"retrieveCustomerByReferenceId": {
-					"H": "var _a;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nvar qID;\r\nvar requestData = {\r\n    \"referenceId\": {\r\n        \"type\": {\r\n            \"code\": idType.code,\r\n            \"category\": \"MUS_RFKTP\"\r\n        },\r\n        \"value\": citizenNo\r\n    },\r\n    \"retrieveOptions\": {\r\n        \"multipleRecordBehaviourCode\": {\r\n            \"code\": \"COKKT_ILK\",\r\n            \"category\": \"MUS_COKKT\"\r\n        },\r\n        \"applicationKey\": quick.store.get('$applicationKey')\r\n    }\r\n};\r\n//consumerCode ve screenName setlendi.\r\nquick.MM.trigger('setConsumerAndScreenInfo');\r\nvar serviceRequest = {\r\n    url: '/api/uiclient/retrieveCustomerByReferenceId',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n};\r\ndebugger;\r\n(_a = quick.Request.async(serviceRequest)) === null || _a === void 0 ? void 0 : _a.then(function (resp) {\r\n    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12;\r\n    quick.EM.trace(resp === null || resp === void 0 ? void 0 : resp.data);\r\n    if (qID) {\r\n        quick.MM.trigger('setRetrieveCustomerByReferenceId', [{ data: (_a = resp === null || resp === void 0 ? void 0 : resp.data) === null || _a === void 0 ? void 0 : _a.customer, qID: qID }]);\r\n    }\r\n    else {\r\n        if (((_c = (_b = resp === null || resp === void 0 ? void 0 : resp.data) === null || _b === void 0 ? void 0 : _b.customer) === null || _c === void 0 ? void 0 : _c.length) > 0) {\r\n            components.row_assuranceInfo5.visible = true;\r\n            components.row_assuranceInfo6.visible = true;\r\n            components.row_assuranceInfo1.visible = false;\r\n            var customerInfo = (_d = resp === null || resp === void 0 ? void 0 : resp.data) === null || _d === void 0 ? void 0 : _d.customer[0];\r\n            var addressInfo_1 = customerInfo.communicationInfo.postalAddresses[0];\r\n            quick.store.set('adressInfo', addressInfo_1);\r\n            var occupationalStatus_1 = (_e = customerInfo.individualInfo.employmentInfo) === null || _e === void 0 ? void 0 : _e.occupationalStatus;\r\n            var customerType = (_g = (_f = customerInfo.basicInfo) === null || _f === void 0 ? void 0 : _f.primaryId) === null || _g === void 0 ? void 0 : _g.type.code;\r\n            var phoneNumbers_1 = (_h = customerInfo.communicationInfo) === null || _h === void 0 ? void 0 : _h.phoneNumbers;\r\n            var selectedPhoneInfo = null;\r\n            var primaryId = (_k = (_j = customerInfo.basicInfo) === null || _j === void 0 ? void 0 : _j.primaryId) === null || _k === void 0 ? void 0 : _k.value;\r\n            if (customerType === \"RFKTP_TCKN\") {\r\n                //müşteri tipi bireysel ise            \r\n                components.txt_taxId2.visible = false;\r\n                components.txt_taxId2.qValue = '';\r\n                components.txt_idNumber2.label = \"TCKN\";\r\n                components.txt_nameSurname2.label = \"Ad Soyad\";\r\n                components.row_assuranceInfo6.visible = true;\r\n                components.vauto_profession2.visible = true;\r\n                components.vauto_employmentStatus2.visible = true;\r\n                components.vauto_employmentStatus2.qValue = components.vauto_employmentStatus2.items.filter(function (item) { return item.code === occupationalStatus_1.code; })[0];\r\n                components.txt_nameSurname2.qValue = customerInfo.basicInfo.fullName;\r\n                var formattedDate = customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.individualInfo.birthDate.substr(0, 10).split(\"-\");\r\n                components.txt_birthday2.qValue = formattedDate[2] + \"-\" + formattedDate[1] + \"-\" + formattedDate[0];\r\n                components.txt_birthdayPlace2.qValue = (_l = customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.individualInfo) === null || _l === void 0 ? void 0 : _l.birthPlace;\r\n                if (((_m = customerInfo.individualInfo) === null || _m === void 0 ? void 0 : _m.citizenId) != null) {\r\n                    primaryId = (_o = customerInfo.individualInfo) === null || _o === void 0 ? void 0 : _o.citizenId;\r\n                }\r\n                else if (((_p = customerInfo.individualInfo) === null || _p === void 0 ? void 0 : _p.kktcId) != null) {\r\n                    primaryId = (_q = customerInfo.individualInfo) === null || _q === void 0 ? void 0 : _q.kktcId;\r\n                }\r\n                else if (((_r = customerInfo.individualInfo) === null || _r === void 0 ? void 0 : _r.foreignerId) != null) {\r\n                    primaryId = (_s = customerInfo.individualInfo) === null || _s === void 0 ? void 0 : _s.foreignerId;\r\n                }\r\n                if (((_t = customerInfo.individualInfo) === null || _t === void 0 ? void 0 : _t.gender.code) == \"CNSYT_KADIN\") {\r\n                    components.txt_gender2.qValue = 'Kadın';\r\n                }\r\n                else if (((_u = customerInfo.individualInfo) === null || _u === void 0 ? void 0 : _u.gender.code) == \"CNSYT_ERKEK\") {\r\n                    components.txt_gender2.qValue = 'Erkek';\r\n                }\r\n                if (((_v = customerInfo.individualInfo) === null || _v === void 0 ? void 0 : _v.maritalStatus.code) == \"MDNDR_EVLI\") {\r\n                    components.txt_maritalStatus2.qValue = 'Evli';\r\n                }\r\n                else if (((_w = customerInfo.individualInfo) === null || _w === void 0 ? void 0 : _w.maritalStatus.code) == \"MDNDR_BEKAR\") {\r\n                    components.txt_maritalStatus2.qValue = 'Bekar';\r\n                }\r\n            }\r\n            else {\r\n                //müşteri tipi ticari ise\r\n                components.txt_taxId2.visible = true;\r\n                components.txt_idNumber2.label = \"VKN\";\r\n                components.txt_nameSurname2.label = \"Unvan\";\r\n                components.row_assuranceInfo6.visible = false;\r\n                components.vauto_profession2.visible = false;\r\n                components.vauto_employmentStatus2.visible = false;\r\n                components.txt_nameSurname2.qValue = (_x = customerInfo.organizationalInfo) === null || _x === void 0 ? void 0 : _x.fullName;\r\n                if (((_y = customerInfo.organizationalInfo) === null || _y === void 0 ? void 0 : _y.taxId) != null) {\r\n                    primaryId = (_z = customerInfo.organizationalInfo) === null || _z === void 0 ? void 0 : _z.taxId;\r\n                }\r\n                if ((customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.taxPayerInfo) != null) {\r\n                    components.txt_taxId2.qValue = (_0 = customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.taxPayerInfo) === null || _0 === void 0 ? void 0 : _0.taxOfficeName;\r\n                }\r\n            }\r\n            for (var i = 0; i < phoneNumbers_1.length; i++) {\r\n                if (((_3 = (_2 = (_1 = phoneNumbers_1[i]) === null || _1 === void 0 ? void 0 : _1.updateInfo) === null || _2 === void 0 ? void 0 : _2.verificationType) === null || _3 === void 0 ? void 0 : _3.code) == 1 && ((_5 = (_4 = phoneNumbers_1[i]) === null || _4 === void 0 ? void 0 : _4.usageType) === null || _5 === void 0 ? void 0 : _5.code) == \"TELTP_CEPTELEFON\") {\r\n                    selectedPhoneInfo = customerInfo.communicationInfo.phoneNumbers[i].number;\r\n                    components.vauto_phoneType2.qValue = components.vauto_phoneType2.items.filter(function (item) { return item.code === phoneNumbers_1[i].usageType.code; })[0];\r\n                    components.txt_countryCode2.qValue = phoneNumbers_1[i].countryCallingCode.code;\r\n                    break;\r\n                }\r\n                else if (((_7 = (_6 = phoneNumbers_1[i]) === null || _6 === void 0 ? void 0 : _6.usageType) === null || _7 === void 0 ? void 0 : _7.code) == \"TELTP_CEPTELEFON\") {\r\n                    components.vauto_phoneType2.qValue = components.vauto_phoneType2.items.filter(function (item) { return item.code === phoneNumbers_1[i].usageType.code; })[0];\r\n                    components.txt_countryCode2.qValue = phoneNumbers_1[i].countryCallingCode.code;\r\n                    selectedPhoneInfo = customerInfo.communicationInfo.phoneNumbers[i].number;\r\n                }\r\n            }\r\n            //tahsilat ekranında kullanılacak.\r\n            quick.store.set('$primaryId2', primaryId);\r\n            quick.store.set('$customerInfo2', customerInfo); // bu ekranda da kullanılıyor.            \r\n            quick.store.set('customerFlag', true); //customerListControl için\r\n            //address\r\n            var address = '';\r\n            if (null != (addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.subdistrict)) {\r\n                address = addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.subdistrict;\r\n            }\r\n            if (null != (addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.address)) {\r\n                address = address + ' ' + (addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.address);\r\n            }\r\n            if (null != (addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.buildingNo)) {\r\n                address = address + ' ' + (addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.buildingNo);\r\n            }\r\n            if (null != (addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.doorNo)) {\r\n                address = address + '/' + (addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.doorNo);\r\n            }\r\n            address = address + ' ' + ((_8 = addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.district) === null || _8 === void 0 ? void 0 : _8.value) + '/' + ((_9 = addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.city) === null || _9 === void 0 ? void 0 : _9.value);\r\n            components.vauto_adressType2.qValue = components.vauto_adressType2.items.filter(function (item) { return item.code === addressInfo_1.usageType.code; })[0];\r\n            components.vauto_country2.qValue = components.vauto_country2.items.filter(function (item) { return item.code === addressInfo_1.countryCode.code; })[0];\r\n            if (addressInfo_1.countryCode.code == 'TR') {\r\n                quick.MM.trigger('retrieveReferenceDataList', [{ categoryPath: 'COUNTRY(' + 'TR' + ')/CITY' }]);\r\n                quick.store.set('flagSuccess2', true);\r\n            }\r\n            components.txt_postCode2.qValue = addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.zipCode;\r\n            components.txt_customerNumber2.qValue = customerInfo.customerNumber;\r\n            components.txt_idNumber2.qValue = primaryId;\r\n            //quick.store.get('$bnkas_utils').getEmploymentStatus(customerInfo.individualInfo?.employmentInfo?.occupationalStatus?.code);\r\n            components.txt_phoneNumber2.qValue = selectedPhoneInfo;\r\n            components.txt_email2.qValue = (_10 = customerInfo.communicationInfo.emailAddresses[0]) === null || _10 === void 0 ? void 0 : _10.address;\r\n            components.txt_address2.qValue = address;\r\n            quick.MM.trigger('customerListControl');\r\n            //Nefes Sağlık Police Özelinde Diğer Sigortalı Bilgileri \r\n            if (quick.store.get('screenNameAS') == 'HINS' || quick.store.get('screenNameAS') == 'IHINS' || quick.store.get('screenNameAS') == 'SHINS') {\r\n                quick.store.set(\"$ch_assuranceDifferentStatus\", components.ch_assuranceDifferent.qValue);\r\n                (_12 = (_11 = quick === null || quick === void 0 ? void 0 : quick.parent) === null || _11 === void 0 ? void 0 : _11.events) === null || _12 === void 0 ? void 0 : _12.setPolicySpecificInsuredInfo({ customerResponse: customerInfo, customerStatus: 'insured' });\r\n            }\r\n        }\r\n        else {\r\n            if (idType.code === \"RFKTP_TCKN\") {\r\n                quick.MM.trigger('retrieveCitizenAndNationalIdCardInfo');\r\n            }\r\n            else {\r\n                quick.MM.trigger('retrieveTaxIdRecordByTaxId');\r\n                quick.MM.trigger('retrieveTaxOfficeListOfTaxPayer');\r\n            }\r\n        }\r\n    }\r\n}).catch(function (err) {\r\n    var _a, _b, _c;\r\n    var errorMessage = (_c = (_b = (_a = err === null || err === void 0 ? void 0 : err.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.responseMessage) !== null && _c !== void 0 ? _c : 'Bir hata oluştu.';\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n});\r\n",
+					"H": "var _a;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nvar qID;\r\nvar requestData = {\r\n    \"referenceId\": {\r\n        \"type\": {\r\n            \"code\": idType.code,\r\n            \"category\": \"MUS_RFKTP\"\r\n        },\r\n        \"value\": citizenNo\r\n    },\r\n    \"retrieveOptions\": {\r\n        \"multipleRecordBehaviourCode\": {\r\n            \"code\": \"COKKT_ILK\",\r\n            \"category\": \"MUS_COKKT\"\r\n        },\r\n        \"applicationKey\": quick.store.get('$applicationKey')\r\n    }\r\n};\r\n//consumerCode ve screenName setlendi.\r\nquick.MM.trigger('setConsumerAndScreenInfo');\r\nvar serviceRequest = {\r\n    url: '/api/uiclient/retrieveCustomerByReferenceId',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n};\r\ndebugger;\r\n(_a = quick.Request.async(serviceRequest)) === null || _a === void 0 ? void 0 : _a.then(function (resp) {\r\n    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12;\r\n    quick.EM.trace(resp === null || resp === void 0 ? void 0 : resp.data);\r\n    if (qID) {\r\n        quick.MM.trigger('setRetrieveCustomerByReferenceId', [{ data: (_a = resp === null || resp === void 0 ? void 0 : resp.data) === null || _a === void 0 ? void 0 : _a.customer, qID: qID }]);\r\n    }\r\n    else {\r\n        if (((_c = (_b = resp === null || resp === void 0 ? void 0 : resp.data) === null || _b === void 0 ? void 0 : _b.customer) === null || _c === void 0 ? void 0 : _c.length) > 0) {\r\n            components.row_assuranceInfo5.visible = true;\r\n            components.row_assuranceInfo6.visible = true;\r\n            components.row_assuranceInfo1.visible = false;\r\n            var customerInfo = (_d = resp === null || resp === void 0 ? void 0 : resp.data) === null || _d === void 0 ? void 0 : _d.customer[0];\r\n            var addressInfo_1 = customerInfo.communicationInfo.postalAddresses[0];\r\n            quick.store.set('adressInfo', addressInfo_1);\r\n            var occupationalStatus_1 = (_e = customerInfo.individualInfo.employmentInfo) === null || _e === void 0 ? void 0 : _e.occupationalStatus;\r\n            var customerType = (_g = (_f = customerInfo.basicInfo) === null || _f === void 0 ? void 0 : _f.primaryId) === null || _g === void 0 ? void 0 : _g.type.code;\r\n            var phoneNumbers_1 = (_h = customerInfo.communicationInfo) === null || _h === void 0 ? void 0 : _h.phoneNumbers;\r\n            var selectedPhoneInfo = null;\r\n            var primaryId = (_k = (_j = customerInfo.basicInfo) === null || _j === void 0 ? void 0 : _j.primaryId) === null || _k === void 0 ? void 0 : _k.value;\r\n            if (customerType === \"RFKTP_TCKN\") {\r\n                //müşteri tipi bireysel ise            \r\n                components.txt_taxId2.visible = false;\r\n                components.txt_taxId2.qValue = '';\r\n                components.txt_idNumber2.label = \"TCKN\";\r\n                components.txt_nameSurname2.label = \"Ad Soyad\";\r\n                components.row_assuranceInfo6.visible = true;\r\n                components.vauto_profession2.visible = true;\r\n                components.vauto_employmentStatus2.visible = true;\r\n                components.vauto_employmentStatus2.qValue = components.vauto_employmentStatus2.items.filter(function (item) { return item.code === (occupationalStatus_1 === null || occupationalStatus_1 === void 0 ? void 0 : occupationalStatus_1.code); })[0];\r\n                components.txt_nameSurname2.qValue = customerInfo.basicInfo.fullName;\r\n                var formattedDate = customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.individualInfo.birthDate.substr(0, 10).split(\"-\");\r\n                components.txt_birthday2.qValue = formattedDate[2] + \"-\" + formattedDate[1] + \"-\" + formattedDate[0];\r\n                components.txt_birthdayPlace2.qValue = (_l = customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.individualInfo) === null || _l === void 0 ? void 0 : _l.birthPlace;\r\n                if (((_m = customerInfo.individualInfo) === null || _m === void 0 ? void 0 : _m.citizenId) != null) {\r\n                    primaryId = (_o = customerInfo.individualInfo) === null || _o === void 0 ? void 0 : _o.citizenId;\r\n                }\r\n                else if (((_p = customerInfo.individualInfo) === null || _p === void 0 ? void 0 : _p.kktcId) != null) {\r\n                    primaryId = (_q = customerInfo.individualInfo) === null || _q === void 0 ? void 0 : _q.kktcId;\r\n                }\r\n                else if (((_r = customerInfo.individualInfo) === null || _r === void 0 ? void 0 : _r.foreignerId) != null) {\r\n                    primaryId = (_s = customerInfo.individualInfo) === null || _s === void 0 ? void 0 : _s.foreignerId;\r\n                }\r\n                if (((_t = customerInfo.individualInfo) === null || _t === void 0 ? void 0 : _t.gender.code) == \"CNSYT_KADIN\") {\r\n                    components.txt_gender2.qValue = 'Kadın';\r\n                }\r\n                else if (((_u = customerInfo.individualInfo) === null || _u === void 0 ? void 0 : _u.gender.code) == \"CNSYT_ERKEK\") {\r\n                    components.txt_gender2.qValue = 'Erkek';\r\n                }\r\n                if (((_v = customerInfo.individualInfo) === null || _v === void 0 ? void 0 : _v.maritalStatus.code) == \"MDNDR_EVLI\") {\r\n                    components.txt_maritalStatus2.qValue = 'Evli';\r\n                }\r\n                else if (((_w = customerInfo.individualInfo) === null || _w === void 0 ? void 0 : _w.maritalStatus.code) == \"MDNDR_BEKAR\") {\r\n                    components.txt_maritalStatus2.qValue = 'Bekar';\r\n                }\r\n            }\r\n            else {\r\n                //müşteri tipi ticari ise\r\n                components.txt_taxId2.visible = true;\r\n                components.txt_idNumber2.label = \"VKN\";\r\n                components.txt_nameSurname2.label = \"Unvan\";\r\n                components.row_assuranceInfo6.visible = false;\r\n                components.vauto_profession2.visible = false;\r\n                components.vauto_employmentStatus2.visible = false;\r\n                components.txt_nameSurname2.qValue = (_x = customerInfo.organizationalInfo) === null || _x === void 0 ? void 0 : _x.fullName;\r\n                if (((_y = customerInfo.organizationalInfo) === null || _y === void 0 ? void 0 : _y.taxId) != null) {\r\n                    primaryId = (_z = customerInfo.organizationalInfo) === null || _z === void 0 ? void 0 : _z.taxId;\r\n                }\r\n                if ((customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.taxPayerInfo) != null) {\r\n                    components.txt_taxId2.qValue = (_0 = customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.taxPayerInfo) === null || _0 === void 0 ? void 0 : _0.taxOfficeName;\r\n                }\r\n            }\r\n            for (var i = 0; i < phoneNumbers_1.length; i++) {\r\n                if (((_3 = (_2 = (_1 = phoneNumbers_1[i]) === null || _1 === void 0 ? void 0 : _1.updateInfo) === null || _2 === void 0 ? void 0 : _2.verificationType) === null || _3 === void 0 ? void 0 : _3.code) == 1 && ((_5 = (_4 = phoneNumbers_1[i]) === null || _4 === void 0 ? void 0 : _4.usageType) === null || _5 === void 0 ? void 0 : _5.code) == \"TELTP_CEPTELEFON\") {\r\n                    selectedPhoneInfo = customerInfo.communicationInfo.phoneNumbers[i].number;\r\n                    components.vauto_phoneType2.qValue = components.vauto_phoneType2.items.filter(function (item) { return item.code === phoneNumbers_1[i].usageType.code; })[0];\r\n                    components.txt_countryCode2.qValue = phoneNumbers_1[i].countryCallingCode.code;\r\n                    break;\r\n                }\r\n                else if (((_7 = (_6 = phoneNumbers_1[i]) === null || _6 === void 0 ? void 0 : _6.usageType) === null || _7 === void 0 ? void 0 : _7.code) == \"TELTP_CEPTELEFON\") {\r\n                    components.vauto_phoneType2.qValue = components.vauto_phoneType2.items.filter(function (item) { return item.code === phoneNumbers_1[i].usageType.code; })[0];\r\n                    components.txt_countryCode2.qValue = phoneNumbers_1[i].countryCallingCode.code;\r\n                    selectedPhoneInfo = customerInfo.communicationInfo.phoneNumbers[i].number;\r\n                }\r\n            }\r\n            //tahsilat ekranında kullanılacak.\r\n            quick.store.set('$primaryId2', primaryId);\r\n            quick.store.set('$customerInfo2', customerInfo); // bu ekranda da kullanılıyor.            \r\n            quick.store.set('customerFlag', true); //customerListControl için\r\n            //address\r\n            var address = '';\r\n            if (null != (addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.subdistrict)) {\r\n                address = addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.subdistrict;\r\n            }\r\n            if (null != (addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.address)) {\r\n                address = address + ' ' + (addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.address);\r\n            }\r\n            if (null != (addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.buildingNo)) {\r\n                address = address + ' ' + (addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.buildingNo);\r\n            }\r\n            if (null != (addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.doorNo)) {\r\n                address = address + '/' + (addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.doorNo);\r\n            }\r\n            address = address + ' ' + ((_8 = addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.district) === null || _8 === void 0 ? void 0 : _8.value) + '/' + ((_9 = addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.city) === null || _9 === void 0 ? void 0 : _9.value);\r\n            components.vauto_adressType2.qValue = components.vauto_adressType2.items.filter(function (item) { return item.code === addressInfo_1.usageType.code; })[0];\r\n            components.vauto_country2.qValue = components.vauto_country2.items.filter(function (item) { return item.code === addressInfo_1.countryCode.code; })[0];\r\n            if (addressInfo_1.countryCode.code == 'TR') {\r\n                quick.MM.trigger('retrieveReferenceDataList', [{ categoryPath: 'COUNTRY(' + 'TR' + ')/CITY' }]);\r\n                quick.store.set('flagSuccess2', true);\r\n            }\r\n            components.txt_postCode2.qValue = addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.zipCode;\r\n            components.txt_customerNumber2.qValue = customerInfo.customerNumber;\r\n            components.txt_idNumber2.qValue = primaryId;\r\n            //quick.store.get('$bnkas_utils').getEmploymentStatus(customerInfo.individualInfo?.employmentInfo?.occupationalStatus?.code);\r\n            components.txt_phoneNumber2.qValue = selectedPhoneInfo;\r\n            components.txt_email2.qValue = (_10 = customerInfo.communicationInfo.emailAddresses[0]) === null || _10 === void 0 ? void 0 : _10.address;\r\n            components.txt_address2.qValue = address;\r\n            quick.MM.trigger('customerListControl');\r\n            //Nefes Sağlık Police Özelinde Diğer Sigortalı Bilgileri \r\n            if (quick.store.get('screenNameAS') == 'HINS' || quick.store.get('screenNameAS') == 'IHINS' || quick.store.get('screenNameAS') == 'SHINS') {\r\n                quick.store.set(\"$ch_assuranceDifferentStatus\", components.ch_assuranceDifferent.qValue);\r\n                (_12 = (_11 = quick === null || quick === void 0 ? void 0 : quick.parent) === null || _11 === void 0 ? void 0 : _11.events) === null || _12 === void 0 ? void 0 : _12.setPolicySpecificInsuredInfo({ customerResponse: customerInfo, customerStatus: 'insured' });\r\n            }\r\n        }\r\n        else {\r\n            if (idType.code === \"RFKTP_TCKN\") {\r\n                quick.MM.trigger('retrieveCitizenAndNationalIdCardInfo');\r\n            }\r\n            else {\r\n                quick.MM.trigger('retrieveTaxIdRecordByTaxId');\r\n                quick.MM.trigger('retrieveTaxOfficeListOfTaxPayer');\r\n            }\r\n        }\r\n    }\r\n}).catch(function (err) {\r\n    var _a, _b, _c;\r\n    var errorMessage = (_c = (_b = (_a = err === null || err === void 0 ? void 0 : err.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.responseMessage) !== null && _c !== void 0 ? _c : 'Bir hata oluştu.';\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n});\r\n",
 					"C": true,
 					"HL": "JS"
 				},
@@ -18988,7 +18988,7 @@ let pjson = {
 					"HL": "JS"
 				},
 				"setRetrieveCustomerByReferenceId": {
-					"H": "var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7, _8;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nvar expansionPanelCountList = quick.store.get('expansionPanelCountList') || [];\r\nvar compQId = quick.store.get('compQId');\r\nexpansionPanelCountList.push(qID);\r\nquick.store.set('expansionPanelCountList', expansionPanelCountList);\r\nif (data) {\r\n    components[\"row_otherInfo2_\" + qID].visible = true;\r\n    components[\"row_otherInfo3_\" + qID].visible = true;\r\n    components[\"row_otherInfo1_\" + qID].visible = false;\r\n    var customerInfo = data[0];\r\n    quick.store.set('$customerInfo_' + qID, customerInfo);\r\n    var addressInfo_1 = customerInfo.communicationInfo.postalAddresses[0];\r\n    quick.store.set('adressInfo', addressInfo_1);\r\n    var occupationalStatus_1 = (_a = customerInfo.individualInfo.employmentInfo) === null || _a === void 0 ? void 0 : _a.occupationalStatus;\r\n    var customerType = (_c = (_b = customerInfo.basicInfo) === null || _b === void 0 ? void 0 : _b.primaryId) === null || _c === void 0 ? void 0 : _c.type.code;\r\n    var phoneNumbers_1 = (_d = customerInfo.communicationInfo) === null || _d === void 0 ? void 0 : _d.phoneNumbers;\r\n    var selectedPhoneInfo = null;\r\n    var primaryId = (_f = (_e = customerInfo.basicInfo) === null || _e === void 0 ? void 0 : _e.primaryId) === null || _f === void 0 ? void 0 : _f.value;\r\n    if (customerType === \"RFKTP_TCKN\") {\r\n        //müşteri tipi bireysel ise            \r\n        components[\"txt_taxId3_\" + qID].visible = false;\r\n        components[\"txt_taxId3_\" + qID].qValue = '';\r\n        components[\"txt_idNumber3_\" + qID].label = \"TCKN\";\r\n        components[\"txt_nameSurname3_\" + qID].label = \"Ad Soyad\";\r\n        components[\"row_otherInfo3_\" + qID].visible = true;\r\n        components[\"vauto_profession3_\" + qID].visible = true;\r\n        components[\"vauto_employmentStatus3_\" + qID].visible = true;\r\n        components[\"vauto_employmentStatus3_\" + qID].qValue = components[\"vauto_employmentStatus3_\" + qID].items.filter(function (item) { return item.code === occupationalStatus_1.code; })[0];\r\n        components[\"txt_nameSurname3_\" + qID].qValue = customerInfo.basicInfo.fullName;\r\n        var formattedDate = customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.individualInfo.birthDate.substr(0, 10).split(\"-\");\r\n        components[\"txt_birthday3_\" + qID].qValue = formattedDate[2] + \"-\" + formattedDate[1] + \"-\" + formattedDate[0];\r\n        components[\"txt_birthdayPlace3_\" + qID].qValue = (_g = customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.individualInfo) === null || _g === void 0 ? void 0 : _g.birthPlace;\r\n        if (((_h = customerInfo.individualInfo) === null || _h === void 0 ? void 0 : _h.citizenId) != null) {\r\n            primaryId = (_j = customerInfo.individualInfo) === null || _j === void 0 ? void 0 : _j.citizenId;\r\n        }\r\n        else if (((_k = customerInfo.individualInfo) === null || _k === void 0 ? void 0 : _k.kktcId) != null) {\r\n            primaryId = (_l = customerInfo.individualInfo) === null || _l === void 0 ? void 0 : _l.kktcId;\r\n        }\r\n        else if (((_m = customerInfo.individualInfo) === null || _m === void 0 ? void 0 : _m.foreignerId) != null) {\r\n            primaryId = (_o = customerInfo.individualInfo) === null || _o === void 0 ? void 0 : _o.foreignerId;\r\n        }\r\n        if (((_p = customerInfo.individualInfo) === null || _p === void 0 ? void 0 : _p.gender.code) == \"CNSYT_KADIN\") {\r\n            components[\"txt_gender3_\" + qID].qValue = 'Kadın';\r\n        }\r\n        else if (((_q = customerInfo.individualInfo) === null || _q === void 0 ? void 0 : _q.gender.code) == \"CNSYT_ERKEK\") {\r\n            components[\"txt_gender3_\" + qID].qValue = 'Erkek';\r\n        }\r\n        if (((_r = customerInfo.individualInfo) === null || _r === void 0 ? void 0 : _r.maritalStatus.code) == \"MDNDR_EVLI\") {\r\n            components[\"txt_maritalStatus3_\" + qID].qValue = 'Evli';\r\n        }\r\n        else if (((_s = customerInfo.individualInfo) === null || _s === void 0 ? void 0 : _s.maritalStatus.code) == \"MDNDR_BEKAR\") {\r\n            components[\"txt_maritalStatus3_\" + qID].qValue = 'Bekar';\r\n        }\r\n    }\r\n    else {\r\n        //müşteri tipi ticari ise\r\n        components[\"txt_taxId3_\" + qID].visible = true;\r\n        components[\"txt_idNumber3_\" + qID].label = \"VKN\";\r\n        components[\"txt_nameSurname3_\" + qID].label = \"Unvan\";\r\n        components[\"row_otherInfo3_\" + qID].visible = false;\r\n        components[\"vauto_profession3_\" + qID].visible = false;\r\n        components[\"vauto_employmentStatus3_\" + qID].visible = false;\r\n        components[\"txt_nameSurname3_\" + qID].qValue = (_t = customerInfo.organizationalInfo) === null || _t === void 0 ? void 0 : _t.fullName;\r\n        if (((_u = customerInfo.organizationalInfo) === null || _u === void 0 ? void 0 : _u.taxId) != null) {\r\n            primaryId = (_v = customerInfo.organizationalInfo) === null || _v === void 0 ? void 0 : _v.taxId;\r\n        }\r\n        if ((customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.taxPayerInfo) != null) {\r\n            components[\"txt_taxId3_\" + qID].qValue = (_w = customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.taxPayerInfo) === null || _w === void 0 ? void 0 : _w.taxOfficeName;\r\n        }\r\n    }\r\n    for (var i = 0; i < phoneNumbers_1.length; i++) {\r\n        if (((_z = (_y = (_x = phoneNumbers_1[i]) === null || _x === void 0 ? void 0 : _x.updateInfo) === null || _y === void 0 ? void 0 : _y.verificationType) === null || _z === void 0 ? void 0 : _z.code) == 1 && ((_1 = (_0 = phoneNumbers_1[i]) === null || _0 === void 0 ? void 0 : _0.usageType) === null || _1 === void 0 ? void 0 : _1.code) == \"TELTP_CEPTELEFON\") {\r\n            selectedPhoneInfo = customerInfo.communicationInfo.phoneNumbers[i].number;\r\n            components[\"vauto_phoneType3_\" + qID].qValue = components[\"vauto_phoneType3_\" + qID].items.filter(function (item) { return item.code === phoneNumbers_1[i].usageType.code; })[0];\r\n            components[\"txt_countryCode3_\" + qID].qValue = phoneNumbers_1[i].countryCallingCode.code;\r\n            break;\r\n        }\r\n        else if (((_3 = (_2 = phoneNumbers_1[i]) === null || _2 === void 0 ? void 0 : _2.usageType) === null || _3 === void 0 ? void 0 : _3.code) == \"TELTP_CEPTELEFON\") {\r\n            components[\"vauto_phoneType3_\" + qID].qValue = components[\"vauto_phoneType3_\" + qID].items.filter(function (item) { return item.code === phoneNumbers_1[i].usageType.code; })[0];\r\n            components[\"txt_countryCode3_\" + qID].qValue = phoneNumbers_1[i].countryCallingCode.code;\r\n            selectedPhoneInfo = customerInfo.communicationInfo.phoneNumbers[i].number;\r\n        }\r\n    }\r\n    //tahsilat ekranında kullanılacak.\r\n    quick.store.set('$primaryId3_' + qID, primaryId);\r\n    quick.store.set('$vauto_idNumber3_' + qID, customerType);\r\n    quick.store.set('$customerInfo_' + qID, customerInfo); // bu ekranda da kullanılıyor.\r\n    quick.store.set('customerFlag', false); //customerListControl için\r\n    //address\r\n    var address = '';\r\n    if (null != (addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.subdistrict)) {\r\n        address = addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.subdistrict;\r\n    }\r\n    if (null != (addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.address)) {\r\n        address = address + ' ' + (addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.address);\r\n    }\r\n    if (null != (addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.buildingNo)) {\r\n        address = address + ' ' + (addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.buildingNo);\r\n    }\r\n    if (null != (addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.doorNo)) {\r\n        address = address + '/' + (addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.doorNo);\r\n    }\r\n    address = address + ' ' + ((_4 = addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.district) === null || _4 === void 0 ? void 0 : _4.value) + '/' + ((_5 = addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.city) === null || _5 === void 0 ? void 0 : _5.value);\r\n    components[\"vauto_adressType3_\" + qID].qValue = components[\"vauto_adressType3_\" + qID].items.filter(function (item) { return item.code === addressInfo_1.usageType.code; })[0];\r\n    components[\"vauto_country3_\" + qID].qValue = components[\"vauto_country3_\" + qID].items.filter(function (item) { return item.code === addressInfo_1.countryCode.code; })[0];\r\n    if (addressInfo_1.countryCode.code == 'TR') {\r\n        quick.MM.trigger('retrieveReferenceDataList', [{ categoryPath: 'COUNTRY(' + 'TR' + ')/CITY', qID: qID }]);\r\n        quick.store.set('flagSuccess3', true);\r\n    }\r\n    components[\"txt_postCode3_\" + qID].qValue = addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.zipCode;\r\n    components[\"txt_customerNumber3_\" + qID].qValue = customerInfo.customerNumber;\r\n    components[\"txt_idNumber3_\" + qID].qValue = primaryId;\r\n    //quick.store.get('$bnkas_utils').getEmploymentStatus(customerInfo.individualInfo?.employmentInfo?.occupationalStatus?.code);\r\n    components[\"txt_phoneNumber3_\" + qID].qValue = selectedPhoneInfo;\r\n    components[\"txt_email3_\" + qID].qValue = (_6 = customerInfo.communicationInfo.emailAddresses[0]) === null || _6 === void 0 ? void 0 : _6.address;\r\n    components[\"txt_address3_\" + qID].qValue = address;\r\n    quick.MM.trigger('customerListControl');\r\n    if (quick.store.get('screenNameAS') == 'HINS' || quick.store.get('screenNameAS') == 'IHINS' || quick.store.get('screenNameAS') == 'SHINS') {\r\n        quick.store.set(\"$ch_otherAssuranceStatus\", components.ch_otherAssurance.qValue);\r\n        (_8 = (_7 = quick === null || quick === void 0 ? void 0 : quick.parent) === null || _7 === void 0 ? void 0 : _7.events) === null || _8 === void 0 ? void 0 : _8.setPolicySpecificInsuredInfo({ customerResponse: customerInfo, customerStatus: 'otherInsured' });\r\n    }\r\n}\r\n",
+					"H": "var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7, _8;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nvar expansionPanelCountList = quick.store.get('expansionPanelCountList') || [];\r\nvar compQId = quick.store.get('compQId');\r\nexpansionPanelCountList.push(qID);\r\nquick.store.set('expansionPanelCountList', expansionPanelCountList);\r\nif (data) {\r\n    components[\"row_otherInfo2_\" + qID].visible = true;\r\n    components[\"row_otherInfo3_\" + qID].visible = true;\r\n    components[\"row_otherInfo1_\" + qID].visible = false;\r\n    var customerInfo = data[0];\r\n    quick.store.set('$customerInfo_' + qID, customerInfo);\r\n    var addressInfo_1 = customerInfo.communicationInfo.postalAddresses[0];\r\n    quick.store.set('adressInfo', addressInfo_1);\r\n    var occupationalStatus_1 = (_a = customerInfo.individualInfo.employmentInfo) === null || _a === void 0 ? void 0 : _a.occupationalStatus;\r\n    var customerType = (_c = (_b = customerInfo.basicInfo) === null || _b === void 0 ? void 0 : _b.primaryId) === null || _c === void 0 ? void 0 : _c.type.code;\r\n    var phoneNumbers_1 = (_d = customerInfo.communicationInfo) === null || _d === void 0 ? void 0 : _d.phoneNumbers;\r\n    var selectedPhoneInfo = null;\r\n    var primaryId = (_f = (_e = customerInfo.basicInfo) === null || _e === void 0 ? void 0 : _e.primaryId) === null || _f === void 0 ? void 0 : _f.value;\r\n    if (customerType === \"RFKTP_TCKN\") {\r\n        //müşteri tipi bireysel ise            \r\n        components[\"txt_taxId3_\" + qID].visible = false;\r\n        components[\"txt_taxId3_\" + qID].qValue = '';\r\n        components[\"txt_idNumber3_\" + qID].label = \"TCKN\";\r\n        components[\"txt_nameSurname3_\" + qID].label = \"Ad Soyad\";\r\n        components[\"row_otherInfo3_\" + qID].visible = true;\r\n        components[\"vauto_profession3_\" + qID].visible = true;\r\n        components[\"vauto_employmentStatus3_\" + qID].visible = true;\r\n        components[\"vauto_employmentStatus3_\" + qID].qValue = components[\"vauto_employmentStatus3_\" + qID].items.filter(function (item) { return item.code === (occupationalStatus_1 === null || occupationalStatus_1 === void 0 ? void 0 : occupationalStatus_1.code); })[0];\r\n        components[\"txt_nameSurname3_\" + qID].qValue = customerInfo.basicInfo.fullName;\r\n        var formattedDate = customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.individualInfo.birthDate.substr(0, 10).split(\"-\");\r\n        components[\"txt_birthday3_\" + qID].qValue = formattedDate[2] + \"-\" + formattedDate[1] + \"-\" + formattedDate[0];\r\n        components[\"txt_birthdayPlace3_\" + qID].qValue = (_g = customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.individualInfo) === null || _g === void 0 ? void 0 : _g.birthPlace;\r\n        if (((_h = customerInfo.individualInfo) === null || _h === void 0 ? void 0 : _h.citizenId) != null) {\r\n            primaryId = (_j = customerInfo.individualInfo) === null || _j === void 0 ? void 0 : _j.citizenId;\r\n        }\r\n        else if (((_k = customerInfo.individualInfo) === null || _k === void 0 ? void 0 : _k.kktcId) != null) {\r\n            primaryId = (_l = customerInfo.individualInfo) === null || _l === void 0 ? void 0 : _l.kktcId;\r\n        }\r\n        else if (((_m = customerInfo.individualInfo) === null || _m === void 0 ? void 0 : _m.foreignerId) != null) {\r\n            primaryId = (_o = customerInfo.individualInfo) === null || _o === void 0 ? void 0 : _o.foreignerId;\r\n        }\r\n        if (((_p = customerInfo.individualInfo) === null || _p === void 0 ? void 0 : _p.gender.code) == \"CNSYT_KADIN\") {\r\n            components[\"txt_gender3_\" + qID].qValue = 'Kadın';\r\n        }\r\n        else if (((_q = customerInfo.individualInfo) === null || _q === void 0 ? void 0 : _q.gender.code) == \"CNSYT_ERKEK\") {\r\n            components[\"txt_gender3_\" + qID].qValue = 'Erkek';\r\n        }\r\n        if (((_r = customerInfo.individualInfo) === null || _r === void 0 ? void 0 : _r.maritalStatus.code) == \"MDNDR_EVLI\") {\r\n            components[\"txt_maritalStatus3_\" + qID].qValue = 'Evli';\r\n        }\r\n        else if (((_s = customerInfo.individualInfo) === null || _s === void 0 ? void 0 : _s.maritalStatus.code) == \"MDNDR_BEKAR\") {\r\n            components[\"txt_maritalStatus3_\" + qID].qValue = 'Bekar';\r\n        }\r\n    }\r\n    else {\r\n        //müşteri tipi ticari ise\r\n        components[\"txt_taxId3_\" + qID].visible = true;\r\n        components[\"txt_idNumber3_\" + qID].label = \"VKN\";\r\n        components[\"txt_nameSurname3_\" + qID].label = \"Unvan\";\r\n        components[\"row_otherInfo3_\" + qID].visible = false;\r\n        components[\"vauto_profession3_\" + qID].visible = false;\r\n        components[\"vauto_employmentStatus3_\" + qID].visible = false;\r\n        components[\"txt_nameSurname3_\" + qID].qValue = (_t = customerInfo.organizationalInfo) === null || _t === void 0 ? void 0 : _t.fullName;\r\n        if (((_u = customerInfo.organizationalInfo) === null || _u === void 0 ? void 0 : _u.taxId) != null) {\r\n            primaryId = (_v = customerInfo.organizationalInfo) === null || _v === void 0 ? void 0 : _v.taxId;\r\n        }\r\n        if ((customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.taxPayerInfo) != null) {\r\n            components[\"txt_taxId3_\" + qID].qValue = (_w = customerInfo === null || customerInfo === void 0 ? void 0 : customerInfo.taxPayerInfo) === null || _w === void 0 ? void 0 : _w.taxOfficeName;\r\n        }\r\n    }\r\n    for (var i = 0; i < phoneNumbers_1.length; i++) {\r\n        if (((_z = (_y = (_x = phoneNumbers_1[i]) === null || _x === void 0 ? void 0 : _x.updateInfo) === null || _y === void 0 ? void 0 : _y.verificationType) === null || _z === void 0 ? void 0 : _z.code) == 1 && ((_1 = (_0 = phoneNumbers_1[i]) === null || _0 === void 0 ? void 0 : _0.usageType) === null || _1 === void 0 ? void 0 : _1.code) == \"TELTP_CEPTELEFON\") {\r\n            selectedPhoneInfo = customerInfo.communicationInfo.phoneNumbers[i].number;\r\n            components[\"vauto_phoneType3_\" + qID].qValue = components[\"vauto_phoneType3_\" + qID].items.filter(function (item) { return item.code === phoneNumbers_1[i].usageType.code; })[0];\r\n            components[\"txt_countryCode3_\" + qID].qValue = phoneNumbers_1[i].countryCallingCode.code;\r\n            break;\r\n        }\r\n        else if (((_3 = (_2 = phoneNumbers_1[i]) === null || _2 === void 0 ? void 0 : _2.usageType) === null || _3 === void 0 ? void 0 : _3.code) == \"TELTP_CEPTELEFON\") {\r\n            components[\"vauto_phoneType3_\" + qID].qValue = components[\"vauto_phoneType3_\" + qID].items.filter(function (item) { return item.code === phoneNumbers_1[i].usageType.code; })[0];\r\n            components[\"txt_countryCode3_\" + qID].qValue = phoneNumbers_1[i].countryCallingCode.code;\r\n            selectedPhoneInfo = customerInfo.communicationInfo.phoneNumbers[i].number;\r\n        }\r\n    }\r\n    //tahsilat ekranında kullanılacak.\r\n    quick.store.set('$primaryId3_' + qID, primaryId);\r\n    quick.store.set('$vauto_idNumber3_' + qID, customerType);\r\n    quick.store.set('$customerInfo_' + qID, customerInfo); // bu ekranda da kullanılıyor.\r\n    quick.store.set('customerFlag', false); //customerListControl için\r\n    //address\r\n    var address = '';\r\n    if (null != (addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.subdistrict)) {\r\n        address = addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.subdistrict;\r\n    }\r\n    if (null != (addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.address)) {\r\n        address = address + ' ' + (addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.address);\r\n    }\r\n    if (null != (addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.buildingNo)) {\r\n        address = address + ' ' + (addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.buildingNo);\r\n    }\r\n    if (null != (addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.doorNo)) {\r\n        address = address + '/' + (addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.doorNo);\r\n    }\r\n    address = address + ' ' + ((_4 = addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.district) === null || _4 === void 0 ? void 0 : _4.value) + '/' + ((_5 = addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.city) === null || _5 === void 0 ? void 0 : _5.value);\r\n    components[\"vauto_adressType3_\" + qID].qValue = components[\"vauto_adressType3_\" + qID].items.filter(function (item) { return item.code === addressInfo_1.usageType.code; })[0];\r\n    components[\"vauto_country3_\" + qID].qValue = components[\"vauto_country3_\" + qID].items.filter(function (item) { return item.code === addressInfo_1.countryCode.code; })[0];\r\n    if (addressInfo_1.countryCode.code == 'TR') {\r\n        quick.MM.trigger('retrieveReferenceDataList', [{ categoryPath: 'COUNTRY(' + 'TR' + ')/CITY', qID: qID }]);\r\n        quick.store.set('flagSuccess3', true);\r\n    }\r\n    components[\"txt_postCode3_\" + qID].qValue = addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.zipCode;\r\n    components[\"txt_customerNumber3_\" + qID].qValue = customerInfo.customerNumber;\r\n    components[\"txt_idNumber3_\" + qID].qValue = primaryId;\r\n    //quick.store.get('$bnkas_utils').getEmploymentStatus(customerInfo.individualInfo?.employmentInfo?.occupationalStatus?.code);\r\n    components[\"txt_phoneNumber3_\" + qID].qValue = selectedPhoneInfo;\r\n    components[\"txt_email3_\" + qID].qValue = (_6 = customerInfo.communicationInfo.emailAddresses[0]) === null || _6 === void 0 ? void 0 : _6.address;\r\n    components[\"txt_address3_\" + qID].qValue = address;\r\n    quick.MM.trigger('customerListControl');\r\n    if (quick.store.get('screenNameAS') == 'HINS' || quick.store.get('screenNameAS') == 'IHINS' || quick.store.get('screenNameAS') == 'SHINS') {\r\n        quick.store.set(\"$ch_otherAssuranceStatus\", components.ch_otherAssurance.qValue);\r\n        (_8 = (_7 = quick === null || quick === void 0 ? void 0 : quick.parent) === null || _7 === void 0 ? void 0 : _7.events) === null || _8 === void 0 ? void 0 : _8.setPolicySpecificInsuredInfo({ customerResponse: customerInfo, customerStatus: 'otherInsured' });\r\n    }\r\n}\r\n",
 					"C": true,
 					"HL": "JS"
 				},
@@ -19574,7 +19574,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined"
+																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -19762,7 +19762,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0"
+																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0 newDropBorder"
 																			}
 																		}
 																	],
@@ -19950,7 +19950,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined"
+																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -20140,7 +20140,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined"
+																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -20378,7 +20378,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined"
+																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -20567,7 +20567,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined"
+																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -20756,7 +20756,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined"
+																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -20945,7 +20945,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined"
+																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -21213,7 +21213,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -21430,7 +21430,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--prefix v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded pt-0 undefined"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--prefix v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded pt-0 undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -21639,7 +21639,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0 newDropBorder"
 																			}
 																		}
 																	],
@@ -21860,7 +21860,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -22083,7 +22083,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -22328,7 +22328,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0 newDropBorder"
 																			}
 																		}
 																	],
@@ -22546,7 +22546,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -22741,7 +22741,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0 newDropBorder"
 																			}
 																		}
 																	],
@@ -23013,7 +23013,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -23236,7 +23236,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -23454,7 +23454,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -23665,7 +23665,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0 newDropBorder"
 																			}
 																		}
 																	],
@@ -26265,7 +26265,7 @@ let pjson = {
 																																	},
 																																	"class": "ml-5 text-h6"
 																																},
-																																"compDomClasses": "q-label ml-5 text-h6 newDropBorder"
+																																"compDomClasses": "q-label  ml-5 text-h6"
 																															}
 																														}
 																													],
@@ -26297,7 +26297,7 @@ let pjson = {
 																													},
 																													"class": "d-flex flex-column pb-3 pt-3 pl-3 pr-3"
 																												},
-																												"compDomClasses": "col d-flex flex-column pb-3 pt-3 pl-3 pr-3 pb-0 newDropBorder"
+																												"compDomClasses": "col d-flex flex-column pb-3 pt-3 pl-3 pr-3 pb-0"
 																											}
 																										}
 																									],
@@ -26309,7 +26309,7 @@ let pjson = {
 																							},
 																							"O": {
 																								"cType": "slot",
-																								"compDomClasses": "row newDropBorder"
+																								"compDomClasses": "row"
 																							}
 																						}
 																					],
@@ -26327,7 +26327,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-card v-card--flat v-sheet theme--dark rounded-b-0 primary newDropBorder"
+																				"compDomClasses": "v-card v-card--flat v-sheet theme--dark rounded-b-0 primary"
 																			}
 																		}
 																	],
@@ -26359,7 +26359,7 @@ let pjson = {
 																	},
 																	"class": "d-flex flex-column pb-3 pt-0 pl-0 pr-0"
 																},
-																"compDomClasses": "col d-flex flex-column pb-3 pt-0 pl-0 pr-0 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex flex-column pb-3 pt-0 pl-0 pr-0 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -26443,7 +26443,7 @@ let pjson = {
 											},
 											"O": {
 												"cType": "slot",
-												"compDomClasses": "row newDropBorder"
+												"compDomClasses": "row"
 											}
 										},
 										{
@@ -26635,7 +26635,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
 																			}
 																		}
 																	],
@@ -26667,7 +26667,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 col-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -26825,7 +26825,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0 newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0"
 																			}
 																		}
 																	],
@@ -26857,7 +26857,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 col-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -26960,7 +26960,7 @@ let pjson = {
 																									},
 																									"class": "text-body-1 font-weight-regular"
 																								},
-																								"compDomClasses": "q-label text-body-1 font-weight-regular newDropBorder"
+																								"compDomClasses": "q-label  text-body-1 font-weight-regular"
 																							},
 																							"S": {
 																								"xs-xl": {
@@ -27075,7 +27075,7 @@ let pjson = {
 																					},
 																					"class": "mr-1"
 																				},
-																				"compDomClasses": "v-btn v-btn--depressed v-btn--rounded theme--dark v-size--default mr-1 newDropBorder"
+																				"compDomClasses": "v-btn v-btn--depressed v-btn--rounded theme--dark v-size--default mr-1"
 																			}
 																		}
 																	],
@@ -27107,7 +27107,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 col-1"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-1 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-1 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -27137,7 +27137,7 @@ let pjson = {
 											},
 											"O": {
 												"cType": "slot",
-												"compDomClasses": "row newDropBorder"
+												"compDomClasses": "row"
 											},
 											"S": {
 												"xs-xl": {
@@ -27309,7 +27309,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined"
 																			}
 																		}
 																	],
@@ -27341,7 +27341,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 col-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -27497,7 +27497,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0 newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0"
 																			}
 																		}
 																	],
@@ -27529,7 +27529,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 col-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -27685,7 +27685,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined"
 																			}
 																		}
 																	],
@@ -27717,7 +27717,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 col-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -27875,7 +27875,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined"
 																			}
 																		}
 																	],
@@ -27907,7 +27907,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 col-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -27937,7 +27937,7 @@ let pjson = {
 											},
 											"O": {
 												"cType": "slot",
-												"compDomClasses": "row newDropBorder"
+												"compDomClasses": "row"
 											},
 											"S": {
 												"xs-xl": {
@@ -28113,7 +28113,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined"
 																			}
 																		}
 																	],
@@ -28145,7 +28145,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 col-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -28302,7 +28302,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined"
 																			}
 																		}
 																	],
@@ -28334,7 +28334,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 col-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -28491,7 +28491,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined"
 																			}
 																		}
 																	],
@@ -28523,7 +28523,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 col-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -28680,7 +28680,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined"
 																			}
 																		}
 																	],
@@ -28712,7 +28712,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 col-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -28742,7 +28742,7 @@ let pjson = {
 											},
 											"O": {
 												"cType": "slot",
-												"compDomClasses": "row newDropBorder"
+												"compDomClasses": "row"
 											},
 											"S": {
 												"xs-xl": {
@@ -28944,7 +28944,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
 																			}
 																		}
 																	],
@@ -28976,7 +28976,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 col-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -29156,7 +29156,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--prefix v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded pt-0 undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--prefix v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded pt-0 undefined"
 																			}
 																		}
 																	],
@@ -29187,7 +29187,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pb-3 col-1 pr-0"
 																},
-																"compDomClasses": "col d-flex pt-3 pb-3 col-1 pr-0 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pb-3 col-1 pr-0 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -29355,7 +29355,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0 newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0"
 																			}
 																		}
 																	],
@@ -29386,7 +29386,7 @@ let pjson = {
 																	},
 																	"class": "d-flex flex-row col-2 pt-3 pb-3"
 																},
-																"compDomClasses": "col d-flex flex-row col-2 pt-3 pb-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex flex-row col-2 pt-3 pb-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -29572,7 +29572,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
 																			}
 																		}
 																	],
@@ -29604,7 +29604,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 col-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -29790,7 +29790,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
 																			}
 																		}
 																	],
@@ -29822,7 +29822,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 col-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -29852,7 +29852,7 @@ let pjson = {
 											},
 											"O": {
 												"cType": "slot",
-												"compDomClasses": "row newDropBorder"
+												"compDomClasses": "row"
 											},
 											"S": {
 												"xs-xl": {
@@ -30031,7 +30031,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0 newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0"
 																			}
 																		}
 																	],
@@ -30063,7 +30063,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 col-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -30249,7 +30249,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
 																			}
 																		}
 																	],
@@ -30281,7 +30281,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 col-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -30439,7 +30439,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0 newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0"
 																			}
 																		}
 																	],
@@ -30470,7 +30470,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -30500,7 +30500,7 @@ let pjson = {
 											},
 											"O": {
 												"cType": "slot",
-												"compDomClasses": "row newDropBorder"
+												"compDomClasses": "row"
 											},
 											"S": {
 												"xs-xl": {
@@ -30707,7 +30707,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
 																			}
 																		}
 																	],
@@ -30739,7 +30739,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 col-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -30925,7 +30925,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
 																			}
 																		}
 																	],
@@ -30957,7 +30957,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 col-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -31138,7 +31138,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
 																			}
 																		}
 																	],
@@ -31170,7 +31170,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 col-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -31344,7 +31344,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0 newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0"
 																			}
 																		}
 																	],
@@ -31376,7 +31376,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 col-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -31406,7 +31406,7 @@ let pjson = {
 											},
 											"O": {
 												"cType": "slot",
-												"compDomClasses": "row newDropBorder"
+												"compDomClasses": "row"
 											},
 											"S": {
 												"xs-xl": {
@@ -31445,7 +31445,7 @@ let pjson = {
 									},
 									"class": "pt-0 pb-0 pl-3 pr-3"
 								},
-								"compDomClasses": "v-card v-sheet theme--light elevation-0 white pt-0 pb-0 pl-3 pr-3 newDropBorder"
+								"compDomClasses": "v-card v-sheet theme--light elevation-0 white pt-0 pb-0 pl-3 pr-3"
 							}
 						},
 						{
@@ -31599,7 +31599,7 @@ let pjson = {
 																					},
 																					"class": "mt-0"
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-input--selection-controls v-input--checkbox mt-0 newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-input--selection-controls v-input--checkbox mt-0"
 																			}
 																		},
 																		{
@@ -31691,7 +31691,7 @@ let pjson = {
 																							},
 																							"O": {
 																								"cType": "slot",
-																								"compDomClasses": "v-icon notranslate v-icon--link mdi mdi-plus theme--light newDropBorder"
+																								"compDomClasses": "v-icon notranslate v-icon--link mdi mdi-plus theme--light"
 																							}
 																						}
 																					],
@@ -31750,7 +31750,7 @@ let pjson = {
 																					},
 																					"class": "ml-5 mt-1"
 																				},
-																				"compDomClasses": "tooltip-force ml-5 mt-1 newDropBorder"
+																				"compDomClasses": "tooltip-force ml-5 mt-1"
 																			}
 																		}
 																	],
@@ -31782,7 +31782,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 col-4 pl-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 col-4 pl-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 col-4 pl-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -31812,7 +31812,7 @@ let pjson = {
 											},
 											"O": {
 												"cType": "slot",
-												"compDomClasses": "row newDropBorder"
+												"compDomClasses": "row"
 											},
 											"S": {
 												"xs-xl": {
@@ -31851,7 +31851,7 @@ let pjson = {
 									},
 									"class": "pb-0 pt-0 pl-3 pr-3"
 								},
-								"compDomClasses": "v-card v-sheet theme--light elevation-0 white pb-0 pt-0 pl-3 pr-3 newDropBorder"
+								"compDomClasses": "v-card v-sheet theme--light elevation-0 white pb-0 pt-0 pl-3 pr-3"
 							}
 						}
 					],
@@ -32178,7 +32178,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
 																			}
 																		}
 																	],
@@ -32218,7 +32218,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pl-3 pt-3 pr-3 pb-3 justify-center flex-row align-start col-4"
 																},
-																"compDomClasses": "col d-flex pl-3 pt-3 pr-3 pb-3 justify-center flex-row align-start col-4 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pl-3 pt-3 pr-3 pb-3 justify-center flex-row align-start col-4 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -32237,7 +32237,7 @@ let pjson = {
 											},
 											"O": {
 												"cType": "slot",
-												"compDomClasses": "row newDropBorder"
+												"compDomClasses": "row"
 											},
 											"S": {
 												"xs-xl": {
@@ -32276,7 +32276,7 @@ let pjson = {
 									},
 									"class": "pb-0 pt-0 pl-3 pr-3"
 								},
-								"compDomClasses": "v-card v-sheet theme--light elevation-0 white pb-0 pt-0 pl-3 pr-3 newDropBorder"
+								"compDomClasses": "v-card v-sheet theme--light elevation-0 white pb-0 pt-0 pl-3 pr-3"
 							}
 						}
 					],
@@ -32299,7 +32299,7 @@ let pjson = {
 					},
 					"class": "pl-0 pt-0 pr-0 pb-0"
 				},
-				"compDomClasses": "container container--fluid pl-0 pt-0 pr-0 pb-0 newDropBorder"
+				"compDomClasses": "container container--fluid pl-0 pt-0 pr-0 pb-0 container container--fluid"
 			},
 			"S": {
 				"xs-xl": {
@@ -32420,7 +32420,7 @@ let pjson = {
 																	},
 																	"class": "ml-5 text-h6"
 																},
-																"compDomClasses": "q-label ml-5 text-h6 newDropBorder"
+																"compDomClasses": "q-label  ml-5 text-h6"
 															}
 														}
 													],
@@ -32432,7 +32432,7 @@ let pjson = {
 											},
 											"O": {
 												"cType": "child",
-												"compDomClasses": "v-expansion-panel-header primary newDropBorder"
+												"compDomClasses": "v-expansion-panel-header primary"
 											}
 										},
 										{
@@ -37848,7 +37848,7 @@ let pjson = {
 							},
 							"O": {
 								"cType": "slot",
-								"compDomClasses": "v-expansion-panel newDropBorder"
+								"compDomClasses": "v-expansion-panel"
 							}
 						}
 					],
@@ -37860,7 +37860,7 @@ let pjson = {
 			},
 			"O": {
 				"cType": "slot",
-				"compDomClasses": "v-item-group theme--light v-expansion-panels newDropBorder"
+				"compDomClasses": "v-item-group theme--light v-expansion-panels"
 			}
 		},
 		{
@@ -37940,7 +37940,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": "newDropBorder"
+				"compDomClasses": ""
 			}
 		},
 		{
@@ -37989,7 +37989,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": "newDropBorder"
+				"compDomClasses": ""
 			}
 		}
 	],

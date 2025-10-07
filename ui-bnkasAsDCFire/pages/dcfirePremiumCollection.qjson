@@ -14,7 +14,7 @@ let pjson = {
 			},
 			"E": {
 				"PostRender": {
-					"H": "// debugger;\r\ncomponents.as_collectionInfoPremiumCollection.consumerCode = 'TANE.BANKASUR';\r\ncomponents.as_collectionInfoPremiumCollection.screenName = 'DCFIRE';\r\ncomponents.as_policyInfoPremiumCollection.consumerCode = 'TANE.BANKASUR';\r\ncomponents.as_policyInfoPremiumCollection.screenName = 'DCFIRE';\r\nquick.MM.trigger('setFirstPageDatas');",
+					"H": "// debugger;\r\ncomponents.as_collectionInfoPremiumCollection.consumerCode = 'TANE.BANKASUR';\r\ncomponents.as_collectionInfoPremiumCollection.screenName = 'DCFIRE';\r\n\r\ncomponents.as_policyInfoPremiumCollection.consumerCode = 'TANE.BANKASUR';\r\ncomponents.as_policyInfoPremiumCollection.screenName = 'DCFIRE';\r\n\r\nquick.MM.trigger('setFirstPageDatas');",
 					"TO": 1,
 					"HL": "TS"
 				},
@@ -289,7 +289,7 @@ let pjson = {
 															},
 															"E": {
 																"onLoad": {
-																	"H": "debugger;\r\n// Poliçe Bilgileri Onload\r\nlet assurance;\r\nlet policy;\r\n\r\nif(quick.store.get('$policyType')){\r\n    assurance = quick.store.get('$policyType');\r\n}\r\nif(quick.store.get('$reservePolicyNumber')){\r\n    policy = quick.store.get('$reservePolicyNumber').reservePolicyNumber;\r\n}\r\n\r\nlet premiumCollectionItems = {\r\n    assuranceType: assurance,\r\n    policyNo: policy,\r\n};\r\n(<any>components.as_policyInfoPremiumCollection).setData({ data: premiumCollectionItems });",
+																	"H": "debugger;\r\n// Poliçe Bilgileri Onload\r\nlet assurance;\r\nlet policy;\r\n\r\nif (quick.store.get(\"$getAssuranceCompInfo\")) {\r\n    assurance = quick.store.get(\"$getAssuranceCompInfo\").assuranceType;\r\n}\r\n\r\nif (quick.store.get('$reservePolicyNumber')) {\r\n    policy = quick.store.get('$reservePolicyNumber').reservePolicyNumber;\r\n}\r\n\r\nlet premiumCollectionItems = {\r\n    assuranceType: assurance,\r\n    policyNo: policy,\r\n};\r\n(<any>components.as_policyInfoPremiumCollection).setData({ data: premiumCollectionItems });",
 																	"HL": "TS"
 																}
 															},
@@ -1822,7 +1822,7 @@ let pjson = {
 															},
 															"E": {
 																"onLoad": {
-																	"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\n// Poliçe Bilgileri Onload\r\nvar assurance;\r\nvar policy;\r\nif (quick.store.get('$policyType')) {\r\n    assurance = quick.store.get('$policyType');\r\n}\r\nif (quick.store.get('$reservePolicyNumber')) {\r\n    policy = quick.store.get('$reservePolicyNumber').reservePolicyNumber;\r\n}\r\nvar premiumCollectionItems = {\r\n    assuranceType: assurance,\r\n    policyNo: policy,\r\n};\r\ncomponents.as_policyInfoPremiumCollection.setData({ data: premiumCollectionItems });\r\n",
+																	"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\n// Poliçe Bilgileri Onload\r\nvar assurance;\r\nvar policy;\r\nif (quick.store.get(\"$getAssuranceCompInfo\")) {\r\n    assurance = quick.store.get(\"$getAssuranceCompInfo\").assuranceType;\r\n}\r\nif (quick.store.get('$reservePolicyNumber')) {\r\n    policy = quick.store.get('$reservePolicyNumber').reservePolicyNumber;\r\n}\r\nvar premiumCollectionItems = {\r\n    assuranceType: assurance,\r\n    policyNo: policy,\r\n};\r\ncomponents.as_policyInfoPremiumCollection.setData({ data: premiumCollectionItems });\r\n",
 																	"HL": "JS"
 																}
 															},
@@ -2305,7 +2305,7 @@ let pjson = {
 															"O": {
 																"cType": "child",
 																"dynProps": true,
-																"compDomClasses": "newDropBorder"
+																"compDomClasses": ""
 															}
 														}
 													],
@@ -3034,7 +3034,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": "newDropBorder"
+				"compDomClasses": ""
 			}
 		},
 		{
@@ -3083,7 +3083,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": "newDropBorder"
+				"compDomClasses": ""
 			}
 		}
 	],
