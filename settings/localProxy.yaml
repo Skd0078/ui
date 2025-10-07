@@ -1,0 +1,10 @@
+/posts: https://jsonplaceholder.typicode.com/posts
+/api/wrapperclient: https://apigateway-bnkas-ui-platform.kube.uatisbank/bnkas-wrapper-client/api/wrapperclient
+/api/uiclient: https://apigateway-bnkas-ui-platform.kube.uatisbank/bnkas-ui-client/api/uiclient
+/api/bnkasgeneral: https://apigateway-bnkas-platform.kube.uatisbank/bnkas-general/api/bnkasgeneral
+/api/ahegeneral: https://apigateway-bnkas-ahe-platform.kube.uatisbank/bnkas-ahe-general/api/ahegeneral
+/api/bnkasaspolicy: https://apigateway-bnkas-as-platform.kube.uatisbank/bnkas-as-policy/api/bnkasaspolicy
+/api/bnkaspayment: https://apigateway-bnkas-platform.kube.uatisbank/bnkas-payment/api/bnkaspayment
+/api/as/payment: https://apigateway-bnkas-as-platform.kube.uatisbank/bnkas-as-payment/api/as/payment
+/api/bnkasaspayment: https://apigateway-bnkas-as-platform.kube.uatisbank/bnkas-as-payment/api/bnkasaspayment
+/api/abm: https://abm-apigateway.kube.uatisbank/abm-rest-service-app/api/abm

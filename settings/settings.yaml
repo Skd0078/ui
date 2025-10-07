@@ -1,0 +1,994 @@
+csspath: 
+- /settings/css/Style File
+
+containerServicesPath: /settings/js/Container Services File.ts
+componentListPath: /settings/js/Component List.js
+pipelineqjson: /settings/qjson/Pipeline.qjson
+useLocalProxyOnClient: true
+localproxy: /settings/localProxy.yaml
+rootqjson: /static/ui-bankasASHins/individualHealthInsurancePages/compProductSelectionIHINS.qjson
+fileMap: 
+- id: dqn6zjeb-l18x-gz2q-628e-9ae0mel12poa
+  path: /static/ui-bnkasAsDCFire/common
+  name: /as_alertCustomComp.qjson
+  version: Thu Aug 21 2025 09:37:06 GMT+0300 (GMT+03:00)
+- id: w13zyjgb-gjjv-e0mz-juc6-hib0mel13jtv
+  path: /static/ui-bnkasAsDCFire/common
+  name: /as_loadingCustomComp.qjson
+  version: Thu Aug 21 2025 09:37:20 GMT+0300 (GMT+03:00)
+- id: 96cb3rcu-pkyf-1s4g-sfax-vez0mel3d3dt
+  path: /static/ui-bnkasAsDCFire/common
+  name: /as_assuranceInfo.qjson
+  version: Wed Oct 01 2025 21:10:24 GMT+0300 (GMT+03:00)
+- id: gu5yk8lq-jkug-44po-cj0r-qj40mel3ou5c
+  path: /static/ui-bnkasAsDCFire/common
+  name: /as_buildingInfo.qjson
+  version: Mon Oct 06 2025 19:08:37 GMT+0300 (GMT+03:00)
+- id: 12urf480-16hb-01yd-jhxp-njj0mel3pm1x
+  path: /static/ui-bnkasAsDCFire/common
+  name: /as_buildingUAVTAdressInfo.qjson
+  version: Fri Oct 03 2025 17:16:12 GMT+0300 (GMT+03:00)
+- id: o1ws2o07-kqv8-7ow2-3xcb-1uj0mel3ndbu
+  path: /static/ui-bnkasAsDCFire/common
+  name: /as_assuranceOwnerInfo.qjson
+  version: Mon Oct 06 2025 13:41:40 GMT+0300 (GMT+03:00)
+- id: 6rp7zcr4-xww8-tuvd-6wy8-lv10mf14xvzg
+  path: /static/ui-bnkasAsDCFire/common
+  name: /as_insuredStatus.qjson
+  version: Wed Sep 24 2025 14:40:09 GMT+0300 (GMT+03:00)
+- id: 04tgyju3-56o0-8spt-qf7h-t6g0meld1bul
+  path: /static/ui-bnkasAsDCFire/common
+  name: /as_pledgedReceivablesInfo.qjson
+  version: Fri Oct 03 2025 17:19:29 GMT+0300 (GMT+03:00)
+- id: i0bj7mjr-cj1f-mfes-dzxo-atc0mer6kpm4
+  path: /static/ui-bnkasAsDCFire/common
+  name: /as_additionalInfo.qjson
+  version: Fri Oct 03 2025 17:13:03 GMT+0300 (GMT+03:00)
+- id: 7tym6ds3-v33v-5qag-ea52-gb70mf89pjij
+  path: /static/ui-bnkasAsDCFire/common
+  name: /as_policyInfo.qjson
+  version: Mon Oct 06 2025 11:40:06 GMT+0300 (GMT+03:00)
+- id: xpz2uo0q-uila-dy8l-los5-76f0mf84dwr3
+  path: /static/ui-bnkasAsDCFire/common
+  name: /as_policyProposalTable.qjson
+  version: Mon Oct 06 2025 19:57:39 GMT+0300 (GMT+03:00)
+- id: 2m6c5rz8-jbcu-dblp-wbfo-pcr0mgajui99
+  path: /static/ui-bnkasAsDCFire/common
+  name: /as_DCFireKVKK.qjson
+  version: Mon Oct 06 2025 17:09:58 GMT+0300 (GMT+03:00)
+- id: mj6ccdm2-e5hm-fyhe-gnvh-k0o0mg7om6mp
+  path: /static/ui-bnkasAsDCFire/common
+  name: /as_policyInfoPremiumCollection.qjson
+  version: Mon Oct 06 2025 19:14:39 GMT+0300 (GMT+03:00)
+- id: yjan0ye3-7v52-2hmb-qe72-p630mg7onswk
+  path: /static/ui-bnkasAsDCFire/common
+  name: /as_assuranceOwnerInfoPremiumCollection.qjson
+  version: Wed Oct 01 2025 11:25:12 GMT+0300 (GMT+03:00)
+- id: u9n0otgf-3sor-id96-nhaz-hrx0mg7ooux9
+  path: /static/ui-bnkasAsDCFire/common
+  name: /as_collectionInfoPremiumCollection.qjson
+  version: Fri Oct 03 2025 17:17:38 GMT+0300 (GMT+03:00)
+- id: ojnii7kz-xecr-hwk9-va4u-xbl0m5mal4xz
+  path: /static
+  name: /App Settings.appSettings
+  version: Mon Aug 04 2025 09:35:25 GMT+0300 (GMT+03:00)
+- id: dlwauol8-l03r-55ye-ko7z-3sv0m5xnfrxa
+  path: /static/ui-commonsAS
+  name: /as_buildingUAVTAdressInfo.qjson
+  version: Wed May 21 2025 23:20:42 GMT+0300 (GMT+03:00)
+- id: yzx3ty1i-hbw1-2mh9-5onh-pf60m5z2favo
+  path: /static/ui-commonsAS
+  name: /as_assuranceInfo.qjson
+  version: Tue Apr 22 2025 14:24:34 GMT+0300 (GMT+03:00)
+- id: shwrrm6d-y677-ri9t-5w69-jtp0m5z3nu4o
+  path: /static/ui-commonsAS
+  name: /as_landInformation.qjson
+  version: Thu Apr 24 2025 17:56:37 GMT+0300 (GMT+03:00)
+- id: w0gaw94b-ai9i-verr-k810-9cf0m60hza31
+  path: /static/ui-commonsAS
+  name: /as_buildingInfo.qjson
+  version: Tue May 06 2025 14:23:53 GMT+0300 (GMT+03:00)
+- id: phtpvrhj-e9my-m7nn-a38w-7tb0m60i7ede
+  path: /static/ui-commonsAS
+  name: /as_policyInformation.qjson
+  version: Wed Apr 16 2025 10:50:28 GMT+0300 (GMT+03:00)
+- id: k6f4g24f-1ty4-85sb-pfqb-8qx0m6g7ix0j
+  path: /static/ui-commonsAS
+  name: /as_pledgedReceivablesInfo.qjson
+  version: Fri May 16 2025 13:46:34 GMT+0300 (GMT+03:00)
+- id: cr1drky7-rtsp-4md6-tlcy-ud70m6ytjzjh
+  path: /static/ui-commonsAS
+  name: /as_alertCustomComp.qjson
+  version: Fri Mar 21 2025 14:15:19 GMT+0300 (GMT+03:00)
+- id: 2s47pmft-nhlm-vav2-3hrh-6e90m71lkzs9
+  path: /static/ui-commonsAS
+  name: /as_policyInfoAbroadTravel.qjson
+  version: Thu Apr 03 2025 18:08:49 GMT+0300 (GMT+03:00)
+- id: 1x6v8c8r-dx1x-zuh1-dk1t-wjw0m78qfxka
+  path: /static/ui-commonsAS
+  name: /as_policyInfoPremiumCollection.qjson
+  version: Mon Apr 14 2025 21:38:57 GMT+0300 (GMT+03:00)
+- id: 9gqa5ckn-kjrp-y4pe-t77q-pef0m78yueug
+  path: /static/ui-commonsAS
+  name: /as_assuranceOwnerInfoPremiumCollection.qjson
+  version: Mon Apr 14 2025 21:38:30 GMT+0300 (GMT+03:00)
+- id: k95s33p3-kg8k-f81r-8y94-8i50m7n3tch7
+  path: /static/ui-commonsAS
+  name: /as_collectionInfoPremiumCollection.qjson
+  version: Wed May 14 2025 23:30:32 GMT+0300 (GMT+03:00)
+- id: 28yzixh3-xp2b-cyq7-zt1w-f4f0m7n59jbr
+  path: /static/ui-commonsAS
+  name: /as_loadingCustomComp.qjson
+  version: Tue Mar 11 2025 16:36:06 GMT+0300 (GMT+03:00)
+- id: kioyqpeb-wp4r-3h3p-iii6-3t20m7ndnroh
+  path: /static/ui-commonsAS
+  name: /as_premiumInfo.qjson
+  version: Thu Apr 24 2025 12:50:00 GMT+0300 (GMT+03:00)
+- id: rz1rf8da-wpoj-xd4k-gih5-tvw0m7opyddw
+  path: /static/ui-commonsAS
+  name: /as_premiumCollectionResult.qjson
+  version: Mon Mar 24 2025 16:37:53 GMT+0300 (GMT+03:00)
+- id: cjlz4jqv-mryx-luyl-vpzz-zk80m8cs7yvo
+  path: /static/ui-commonsAS
+  name: /as_policyInquiry.qjson
+  version: Fri Apr 11 2025 16:09:44 GMT+0300 (GMT+03:00)
+- id: 4v3ndjop-altr-5302-n220-g2a0m8studfk
+  path: /static/ui-commonsAS
+  name: /as_guaranteeInformation.qjson
+  version: Fri Mar 28 2025 16:44:59 GMT+0300 (GMT+03:00)
+- id: dau9e4b7-rgrd-0i96-g476-b4o0m9113e2v
+  path: /static/ui-commonsAS
+  name: /as_assuranceOwnerInfo.qjson
+  version: Fri Jul 18 2025 13:22:55 GMT+0300 (GMT+03:00)
+- id: koyi1ccg-bfo2-4ed6-3nie-sj40m99o3u39
+  path: /static/ui-commonsAS
+  name: /as_creditInformation.qjson
+  version: Wed Apr 09 2025 11:33:54 GMT+0300 (GMT+03:00)
+- id: giwe69x1-hhu1-judo-3wdj-swz0m9id2wc8
+  path: /static/ui-commonsAS
+  name: /as_renewAssuranceList.qjson
+  version: Tue Apr 22 2025 14:58:29 GMT+0300 (GMT+03:00)
+- id: ep8a3yex-0cxw-49c5-jyd9-2mi0mayfphaj
+  path: /static/ui-commonsAS
+  name: /as_pledgedReceivablesInfo2.qjson
+  version: Thu May 22 2025 00:08:09 GMT+0300 (GMT+03:00)
+- id: v8fjz0jt-9u3n-doqy-2qqm-6120m6z4jc94
+  path: /static/ui-bankasASFrgn/foreignTravelPages
+  name: /compAbroadTravelInsurance.qjson
+  version: Fri Sep 19 2025 13:04:45 GMT+0300 (GMT+03:00)
+- id: 9gjh1a8u-lhlj-6zku-mpn1-2wj0m78r421d
+  path: /static
+  name: /tempScreen.qjson
+  version: Wed Mar 12 2025 11:23:42 GMT+0300 (GMT+03:00)
+- id: gn1zz5pd-imga-w02a-n17s-tpi0m78sm2u3
+  path: /static/ui-bankaAs
+  name: /compPremiumCollectionDividedCollection.qjson
+  version: Thu May 15 2025 21:49:02 GMT+0300 (GMT+03:00)
+- id: 8ei2q52m-d6qr-j1ie-r0kf-dxj0m7al5zt6
+  path: /static/ui-bnkasASPolicyCancellation
+  name: /policyCancellationPage.qjson
+  version: Tue Aug 12 2025 10:22:54 GMT+0300 (GMT+03:00)
+- id: trewnzzu-fo71-ln6p-gibs-3z00m7lkg2q6
+  path: /static/ui-bankaAs
+  name: /compPremiumCollectionResult.qjson
+  version: Tue May 27 2025 14:55:05 GMT+0300 (GMT+03:00)
+- id: mdelcf27-meje-8nfo-spvb-jz00m7nfww1h
+  path: /static/ui-bankaAs
+  name: /compEarthquakeInsurance.qjson
+  version: Wed May 21 2025 00:06:16 GMT+0300 (GMT+03:00)
+- id: t7zyc5q4-u11f-pzq2-17xb-9wc0m8cs1n1n
+  path: /static/ui-bankaAs
+  name: /compEarthquakeInsuranceRenew.qjson
+  version: Wed May 21 2025 23:13:08 GMT+0300 (GMT+03:00)
+- id: wwi2kx5l-id7m-bblp-a8ti-ajm0m8fwmp68
+  path: /static/ui-bankasASFrgn/foreignTravelPages
+  name: /compPremiumCollection.qjson
+  version: Fri Sep 19 2025 13:05:44 GMT+0300 (GMT+03:00)
+- id: c0ywtafb-yiy3-xuqh-qdwh-rpd0m8ir3z6n
+  path: /static/ui-bankaAs/zas
+  name: /compDisasterPremiumCollectionDividedCollection.qjson
+  version: Mon Mar 24 2025 17:32:22 GMT+0300 (GMT+03:00)
+- id: f80udkyl-i3pw-kv0t-1kq5-8ha0m8mxhjoy
+  path: /static/ui-bankaAs
+  name: /compPremiumCollectionRenewDividedCollection.qjson
+  version: Tue May 20 2025 23:09:15 GMT+0300 (GMT+03:00)
+- id: czx0fm4u-hco0-a13n-xqz9-c6b0m8n0mr8f
+  path: /static/ui-bankaAs/zas
+  name: /compDisasterInsurance.qjson
+  version: Mon Sep 15 2025 09:47:01 GMT+0300 (GMT+03:00)
+- id: ozfxp2k4-t4fy-3w5i-7o0t-un20m8skslgt
+  path: /static/ui-bankasASFrgn/foreignTravelPages
+  name: /compPremiumCollectionResult.qjson
+  version: Mon Aug 04 2025 15:41:05 GMT+0300 (GMT+03:00)
+- id: v9u63szw-ljs2-tivu-2flx-kxw0m91al4yt
+  path: /static/ui-bankaAs/zas
+  name: /compDisasterInsuranceRenew.qjson
+  version: Mon Sep 15 2025 09:48:11 GMT+0300 (GMT+03:00)
+- id: p6phrprn-kila-u3xi-u8pw-wgf0m91aqgid
+  path: /static/ui-bankaAs/zas
+  name: /compDisasterPremiumCollectionDividedCollectionRenew.qjson
+  version: Thu Apr 03 2025 14:54:44 GMT+0300 (GMT+03:00)
+- id: 35jjwsts-x1ng-myi1-qrhq-tl60m96zvipm
+  path: /static/ui-bankasASHins/healthInsurancePages
+  name: /compProductSelectionHINS.qjson
+  version: Tue Aug 12 2025 14:10:51 GMT+0300 (GMT+03:00)
+- id: 8cmefzme-twlk-kqse-e12x-4vs0m9gnyo91
+  path: /static/ui-bankasASPACC/common
+  name: /as_alertCustomComp.qjson
+  version: Thu May 22 2025 19:26:33 GMT+0300 (GMT+03:00)
+- id: b23u9gf2-2qn7-8mgv-1ukd-9940m9gnyo95
+  path: /static/ui-bankasASPACC/common
+  name: /as_assuranceInfo.qjson
+  version: Thu Aug 28 2025 23:26:01 GMT+0300 (GMT+03:00)
+- id: x7dtqxxe-23p5-n784-ybzc-jyt0m9gnyobq
+  path: /static/ui-bankasASPACC/common
+  name: /as_assuranceOwnerInfoPremiumCollection.qjson
+  version: Wed Jul 30 2025 14:56:15 GMT+0300 (GMT+03:00)
+- id: zq0g84nt-6pm6-ebja-kbzf-cal0m9gnyoej
+  path: /static/ui-bankasASPACC/common
+  name: /as_guaranteeInformation.qjson
+  version: Mon Sep 15 2025 13:47:56 GMT+0300 (GMT+03:00)
+- id: o7721i8q-j8hu-ktq8-c8kw-0h50m9gnyoih
+  path: /static/ui-bankasASPACC/common
+  name: /as_loadingCustomComp.qjson
+  version: Mon Apr 14 2025 22:53:36 GMT+0300 (GMT+03:00)
+- id: 48qfg1hr-6orb-7wo1-a5rt-t970m9gnyopt
+  path: /static/ui-bankasASPACC/common
+  name: /as_collectionInfoPremiumCollection.qjson
+  version: Fri Sep 05 2025 13:06:46 GMT+0300 (GMT+03:00)
+- id: p7l1ogoz-riqd-m0ax-etkf-inq0m9gnypzy
+  path: /static/ui-bankasASPACC/common
+  name: /as_policyInformation.qjson
+  version: Fri Oct 03 2025 11:36:13 GMT+0300 (GMT+03:00)
+- id: 31q0lld5-87yg-7zwt-k3cb-q5m0m9gnyq2g
+  path: /static/ui-bankasASPACC/common
+  name: /as_policyInfoPremiumCollection.qjson
+  version: Tue Apr 15 2025 12:31:48 GMT+0300 (GMT+03:00)
+- id: iunsbtw6-1zd2-sqjh-wpdf-13k0m9gnyq3t
+  path: /static/ui-bankasASPACC/common
+  name: /as_premiumInfo.qjson
+  version: Thu Aug 28 2025 11:11:27 GMT+0300 (GMT+03:00)
+- id: j38wnloc-qr5s-52pw-26sx-mcs0m9gus7qg
+  path: /static/ui-bankasASFrgn/common
+  name: /as_alertCustomComp.qjson
+  version: Mon Apr 14 2025 14:42:12 GMT+0300 (GMT+03:00)
+- id: ylfmsnpm-1pvx-qwgg-vonb-7pl0m9gus7rq
+  path: /static/ui-bankasASFrgn/common
+  name: /as_assuranceInfo.qjson
+  version: Mon Aug 25 2025 12:24:57 GMT+0300 (GMT+03:00)
+- id: lpw8yky7-io58-3re0-93sv-dfr0m9gus881
+  path: /static/ui-bankasASFrgn/common
+  name: /as_loadingCustomComp.qjson
+  version: Mon Apr 14 2025 14:39:25 GMT+0300 (GMT+03:00)
+- id: alw0acn4-ztju-d8c9-dbsd-ml40m9gus8w6
+  path: /static/ui-bankasASFrgn/common
+  name: /as_collectionInfoPremiumCollection.qjson
+  version: Fri Jun 27 2025 11:12:08 GMT+0300 (GMT+03:00)
+- id: klk9p998-6yvt-l1fe-g70o-ge60m9gus9km
+  path: /static/ui-bankasASFrgn/common
+  name: /as_policyInfoPremiumCollection.qjson
+  version: Wed Apr 16 2025 13:59:14 GMT+0300 (GMT+03:00)
+- id: x0g62qpe-ivgx-n5uz-tl1e-ai80m9gus9te
+  path: /static/ui-bankasASFrgn/common
+  name: /as_policyInfoAbroadTravel.qjson
+  version: Tue May 13 2025 14:54:28 GMT+0300 (GMT+03:00)
+- id: tg0nm4hc-ftg2-sacb-nk1w-rvy0m9gus9xi
+  path: /static/ui-bankasASFrgn/common
+  name: /as_premiumInfo.qjson
+  version: Wed Jun 18 2025 12:16:32 GMT+0300 (GMT+03:00)
+- id: 50v9n3es-fleh-vuf8-2y6n-35r0m9iaegam
+  path: /static/ui-bankasASPACC/individualAccidentPages
+  name: /compProductSelection.qjson
+  version: Mon Aug 11 2025 18:17:21 GMT+0300 (GMT+03:00)
+- id: 2zl2a6wh-tsqb-eq3q-btv5-5qz0m9idjswx
+  path: /static/ui-bankasASPACC/atworkCommercialProtectionPages
+  name: /compAtworkCommercialProtection.qjson
+  version: Thu Aug 28 2025 18:02:46 GMT+0300 (GMT+03:00)
+- id: 2jotenr6-vdpu-yq22-jkdp-fsy0m9ieaquk
+  path: /static/ui-bankasASPACC/common
+  name: /as_creditInformation.qjson
+  version: Mon Aug 11 2025 14:57:30 GMT+0300 (GMT+03:00)
+- id: 96wosfpy-7zvq-nqt4-rx6e-3660m9jod84q
+  path: /static/ui-bankasASHins/healthInsurancePages
+  name: /healthInsurancePage.qjson
+  version: Tue Sep 02 2025 18:52:46 GMT+0300 (GMT+03:00)
+- id: yy03377o-giab-tkdj-r3ge-5ji0m9jsh1hy
+  path: /static/ui-bankasASHins/common
+  name: /as_alertCustomComp.qjson
+  version: Fri Aug 01 2025 16:03:15 GMT+0300 (GMT+03:00)
+- id: 4v33m3au-krh2-2odh-d81b-m4q0m9jshoal
+  path: /static/ui-bankasASHins/common
+  name: /as_assuranceInfo.qjson
+  version: Wed Sep 10 2025 16:10:13 GMT+0300 (GMT+03:00)
+- id: 68ft5mmo-d6qs-9qml-pkwq-jt70m9jskyeg
+  path: /static/ui-bankasASHins/common
+  name: /as_loadingCustomComp.qjson
+  version: Wed Apr 16 2025 13:32:15 GMT+0300 (GMT+03:00)
+- id: tfjexl3b-noe0-7v0e-4msr-lws0m9jspi94
+  path: /static/ui-bankasASHins/common
+  name: /as_policySpecificInsuredInfo.qjson
+  version: Wed Sep 24 2025 09:34:45 GMT+0300 (GMT+03:00)
+- id: 8kez2tf9-wdw3-s1kn-koi5-x690m9sks72j
+  path: /static/ui-bankasASPACC/standardIndividualAccidentPages
+  name: /compStandardIndividualAccident.qjson
+  version: Mon Sep 15 2025 17:44:20 GMT+0300 (GMT+03:00)
+- id: 2rmoi9uu-7llv-xiol-i4s2-5f30m9sxfjx1
+  path: /static/ui-bankasASPACC/standardIndividualAccidentPages
+  name: /compPremiumCollection.qjson
+  version: Wed Sep 24 2025 17:02:49 GMT+0300 (GMT+03:00)
+- id: pldepguv-675j-jt2k-ar5a-o640m9v21j0c
+  path: /static/ui-bankasASOrder/common
+  name: /as_alertCustomComp.qjson
+  version: Thu Apr 24 2025 10:44:40 GMT+0300 (GMT+03:00)
+- id: swqvo18z-tgni-m100-loyl-yqy0m9v2m6l7
+  path: /static/ui-bankasASOrder/common
+  name: /as_searchPolicy.qjson
+  version: Fri Jul 04 2025 16:05:10 GMT+0300 (GMT+03:00)
+- id: m6roq06i-i2rj-l2vz-lf0i-3im0m9vez6rj
+  path: /static/ui-bankasASOrder/common
+  name: /as_policyResultList.qjson
+  version: Tue Sep 16 2025 11:34:05 GMT+0300 (GMT+03:00)
+- id: n0t26jfz-ooau-4ik0-ps1i-dic0m9vfw5cy
+  path: /static/ui-bankasASOrder/common
+  name: /as_loadingCustomComp.qjson
+  version: Thu Apr 24 2025 17:10:36 GMT+0300 (GMT+03:00)
+- id: 6x2ucwns-h509-04cs-ol59-pix0m9vpxd6i
+  path: /static/ui-bankasASPACC/individualAccidentPages
+  name: /compIndividualAccident.qjson
+  version: Thu Sep 25 2025 12:27:25 GMT+0300 (GMT+03:00)
+- id: r3yzyy17-00ku-4tet-5x41-r480m9wvhl8l
+  path: /static/ui-bankasASOrder/common
+  name: /as_policyOrderInfo.qjson
+  version: Wed May 14 2025 15:59:12 GMT+0300 (GMT+03:00)
+- id: mhnwwlrc-q23r-h41z-xo6z-ff00m9wwht78
+  path: /static/ui-bankasASOrder/common
+  name: /as_orderInsuranceInfo.qjson
+  version: Mon Jul 21 2025 12:19:28 GMT+0300 (GMT+03:00)
+- id: ptxfp8d2-qreu-2tqa-m52i-gra0macf2vao
+  path: /static/ui-bankasASOrder/createOrCancelOrderPages
+  name: /searchPolicyPage.qjson
+  version: Wed May 14 2025 18:14:46 GMT+0300 (GMT+03:00)
+- id: k07y8myh-yw2b-n7k0-2vtu-nuu0macfumyj
+  path: /static/ui-bankasASOrder/common
+  name: /as_relationalCreditInformation.qjson
+  version: Fri Jul 04 2025 14:34:49 GMT+0300 (GMT+03:00)
+- id: be4j9vah-ru71-n8wb-66s3-ynu0makpqjxt
+  path: /static/ui-bankasASHins/common
+  name: /as_policyInfoPremiumCollection.qjson
+  version: Mon May 12 2025 09:42:21 GMT+0300 (GMT+03:00)
+- id: k73jkq4l-y70x-o3jl-lxam-s2q0makpr7wm
+  path: /static/ui-bankasASHins/common
+  name: /as_premiumInfo.qjson
+  version: Tue Sep 02 2025 12:57:13 GMT+0300 (GMT+03:00)
+- id: 5l6th3iu-rpcq-i7c7-r6d1-bjn0mamdxrvm
+  path: /static/ui-bankasASPACC/safeAtMyWorkPages
+  name: /compSafeAtMyWork.qjson
+  version: Thu Sep 25 2025 12:23:42 GMT+0300 (GMT+03:00)
+- id: vnwp97dl-gla4-u22k-nisb-atq0mame3xtq
+  path: /static/ui-bankasASPACC/safeAtMyWorkPages
+  name: /compProductSelection.qjson
+  version: Mon Aug 11 2025 18:13:00 GMT+0300 (GMT+03:00)
+- id: isl8h2iy-si7j-bsl0-rj86-vsh0mamnb1r4
+  path: /static/ui-bankasASPACC/atworkCommercialProtectionPages
+  name: /compAtworkCommercialPremiumCollection.qjson
+  version: Wed Sep 24 2025 16:58:38 GMT+0300 (GMT+03:00)
+- id: 8vhwtxcc-3rby-e6ki-chab-nq10mamss2bk
+  path: /static/ui-bankasASPACC/safeAtMyWorkPages
+  name: /compSafeAtMyWorkPremiumCollection.qjson
+  version: Wed Sep 24 2025 17:02:13 GMT+0300 (GMT+03:00)
+- id: oqb4dhi4-v0s0-rym4-6wxk-h3z0mamvr130
+  path: /static/ui-bankasASPACC/safeAtMyWorkPages
+  name: /compSafeAtMyWorkResult.qjson
+  version: Mon Aug 04 2025 22:02:42 GMT+0300 (GMT+03:00)
+- id: u12xnue8-g9hk-c1ys-5fxk-uhm0manpplfb
+  path: /static/ui-bankasASOrder/createOrCancelOrderPages
+  name: /createOrderPage.qjson
+  version: Tue Aug 12 2025 10:06:07 GMT+0300 (GMT+03:00)
+- id: nd14klfa-pzk2-i6mv-jjx4-d150mapaxz0i
+  path: /static/ui-bankasASOrder/createOrCancelOrderPages
+  name: /createOrCancelOrderResult.qjson
+  version: Fri Jul 04 2025 14:45:35 GMT+0300 (GMT+03:00)
+- id: lovjubm9-meks-e6h6-w9kw-n2y0maps7nlp
+  path: /static/ui-bankasASDask/common
+  name: /as_assuranceInfo.qjson
+  version: Mon Sep 01 2025 17:42:44 GMT+0300 (GMT+03:00)
+- id: 4ofxpzue-4tgt-xn8v-tb9d-he40maps7nna
+  path: /static/ui-bankasASDask/common
+  name: /as_alertCustomComp.qjson
+  version: Thu May 15 2025 22:52:02 GMT+0300 (GMT+03:00)
+- id: oiez2vxc-r46a-u3zt-t5jz-ndj0maps7nnj
+  path: /static/ui-bankasASDask/common
+  name: /as_assuranceOwnerInfoPremiumCollection.qjson
+  version: Tue May 20 2025 23:38:11 GMT+0300 (GMT+03:00)
+- id: x7stsyhl-dg2s-kghc-15k4-v7l0maps7nnv
+  path: /static/ui-bankasASDask/common
+  name: /as_buildingInfo.qjson
+  version: Thu May 15 2025 23:12:07 GMT+0300 (GMT+03:00)
+- id: uqhpjdpa-lkdx-zekn-h042-yuw0maps7npk
+  path: /static/ui-bankasASDask/common
+  name: /as_loadingCustomComp.qjson
+  version: Thu May 15 2025 23:10:12 GMT+0300 (GMT+03:00)
+- id: q5zpc7bf-z3e2-3uvp-nj20-rij0maps7otk
+  path: /static/ui-bankasASDask/common
+  name: /as_collectionInfoPremiumCollection.qjson
+  version: Tue Aug 26 2025 14:55:05 GMT+0300 (GMT+03:00)
+- id: 6rztmboj-tc71-bupw-e9m2-6870maps7p5s
+  path: /static/ui-bankasASDask/common
+  name: /as_buildingUAVTAdressInfo.qjson
+  version: Mon Sep 22 2025 18:45:25 GMT+0300 (GMT+03:00)
+- id: seqitvnr-w425-x85u-h888-jji0maps7pcv
+  path: /static/ui-bankasASDask/common
+  name: /as_landInformation.qjson
+  version: Thu May 15 2025 23:36:58 GMT+0300 (GMT+03:00)
+- id: o67rccvu-4pua-d00e-9535-l7l0maps7pgp
+  path: /static/ui-bankasASDask/common
+  name: /as_policyInfoPremiumCollection.qjson
+  version: Fri May 23 2025 11:28:40 GMT+0300 (GMT+03:00)
+- id: t6rrlk7j-qtzh-8hqa-sppr-9a90maps7phi
+  path: /static/ui-bankasASDask/common
+  name: /as_policyInformation.qjson
+  version: Wed Aug 13 2025 22:32:45 GMT+0300 (GMT+03:00)
+- id: cgw8didt-trd1-92a7-g6ch-cty0maps7pi3
+  path: /static/ui-bankasASDask/common
+  name: /as_policyInquiry.qjson
+  version: Tue Jun 10 2025 18:05:10 GMT+0300 (GMT+03:00)
+- id: ozm6mt3r-zge0-1hzx-2m1r-a8j0maps7pvr
+  path: /static/ui-bankasASDask/common
+  name: /as_premiumInfo.qjson
+  version: Wed Jun 18 2025 12:15:15 GMT+0300 (GMT+03:00)
+- id: lbwtwtvd-cfgo-lxri-76wf-qxn0mapsom4h
+  path: /static/ui-bankasASDask/daskPages
+  name: /compPremiumCollectionResult.qjson
+  version: Wed Oct 01 2025 11:56:13 GMT+0300 (GMT+03:00)
+- id: 21k4gd40-stpm-yj6y-gwha-p7d0mapsom57
+  path: /static/ui-bankasASDask/daskPages
+  name: /compPremiumCollectionDividedCollection.qjson
+  version: Mon Oct 06 2025 12:13:02 GMT+0300 (GMT+03:00)
+- id: fo6z8xxz-8dbv-uj00-7zyn-vou0maqglwtb
+  path: /static/ui-bankasASOrder/createOrCancelOrderPages
+  name: /cancelOrderPage.qjson
+  version: Fri Jul 04 2025 14:39:47 GMT+0300 (GMT+03:00)
+- id: y8o781rq-sjxq-68h9-tqgk-nj90mar5ae7k
+  path: /static/ui-bnkasASPolicyCancellation/common
+  name: /as_alertCustomComp.qjson
+  version: Fri May 16 2025 21:48:26 GMT+0300 (GMT+03:00)
+- id: 4omytz6p-q28s-qska-vcmj-yf60mar5cgwp
+  path: /static/ui-bnkasASPolicyCancellation/common
+  name: /as_loadingCustomComp.qjson
+  version: Fri May 16 2025 21:48:33 GMT+0300 (GMT+03:00)
+- id: ejy7wv29-7p34-7su0-ausu-ib10mavi0lsh
+  path: /static/ui-bankasASHins/healthInsurancePages
+  name: /compPremiumCollection.qjson
+  version: Mon Aug 25 2025 15:09:50 GMT+0300 (GMT+03:00)
+- id: 2dg7f4gv-qb6h-nmi2-5cne-dv30mavi0yve
+  path: /static/ui-bankasASHins/healthInsurancePages
+  name: /compPremiumCollectionResult.qjson
+  version: Tue Sep 30 2025 10:20:46 GMT+0300 (GMT+03:00)
+- id: tdqq3d3h-lujm-5rf2-xxfx-m5w0mawfexyp
+  path: /static/ui-bankasASPACC/atworkCommercialProtectionPages
+  name: /compAtworkCommercialResult.qjson
+  version: Tue Aug 05 2025 09:13:29 GMT+0300 (GMT+03:00)
+- id: nc8gtum0-akm1-cj85-5dji-bno0mawwcgql
+  path: /static/ui-bankasASPACC/individualAccidentPages
+  name: /compIndividualAccidentPremiumCollection.qjson
+  version: Wed Sep 24 2025 17:01:36 GMT+0300 (GMT+03:00)
+- id: eeovych3-9omh-fzea-tpeu-rfz0mawye9r1
+  path: /static/ui-bankasASDask/common
+  name: /as_assuranceOwnerInfo.qjson
+  version: Mon Oct 06 2025 13:42:38 GMT+0300 (GMT+03:00)
+- id: nkk04mus-8hsj-ozeu-7nqr-rsm0mawyy3n2
+  path: /static/ui-bankasASDask/common
+  name: /as_pledgedReceivablesInfo.qjson
+  version: Fri Jul 18 2025 14:48:05 GMT+0300 (GMT+03:00)
+- id: 6emvevsg-35xl-r3si-q1g8-j2q0maxnkvqy
+  path: /static/ui-bankasASFrgn/common
+  name: /as_assuranceOwnerInfoPremiumCollection.qjson
+  version: Wed May 21 2025 11:03:50 GMT+0300 (GMT+03:00)
+- id: cpm0hf69-adjt-vuf3-039g-h2u0mayebgcl
+  path: /static/ui-bankasASPACC/atworkFarmerProtectionPages
+  name: /compAtworkFarmerResult.qjson
+  version: Wed Sep 10 2025 15:00:37 GMT+0300 (GMT+03:00)
+- id: qe3iszwg-a0ky-ctw1-5cm9-0iu0mayeeupk
+  path: /static/ui-bankasASPACC/atworkFarmerProtectionPages
+  name: /compAtworkFarmerProtection.qjson
+  version: Tue Oct 07 2025 14:32:28 GMT+0300 (GMT+03:00)
+- id: fzusapxm-daqq-dtni-64fl-s6i0mayel8uw
+  path: /static/ui-bankasASPACC/atworkFarmerProtectionPages
+  name: /compAtworkFarmerProtectionPremiumCollection.qjson
+  version: Tue Oct 07 2025 14:33:20 GMT+0300 (GMT+03:00)
+- id: uetuz7by-cy4l-62w5-868g-mgh0mayz82o1
+  path: /static/ui-bankasASPACC/atworkFarmerProtectionPages
+  name: /compAtworkFarmerProtectionInformation.qjson
+  version: Tue Oct 07 2025 13:03:09 GMT+0300 (GMT+03:00)
+- id: wj6ao12k-5cx5-f5n6-v7ee-8qu0mazdpojf
+  path: /static/ui-bankasASDask/daskPages
+  name: /compEarthquakeInsurance.qjson
+  version: Tue Sep 09 2025 22:14:33 GMT+0300 (GMT+03:00)
+- id: 6q0s5zqm-1bu5-98li-3pkx-kaj0mazetdj6
+  path: /static/ui-bankasASDask/daskPages
+  name: /compEarthquakeInsuranceRenew.qjson
+  version: Tue Sep 09 2025 22:13:26 GMT+0300 (GMT+03:00)
+- id: 1t7vzysj-35ea-v1b1-38au-uwj0mazf1k31
+  path: /static/ui-bankasASDask/common
+  name: /as_renewAssuranceList.qjson
+  version: Mon Jul 28 2025 15:12:09 GMT+0300 (GMT+03:00)
+- id: 7xojegip-uati-50zo-tnsd-zfq0mb0gi5ok
+  path: /static/ui-bankasASPACC/standardIndividualAccidentPages
+  name: /compPremiumCollectionResult.qjson
+  version: Mon Aug 04 2025 22:03:40 GMT+0300 (GMT+03:00)
+- id: 4h0rmw01-707i-2u0r-6xr7-gr80mb0ojggn
+  path: /static/ui-bankasASDask/daskPages
+  name: /compPremiumCollectionDividedCollectionRNW.qjson
+  version: Mon Oct 06 2025 12:14:18 GMT+0300 (GMT+03:00)
+- id: 1e91aj0u-cf9k-g7nx-ofba-eyl0mb6gdugb
+  path: /static/ui-bankasASHins/individualHealthInsurancePages
+  name: /individualHealthInsurancePage.qjson
+  version: Wed Oct 01 2025 18:32:16 GMT+0300 (GMT+03:00)
+- id: izw96gi7-hchv-xv3n-9qxw-28r0mb9414sw
+  path: /static/ui-bankasASPACC/individualAccidentPages
+  name: /compPremiumCollectionResult.qjson
+  version: Mon Aug 04 2025 22:01:49 GMT+0300 (GMT+03:00)
+- id: v4afgmie-95sl-7xta-x7xd-9910mbf79v55
+  path: /static/ui-bankasASHins/common
+  name: /as_assuranceOwnerInfo.qjson
+  version: Wed Oct 01 2025 18:35:53 GMT+0300 (GMT+03:00)
+- id: j7833bnk-8v9e-5z4v-aakn-klk0mbq75thv
+  path: /static/ui-bankasASDask/common
+  name: /as_pledgedReceivablesInfoRNW.qjson
+  version: Fri Jul 18 2025 14:49:37 GMT+0300 (GMT+03:00)
+- id: xy1vw6ld-dhjj-j1ri-0qm0-o240mbrwd8z5
+  path: /static/ui-bankasASHins/common
+  name: /as_policyInformation.qjson
+  version: Thu Sep 11 2025 09:49:45 GMT+0300 (GMT+03:00)
+- id: wf7kkqzg-pssb-v5op-9joq-j3b0mbs0awz2
+  path: /static/ui-bankasASHins/common
+  name: /as_collectionInfoPremiumCollection.qjson
+  version: Tue Sep 23 2025 15:51:01 GMT+0300 (GMT+03:00)
+- id: d7k1pqy2-2cq9-aep1-tus2-uzh0mbt8bbuw
+  path: /static/ui-bankasASHins/common
+  name: /as_assuranceOwnerInfoPremiumCollection.qjson
+  version: Fri Sep 12 2025 09:56:10 GMT+0300 (GMT+03:00)
+- id: zczrov98-ag3s-t7c7-8jz6-9af0mc8v9phi
+  path: /static/ui-bankasASPACC/eliteIndividualAccidentPages
+  name: /compPremiumCollection.qjson
+  version: Wed Sep 24 2025 16:59:34 GMT+0300 (GMT+03:00)
+- id: 10p70z3d-ahxu-l9kr-hgqr-10t0mc8v9pxp
+  path: /static/ui-bankasASPACC/eliteIndividualAccidentPages
+  name: /compEliteIndividualAccident.qjson
+  version: Tue Sep 09 2025 13:29:01 GMT+0300 (GMT+03:00)
+- id: 9d9upol3-2uv8-66pv-2mc7-4u50mc8v9q4g
+  path: /static/ui-bankasASPACC/eliteIndividualAccidentPages
+  name: /compPremiumCollectionResult.qjson
+  version: Thu Aug 28 2025 12:01:55 GMT+0300 (GMT+03:00)
+- id: 132m4en3-mz3u-1bif-71d4-l3r0mcexhcyj
+  path: /static/ui-bankasASHins/individualHealthInsurancePages
+  name: /compPremiumCollectionResult.qjson
+  version: Tue Sep 30 2025 13:50:58 GMT+0300 (GMT+03:00)
+- id: vm74lmny-ic41-iiq4-ndcq-60s0mcexjtif
+  path: /static/ui-bankasASHins/individualHealthInsurancePages
+  name: /compPremiumCollection.qjson
+  version: Wed Sep 10 2025 16:13:39 GMT+0300 (GMT+03:00)
+- id: 4nie0f10-d6p0-lnq1-cdkz-zbn0mcexx5pe
+  path: /static/ui-bankasASHins/individualHealthInsurancePages
+  name: /compProductSelectionIHINS.qjson
+  version: Wed Sep 10 2025 16:12:56 GMT+0300 (GMT+03:00)
+- id: x0bjawda-jbo0-jl0n-8std-97g0mcj0op3k
+  path: /static/ui-bankasASHins/supplementaryHealthInsurancePages
+  name: /compPremiumCollection.qjson
+  version: Tue Sep 23 2025 16:12:29 GMT+0300 (GMT+03:00)
+- id: l2df1yty-gypu-6y6s-26mv-sk80mcj0phnp
+  path: /static/ui-bankasASHins/supplementaryHealthInsurancePages
+  name: /compPremiumCollectionResult.qjson
+  version: Tue Sep 30 2025 10:26:57 GMT+0300 (GMT+03:00)
+- id: bhfm9i10-eixd-jjyx-qhbu-v020mcj0pwg8
+  path: /static/ui-bankasASHins/supplementaryHealthInsurancePages
+  name: /compProductSelectionSHINS.qjson
+  version: Wed Sep 10 2025 23:28:41 GMT+0300 (GMT+03:00)
+- id: wxs12z3d-pt1i-d0aq-8llk-4h00mcj0qey5
+  path: /static/ui-bankasASHins/supplementaryHealthInsurancePages
+  name: /supplementaryHealthInsurancePage.qjson
+  version: Fri Sep 12 2025 11:59:59 GMT+0300 (GMT+03:00)
+- id: 9j26cuqe-ut4f-rd3s-48vx-dwo0mcu86065
+  path: /static/ui-bankasASPayment/common
+  name: /as_searchPolicyPayment.qjson
+  version: Tue Sep 09 2025 10:21:09 GMT+0300 (GMT+03:00)
+- id: mgaji9g2-nkxw-kc0k-o139-9my0mcx9ulhh
+  path: /static/ui-bankasASPayment/common
+  name: /as_policyPaymentResultList.qjson
+  version: Thu Sep 25 2025 12:09:45 GMT+0300 (GMT+03:00)
+- id: 29q9b0z1-imgs-dqqt-yvqy-p9h0mcykcy1i
+  path: /static/ui-bankasASCOMP/common
+  name: /referencePolicyInquiry.qjson
+  version: Tue Oct 07 2025 11:07:07 GMT+0300 (GMT+03:00)
+- id: ufjkdjo3-5hvi-041o-6wsv-5ub0mcytkg0v
+  path: /static/ui-bankasASPayment/common
+  name: /as_alertCustomComp.qjson
+  version: Thu Jul 31 2025 11:12:46 GMT+0300 (GMT+03:00)
+- id: l9bt7is7-iwna-tpex-tf8d-ieh0mcytku95
+  path: /static/ui-bankasASPayment/common
+  name: /as_loadingCustomComp.qjson
+  version: Thu Jul 31 2025 11:12:37 GMT+0300 (GMT+03:00)
+- id: fken3acs-tz3u-a19m-x1ps-apf0md6z2gif
+  path: /static/ui-bankasASPayment/common
+  name: /as_paymentPlanList.qjson
+  version: Mon Sep 29 2025 16:23:41 GMT+0300 (GMT+03:00)
+- id: vcyj6i60-118x-p2ca-xyh5-0wk0md6zapch
+  path: /static/ui-bankasASPayment/paymentPages
+  name: /as_searchPolicyPaymentPage.qjson
+  version: Fri Sep 05 2025 16:34:25 GMT+0300 (GMT+03:00)
+- id: u329ghbq-5ept-mwcd-5hyq-14x0md8te7il
+  path: /static/ui-bankasASFrgn/common
+  name: /as_assuranceOwnerInfo.qjson
+  version: Mon Oct 06 2025 13:54:43 GMT+0300 (GMT+03:00)
+- id: ua8s8xf3-kk3q-6bgi-igeo-7hs0mdd22ohj
+  path: /static/ui-bankasASPACC/common
+  name: /as_assuranceOwnerInfo.qjson
+  version: Tue Oct 07 2025 14:38:18 GMT+0300 (GMT+03:00)
+- id: 8ldaqa7y-gu3p-ywa1-w6ct-hli0mdflzk8j
+  path: /static/ui-ASMSU
+  name: /compInsuranceSpecialist.qjson
+  version: Fri Oct 03 2025 14:48:02 GMT+0300 (GMT+03:00)
+- id: ov9yfxt0-5oyq-5kb7-3k59-nbq0mdh0utu9
+  path: /static/ui-ASMSU/common
+  name: /as_alertCustomComp.qjson
+  version: Tue Sep 16 2025 15:16:14 GMT+0300 (GMT+03:00)
+- id: qtwsdgzl-g1p3-bvgl-ida5-28m0mdh0utv9
+  path: /static/ui-ASMSU/common
+  name: /as_loadingCustomComp.qjson
+  version: Tue Sep 16 2025 15:15:04 GMT+0300 (GMT+03:00)
+- id: kmclcdup-4q6o-6mph-3xcg-zyo0mdh0utwk
+  path: /static/ui-ASMSU/common
+  name: /as_assuranceInfo.qjson
+  version: Wed Oct 01 2025 09:59:09 GMT+0300 (GMT+03:00)
+- id: ulxf5zhu-rq3g-5hha-6nh6-6xk0mdh0uu2a
+  path: /static/ui-ASMSU/common
+  name: /as_creditInformation.qjson
+  version: Tue Sep 30 2025 17:08:59 GMT+0300 (GMT+03:00)
+- id: pljwlya7-1z2i-glu7-n9wf-is20mdh0uuhr
+  path: /static/ui-ASMSU/common
+  name: /as_assuranceOwnerInfo.qjson
+  version: Fri Sep 26 2025 09:48:42 GMT+0300 (GMT+03:00)
+- id: py3df8rr-w0jq-bnom-nux4-79j0mdit7lca
+  path: /static/ui-bankasASPayment/common
+  name: /as_paymentCancelledList.qjson
+  version: Wed Oct 01 2025 14:19:22 GMT+0300 (GMT+03:00)
+- id: 1ke8djxa-6gjs-0pjr-iigl-goh0mdiuw73y
+  path: /static/ui-bankasASPayment/paymentPages
+  name: /as_paymentResultPage.qjson
+  version: Fri Sep 05 2025 11:59:01 GMT+0300 (GMT+03:00)
+- id: 818rcu8b-24gs-cxza-93uy-dm20mdn0lsiy
+  path: /static/ui-bankasASPayment/common
+  name: /as_paymentCancelledListDetails.qjson
+  version: Wed Oct 01 2025 14:24:08 GMT+0300 (GMT+03:00)
+- id: td0ysy91-9fb1-gung-oj6v-np30mdsjdyz1
+  path: /static/ui-bankasASPayment/paymentPages
+  name: /as_policyPaymentCancelledPage.qjson
+  version: Wed Sep 17 2025 15:35:44 GMT+0300 (GMT+03:00)
+- id: 176tl76o-rdjm-rfvf-ci5r-tf20mdy63v3w
+  path: /static
+  name: /dataTableSelect.qjson
+  version: Tue Aug 05 2025 10:01:09 GMT+0300 (GMT+03:00)
+- id: rkm66f17-4wgb-pj03-8f00-j060me1ip8ol
+  path: /static/ui-bankasASPACC/atworkFarmerProtectionPages
+  name: /farmerprotecinfo-PLT.qjson
+  version: Thu Aug 07 2025 18:50:41 GMT+0300 (GMT+03:00)
+- id: 8heqhbwd-o29o-es3k-avq3-3qq0meb1bngd
+  path: /static/ui-ASMSU/common
+  name: /redirectionDetailInfo.qjson
+  version: Fri Oct 03 2025 14:48:27 GMT+0300 (GMT+03:00)
+- id: qjsxqc27-rwwr-kmzb-h49t-a5b0mecmtvk0
+  path: /static/ui-bankasASCOMP/common
+  name: /as_loadingCustomComp.qjson
+  version: Fri Aug 15 2025 12:35:51 GMT+0300 (GMT+03:00)
+- id: ioa0ue9u-u2j1-vuog-xhv8-r3k0mecmtvrz
+  path: /static/ui-bankasASCOMP/common
+  name: /as_alertCustomComp.qjson
+  version: Fri Aug 15 2025 12:35:30 GMT+0300 (GMT+03:00)
+- id: 882l2kpx-scf1-6269-uoo6-39p0mecmzrmr
+  path: /static/ui-bankasASCOMP/compPages
+  name: /compTrafficPremiumCollection.qjson
+  version: Thu Sep 25 2025 23:23:35 GMT+0300 (GMT+03:00)
+- id: 2yffyv8z-zacd-vbor-gexz-0xs0mecmzrsb
+  path: /static/ui-bankasASCOMP/compPages
+  name: /compTraffic.qjson
+  version: Tue Oct 07 2025 10:55:50 GMT+0300 (GMT+03:00)
+- id: mogns2zx-upqo-ycd1-fli8-9gt0mecmzs7x
+  path: /static/ui-bankasASCOMP/compPages
+  name: /compTrafficResult.qjson
+  version: Tue Sep 30 2025 16:33:53 GMT+0300 (GMT+03:00)
+- id: 4phf44m0-97ev-6xkv-i3p3-mz70megrjaag
+  path: /static/ui-bankasASCOMP/common
+  name: /as_policyInformation.qjson
+  version: Mon Aug 18 2025 13:49:34 GMT+0300 (GMT+03:00)
+- id: wnu17jh3-vl58-auab-o2v1-a9q0megrjab9
+  path: /static/ui-bankasASCOMP/common
+  name: /as_policyInfoPremiumCollection.qjson
+  version: Thu Sep 04 2025 11:28:09 GMT+0300 (GMT+03:00)
+- id: uskh4tp1-w0rf-7m7d-51q4-9o20megrjae1
+  path: /static/ui-bankasASCOMP/common
+  name: /as_assuranceInfo.qjson
+  version: Tue Oct 07 2025 10:31:20 GMT+0300 (GMT+03:00)
+- id: l9yteckt-a2wy-vv80-j02r-g0d0megrjanx
+  path: /static/ui-bankasASCOMP/common
+  name: /as_assuranceOwnerInfoPremiumCollection.qjson
+  version: Thu Aug 28 2025 11:49:44 GMT+0300 (GMT+03:00)
+- id: 8h1gkqun-hpl9-js5o-s43c-rwl0megrjaoo
+  path: /static/ui-bankasASCOMP/common
+  name: /as_collectionInfoPremiumCollection.qjson
+  version: Thu Aug 28 2025 11:52:53 GMT+0300 (GMT+03:00)
+- id: m9h0kzis-aqv8-bnlc-gzm7-89p0megvagzw
+  path: /static/ui-bankasASCOMP/common
+  name: /as_assuranceOwnerInfo.qjson
+  version: Tue Oct 07 2025 10:11:15 GMT+0300 (GMT+03:00)
+- id: ub0a2wm7-i8jg-u6vm-pssj-gqg0mehgpelm
+  path: /static/ui-bankasASPayment/common
+  name: /as_paymentCancelledListResults.qjson
+  version: Wed Sep 17 2025 15:53:01 GMT+0300 (GMT+03:00)
+- id: wizxsdut-cy4e-6y5f-c6jz-61w0melw2kif
+  path: /static/ui-bankasASCOMP/compPages
+  name: /compTrafficPackageInformation.qjson
+  version: Tue Oct 07 2025 10:48:11 GMT+0300 (GMT+03:00)
+- id: fo6qqm19-khnm-nqsl-2u5h-svv0meqtqu79
+  path: /static/test-AS
+  name: /plt-8738.qjson
+  version: Mon Sep 22 2025 01:03:49 GMT+0300 (GMT+03:00)
+- id: b1ury813-u1mc-imaq-emps-m7i0mesismq5
+  path: /static/ui-bankasASSearchPolicy/common
+  name: /searchPolicyCriteria.qjson
+  version: Mon Oct 06 2025 00:17:52 GMT+0300 (GMT+03:00)
+- id: 8qk6sqa9-fb5v-mw2p-9stx-uxu0mfa0qszx
+  path: /static/ui-bankasASVEHICLE/common
+  name: /as_loadingCustomComp.qjson
+  version: Sun Sep 07 2025 21:32:58 GMT+0300 (GMT+03:00)
+- id: 5eaz1tw7-q8mm-mcrr-z10r-ckj0mfa0qt2d
+  path: /static/ui-bankasASVEHICLE/common
+  name: /as_alertCustomComp.qjson
+  version: Sun Sep 07 2025 21:23:35 GMT+0300 (GMT+03:00)
+- id: czhssycs-pkez-7bx9-0fwt-0ls0mfa0qt9l
+  path: /static/ui-bankasASVEHICLE/common
+  name: /as_assuranceInfo.qjson
+  version: Wed Oct 01 2025 23:02:10 GMT+0300 (GMT+03:00)
+- id: 5l7vui18-cmth-nh93-c0j1-4ce0mfa0qt9t
+  path: /static/ui-bankasASVEHICLE/common
+  name: /as_assuranceOwnerInfoPremiumCollection.qjson
+  version: Sun Sep 07 2025 21:30:13 GMT+0300 (GMT+03:00)
+- id: wqnifzpd-onvr-hhes-3bat-ulm0mfa0qtua
+  path: /static/ui-bankasASVEHICLE/common
+  name: /as_policyInfoPremiumCollection.qjson
+  version: Mon Sep 08 2025 11:05:18 GMT+0300 (GMT+03:00)
+- id: l684y0dt-0ve2-6jix-kg3g-mmb0mfa0qtx3
+  path: /static/ui-bankasASVEHICLE/common
+  name: /as_policyInformation.qjson
+  version: Sun Sep 07 2025 21:36:53 GMT+0300 (GMT+03:00)
+- id: 4oq2ppl6-fxqv-b9g6-tj4g-5c90mfa0qu3m
+  path: /static/ui-bankasASVEHICLE/common
+  name: /as_collectionInfoPremiumCollection.qjson
+  version: Sun Sep 07 2025 21:32:12 GMT+0300 (GMT+03:00)
+- id: z4hm034v-zv23-tpho-49oh-tef0mfa0qwdt
+  path: /static/ui-bankasASVEHICLE/common
+  name: /as_assuranceOwnerInfo.qjson
+  version: Mon Oct 06 2025 15:46:36 GMT+0300 (GMT+03:00)
+- id: ymh2si0m-fa5p-rw7m-btvg-cs10mfa0qxi3
+  path: /static/ui-bankasASVEHICLE/common
+  name: /referencePolicyInquiry.qjson
+  version: Mon Oct 06 2025 15:56:47 GMT+0300 (GMT+03:00)
+- id: 21q3adxv-lhum-yj59-p7wz-9d70mfatp27e
+  path: /static/ui-bankasASVEHICLE/vehiclePages
+  name: /vehicle.qjson
+  version: Mon Oct 06 2025 15:56:04 GMT+0300 (GMT+03:00)
+- id: 37fp2orl-jt4a-1ys7-1dml-0zu0mfatp2fv
+  path: /static/ui-bankasASVEHICLE/vehiclePages
+  name: /vehicleResult.qjson
+  version: Wed Oct 01 2025 23:04:51 GMT+0300 (GMT+03:00)
+- id: jpalgwbf-q6vp-kwqq-qb44-wcq0mfck9ek0
+  path: /static/ui-ASMSU/common
+  name: /salesRedirectionInfo.qjson
+  version: Wed Oct 01 2025 10:50:58 GMT+0300 (GMT+03:00)
+- id: 4job50dx-gvn2-4cti-4sj0-h1q0mfdtp2hb
+  path: /static/ui-ASMSU/common
+  name: /customerConsentPopup.qjson
+  version: Tue Sep 16 2025 15:14:46 GMT+0300 (GMT+03:00)
+- id: bdl567gi-snuf-iz91-vltz-1o80mfe0tctx
+  path: /static/ui-bankasASSearchPolicy/searchPage
+  name: /searchPolicyPage.qjson
+  version: Sat Sep 27 2025 23:12:57 GMT+0300 (GMT+03:00)
+- id: al4vbqzl-7ksu-3qqa-8dnd-3h60mfggupgl
+  path: /static/ui-bankasASSearchPolicy/common
+  name: /as_alertCustomComp.qjson
+  version: Fri Sep 12 2025 09:43:36 GMT+0300 (GMT+03:00)
+- id: alcll813-tox7-vguf-off0-b9s0mfggw4mc
+  path: /static/ui-bankasASSearchPolicy/common
+  name: /as_loadingCustomComp.qjson
+  version: Fri Sep 12 2025 09:43:48 GMT+0300 (GMT+03:00)
+- id: s3xcqx0a-3lg5-e0e0-2lkd-1op0mfky9ejb
+  path: /static/ui-bankasASHome/homePages
+  name: /compProductSelectionHOME.qjson
+  version: Mon Oct 06 2025 10:39:31 GMT+0300 (GMT+03:00)
+- id: f7g08uh0-i005-nqpq-u5to-oqw0mfminnen
+  path: /static/ui-bankasASHome/common
+  name: /as_alertCustomComp.qjson
+  version: Tue Sep 16 2025 16:10:23 GMT+0300 (GMT+03:00)
+- id: uew682z3-0sbx-sitr-u1ys-yjz0mfmj68fa
+  path: /static/ui-bankasASHome/homePages
+  name: /homePolicyCreatePage.qjson
+  version: Thu Oct 02 2025 19:02:33 GMT+0300 (GMT+03:00)
+- id: bkd0gzo9-a5io-0smd-3lt3-rmh0mfmjq9gz
+  path: /static/ui-bankasASHome/common
+  name: /as_loadingCustomComp.qjson
+  version: Tue Sep 16 2025 16:14:20 GMT+0300 (GMT+03:00)
+- id: 9mhyexla-4sy0-hodt-c6lc-ffe0mfmju989
+  path: /static/ui-bankasASHome/common
+  name: /as_pledgedReceivablesInfo.qjson
+  version: Mon Sep 22 2025 14:51:32 GMT+0300 (GMT+03:00)
+- id: hox2cobt-8d41-c60b-1xhk-g5w0mfmjxukw
+  path: /static/ui-bankasASHome/common
+  name: /as_assuranceOwnerInfo.qjson
+  version: Fri Oct 03 2025 16:47:23 GMT+0300 (GMT+03:00)
+- id: nv3ks2dg-fane-7yqa-8tp7-e3u0mfmk5ane
+  path: /static/ui-bankasASHome/common
+  name: /as_assuranceInfo.qjson
+  version: Tue Sep 30 2025 14:25:28 GMT+0300 (GMT+03:00)
+- id: mu7spmao-d7ha-0vso-xkn3-eak0mfmk87v5
+  path: /static/ui-bankasASHome/common
+  name: /as_policyInformation.qjson
+  version: Tue Sep 16 2025 16:16:03 GMT+0300 (GMT+03:00)
+- id: cbf09hav-wri7-s5wt-4a35-n7z0mfnonih8
+  path: /static/ui-bankasASHome/common
+  name: /as_buildingInfoHome.qjson
+  version: Fri Oct 03 2025 16:44:41 GMT+0300 (GMT+03:00)
+- id: kxolwjbs-jjgg-jnpm-56yy-brj0mfnxd62l
+  path: /static/ui-bankasASHome/common
+  name: /as_premiumInfo.qjson
+  version: Mon Sep 22 2025 15:26:38 GMT+0300 (GMT+03:00)
+- id: z44cked6-1f3t-qzih-qvw1-2uh0mfpfpenp
+  path: /static/ui-bankasASHome/common
+  name: /as_insuranceInformation.qjson
+  version: Tue Sep 30 2025 00:39:16 GMT+0300 (GMT+03:00)
+- id: qbmoxjjt-xfcv-4si6-h43k-eep0mfphz7v2
+  path: /static/ui-bankasASHome/common
+  name: /as_buildingUAVTAdressInfo2.qjson
+  version: Fri Oct 03 2025 16:45:33 GMT+0300 (GMT+03:00)
+- id: f6dmmstb-ej63-8xtt-f23u-c7n0mfv2ptqt
+  path: /static/ui-bankasASHome/homePagesRNW
+  name: /homeRnw.qjson
+  version: Mon Oct 06 2025 02:52:02 GMT+0300 (GMT+03:00)
+- id: 7bli9uu9-40uo-c5yr-ezsb-qjx0mfv4shwl
+  path: /static/ui-bankasASHome/homePagesRNW
+  name: /compPremiumCollection.qjson
+  version: Fri Oct 03 2025 14:43:02 GMT+0300 (GMT+03:00)
+- id: v3t0tses-z3a0-9msw-52wq-4lz0mfwkpe92
+  path: /static/ui-bankasASHome/common
+  name: /as_assuranceInfoRNW.qjson
+  version: Tue Sep 30 2025 14:34:25 GMT+0300 (GMT+03:00)
+- id: 4w2cas02-zrkz-jibj-fhc9-yod0mfwkygna
+  path: /static/ui-bankasASHome/common
+  name: /as_buildingInfoHomeRNW.qjson
+  version: Tue Sep 30 2025 00:15:00 GMT+0300 (GMT+03:00)
+- id: 1zmhi5pz-be2u-n5xd-c7tj-m5i0mfwne0hh
+  path: /static/ui-bankasASHome/common
+  name: /as_buildingUAVTAdressInfo2RNW.qjson
+  version: Tue Sep 30 2025 00:24:56 GMT+0300 (GMT+03:00)
+- id: 4xo68bk2-6iw2-sbhi-x005-arb0mfwnsx0y
+  path: /static/ui-bankasASHome/common
+  name: /as_assuranceOwnerInfoRNW.qjson
+  version: Tue Sep 30 2025 14:12:33 GMT+0300 (GMT+03:00)
+- id: wwfblj77-nyl2-c8q1-69g2-t3u0mfwpv1he
+  path: /static/ui-bankasASHome/common
+  name: /as_pledgedReceivablesInfoRNWW.qjson
+  version: Tue Sep 30 2025 14:16:35 GMT+0300 (GMT+03:00)
+- id: mds99dtu-16ys-f2t8-5fe3-6of0mfwz1liz
+  path: /static/ui-bankasASVEHICLE/common
+  name: /as_pledgedReceivablesInfo.qjson
+  version: Wed Oct 01 2025 15:15:28 GMT+0300 (GMT+03:00)
+- id: hy29xwom-b3cx-49tu-677t-j7e0mfxmcz9e
+  path: /static/ui-bankasASHome/common
+  name: /as_premiumInfoRNW.qjson
+  version: Tue Sep 30 2025 14:27:55 GMT+0300 (GMT+03:00)
+- id: o7c6udof-2t9h-19y8-guaf-j5e0mfz2cs2s
+  path: /static/ui-bankasASVEHICLE/vehiclePages
+  name: /vehiclePackageInformationOLD.qjson
+  version: Wed Oct 01 2025 23:05:34 GMT+0300 (GMT+03:00)
+- id: 8mhvef4e-7sox-utbs-o3cd-02z0mfz2dkgy
+  path: /static/ui-bankasASVEHICLE/vehiclePages
+  name: /vehiclePremiumCollection.qjson
+  version: Thu Oct 02 2025 14:33:27 GMT+0300 (GMT+03:00)
+- id: 2tvlgw64-2gvi-ejtt-f8ku-n180mfz5n1g0
+  path: /static/ui-bankasASHome/homePages
+  name: /homePolicyCoverageListPage.qjson
+  version: Fri Oct 03 2025 15:53:24 GMT+0300 (GMT+03:00)
+- id: ch9h52se-2b9a-m3xc-xdcg-jz70mfzt12te
+  path: /static/ui-bankasASVEHICLE/common
+  name: /as_policySpecificInsuredInfoVehicle.qjson
+  version: Wed Oct 01 2025 23:11:59 GMT+0300 (GMT+03:00)
+- id: llkw4bhz-iuw5-lwe9-90nx-ulk0mg0lyl60
+  path: /static/ui-bankasASHome/homePagesRNW
+  name: /compPremiumCollectionResult.qjson
+  version: Tue Sep 30 2025 14:23:09 GMT+0300 (GMT+03:00)
+- id: kjqbj233-z5oo-vnvp-2mxd-pbw0mg2ot2zh
+  path: /static/ui-bankasASHome/common
+  name: /as_policySelection.qjson
+  version: Mon Oct 06 2025 22:33:30 GMT+0300 (GMT+03:00)
+- id: gd15uwi0-szzk-4vjv-td6j-f6w0mg5ex0uz
+  path: /static/ui-bankasASVEHICLE/vehiclePages
+  name: /vehiclePackageInformation.qjson
+  version: Mon Oct 06 2025 17:32:00 GMT+0300 (GMT+03:00)
+- id: kgc0p16n-xbq9-x5q3-gwog-2ui0mg9iz8ly
+  path: /static/ui-bankasASHome/homePages
+  name: /homePremiumCollection.qjson
+  version: Fri Oct 03 2025 16:38:45 GMT+0300 (GMT+03:00)
+- id: uao0bxby-buiz-4vai-x30l-tho0mg9j1d0t
+  path: /static/ui-bankasASHome/common
+  name: /as_policyInfoPremiumCollection.qjson
+  version: Fri Oct 03 2025 14:50:36 GMT+0300 (GMT+03:00)
+- id: jdyk41op-u582-9xdt-30ic-3mr0mg9j3862
+  path: /static/ui-bankasASHome/common
+  name: /as_assuranceOwnerInfoPremiumCollection.qjson
+  version: Fri Oct 03 2025 14:45:34 GMT+0300 (GMT+03:00)
+- id: 0oaufo2g-9e3v-nm1t-bt86-nu10mg9j4vgt
+  path: /static/ui-bankasASHome/common
+  name: /as_collectionInfoPremiumCollection.qjson
+  version: Fri Oct 03 2025 14:49:00 GMT+0300 (GMT+03:00)
+- id: 58dyzdzc-a5vc-nkl4-6m86-p8c0mgammapw
+  path: /static/ui-bankasASHome/homePages
+  name: /homePremiumCollectionResult.qjson
+  version: Fri Oct 03 2025 12:14:03 GMT+0300 (GMT+03:00)
+- id: 3yck275x-xun0-2aj9-tlge-fbn0mgaqqlkt
+  path: /static/ui-bankasASVEHICLE/vehiclePages
+  name: /vehiclePackageInformation478.qjson
+  version: Fri Oct 03 2025 14:08:20 GMT+0300 (GMT+03:00)
+- id: 1s1i41eq-oxi3-pexe-7mto-3du0mgeaaftc
+  path: /static/ui-bankasASHome/common
+  name: /as_policyInformationRNW.qjson
+  version: Mon Oct 06 2025 02:09:24 GMT+0300 (GMT+03:00)
+- id: mrmmed2d-3a7e-7dnh-csw5-coo0mcxeg0d9
+  path: /static/ui-bankasASPayment/common
+  name: /as_policyPayment.qjson
+  version: Mon Sep 29 2025 17:32:28 GMT+0300 (GMT+03:00)
+- id: mrmmed2d-3a7e-7dnh-csw5-coo0mcxeg0d9
+  path: /static/ui-bankasASPayment/common
+  name: /as_policyPayment.qjson
+  version: Mon Sep 29 2025 17:32:28 GMT+0300 (GMT+03:00)
+- id: 96cb3rcu-pkyf-1s4g-sfax-vez0mel3d3dt
+  path: /static/ui-bnkasAsDCFire/common
+  name: /as_assuranceInfo.qjson
+  version: Wed Oct 01 2025 21:10:24 GMT+0300 (GMT+03:00)
+- id: o1ws2o07-kqv8-7ow2-3xcb-1uj0mel3ndbu
+  path: /static/ui-bnkasAsDCFire/common
+  name: /as_assuranceOwnerInfo.qjson
+  version: Mon Oct 06 2025 13:41:40 GMT+0300 (GMT+03:00)
+- id: gu5yk8lq-jkug-44po-cj0r-qj40mel3ou5c
+  path: /static/ui-bnkasAsDCFire/common
+  name: /as_buildingInfo.qjson
+  version: Mon Oct 06 2025 19:08:37 GMT+0300 (GMT+03:00)
+- id: 12urf480-16hb-01yd-jhxp-njj0mel3pm1x
+  path: /static/ui-bnkasAsDCFire/common
+  name: /as_buildingUAVTAdressInfo.qjson
+  version: Fri Oct 03 2025 17:16:12 GMT+0300 (GMT+03:00)
+- id: 04tgyju3-56o0-8spt-qf7h-t6g0meld1bul
+  path: /static/ui-bnkasAsDCFire/common
+  name: /as_pledgedReceivablesInfo.qjson
+  version: Fri Oct 03 2025 17:19:29 GMT+0300 (GMT+03:00)
+- id: wc3yhefk-k9nf-j898-svav-yde0memqj49g
+  path: /static/ui-bnkasAsDCFire/pages
+  name: /as_dcFirePage.qjson
+  version: Tue Oct 07 2025 14:23:42 GMT+0300 (GMT+03:00)
+- id: 6ypcl05o-8ali-k7im-ei0y-j260mg7ol2xr
+  path: /static/ui-bnkasAsDCFire/pages
+  name: /dcfirePremiumCollection.qjson
+  version: Mon Oct 06 2025 19:26:31 GMT+0300 (GMT+03:00)
+- id: kwbb2qte-1bvi-l24x-ceeq-i4j0mg7ordx2
+  path: /static/ui-bnkasAsDCFire/pages
+  name: /dcFireResultPage.qjson
+  version: Fri Oct 03 2025 17:10:07 GMT+0300 (GMT+03:00)
+
+containerServices: <<containerServices:x6u26atl-94pw-91ir-owjy-s6v0m5mb9rtg>>
+componentList: <<componentList:046uxuwe-u4e2-hw9q-1cpo-zzm0m5mbfukk>>
+pipeline: <<pipeline:qm6u428v-39sf-fzb7-vqsz-2e20m7db634w>>
+localProxy: <<localProxy:7tz74for-ce0y-vz4y-7q1t-11g0m5mbhrdw>>
+
+appSettings:
+  general:
+    containerServices: <<containerServices:x6u26atl-94pw-91ir-owjy-s6v0m5mb9rtg>>
+    componentList: <<componentList:046uxuwe-u4e2-hw9q-1cpo-zzm0m5mbfukk>>
+    pipeline: <<pipeline:qm6u428v-39sf-fzb7-vqsz-2e20m7db634w>>
+    localProxy: <<localProxy:7tz74for-ce0y-vz4y-7q1t-11g0m5mbhrdw>>
