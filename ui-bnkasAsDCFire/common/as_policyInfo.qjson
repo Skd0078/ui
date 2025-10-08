@@ -25,7 +25,7 @@ let pjson = {
 					"HL": "TS"
 				},
 				"getPolicyInfoDate": {
-					"H": "debugger;\r\n\r\nquick.return({\r\n    \"policyStartDate\": components.dt_policyStartDate.qValue,\r\n    \"policyEndDate\": components.dt_policyEndDate.qValue\r\n})",
+					"H": "debugger;\r\nlet dates = {\r\n    \"policyStartDate\": components.dt_policyStartDate.qValue,\r\n    \"policyEndDate\": components.dt_policyEndDate.qValue\r\n}\r\nquick.store.set(\"$policyDate\", dates)\r\nquick.return(dates)",
 					"C": true,
 					"EV": true,
 					"HL": "TS"
@@ -959,7 +959,7 @@ let pjson = {
 					"HL": "JS"
 				},
 				"getPolicyInfoDate": {
-					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nquick.return({\r\n    \"policyStartDate\": components.dt_policyStartDate.qValue,\r\n    \"policyEndDate\": components.dt_policyEndDate.qValue\r\n});\r\n",
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nvar dates = {\r\n    \"policyStartDate\": components.dt_policyStartDate.qValue,\r\n    \"policyEndDate\": components.dt_policyEndDate.qValue\r\n};\r\nquick.store.set(\"$policyDate\", dates);\r\nquick.return(dates);\r\n",
 					"C": true,
 					"EV": true,
 					"HL": "JS"
