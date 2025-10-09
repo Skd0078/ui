@@ -1619,17 +1619,12 @@ let pjson = {
 																																	"HL": "QS"
 																																},
 																																"format": {
-																																	"H": "'regex'",
-																																	"T": "attr",
-																																	"HL": "QS"
-																																},
-																																"formatValues": {
-																																	"H": "{'regex' = '[0-9]\\{11}'}",
+																																	"H": "'alphaNumeric'",
 																																	"T": "attr",
 																																	"HL": "QS"
 																																},
 																																"maxlength": {
-																																	"H": "11",
+																																	"H": "15",
 																																	"T": "attr",
 																																	"HL": "QS"
 																																},
@@ -4887,17 +4882,12 @@ let pjson = {
 																																	"HL": "QS"
 																																},
 																																"format": {
-																																	"H": "╬'regex'╩╩",
-																																	"T": "attr",
-																																	"HL": "QS"
-																																},
-																																"formatValues": {
-																																	"H": "╬{}╠=╣'regex'╩╠'[0-9]{11}'╩╩╩╩",
+																																	"H": "╬'alphaNumeric'╩╩",
 																																	"T": "attr",
 																																	"HL": "QS"
 																																},
 																																"maxlength": {
-																																	"H": "╬11╩╩",
+																																	"H": "╬15╩╩",
 																																	"T": "attr",
 																																	"HL": "QS"
 																																},
