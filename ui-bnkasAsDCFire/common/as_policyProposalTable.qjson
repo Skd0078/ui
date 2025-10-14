@@ -44,7 +44,7 @@ let pjson = {
 					"HL": "TS"
 				},
 				"setItems": {
-					"H": "debugger;\r\nlet dcfireTableItems = quick.store.get(\"$dcfireTableItems\");\r\nlet items = [];\r\ndebugger;\r\ndcfireTableItems?.coverDetailList?.forEach(coverDetail => {\r\n    let headerItem = {\r\n        \"header\": coverDetail.coverName,\r\n        \"amount\": null\r\n    };\r\n    items.push(headerItem);\r\n    if (coverDetail.childCoverDetailList && coverDetail.childCoverDetailList.length > 0) {\r\n        coverDetail.childCoverDetailList.forEach(childCover => {\r\n            let childItem = {\r\n                \"name\": childCover.coverName,\r\n                \"amount\": quick.Quick.toMoney(childCover.coverInsuranceAmount, 'tr-TR', { minimumFractionDigits: 2 })\r\n            };\r\n            items.push(childItem)\r\n        });\r\n    } else {\r\n        headerItem.amount = quick.Quick.toMoney(coverDetail.coverInsuranceAmount, 'tr-TR', { minimumFractionDigits: 2 })\r\n    }\r\n});\r\n\r\ncomponents.dt_assuranceList.items = items;\r\nquick.Quick.updateComponent(components.dt_assuranceList);\r\n\r\n",
+					"H": "debugger;\r\nlet dcfireTableItems = quick.store.get(\"$dcfireTableItems\");\r\nlet items = [];\r\ncomponents.containerAmountInfo.visible = false;\r\ncomponents.rowUpdateProposal.visible = false;\r\ndebugger;\r\ndcfireTableItems?.coverDetailList?.forEach(coverDetail => {\r\n    let headerItem = {\r\n        \"header\": coverDetail.coverName,\r\n        \"amount\": null\r\n    };\r\n    items.push(headerItem);\r\n    if (coverDetail.childCoverDetailList && coverDetail.childCoverDetailList.length > 0) {\r\n        coverDetail.childCoverDetailList.forEach(childCover => {\r\n            let childItem = {\r\n                \"name\": childCover.coverName,\r\n                \"amount\": quick.Quick.toMoney(childCover.coverInsuranceAmount, 'tr-TR', { minimumFractionDigits: 2 })\r\n            };\r\n            items.push(childItem)\r\n        });\r\n    } else {\r\n        headerItem.amount = quick.Quick.toMoney(coverDetail.coverInsuranceAmount, 'tr-TR', { minimumFractionDigits: 2 })\r\n    }\r\n});\r\n\r\ncomponents.dt_assuranceList.items = items;\r\nquick.Quick.updateComponent(components.dt_assuranceList);\r\n\r\n",
 					"C": true,
 					"EV": true,
 					"HL": "TS"
@@ -2991,6 +2991,203 @@ let pjson = {
 															"T": "VBtn",
 															"P": {
 																"ID": {
+																	"H": "btn_backUpdate",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"depressed": {
+																	"H": "true",
+																	"T": "prop"
+																},
+																"visible": {
+																	"H": "true",
+																	"T": "prop"
+																},
+																"DiscardSettings": {
+																	"H": "true",
+																	"T": "prop"
+																},
+																"color": {
+																	"H": "'#2171DC'",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"dark": {
+																	"H": "true",
+																	"T": "prop"
+																},
+																"height": {
+																	"H": "'40px'",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"rounded": {
+																	"H": "true",
+																	"T": "prop"
+																}
+															},
+															"E": {
+																"click": {
+																	"H": "quick.parent.events.clickBackButtonEvent();",
+																	"P": "mouseEvent:unknown | undefined",
+																	"HL": "TS"
+																}
+															},
+															"C": {
+																"default": {
+																	"c": [
+																		{
+																			"T": "QLabel",
+																			"C": {},
+																			"E": {},
+																			"P": {
+																				"ID": {
+																					"H": "EdtrComp_8",
+																					"T": "prop"
+																				},
+																				"text": {
+																					"H": "'Geri'",
+																					"T": "prop",
+																					"HL": "QS"
+																				}
+																			},
+																			"_Editor": {
+																				"eID": "EdtrComp_8"
+																			},
+																			"O": {
+																				"cType": "child",
+																				"layout": {
+																					"dOpt": {
+																						"xs": [
+																							"tt:text-body-1",
+																							"te:font-weight-regular"
+																						]
+																					},
+																					"class": "text-body-1 font-weight-regular"
+																				}
+																			},
+																			"S": {
+																				"xs-xl": {
+																					"marginTop": "",
+																					"marginRight": "",
+																					"marginBottom": "",
+																					"marginLeft": "",
+																					"paddingTop": "",
+																					"paddingRight": "",
+																					"paddingBottom": "",
+																					"paddingLeft": "",
+																					"fontColor": "#000000",
+																					"fontFamily": "Roboto",
+																					"fontSize": "16px",
+																					"fontStyle": "normal",
+																					"fontWeight": "400",
+																					"combinedFont": "Roboto-Regular",
+																					"ThemeFont": "Custom",
+																					"lineHeight": "20px"
+																				}
+																			}
+																		}
+																	],
+																	"cType": "slot"
+																}
+															},
+															"_Editor": {
+																"eID": "EdtrComp_7"
+															},
+															"S": {
+																"xs-xl": {
+																	"marginTop": "",
+																	"marginRight": "10px",
+																	"marginBottom": "",
+																	"marginLeft": "",
+																	"paddingTop": "",
+																	"paddingRight": "16px",
+																	"paddingBottom": "",
+																	"paddingLeft": "16px",
+																	"width": "",
+																	"height": "",
+																	"maxWidth": "",
+																	"maxHeight": "",
+																	"minWidth": "",
+																	"minHeight": "",
+																	"unlink": "false",
+																	"unlinkMax": "false",
+																	"unlinkMin": "false",
+																	"isSizeCollapsed": "false",
+																	"fontColor": "#ffffff",
+																	"fontFamily": "Roboto",
+																	"fontSize": "16px",
+																	"fontStyle": "normal",
+																	"fontWeight": "400",
+																	"combinedFont": "Roboto-Regular",
+																	"ThemeFont": "Custom",
+																	"lineHeight": "20px",
+																	"backgroundColor": "#1976D2",
+																	"disabledBackgroundColor": "rgba(0,0,0,.12)",
+																	"boxShadow": "",
+																	"boxSizing": "",
+																	"borderTopStyle": "solid",
+																	"borderRightStyle": "solid",
+																	"borderBottomStyle": "solid",
+																	"borderLeftStyle": "solid",
+																	"borderTopLeftRadius": "4px",
+																	"borderTopRightRadius": "4px",
+																	"borderBottomLeftRadius": "4px",
+																	"borderBottomRightRadius": "4px",
+																	"borderTopWidth": "0px",
+																	"borderRightWidth": "0px",
+																	"borderBottomWidth": "0px",
+																	"borderLeftWidth": "0px",
+																	"defaultBorderColor": "",
+																	"sides": "Top,Right,Bottom,Left"
+																}
+															},
+															"SC": {
+																"fontColor": {
+																	"VIcon": "iconColor",
+																	"QLabel": "fontColor"
+																},
+																"fontStyle": {
+																	"QLabel": "fontStyle"
+																},
+																"fontSize": {
+																	"QLabel": "fontSize"
+																},
+																"fontFamily": {
+																	"QLabel": "fontFamily"
+																},
+																"fontWeight": {
+																	"QLabel": "fontWeight"
+																},
+																"combinedFont": {
+																	"QLabel": "combinedFont"
+																},
+																"lineHeight": {
+																	"QLabel": "lineHeight"
+																},
+																"bacgroundColor": {
+																	"VIcon": "backgroundColor"
+																}
+															},
+															"O": {
+																"cType": "slot",
+																"layout": {
+																	"dOpt": {
+																		"xs": [
+																			"sp:mr-1"
+																		],
+																		"lg": [
+																			"sp:mr-1"
+																		]
+																	},
+																	"class": "mr-1 mr-lg-1"
+																}
+															}
+														},
+														{
+															"T": "VBtn",
+															"P": {
+																"ID": {
 																	"H": "btnUpdateProposal",
 																	"T": "prop",
 																	"HL": "QS"
@@ -3536,7 +3733,7 @@ let pjson = {
 					"HL": "JS"
 				},
 				"setItems": {
-					"H": "var _a;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nvar dcfireTableItems = quick.store.get(\"$dcfireTableItems\");\r\nvar items = [];\r\ndebugger;\r\n(_a = dcfireTableItems === null || dcfireTableItems === void 0 ? void 0 : dcfireTableItems.coverDetailList) === null || _a === void 0 ? void 0 : _a.forEach(function (coverDetail) {\r\n    var headerItem = {\r\n        \"header\": coverDetail.coverName,\r\n        \"amount\": null\r\n    };\r\n    items.push(headerItem);\r\n    if (coverDetail.childCoverDetailList && coverDetail.childCoverDetailList.length > 0) {\r\n        coverDetail.childCoverDetailList.forEach(function (childCover) {\r\n            var childItem = {\r\n                \"name\": childCover.coverName,\r\n                \"amount\": quick.Quick.toMoney(childCover.coverInsuranceAmount, 'tr-TR', { minimumFractionDigits: 2 })\r\n            };\r\n            items.push(childItem);\r\n        });\r\n    }\r\n    else {\r\n        headerItem.amount = quick.Quick.toMoney(coverDetail.coverInsuranceAmount, 'tr-TR', { minimumFractionDigits: 2 });\r\n    }\r\n});\r\ncomponents.dt_assuranceList.items = items;\r\nquick.Quick.updateComponent(components.dt_assuranceList);\r\n",
+					"H": "var _a;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nvar dcfireTableItems = quick.store.get(\"$dcfireTableItems\");\r\nvar items = [];\r\ncomponents.containerAmountInfo.visible = false;\r\ncomponents.rowUpdateProposal.visible = false;\r\ndebugger;\r\n(_a = dcfireTableItems === null || dcfireTableItems === void 0 ? void 0 : dcfireTableItems.coverDetailList) === null || _a === void 0 ? void 0 : _a.forEach(function (coverDetail) {\r\n    var headerItem = {\r\n        \"header\": coverDetail.coverName,\r\n        \"amount\": null\r\n    };\r\n    items.push(headerItem);\r\n    if (coverDetail.childCoverDetailList && coverDetail.childCoverDetailList.length > 0) {\r\n        coverDetail.childCoverDetailList.forEach(function (childCover) {\r\n            var childItem = {\r\n                \"name\": childCover.coverName,\r\n                \"amount\": quick.Quick.toMoney(childCover.coverInsuranceAmount, 'tr-TR', { minimumFractionDigits: 2 })\r\n            };\r\n            items.push(childItem);\r\n        });\r\n    }\r\n    else {\r\n        headerItem.amount = quick.Quick.toMoney(coverDetail.coverInsuranceAmount, 'tr-TR', { minimumFractionDigits: 2 });\r\n    }\r\n});\r\ncomponents.dt_assuranceList.items = items;\r\nquick.Quick.updateComponent(components.dt_assuranceList);\r\n",
 					"C": true,
 					"EV": true,
 					"HL": "JS"
@@ -6514,6 +6711,205 @@ let pjson = {
 											"C": {
 												"default": {
 													"c": [
+														{
+															"T": "VBtn",
+															"P": {
+																"ID": {
+																	"H": "btn_backUpdate",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"depressed": {
+																	"H": "╬true╩╩",
+																	"T": "prop"
+																},
+																"visible": {
+																	"H": "╬true╩╩",
+																	"T": "prop"
+																},
+																"DiscardSettings": {
+																	"H": "╬true╩╩",
+																	"T": "prop"
+																},
+																"color": {
+																	"H": "╬'#2171DC'╩╩",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"dark": {
+																	"H": "╬true╩╩",
+																	"T": "prop"
+																},
+																"height": {
+																	"H": "╬'40px'╩╩",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"rounded": {
+																	"H": "╬true╩╩",
+																	"T": "prop"
+																}
+															},
+															"E": {
+																"click": {
+																	"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\nquick.parent.events.clickBackButtonEvent();\r\n",
+																	"P": "mouseEvent:unknown | undefined",
+																	"HL": "JS"
+																}
+															},
+															"C": {
+																"default": {
+																	"c": [
+																		{
+																			"T": "QLabel",
+																			"C": {},
+																			"E": {},
+																			"P": {
+																				"ID": {
+																					"H": "EdtrComp_8",
+																					"T": "prop"
+																				},
+																				"text": {
+																					"H": "╬'Geri'╩╩",
+																					"T": "prop",
+																					"HL": "QS"
+																				}
+																			},
+																			"_Editor": {
+																				"eID": "EdtrComp_8"
+																			},
+																			"O": {
+																				"cType": "child",
+																				"layout": {
+																					"dOpt": {
+																						"xs": [
+																							"tt:text-body-1",
+																							"te:font-weight-regular"
+																						]
+																					},
+																					"class": "text-body-1 font-weight-regular"
+																				},
+																				"compDomClasses": "q-label text-body-1 font-weight-regular newDropBorder"
+																			},
+																			"S": {
+																				"xs-xl": {
+																					"marginTop": "",
+																					"marginRight": "",
+																					"marginBottom": "",
+																					"marginLeft": "",
+																					"paddingTop": "",
+																					"paddingRight": "",
+																					"paddingBottom": "",
+																					"paddingLeft": "",
+																					"fontColor": "#000000",
+																					"fontFamily": "Roboto",
+																					"fontSize": "16px",
+																					"fontStyle": "normal",
+																					"fontWeight": "400",
+																					"combinedFont": "Roboto-Regular",
+																					"ThemeFont": "Custom",
+																					"lineHeight": "20px"
+																				}
+																			}
+																		}
+																	],
+																	"cType": "slot"
+																}
+															},
+															"_Editor": {
+																"eID": "EdtrComp_7"
+															},
+															"S": {
+																"xs-xl": {
+																	"marginTop": "",
+																	"marginRight": "10px",
+																	"marginBottom": "",
+																	"marginLeft": "",
+																	"paddingTop": "",
+																	"paddingRight": "16px",
+																	"paddingBottom": "",
+																	"paddingLeft": "16px",
+																	"width": "",
+																	"height": "",
+																	"maxWidth": "",
+																	"maxHeight": "",
+																	"minWidth": "",
+																	"minHeight": "",
+																	"unlink": "false",
+																	"unlinkMax": "false",
+																	"unlinkMin": "false",
+																	"isSizeCollapsed": "false",
+																	"fontColor": "#ffffff",
+																	"fontFamily": "Roboto",
+																	"fontSize": "16px",
+																	"fontStyle": "normal",
+																	"fontWeight": "400",
+																	"combinedFont": "Roboto-Regular",
+																	"ThemeFont": "Custom",
+																	"lineHeight": "20px",
+																	"backgroundColor": "#1976D2",
+																	"disabledBackgroundColor": "rgba(0,0,0,.12)",
+																	"boxShadow": "",
+																	"boxSizing": "",
+																	"borderTopStyle": "solid",
+																	"borderRightStyle": "solid",
+																	"borderBottomStyle": "solid",
+																	"borderLeftStyle": "solid",
+																	"borderTopLeftRadius": "4px",
+																	"borderTopRightRadius": "4px",
+																	"borderBottomLeftRadius": "4px",
+																	"borderBottomRightRadius": "4px",
+																	"borderTopWidth": "0px",
+																	"borderRightWidth": "0px",
+																	"borderBottomWidth": "0px",
+																	"borderLeftWidth": "0px",
+																	"defaultBorderColor": "",
+																	"sides": "Top,Right,Bottom,Left"
+																}
+															},
+															"SC": {
+																"fontColor": {
+																	"VIcon": "iconColor",
+																	"QLabel": "fontColor"
+																},
+																"fontStyle": {
+																	"QLabel": "fontStyle"
+																},
+																"fontSize": {
+																	"QLabel": "fontSize"
+																},
+																"fontFamily": {
+																	"QLabel": "fontFamily"
+																},
+																"fontWeight": {
+																	"QLabel": "fontWeight"
+																},
+																"combinedFont": {
+																	"QLabel": "combinedFont"
+																},
+																"lineHeight": {
+																	"QLabel": "lineHeight"
+																},
+																"bacgroundColor": {
+																	"VIcon": "backgroundColor"
+																}
+															},
+															"O": {
+																"cType": "slot",
+																"layout": {
+																	"dOpt": {
+																		"xs": [
+																			"sp:mr-1"
+																		],
+																		"lg": [
+																			"sp:mr-1"
+																		]
+																	},
+																	"class": "mr-1 mr-lg-1"
+																},
+																"compDomClasses": "v-btn v-btn--depressed v-btn--rounded theme--dark v-size--default mr-1 mr-lg-1 newDropBorder"
+															}
+														},
 														{
 															"T": "VBtn",
 															"P": {

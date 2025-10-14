@@ -2568,6 +2568,16 @@ let pjson = {
 																					"H": "'Seçiniz'",
 																					"T": "prop",
 																					"HL": "QS"
+																				},
+																				"DiscardSettings": {
+																					"H": "true",
+																					"T": "prop",
+																					"HL": "QS"
+																				},
+																				"attach": {
+																					"H": "true",
+																					"T": "prop",
+																					"HL": "QS"
 																				}
 																			},
 																			"E": {
@@ -8737,6 +8747,16 @@ let pjson = {
 																				},
 																				"placeholder": {
 																					"H": "╬'Seçiniz'╩╩",
+																					"T": "prop",
+																					"HL": "QS"
+																				},
+																				"DiscardSettings": {
+																					"H": "╬true╩╩",
+																					"T": "prop",
+																					"HL": "QS"
+																				},
+																				"attach": {
+																					"H": "╬true╩╩",
 																					"T": "prop",
 																					"HL": "QS"
 																				}

@@ -950,7 +950,7 @@ let pjson = {
 															},
 															"E": {
 																"click": {
-																	"H": "// debugger;\r\nquick.store.set('$backBtnTrue', true);\r\nquick.Quick.go(\"/static/ui-bankasASPACC/atworkCommercialProtectionPages/compAtworkCommercialProtection.qjson\"); //Prim Hesaplama",
+																	"H": "// debugger;\r\nquick.store.set('$backBtnTrue', true);\r\nquick.Quick.go(\"/static/ui-bnkasAsDCFire/pages/as_dcFirePage.qjson\"); //Prim Hesaplama",
 																	"P": "mouseEvent:unknown | undefined",
 																	"HL": "TS"
 																}
@@ -2493,7 +2493,7 @@ let pjson = {
 															},
 															"E": {
 																"click": {
-																	"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\nquick.store.set('$backBtnTrue', true);\r\nquick.Quick.go(\"/static/ui-bankasASPACC/atworkCommercialProtectionPages/compAtworkCommercialProtection.qjson\"); //Prim Hesaplama\r\n",
+																	"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\nquick.store.set('$backBtnTrue', true);\r\nquick.Quick.go(\"/static/ui-bnkasAsDCFire/pages/as_dcFirePage.qjson\"); //Prim Hesaplama\r\n",
 																	"P": "mouseEvent:unknown | undefined",
 																	"HL": "JS"
 																}

@@ -374,6 +374,16 @@ let pjson = {
 																	"H": "true",
 																	"T": "prop",
 																	"HL": "QS"
+																},
+																"DiscardSettings": {
+																	"H": "true",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"attach": {
+																	"H": "true",
+																	"T": "prop",
+																	"HL": "QS"
 																}
 															},
 															"E": {
@@ -2838,6 +2848,16 @@ let pjson = {
 																	"HL": "QS"
 																},
 																"disabled": {
+																	"H": "╬true╩╩",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"DiscardSettings": {
+																	"H": "╬true╩╩",
+																	"T": "prop",
+																	"HL": "QS"
+																},
+																"attach": {
 																	"H": "╬true╩╩",
 																	"T": "prop",
 																	"HL": "QS"

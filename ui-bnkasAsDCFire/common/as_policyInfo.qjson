@@ -29,6 +29,10 @@ let pjson = {
 					"C": true,
 					"EV": true,
 					"HL": "TS"
+				},
+				"EndRender": {
+					"H": "debugger;\r\nlet today = new Date();\r\ncomponents.dt_policyStartDate.min = today.toISOString().slice(0, 10);\r\n",
+					"HL": "TS"
 				}
 			},
 			"C": {},
@@ -391,6 +395,11 @@ let pjson = {
 																					"HL": "QS"
 																				},
 																				"dateNow": {
+																					"H": "true",
+																					"T": "prop",
+																					"HL": "QS"
+																				},
+																				"DiscardSettings": {
 																					"H": "true",
 																					"T": "prop",
 																					"HL": "QS"
@@ -963,6 +972,10 @@ let pjson = {
 					"C": true,
 					"EV": true,
 					"HL": "JS"
+				},
+				"EndRender": {
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nvar today = new Date();\r\ncomponents.dt_policyStartDate.min = today.toISOString().slice(0, 10);\r\n",
+					"HL": "JS"
 				}
 			},
 			"C": {},
@@ -1332,6 +1345,11 @@ let pjson = {
 																					"HL": "QS"
 																				},
 																				"dateNow": {
+																					"H": "╬true╩╩",
+																					"T": "prop",
+																					"HL": "QS"
+																				},
+																				"DiscardSettings": {
 																					"H": "╬true╩╩",
 																					"T": "prop",
 																					"HL": "QS"
