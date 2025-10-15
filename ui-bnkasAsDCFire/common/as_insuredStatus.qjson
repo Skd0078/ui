@@ -431,7 +431,7 @@ let pjson = {
 																			},
 																			"E": {
 																				"change": {
-																					"H": "quick.store.set(\"$insuredStatusSelected\", true);\r\nquick.store.set(\"$insuredStatus\", components.vauto_insuredStatus.qValue);\r\nquick.parent.events?.insuredStatusSelected();",
+																					"H": "debugger;\r\nquick.store.set(\"$insuredStatusSelected\", true);\r\nquick.store.set(\"$insuredStatus\", components.vauto_insuredStatus.qValue);\r\nquick.store.set(\"$isBuildingOwner\", components.vauto_insuredStatus.qValue == \"2000000\")\r\nquick.parent.events?.insuredStatusSelected();",
 																					"HL": "TS"
 																				}
 																			},
@@ -1224,7 +1224,7 @@ let pjson = {
 																			},
 																			"E": {
 																				"change": {
-																					"H": "var _a;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nquick.store.set(\"$insuredStatusSelected\", true);\r\nquick.store.set(\"$insuredStatus\", components.vauto_insuredStatus.qValue);\r\n(_a = quick.parent.events) === null || _a === void 0 ? void 0 : _a.insuredStatusSelected();\r\n",
+																					"H": "var _a;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nquick.store.set(\"$insuredStatusSelected\", true);\r\nquick.store.set(\"$insuredStatus\", components.vauto_insuredStatus.qValue);\r\nquick.store.set(\"$isBuildingOwner\", components.vauto_insuredStatus.qValue == \"2000000\");\r\n(_a = quick.parent.events) === null || _a === void 0 ? void 0 : _a.insuredStatusSelected();\r\n",
 																					"HL": "JS"
 																				}
 																			},
