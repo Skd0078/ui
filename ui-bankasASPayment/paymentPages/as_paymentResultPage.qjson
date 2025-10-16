@@ -2059,7 +2059,7 @@ let pjson = {
 					"HL": "TS"
 				},
 				"onLoad": {
-					"H": "(<any>components.as_alertCustomComp).setLabelText({ labelData: { name: 'lbl_400_1', text: 'Tahsilat Sonuç' } });\r\n(<any>components.as_alertCustomComp).setLabelText({ labelData: { name: 'lbl_700_1', text: 'Tahsilat işleminiz başarıyla tamamlanmıştır.' } });\r\n\r\n(<any>components.as_alertCustomComp).open();",
+					"H": "let vauto_debtorCreditor = quick.store.get('$vauto_debtorCreditor'); // Borç veya alacak\r\nlet isDebit = vauto_debtorCreditor == \"debit\";\r\n\r\nif (isDebit) {\r\n    (<any>components.as_alertCustomComp).setLabelText({ labelData: { name: 'lbl_400_1', text: 'Tahsilat Sonuç' } });\r\n    (<any>components.as_alertCustomComp).setLabelText({ labelData: { name: 'lbl_700_1', text: 'Tahsilat işleminiz başarıyla tamamlanmıştır.' } });\r\n} else {\r\n    (<any>components.as_alertCustomComp).setLabelText({ labelData: { name: 'lbl_400_1', text: 'İade Sonuç' } });\r\n    (<any>components.as_alertCustomComp).setLabelText({ labelData: { name: 'lbl_700_1', text: 'İade işleminiz başarıyla tamamlanmıştır.' } });\r\n}\r\n\r\n\r\n(<any>components.as_alertCustomComp).open();",
 					"HL": "TS"
 				}
 			},
@@ -4282,7 +4282,7 @@ let pjson = {
 					"HL": "JS"
 				},
 				"onLoad": {
-					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ncomponents.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_400_1', text: 'Tahsilat Sonuç' } });\r\ncomponents.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: 'Tahsilat işleminiz başarıyla tamamlanmıştır.' } });\r\ncomponents.as_alertCustomComp.open();\r\n",
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nvar vauto_debtorCreditor = quick.store.get('$vauto_debtorCreditor'); // Borç veya alacak\r\nvar isDebit = vauto_debtorCreditor == \"debit\";\r\nif (isDebit) {\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_400_1', text: 'Tahsilat Sonuç' } });\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: 'Tahsilat işleminiz başarıyla tamamlanmıştır.' } });\r\n}\r\nelse {\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_400_1', text: 'İade Sonuç' } });\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: 'İade işleminiz başarıyla tamamlanmıştır.' } });\r\n}\r\ncomponents.as_alertCustomComp.open();\r\n",
 					"HL": "JS"
 				}
 			},

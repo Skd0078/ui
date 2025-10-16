@@ -152,8 +152,9 @@ let pjson = {
 																													"HL": "QS"
 																												},
 																												"footerProps": {
-																													"H": "{showFirstLastPage = true,\nfirstIcon = 'mdi-arrow-collapse-left',\nlastIcon = 'mdi-arrow-collapse-right',\nprevIcon = 'mdi-minus',\nnextIcon = 'mdi-plus'}",
-																													"T": "prop"
+																													"H": "{showFirstLastPage = true,\nfirstIcon = 'mdi-arrow-collapse-left',\nlastIcon = 'mdi-arrow-collapse-right',\nprevIcon = 'mdi-minus',\nnextIcon = 'mdi-plus',\nitemsPerPageText = 'Satır Sayısı:',\nitemsPerPageOptions = [5,10,15,'Tümü']}",
+																													"T": "prop",
+																													"HL": "QS"
 																												},
 																												"headers": {
 																													"H": "[{ text = 'Ad - Soyad / Unvan', value= 'name',filterable= true },\n{ text = 'Poliçe No', value= 'policyNumber', filterable= true },\n{ text = 'Yenileme No', value= 'renewalNumber', filterable= true },\n{ text = 'Poliçe Tipi', value= 'policyType', filterable= true },\n{ text = 'Poliçe Durumu', value= 'status', filterable= true },\n{ text = 'Acente Kodu', value= 'branchCode', filterable= true },\n{ text = 'Başlangıç Tarihi', value= 'policyStartDateFormatted',filterable= true }, \n{ text = 'Bitiş Tarihi', value= 'policyEndDateFormatted',filterable= true },\n{ text = 'Borç Tutarı', value= 'debitAmount',filterable= true },\n{ text = 'Alacak Tutarı', value= 'creditAmount',filterable= true },\n{ text = 'Vadesi Geçmiş Tutar', value= 'totalOverdueAmountText',filterable= true }]",
@@ -252,6 +253,45 @@ let pjson = {
 																												}
 																											},
 																											"C": {
+																												"footer.page-text": {
+																													"c": [
+																														{
+																															"T": "QLabel",
+																															"P": {
+																																"ID": {
+																																	"H": "EdtrComp_34",
+																																	"T": "prop"
+																																},
+																																"tagType": {
+																																	"H": "'span'",
+																																	"T": "prop"
+																																},
+																																"text": {
+																																	"H": "pageStart + '-' + pageStop + ' / ' + itemsLength",
+																																	"T": "prop",
+																																	"HL": "QS"
+																																},
+																																"visible": {
+																																	"H": "true",
+																																	"T": "prop"
+																																},
+																																"processHtml": {
+																																	"H": "false",
+																																	"T": "prop"
+																																}
+																															},
+																															"E": {},
+																															"C": {},
+																															"_Editor": {
+																																"eID": "EdtrComp_34"
+																															},
+																															"O": {
+																																"cType": "slot"
+																															}
+																														}
+																													],
+																													"cType": "scopedSlot"
+																												},
 																												"item.selected": {
 																													"c": [
 																														{
@@ -1129,8 +1169,9 @@ let pjson = {
 																													"HL": "QS"
 																												},
 																												"footerProps": {
-																													"H": "╬{}╠=╣showFirstLastPage╩╠true╩╩╠=╣firstIcon╩╠'mdi-arrow-collapse-left'╩╩╠=╣lastIcon╩╠'mdi-arrow-collapse-right'╩╩╠=╣prevIcon╩╠'mdi-minus'╩╩╠=╣nextIcon╩╠'mdi-plus'╩╩╩╩",
-																													"T": "prop"
+																													"H": "╬{}╠=╣showFirstLastPage╩╠true╩╩╠=╣firstIcon╩╠'mdi-arrow-collapse-left'╩╩╠=╣lastIcon╩╠'mdi-arrow-collapse-right'╩╩╠=╣prevIcon╩╠'mdi-minus'╩╩╠=╣nextIcon╩╠'mdi-plus'╩╩╠=╣itemsPerPageText╩╠'Satır Sayısı:'╩╩╠=╣itemsPerPageOptions╩╠[]╠5╩╠10╩╠15╩╠'Tümü'╩╩╩╩╩",
+																													"T": "prop",
+																													"HL": "QS"
 																												},
 																												"headers": {
 																													"H": "╬[]╠{}╠=╣text╩╠'Ad - Soyad / Unvan'╩╩╠=╣value╩╠'name'╩╩╠=╣filterable╩╠true╩╩╩╠{}╠=╣text╩╠'Poliçe No'╩╩╠=╣value╩╠'policyNumber'╩╩╠=╣filterable╩╠true╩╩╩╠{}╠=╣text╩╠'Yenileme No'╩╩╠=╣value╩╠'renewalNumber'╩╩╠=╣filterable╩╠true╩╩╩╠{}╠=╣text╩╠'Poliçe Tipi'╩╩╠=╣value╩╠'policyType'╩╩╠=╣filterable╩╠true╩╩╩╠{}╠=╣text╩╠'Poliçe Durumu'╩╩╠=╣value╩╠'status'╩╩╠=╣filterable╩╠true╩╩╩╠{}╠=╣text╩╠'Acente Kodu'╩╩╠=╣value╩╠'branchCode'╩╩╠=╣filterable╩╠true╩╩╩╠{}╠=╣text╩╠'Başlangıç Tarihi'╩╩╠=╣value╩╠'policyStartDateFormatted'╩╩╠=╣filterable╩╠true╩╩╩╠{}╠=╣text╩╠'Bitiş Tarihi'╩╩╠=╣value╩╠'policyEndDateFormatted'╩╩╠=╣filterable╩╠true╩╩╩╠{}╠=╣text╩╠'Borç Tutarı'╩╩╠=╣value╩╠'debitAmount'╩╩╠=╣filterable╩╠true╩╩╩╠{}╠=╣text╩╠'Alacak Tutarı'╩╩╠=╣value╩╠'creditAmount'╩╩╠=╣filterable╩╠true╩╩╩╠{}╠=╣text╩╠'Vadesi Geçmiş Tutar'╩╩╠=╣value╩╠'totalOverdueAmountText'╩╩╠=╣filterable╩╠true╩╩╩╩╩",
@@ -1229,6 +1270,46 @@ let pjson = {
 																												}
 																											},
 																											"C": {
+																												"footer.page-text": {
+																													"c": [
+																														{
+																															"T": "QLabel",
+																															"P": {
+																																"ID": {
+																																	"H": "EdtrComp_34",
+																																	"T": "prop"
+																																},
+																																"tagType": {
+																																	"H": "╬'span'╩╩",
+																																	"T": "prop"
+																																},
+																																"text": {
+																																	"H": "╬+╣+╣+╣+╣pageStart╩╠'-'╩╩╠pageStop╩╩╠' / '╩╩╠itemsLength╩╩╩",
+																																	"T": "prop",
+																																	"HL": "QS"
+																																},
+																																"visible": {
+																																	"H": "╬true╩╩",
+																																	"T": "prop"
+																																},
+																																"processHtml": {
+																																	"H": "╬false╩╩",
+																																	"T": "prop"
+																																}
+																															},
+																															"E": {},
+																															"C": {},
+																															"_Editor": {
+																																"eID": "EdtrComp_34"
+																															},
+																															"O": {
+																																"cType": "slot",
+																																"compDomClasses": "q-label newDropBorder"
+																															}
+																														}
+																													],
+																													"cType": "scopedSlot"
+																												},
 																												"item.selected": {
 																													"c": [
 																														{

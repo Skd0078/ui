@@ -147,8 +147,9 @@ let pjson = {
 																													"HL": "QS"
 																												},
 																												"footerProps": {
-																													"H": "{showFirstLastPage = true,\nfirstIcon = 'mdi-arrow-collapse-left',\nlastIcon = 'mdi-arrow-collapse-right',\nprevIcon = 'mdi-minus',\nnextIcon = 'mdi-plus'}",
-																													"T": "prop"
+																													"H": "{showFirstLastPage = true,\nfirstIcon = 'mdi-arrow-collapse-left',\nlastIcon = 'mdi-arrow-collapse-right',\nprevIcon = 'mdi-minus',\nnextIcon = 'mdi-plus',\nitemsPerPageText = 'Satır Sayısı:',\nitemsPerPageOptions = [5,10,15,'Tümü']}",
+																													"T": "prop",
+																													"HL": "QS"
 																												},
 																												"headers": {
 																													"H": "[{ text = 'Taksit Tarihi', value= 'installmentDateFormatted',filterable= true },\n{ text = 'Borç/Alacak', value= 'debitOrCredit', filterable= true },\n{ text = 'Tutar', value= 'amountText', filterable= true },\n{ text = 'Tutar TL', value= 'tlAmountText', filterable= true }]",
@@ -252,6 +253,45 @@ let pjson = {
 																												}
 																											},
 																											"C": {
+																												"footer.page-text": {
+																													"c": [
+																														{
+																															"T": "QLabel",
+																															"P": {
+																																"ID": {
+																																	"H": "EdtrComp_61",
+																																	"T": "prop"
+																																},
+																																"tagType": {
+																																	"H": "'span'",
+																																	"T": "prop"
+																																},
+																																"text": {
+																																	"H": "pageStart + '-' + pageStop + ' / ' + itemsLength",
+																																	"T": "prop",
+																																	"HL": "QS"
+																																},
+																																"visible": {
+																																	"H": "true",
+																																	"T": "prop"
+																																},
+																																"processHtml": {
+																																	"H": "false",
+																																	"T": "prop"
+																																}
+																															},
+																															"E": {},
+																															"C": {},
+																															"_Editor": {
+																																"eID": "EdtrComp_61"
+																															},
+																															"O": {
+																																"cType": "slot"
+																															}
+																														}
+																													],
+																													"cType": "scopedSlot"
+																												},
 																												"item.selected": {
 																													"c": [
 																														{
@@ -1124,8 +1164,9 @@ let pjson = {
 																													"HL": "QS"
 																												},
 																												"footerProps": {
-																													"H": "╬{}╠=╣showFirstLastPage╩╠true╩╩╠=╣firstIcon╩╠'mdi-arrow-collapse-left'╩╩╠=╣lastIcon╩╠'mdi-arrow-collapse-right'╩╩╠=╣prevIcon╩╠'mdi-minus'╩╩╠=╣nextIcon╩╠'mdi-plus'╩╩╩╩",
-																													"T": "prop"
+																													"H": "╬{}╠=╣showFirstLastPage╩╠true╩╩╠=╣firstIcon╩╠'mdi-arrow-collapse-left'╩╩╠=╣lastIcon╩╠'mdi-arrow-collapse-right'╩╩╠=╣prevIcon╩╠'mdi-minus'╩╩╠=╣nextIcon╩╠'mdi-plus'╩╩╠=╣itemsPerPageText╩╠'Satır Sayısı:'╩╩╠=╣itemsPerPageOptions╩╠[]╠5╩╠10╩╠15╩╠'Tümü'╩╩╩╩╩",
+																													"T": "prop",
+																													"HL": "QS"
 																												},
 																												"headers": {
 																													"H": "╬[]╠{}╠=╣text╩╠'Taksit Tarihi'╩╩╠=╣value╩╠'installmentDateFormatted'╩╩╠=╣filterable╩╠true╩╩╩╠{}╠=╣text╩╠'Borç/Alacak'╩╩╠=╣value╩╠'debitOrCredit'╩╩╠=╣filterable╩╠true╩╩╩╠{}╠=╣text╩╠'Tutar'╩╩╠=╣value╩╠'amountText'╩╩╠=╣filterable╩╠true╩╩╩╠{}╠=╣text╩╠'Tutar TL'╩╩╠=╣value╩╠'tlAmountText'╩╩╠=╣filterable╩╠true╩╩╩╩╩",
@@ -1229,6 +1270,46 @@ let pjson = {
 																												}
 																											},
 																											"C": {
+																												"footer.page-text": {
+																													"c": [
+																														{
+																															"T": "QLabel",
+																															"P": {
+																																"ID": {
+																																	"H": "EdtrComp_61",
+																																	"T": "prop"
+																																},
+																																"tagType": {
+																																	"H": "╬'span'╩╩",
+																																	"T": "prop"
+																																},
+																																"text": {
+																																	"H": "╬+╣+╣+╣+╣pageStart╩╠'-'╩╩╠pageStop╩╩╠' / '╩╩╠itemsLength╩╩╩",
+																																	"T": "prop",
+																																	"HL": "QS"
+																																},
+																																"visible": {
+																																	"H": "╬true╩╩",
+																																	"T": "prop"
+																																},
+																																"processHtml": {
+																																	"H": "╬false╩╩",
+																																	"T": "prop"
+																																}
+																															},
+																															"E": {},
+																															"C": {},
+																															"_Editor": {
+																																"eID": "EdtrComp_61"
+																															},
+																															"O": {
+																																"cType": "slot",
+																																"compDomClasses": "q-label newDropBorder"
+																															}
+																														}
+																													],
+																													"cType": "scopedSlot"
+																												},
 																												"item.selected": {
 																													"c": [
 																														{
