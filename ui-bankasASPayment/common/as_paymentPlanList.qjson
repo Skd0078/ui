@@ -147,7 +147,7 @@ let pjson = {
 																													"HL": "QS"
 																												},
 																												"footerProps": {
-																													"H": "{showFirstLastPage = true,\nfirstIcon = 'mdi-arrow-collapse-left',\nlastIcon = 'mdi-arrow-collapse-right',\nprevIcon = 'mdi-minus',\nnextIcon = 'mdi-plus',\nitemsPerPageText = 'Satır Sayısı:',\nitemsPerPageOptions = [5,10,15,'Tümü']}",
+																													"H": "{showFirstLastPage = true,\nfirstIcon = 'mdi-arrow-collapse-left',\nlastIcon = 'mdi-arrow-collapse-right',\nprevIcon = 'mdi-minus',\nnextIcon = 'mdi-plus',\nitemsPerPageText = 'Satır Sayısı:',\nitemsPerPageOptions = [5,10,15,{text='Tümü', value = 9999999999}]}",
 																													"T": "prop",
 																													"HL": "QS"
 																												},
@@ -219,11 +219,6 @@ let pjson = {
 																													"T": "prop",
 																													"HL": "QS"
 																												},
-																												"items": {
-																													"H": "[]",
-																													"T": "prop",
-																													"HL": "QS"
-																												},
 																												"caption": {
 																													"H": "'Ödeme Planı Listesi'",
 																													"T": "prop",
@@ -236,6 +231,11 @@ let pjson = {
 																												},
 																												"singleSelect": {
 																													"H": "true",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"items": {
+																													"H": "[]",
 																													"T": "prop",
 																													"HL": "QS"
 																												}
@@ -1164,7 +1164,7 @@ let pjson = {
 																													"HL": "QS"
 																												},
 																												"footerProps": {
-																													"H": "╬{}╠=╣showFirstLastPage╩╠true╩╩╠=╣firstIcon╩╠'mdi-arrow-collapse-left'╩╩╠=╣lastIcon╩╠'mdi-arrow-collapse-right'╩╩╠=╣prevIcon╩╠'mdi-minus'╩╩╠=╣nextIcon╩╠'mdi-plus'╩╩╠=╣itemsPerPageText╩╠'Satır Sayısı:'╩╩╠=╣itemsPerPageOptions╩╠[]╠5╩╠10╩╠15╩╠'Tümü'╩╩╩╩╩",
+																													"H": "╬{}╠=╣showFirstLastPage╩╠true╩╩╠=╣firstIcon╩╠'mdi-arrow-collapse-left'╩╩╠=╣lastIcon╩╠'mdi-arrow-collapse-right'╩╩╠=╣prevIcon╩╠'mdi-minus'╩╩╠=╣nextIcon╩╠'mdi-plus'╩╩╠=╣itemsPerPageText╩╠'Satır Sayısı:'╩╩╠=╣itemsPerPageOptions╩╠[]╠5╩╠10╩╠15╩╠{}╠=╣text╩╠'Tümü'╩╩╠=╣value╩╠9999999999╩╩╩╩╩╩╩",
 																													"T": "prop",
 																													"HL": "QS"
 																												},
@@ -1236,11 +1236,6 @@ let pjson = {
 																													"T": "prop",
 																													"HL": "QS"
 																												},
-																												"items": {
-																													"H": "╬[]╩╩",
-																													"T": "prop",
-																													"HL": "QS"
-																												},
 																												"caption": {
 																													"H": "╬'Ödeme Planı Listesi'╩╩",
 																													"T": "prop",
@@ -1253,6 +1248,11 @@ let pjson = {
 																												},
 																												"singleSelect": {
 																													"H": "╬true╩╩",
+																													"T": "prop",
+																													"HL": "QS"
+																												},
+																												"items": {
+																													"H": "╬[]╩╩",
 																													"T": "prop",
 																													"HL": "QS"
 																												}

@@ -152,7 +152,7 @@ let pjson = {
 																													"HL": "QS"
 																												},
 																												"footerProps": {
-																													"H": "{showFirstLastPage = true,\nfirstIcon = 'mdi-arrow-collapse-left',\nlastIcon = 'mdi-arrow-collapse-right',\nprevIcon = 'mdi-minus',\nnextIcon = 'mdi-plus',\nitemsPerPageText = 'Satır Sayısı:',\nitemsPerPageOptions = [5,10,15,'Tümü']}",
+																													"H": "{showFirstLastPage = true,\nfirstIcon = 'mdi-arrow-collapse-left',\nlastIcon = 'mdi-arrow-collapse-right',\nprevIcon = 'mdi-minus',\nnextIcon = 'mdi-plus',\nitemsPerPageText = 'Satır Sayısı:',\nitemsPerPageOptions = [5,10,15,{text='Tümü', value = 9999999999}]}",
 																													"T": "prop",
 																													"HL": "QS"
 																												},
@@ -162,13 +162,9 @@ let pjson = {
 																													"HL": "QS"
 																												},
 																												"itemsPerPage": {
-																													"H": "10",
+																													"H": "5",
 																													"T": "prop",
 																													"HL": "QS"
-																												},
-																												"mobileBreakpoint": {
-																													"H": "600",
-																													"T": "prop"
 																												},
 																												"visible": {
 																													"H": "true",
@@ -259,8 +255,9 @@ let pjson = {
 																															"T": "QLabel",
 																															"P": {
 																																"ID": {
-																																	"H": "EdtrComp_34",
-																																	"T": "prop"
+																																	"H": "txt_test",
+																																	"T": "prop",
+																																	"HL": "QS"
 																																},
 																																"tagType": {
 																																	"H": "'span'",
@@ -1169,7 +1166,7 @@ let pjson = {
 																													"HL": "QS"
 																												},
 																												"footerProps": {
-																													"H": "╬{}╠=╣showFirstLastPage╩╠true╩╩╠=╣firstIcon╩╠'mdi-arrow-collapse-left'╩╩╠=╣lastIcon╩╠'mdi-arrow-collapse-right'╩╩╠=╣prevIcon╩╠'mdi-minus'╩╩╠=╣nextIcon╩╠'mdi-plus'╩╩╠=╣itemsPerPageText╩╠'Satır Sayısı:'╩╩╠=╣itemsPerPageOptions╩╠[]╠5╩╠10╩╠15╩╠'Tümü'╩╩╩╩╩",
+																													"H": "╬{}╠=╣showFirstLastPage╩╠true╩╩╠=╣firstIcon╩╠'mdi-arrow-collapse-left'╩╩╠=╣lastIcon╩╠'mdi-arrow-collapse-right'╩╩╠=╣prevIcon╩╠'mdi-minus'╩╩╠=╣nextIcon╩╠'mdi-plus'╩╩╠=╣itemsPerPageText╩╠'Satır Sayısı:'╩╩╠=╣itemsPerPageOptions╩╠[]╠5╩╠10╩╠15╩╠{}╠=╣text╩╠'Tümü'╩╩╠=╣value╩╠9999999999╩╩╩╩╩╩╩",
 																													"T": "prop",
 																													"HL": "QS"
 																												},
@@ -1179,13 +1176,9 @@ let pjson = {
 																													"HL": "QS"
 																												},
 																												"itemsPerPage": {
-																													"H": "╬10╩╩",
+																													"H": "╬5╩╩",
 																													"T": "prop",
 																													"HL": "QS"
-																												},
-																												"mobileBreakpoint": {
-																													"H": "╬600╩╩",
-																													"T": "prop"
 																												},
 																												"visible": {
 																													"H": "╬true╩╩",
@@ -1276,8 +1269,9 @@ let pjson = {
 																															"T": "QLabel",
 																															"P": {
 																																"ID": {
-																																	"H": "EdtrComp_34",
-																																	"T": "prop"
+																																	"H": "txt_test",
+																																	"T": "prop",
+																																	"HL": "QS"
 																																},
 																																"tagType": {
 																																	"H": "╬'span'╩╩",
