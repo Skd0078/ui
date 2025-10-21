@@ -352,8 +352,9 @@ let pjson = {
 																					"HL": "QS"
 																				},
 																				"clearable": {
-																					"H": "true",
-																					"T": "prop"
+																					"H": "false",
+																					"T": "prop",
+																					"HL": "QS"
 																				},
 																				"hideMenu": {
 																					"H": "false",
@@ -449,13 +450,10 @@ let pjson = {
 																			"sp:pt-3",
 																			"sp:pr-3",
 																			"sp:pb-3",
-																			"j:justify-center",
-																			"fd:flex-row",
-																			"a:align-start",
 																			"c:col-4"
 																		]
 																	},
-																	"class": "d-flex pl-3 pt-3 pr-3 pb-3 justify-center flex-row align-start col-4"
+																	"class": "d-flex pl-3 pt-3 pr-3 pb-3 col-4"
 																}
 															},
 															"S": {
@@ -1308,8 +1306,9 @@ let pjson = {
 																					"HL": "QS"
 																				},
 																				"clearable": {
-																					"H": "╬true╩╩",
-																					"T": "prop"
+																					"H": "╬false╩╩",
+																					"T": "prop",
+																					"HL": "QS"
 																				},
 																				"hideMenu": {
 																					"H": "╬false╩╩",
@@ -1406,15 +1405,12 @@ let pjson = {
 																			"sp:pt-3",
 																			"sp:pr-3",
 																			"sp:pb-3",
-																			"j:justify-center",
-																			"fd:flex-row",
-																			"a:align-start",
 																			"c:col-4"
 																		]
 																	},
-																	"class": "d-flex pl-3 pt-3 pr-3 pb-3 justify-center flex-row align-start col-4"
+																	"class": "d-flex pl-3 pt-3 pr-3 pb-3 col-4"
 																},
-																"compDomClasses": "col d-flex pl-3 pt-3 pr-3 pb-3 justify-center flex-row align-start col-4 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pl-3 pt-3 pr-3 pb-3 col-4 pb-0 newDropBorder"
 															},
 															"S": {
 																"xs-xl": {
