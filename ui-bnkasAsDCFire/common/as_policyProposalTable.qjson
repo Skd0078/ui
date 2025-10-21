@@ -29,7 +29,7 @@ let pjson = {
 					"HL": "TS"
 				},
 				"setConsumerAndScreenInfo": {
-					"H": "// debugger;\r\nlet consumer = 'TANE.BANKASUR';\r\nlet screen = 'DCFIRE';\r\nquick.store.set('$customConsumerCode', consumer);\r\nquick.store.set('$customScreenName', screen);",
+					"H": "// debugger;\r\nlet consumer = 'TANE.BADCFIRE';\r\nlet screen = 'DCFIRE';\r\nquick.store.set('$customConsumerCode', consumer);\r\nquick.store.set('$customScreenName', screen);",
 					"C": true,
 					"HL": "TS"
 				},
@@ -3225,7 +3225,7 @@ let pjson = {
 															},
 															"E": {
 																"click": {
-																	"H": "debugger;\r\n(components.as_loadingCustomComp).open();\r\nquick.MM.trigger('savePolicyInfo');",
+																	"H": "debugger;\r\n(components.as_loadingCustomComp).open();\r\nquick.MM.trigger('savePolicyInfo');\r\n\r\n",
 																	"P": "mouseEvent:unknown | undefined",
 																	"HL": "TS"
 																}
@@ -3718,7 +3718,7 @@ let pjson = {
 					"HL": "JS"
 				},
 				"setConsumerAndScreenInfo": {
-					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n; // debugger;\r\nvar consumer = 'TANE.BANKASUR';\r\nvar screen = 'DCFIRE';\r\nquick.store.set('$customConsumerCode', consumer);\r\nquick.store.set('$customScreenName', screen);\r\n",
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n; // debugger;\r\nvar consumer = 'TANE.BADCFIRE';\r\nvar screen = 'DCFIRE';\r\nquick.store.set('$customConsumerCode', consumer);\r\nquick.store.set('$customScreenName', screen);\r\n",
 					"C": true,
 					"HL": "JS"
 				},

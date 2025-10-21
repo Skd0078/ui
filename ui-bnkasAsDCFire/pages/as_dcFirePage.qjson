@@ -13,7 +13,7 @@ let pjson = {
 				}
 			},
 			"E": {
-				"createProposal": {
+				"getCoverDetails": {
 					"H": "debugger;\r\ncomponents.as_loadingCustomComp.open();\r\nlet assuranceInfo = components.as_assuranceInfo.getAssuranceCompInfo();\r\nlet buildingInfo = components.as_buildingInfo.getBuildingInfo();\r\nlet buildingUAVTAdressInfo = components.as_buildingUAVTAdressInfo.getBuildingUavtCompInfo();\r\nlet customerInfoType = (components.as_assuranceOwnerInfo as any).getAssuranceOwnerInfo().customerInfoType;\r\nlet insuranceCustomerNumber = (components.as_assuranceOwnerInfo as any).getAssuranceOwnerInfo().customerNumber;\r\nlet additionalInfo = components.as_additionalInfo.getAdditionalInfo();\r\nlet policyDate = components.as_policyInfo.getPolicyInfoDate();\r\nlet insuredStatus = components.as_insuredStatus.getInsuredStatus();\r\nlet saveInsuredContactResp = quick.store.get(\"$saveInsuredContactResp\");\r\n\r\nlet requestData = {\r\n    \"policyInfo\": {\r\n        \"policyInfoType\": \"DCFIRE\",\r\n        \"insurancePackageId\": \"919\",\r\n        \"startDate\": policyDate.policyStartDate,\r\n        \"endDate\": policyDate.policyEndDate,\r\n        \"branchCode\": assuranceInfo.branchCode,\r\n        \"ownerUserInfo\": {\r\n            \"userId\": assuranceInfo.redirector\r\n        },\r\n        \"insurerInfo\": {\r\n            \"customerInfoType\": customerInfoType,\r\n            \"insuranceCustomerNumber\": saveInsuredContactResp?.externalContactNumber,\r\n            \"customerNumber\": saveInsuredContactResp?.externalContactNumber,\r\n            \"contactRole\": \"6\"\r\n        },\r\n        \"insuredInfo\": {\r\n            \"customerInfoType\": customerInfoType,\r\n            \"insuranceCustomerNumber\": saveInsuredContactResp?.externalContactNumber,\r\n            \"customerNumber\": saveInsuredContactResp?.externalContactNumber,\r\n            \"contactRole\": \"1\"\r\n        }\r\n        ,\r\n        \"businessActivityType\": {\r\n            \"referenceDataType\": {\r\n                \"code\": additionalInfo.fieldOfActivity\r\n            }\r\n        },\r\n        \"grossArea\": buildingInfo.acreage,\r\n        \"buildingConstructionYear\": buildingInfo.buildingConstructionYear,\r\n        \"totalFloorCount\": {\r\n            \"referenceDataType\": {\r\n                \"code\": buildingInfo.totalFloorCount\r\n            }\r\n        },\r\n        \"policyHolderRole\": {\r\n            \"referenceDataType\": {\r\n                \"code\": insuredStatus.insuredStatus\r\n            }\r\n        },\r\n        \"pvSolarSystem\": buildingInfo.pvSolarSystem,\r\n        \"residenceEmpty\": buildingInfo.residenceEmpty,\r\n        \"addressInfoType\": {\r\n            \"uavtAddressCode\": buildingUAVTAdressInfo.uavtAddressCode,\r\n            \"cityCode\": buildingUAVTAdressInfo.cityCode,\r\n            \"streetCode\": buildingUAVTAdressInfo.streetCode,\r\n            \"districtCode\": buildingUAVTAdressInfo.districtCode,\r\n            \"villageCode\": buildingUAVTAdressInfo.villageCode,\r\n            \"countyCode\": buildingUAVTAdressInfo.countyCode,\r\n            \"buildingPosition\": {\r\n                \"description\": buildingUAVTAdressInfo.storey,\r\n                \"referenceDataType\": {\r\n                    \"code\": buildingUAVTAdressInfo.storeyCode\r\n                }\r\n            },\r\n            \"buildingPositionValue\": buildingUAVTAdressInfo.storeyNo\r\n        },\r\n        \"insuredObjectInfo\": additionalInfo?.insuredObjectInfo,\r\n        \"additionalInfoLiability\": additionalInfo?.additionalInfoLiability,\r\n        \"additionalInfoPersonalAccident\": additionalInfo?.additionalInfoPersonalAccident,\r\n        \"apartmentFloorNumberType\": {\r\n            \"referenceDataType\": {\r\n                \"code\": buildingInfo.riskFloor\r\n            }\r\n        }\r\n    }\r\n};\r\n\r\n\r\nlet serviceRequest: IRequest = {\r\n    url: '/api/wrapperclient/getCoverDetails',\r\n    http: 'POST',\r\n    headers: { employeeId: (<any>quick.containerServices).getUserContext().userid },\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n}\r\n\r\nquick.Request.async(serviceRequest)?.then((resp) => {\r\n    quick.EM.trace(resp?.data);\r\n    quick.store.set(\"$dcfireTableItems\", resp?.data);\r\n    quick.store.set(\"$dcfireRequest\", requestData);\r\n    components.as_policyProposalTable.setItems();\r\n    components.as_policyProposalTable.visible = true;\r\n    components.as_loadingCustomComp.close();\r\n\r\n    components.as_assuranceInfo.visible = false;\r\n    components.as_buildingInfo.visible = false;\r\n    components.as_buildingUAVTAdressInfo.visible = false;\r\n    components.as_assuranceOwnerInfo.visible = false;\r\n    components.as_insuredStatus.visible = false;\r\n    components.as_pledgedReceivablesInfo.visible = false;\r\n    components.as_additionalInfo.visible = false;\r\n    components.as_policyInfo.visible = false;\r\n\r\n})\r\n    .catch((err) => {\r\n        let errorMessage = err?.response?.data?.responseMessage ?? 'Bir hata oluştu.';\r\n        (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n        components.as_loadingCustomComp.close();\r\n        components.as_alertCustomComp.open();\r\n    });",
 					"C": true,
 					"HL": "TS"
@@ -47,7 +47,12 @@ let pjson = {
 					"HL": "QS"
 				},
 				"screenName": {
-					"H": "DCFIRE",
+					"H": "'DCFIRE'",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"consumerCode": {
+					"H": "'TANE.BADCFIRE'",
 					"T": "prop",
 					"HL": "QS"
 				}
@@ -104,12 +109,12 @@ let pjson = {
 					"HL": "QS"
 				},
 				"consumerCode": {
-					"H": "TANE.BANKASUR",
+					"H": "'TANE.BADCFIRE'",
 					"T": "prop",
 					"HL": "QS"
 				},
 				"screenName": {
-					"H": "DCFIRE",
+					"H": "'DCFIRE'",
 					"T": "prop",
 					"HL": "QS"
 				}
@@ -211,6 +216,16 @@ let pjson = {
 					"H": "'/static/ui-bnkasAsDCFire/common/as_assuranceOwnerInfo.qjson'",
 					"T": "prop",
 					"HL": "QS"
+				},
+				"consumerCode": {
+					"H": "'TANE.BADCFIRE'",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"screenName": {
+					"H": "'DCFIRE'",
+					"T": "prop",
+					"HL": "QS"
 				}
 			},
 			"E": {},
@@ -309,6 +324,16 @@ let pjson = {
 				},
 				"QJsonPath": {
 					"H": "'/static/ui-bnkasAsDCFire/common/as_pledgedReceivablesInfo.qjson'",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"consumerCode": {
+					"H": "'TANE.BADCFIRE'",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"screenName": {
+					"H": "'DCFIRE'",
 					"T": "prop",
 					"HL": "QS"
 				}
@@ -640,7 +665,7 @@ let pjson = {
 			},
 			"E": {
 				"getCoverDetails": {
-					"H": "quick.MM.trigger(\"createProposal\");",
+					"H": "quick.MM.trigger(\"getCoverDetails\");",
 					"C": true,
 					"HL": "TS"
 				}
@@ -692,7 +717,7 @@ let pjson = {
 				}
 			},
 			"E": {
-				"createProposal": {
+				"getCoverDetails": {
 					"H": "var _a;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\ncomponents.as_loadingCustomComp.open();\r\nvar assuranceInfo = components.as_assuranceInfo.getAssuranceCompInfo();\r\nvar buildingInfo = components.as_buildingInfo.getBuildingInfo();\r\nvar buildingUAVTAdressInfo = components.as_buildingUAVTAdressInfo.getBuildingUavtCompInfo();\r\nvar customerInfoType = components.as_assuranceOwnerInfo.getAssuranceOwnerInfo().customerInfoType;\r\nvar insuranceCustomerNumber = components.as_assuranceOwnerInfo.getAssuranceOwnerInfo().customerNumber;\r\nvar additionalInfo = components.as_additionalInfo.getAdditionalInfo();\r\nvar policyDate = components.as_policyInfo.getPolicyInfoDate();\r\nvar insuredStatus = components.as_insuredStatus.getInsuredStatus();\r\nvar saveInsuredContactResp = quick.store.get(\"$saveInsuredContactResp\");\r\nvar requestData = {\r\n    \"policyInfo\": {\r\n        \"policyInfoType\": \"DCFIRE\",\r\n        \"insurancePackageId\": \"919\",\r\n        \"startDate\": policyDate.policyStartDate,\r\n        \"endDate\": policyDate.policyEndDate,\r\n        \"branchCode\": assuranceInfo.branchCode,\r\n        \"ownerUserInfo\": {\r\n            \"userId\": assuranceInfo.redirector\r\n        },\r\n        \"insurerInfo\": {\r\n            \"customerInfoType\": customerInfoType,\r\n            \"insuranceCustomerNumber\": saveInsuredContactResp === null || saveInsuredContactResp === void 0 ? void 0 : saveInsuredContactResp.externalContactNumber,\r\n            \"customerNumber\": saveInsuredContactResp === null || saveInsuredContactResp === void 0 ? void 0 : saveInsuredContactResp.externalContactNumber,\r\n            \"contactRole\": \"6\"\r\n        },\r\n        \"insuredInfo\": {\r\n            \"customerInfoType\": customerInfoType,\r\n            \"insuranceCustomerNumber\": saveInsuredContactResp === null || saveInsuredContactResp === void 0 ? void 0 : saveInsuredContactResp.externalContactNumber,\r\n            \"customerNumber\": saveInsuredContactResp === null || saveInsuredContactResp === void 0 ? void 0 : saveInsuredContactResp.externalContactNumber,\r\n            \"contactRole\": \"1\"\r\n        },\r\n        \"businessActivityType\": {\r\n            \"referenceDataType\": {\r\n                \"code\": additionalInfo.fieldOfActivity\r\n            }\r\n        },\r\n        \"grossArea\": buildingInfo.acreage,\r\n        \"buildingConstructionYear\": buildingInfo.buildingConstructionYear,\r\n        \"totalFloorCount\": {\r\n            \"referenceDataType\": {\r\n                \"code\": buildingInfo.totalFloorCount\r\n            }\r\n        },\r\n        \"policyHolderRole\": {\r\n            \"referenceDataType\": {\r\n                \"code\": insuredStatus.insuredStatus\r\n            }\r\n        },\r\n        \"pvSolarSystem\": buildingInfo.pvSolarSystem,\r\n        \"residenceEmpty\": buildingInfo.residenceEmpty,\r\n        \"addressInfoType\": {\r\n            \"uavtAddressCode\": buildingUAVTAdressInfo.uavtAddressCode,\r\n            \"cityCode\": buildingUAVTAdressInfo.cityCode,\r\n            \"streetCode\": buildingUAVTAdressInfo.streetCode,\r\n            \"districtCode\": buildingUAVTAdressInfo.districtCode,\r\n            \"villageCode\": buildingUAVTAdressInfo.villageCode,\r\n            \"countyCode\": buildingUAVTAdressInfo.countyCode,\r\n            \"buildingPosition\": {\r\n                \"description\": buildingUAVTAdressInfo.storey,\r\n                \"referenceDataType\": {\r\n                    \"code\": buildingUAVTAdressInfo.storeyCode\r\n                }\r\n            },\r\n            \"buildingPositionValue\": buildingUAVTAdressInfo.storeyNo\r\n        },\r\n        \"insuredObjectInfo\": additionalInfo === null || additionalInfo === void 0 ? void 0 : additionalInfo.insuredObjectInfo,\r\n        \"additionalInfoLiability\": additionalInfo === null || additionalInfo === void 0 ? void 0 : additionalInfo.additionalInfoLiability,\r\n        \"additionalInfoPersonalAccident\": additionalInfo === null || additionalInfo === void 0 ? void 0 : additionalInfo.additionalInfoPersonalAccident,\r\n        \"apartmentFloorNumberType\": {\r\n            \"referenceDataType\": {\r\n                \"code\": buildingInfo.riskFloor\r\n            }\r\n        }\r\n    }\r\n};\r\nvar serviceRequest = {\r\n    url: '/api/wrapperclient/getCoverDetails',\r\n    http: 'POST',\r\n    headers: { employeeId: quick.containerServices.getUserContext().userid },\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n};\r\n(_a = quick.Request.async(serviceRequest)) === null || _a === void 0 ? void 0 : _a.then(function (resp) {\r\n    quick.EM.trace(resp === null || resp === void 0 ? void 0 : resp.data);\r\n    quick.store.set(\"$dcfireTableItems\", resp === null || resp === void 0 ? void 0 : resp.data);\r\n    quick.store.set(\"$dcfireRequest\", requestData);\r\n    components.as_policyProposalTable.setItems();\r\n    components.as_policyProposalTable.visible = true;\r\n    components.as_loadingCustomComp.close();\r\n    components.as_assuranceInfo.visible = false;\r\n    components.as_buildingInfo.visible = false;\r\n    components.as_buildingUAVTAdressInfo.visible = false;\r\n    components.as_assuranceOwnerInfo.visible = false;\r\n    components.as_insuredStatus.visible = false;\r\n    components.as_pledgedReceivablesInfo.visible = false;\r\n    components.as_additionalInfo.visible = false;\r\n    components.as_policyInfo.visible = false;\r\n}).catch(function (err) {\r\n    var _a, _b, _c;\r\n    var errorMessage = (_c = (_b = (_a = err === null || err === void 0 ? void 0 : err.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.responseMessage) !== null && _c !== void 0 ? _c : 'Bir hata oluştu.';\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_loadingCustomComp.close();\r\n    components.as_alertCustomComp.open();\r\n});\r\n",
 					"C": true,
 					"HL": "JS"
@@ -727,7 +752,12 @@ let pjson = {
 					"HL": "QS"
 				},
 				"screenName": {
-					"H": "╬DCFIRE╩╩",
+					"H": "╬'DCFIRE'╩╩",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"consumerCode": {
+					"H": "╬'TANE.BADCFIRE'╩╩",
 					"T": "prop",
 					"HL": "QS"
 				}
@@ -786,12 +816,12 @@ let pjson = {
 					"HL": "QS"
 				},
 				"consumerCode": {
-					"H": "╬.╣TANE╩╠BANKASUR╩╩╩",
+					"H": "╬'TANE.BADCFIRE'╩╩",
 					"T": "prop",
 					"HL": "QS"
 				},
 				"screenName": {
-					"H": "╬DCFIRE╩╩",
+					"H": "╬'DCFIRE'╩╩",
 					"T": "prop",
 					"HL": "QS"
 				}
@@ -897,6 +927,16 @@ let pjson = {
 					"H": "╬'/static/ui-bnkasAsDCFire/common/as_assuranceOwnerInfo.qjson'╩╩",
 					"T": "prop",
 					"HL": "QS"
+				},
+				"consumerCode": {
+					"H": "╬'TANE.BADCFIRE'╩╩",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"screenName": {
+					"H": "╬'DCFIRE'╩╩",
+					"T": "prop",
+					"HL": "QS"
 				}
 			},
 			"E": {},
@@ -986,7 +1026,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": ""
+				"compDomClasses": "newDropBorder"
 			}
 		},
 		{
@@ -999,6 +1039,16 @@ let pjson = {
 				},
 				"QJsonPath": {
 					"H": "╬'/static/ui-bnkasAsDCFire/common/as_pledgedReceivablesInfo.qjson'╩╩",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"consumerCode": {
+					"H": "╬'TANE.BADCFIRE'╩╩",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"screenName": {
+					"H": "╬'DCFIRE'╩╩",
 					"T": "prop",
 					"HL": "QS"
 				}
@@ -1035,7 +1085,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": ""
+				"compDomClasses": "newDropBorder"
 			}
 		},
 		{
@@ -1084,7 +1134,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": ""
+				"compDomClasses": "newDropBorder"
 			}
 		},
 		{
@@ -1139,7 +1189,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": ""
+				"compDomClasses": "newDropBorder"
 			}
 		},
 		{
@@ -1199,7 +1249,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": ""
+				"compDomClasses": "newDropBorder"
 			}
 		},
 		{
@@ -1274,7 +1324,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": ""
+				"compDomClasses": "newDropBorder"
 			}
 		},
 		{
@@ -1323,7 +1373,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": ""
+				"compDomClasses": "newDropBorder"
 			}
 		},
 		{
@@ -1342,7 +1392,7 @@ let pjson = {
 			},
 			"E": {
 				"getCoverDetails": {
-					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nquick.MM.trigger(\"createProposal\");\r\n",
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nquick.MM.trigger(\"getCoverDetails\");\r\n",
 					"C": true,
 					"HL": "JS"
 				}
@@ -1378,7 +1428,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": ""
+				"compDomClasses": "newDropBorder"
 			}
 		}
 	],

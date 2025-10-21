@@ -6014,7 +6014,7 @@ let pjson = {
 			},
 			"O": {
 				"cType": "child",
-				"compDomClasses": ""
+				"compDomClasses": "newDropBorder"
 			},
 			"S": {
 				"xs-xl": {
@@ -6182,7 +6182,7 @@ let pjson = {
 																																	},
 																																	"class": "ml-5 text-h6"
 																																},
-																																"compDomClasses": "q-label  ml-5 text-h6"
+																																"compDomClasses": "q-label ml-5 text-h6 newDropBorder"
 																															}
 																														}
 																													],
@@ -6214,7 +6214,7 @@ let pjson = {
 																													},
 																													"class": "d-flex flex-column pb-3 pt-3 pl-3 pr-3"
 																												},
-																												"compDomClasses": "col d-flex flex-column pb-3 pt-3 pl-3 pr-3 pb-0"
+																												"compDomClasses": "col d-flex flex-column pb-3 pt-3 pl-3 pr-3 pb-0 newDropBorder"
 																											}
 																										}
 																									],
@@ -6226,7 +6226,7 @@ let pjson = {
 																							},
 																							"O": {
 																								"cType": "slot",
-																								"compDomClasses": "row"
+																								"compDomClasses": "row newDropBorder"
 																							}
 																						}
 																					],
@@ -6244,7 +6244,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-card v-card--flat v-sheet theme--dark rounded-b-0 primary"
+																				"compDomClasses": "v-card v-card--flat v-sheet theme--dark rounded-b-0 primary newDropBorder"
 																			}
 																		}
 																	],
@@ -6276,7 +6276,7 @@ let pjson = {
 																	},
 																	"class": "d-flex flex-column pt-0 pl-0 pr-0 pb-0"
 																},
-																"compDomClasses": "col d-flex flex-column pt-0 pl-0 pr-0 pb-0"
+																"compDomClasses": "col d-flex flex-column pt-0 pl-0 pr-0 pb-0 newDropBorder"
 															},
 															"S": {
 																"xs-xl": {
@@ -6360,7 +6360,7 @@ let pjson = {
 											},
 											"O": {
 												"cType": "slot",
-												"compDomClasses": "row"
+												"compDomClasses": "row newDropBorder"
 											}
 										},
 										{
@@ -6461,7 +6461,7 @@ let pjson = {
 																																	},
 																																	"class": "font-weight-bold"
 																																},
-																																"compDomClasses": "q-label  font-weight-bold"
+																																"compDomClasses": "q-label font-weight-bold newDropBorder"
 																															}
 																														}
 																													],
@@ -6493,7 +6493,7 @@ let pjson = {
 																													},
 																													"class": "d-flex pb-3 pl-3 pt-3 pr-3 col-4"
 																												},
-																												"compDomClasses": "col d-flex pb-3 pl-3 pt-3 pr-3 col-4 pb-0"
+																												"compDomClasses": "col d-flex pb-3 pl-3 pt-3 pr-3 col-4 pb-0 newDropBorder"
 																											},
 																											"S": {
 																												"xs-xl": {
@@ -6587,7 +6587,7 @@ let pjson = {
 																																			},
 																																			"O": {
 																																				"cType": "child",
-																																				"compDomClasses": "v-radio theme--light"
+																																				"compDomClasses": "v-radio theme--light newDropBorder"
 																																			}
 																																		},
 																																		{
@@ -6617,7 +6617,7 @@ let pjson = {
 																																			},
 																																			"O": {
 																																				"cType": "child",
-																																				"compDomClasses": "v-radio theme--light"
+																																				"compDomClasses": "v-radio theme--light newDropBorder"
 																																			}
 																																		}
 																																	],
@@ -6644,7 +6644,7 @@ let pjson = {
 																																	},
 																																	"class": "pt-0 pr-0 pb-0 pl-0 mt-0 mr-0 ml-0 mb-0"
 																																},
-																																"compDomClasses": "v-input theme--light v-input--selection-controls v-input--radio-group v-input--radio-group--row pt-0 pr-0 pb-0 pl-0 mt-0 mr-0 ml-0 mb-0"
+																																"compDomClasses": "v-input theme--light v-input--selection-controls v-input--radio-group v-input--radio-group--row pt-0 pr-0 pb-0 pl-0 mt-0 mr-0 ml-0 mb-0 newDropBorder"
 																															}
 																														}
 																													],
@@ -6675,7 +6675,7 @@ let pjson = {
 																													},
 																													"class": "d-flex pb-3 pt-3 pr-3 pl-0"
 																												},
-																												"compDomClasses": "col d-flex pb-3 pt-3 pr-3 pl-0 pb-0"
+																												"compDomClasses": "col d-flex pb-3 pt-3 pr-3 pl-0 pb-0 newDropBorder"
 																											},
 																											"S": {
 																												"xs-xl": {
@@ -6705,7 +6705,7 @@ let pjson = {
 																							},
 																							"O": {
 																								"cType": "slot",
-																								"compDomClasses": "row"
+																								"compDomClasses": "row newDropBorder"
 																							}
 																						},
 																						{
@@ -6770,7 +6770,7 @@ let pjson = {
 																																	},
 																																	"class": "font-weight-bold"
 																																},
-																																"compDomClasses": "q-label  font-weight-bold"
+																																"compDomClasses": "q-label font-weight-bold newDropBorder"
 																															}
 																														}
 																													],
@@ -6802,7 +6802,7 @@ let pjson = {
 																													},
 																													"class": "d-flex pb-3 pl-3 pt-3 pr-3 col-4"
 																												},
-																												"compDomClasses": "col d-flex pb-3 pl-3 pt-3 pr-3 col-4 pb-0"
+																												"compDomClasses": "col d-flex pb-3 pl-3 pt-3 pr-3 col-4 pb-0 newDropBorder"
 																											},
 																											"S": {
 																												"xs-xl": {
@@ -6884,7 +6884,7 @@ let pjson = {
 																																			},
 																																			"O": {
 																																				"cType": "child",
-																																				"compDomClasses": "v-radio theme--light"
+																																				"compDomClasses": "v-radio theme--light newDropBorder"
 																																			}
 																																		},
 																																		{
@@ -6908,7 +6908,7 @@ let pjson = {
 																																			},
 																																			"O": {
 																																				"cType": "child",
-																																				"compDomClasses": "v-radio theme--light"
+																																				"compDomClasses": "v-radio theme--light newDropBorder"
 																																			}
 																																		}
 																																	],
@@ -6935,7 +6935,7 @@ let pjson = {
 																																	},
 																																	"class": "pt-0 pb-0 mb-0 pr-0 mr-0 mt-0 pl-0 ml-0"
 																																},
-																																"compDomClasses": "v-input theme--light v-input--selection-controls v-input--radio-group v-input--radio-group--row pt-0 pb-0 mb-0 pr-0 mr-0 mt-0 pl-0 ml-0"
+																																"compDomClasses": "v-input theme--light v-input--selection-controls v-input--radio-group v-input--radio-group--row pt-0 pb-0 mb-0 pr-0 mr-0 mt-0 pl-0 ml-0 newDropBorder"
 																															}
 																														}
 																													],
@@ -6966,7 +6966,7 @@ let pjson = {
 																													},
 																													"class": "d-flex pb-3 pt-3 pr-3 pl-0"
 																												},
-																												"compDomClasses": "col d-flex pb-3 pt-3 pr-3 pl-0 pb-0"
+																												"compDomClasses": "col d-flex pb-3 pt-3 pr-3 pl-0 pb-0 newDropBorder"
 																											},
 																											"S": {
 																												"xs-xl": {
@@ -6996,7 +6996,7 @@ let pjson = {
 																							},
 																							"O": {
 																								"cType": "slot",
-																								"compDomClasses": "row"
+																								"compDomClasses": "row newDropBorder"
 																							}
 																						}
 																					],
@@ -7008,7 +7008,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "container container container--fluid"
+																				"compDomClasses": "container container--fluid newDropBorder"
 																			}
 																		}
 																	],
@@ -7040,7 +7040,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 flex-column"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 flex-column pb-0"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 flex-column pb-0 newDropBorder"
 															},
 															"S": {
 																"xs-xl": {
@@ -7070,7 +7070,7 @@ let pjson = {
 											},
 											"O": {
 												"cType": "slot",
-												"compDomClasses": "row"
+												"compDomClasses": "row newDropBorder"
 											},
 											"S": {
 												"xs-xl": {
@@ -7166,7 +7166,7 @@ let pjson = {
 																											},
 																											"O": {
 																												"cType": "child",
-																												"compDomClasses": "q-label "
+																												"compDomClasses": "q-label newDropBorder"
 																											},
 																											"S": {
 																												"xs-xl": {
@@ -7220,7 +7220,7 @@ let pjson = {
 																							},
 																							"O": {
 																								"cType": "slot",
-																								"compDomClasses": "v-tab v-tab--active"
+																								"compDomClasses": "v-tab v-tab--active newDropBorder"
 																							}
 																						},
 																						{
@@ -7428,7 +7428,7 @@ let pjson = {
 																																							},
 																																							"O": {
 																																								"cType": "slot",
-																																								"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--enclosed v-text-field--outlined v-text-field--rounded"
+																																								"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined newDropBorder"
 																																							}
 																																						}
 																																					],
@@ -7457,7 +7457,7 @@ let pjson = {
 																																					},
 																																					"class": "d-flex flex-column col-4"
 																																				},
-																																				"compDomClasses": "col d-flex flex-column col-4 pb-0"
+																																				"compDomClasses": "col d-flex flex-column col-4 pb-0 newDropBorder"
 																																			},
 																																			"S": {
 																																				"xs-xl": {
@@ -7575,7 +7575,7 @@ let pjson = {
 																																													},
 																																													"class": "text-body-1 font-weight-regular"
 																																												},
-																																												"compDomClasses": "q-label  text-body-1 font-weight-regular"
+																																												"compDomClasses": "q-label text-body-1 font-weight-regular newDropBorder"
 																																											},
 																																											"S": {
 																																												"xs-xl": {
@@ -7690,7 +7690,7 @@ let pjson = {
 																																									},
 																																									"class": "mr-1"
 																																								},
-																																								"compDomClasses": "v-btn v-btn--depressed v-btn--rounded theme--dark v-size--default mr-1"
+																																								"compDomClasses": "v-btn v-btn--depressed v-btn--rounded theme--dark v-size--default mr-1 newDropBorder"
 																																							}
 																																						}
 																																					],
@@ -7718,7 +7718,7 @@ let pjson = {
 																																					},
 																																					"class": "d-flex col-2"
 																																				},
-																																				"compDomClasses": "col d-flex col-2 pb-0"
+																																				"compDomClasses": "col d-flex col-2 pb-0 newDropBorder"
 																																			},
 																																			"S": {
 																																				"xs-xl": {
@@ -7802,7 +7802,7 @@ let pjson = {
 																															},
 																															"O": {
 																																"cType": "slot",
-																																"compDomClasses": "row"
+																																"compDomClasses": "row newDropBorder"
 																															}
 																														},
 																														{
@@ -7982,7 +7982,7 @@ let pjson = {
 																																							},
 																																							"O": {
 																																								"cType": "slot",
-																																								"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete"
+																																								"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
 																																							}
 																																						}
 																																					],
@@ -8012,7 +8012,7 @@ let pjson = {
 																																					},
 																																					"class": "d-flex flex-column col-3 pt-0"
 																																				},
-																																				"compDomClasses": "col d-flex flex-column col-3 pt-0 pb-0"
+																																				"compDomClasses": "col d-flex flex-column col-3 pt-0 pb-0 newDropBorder"
 																																			},
 																																			"S": {
 																																				"xs-xl": {
@@ -8184,7 +8184,7 @@ let pjson = {
 																																							},
 																																							"O": {
 																																								"cType": "slot",
-																																								"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--enclosed v-text-field--outlined v-text-field--rounded"
+																																								"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined newDropBorder"
 																																							}
 																																						}
 																																					],
@@ -8213,7 +8213,7 @@ let pjson = {
 																																					},
 																																					"class": "d-flex flex-column pt-0"
 																																				},
-																																				"compDomClasses": "col d-flex flex-column pt-0 pb-0"
+																																				"compDomClasses": "col d-flex flex-column pt-0 pb-0 newDropBorder"
 																																			},
 																																			"S": {
 																																				"xs-xl": {
@@ -8396,7 +8396,7 @@ let pjson = {
 																																							},
 																																							"O": {
 																																								"cType": "slot",
-																																								"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--enclosed v-text-field--outlined v-text-field--rounded"
+																																								"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined newDropBorder"
 																																							}
 																																						}
 																																					],
@@ -8425,7 +8425,7 @@ let pjson = {
 																																					},
 																																					"class": "d-flex flex-column pt-0"
 																																				},
-																																				"compDomClasses": "col d-flex flex-column pt-0 pb-0"
+																																				"compDomClasses": "col d-flex flex-column pt-0 pb-0 newDropBorder"
 																																			},
 																																			"S": {
 																																				"xs-xl": {
@@ -8597,7 +8597,7 @@ let pjson = {
 																																							},
 																																							"O": {
 																																								"cType": "slot",
-																																								"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--enclosed v-text-field--outlined v-text-field--rounded"
+																																								"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined newDropBorder"
 																																							}
 																																						}
 																																					],
@@ -8626,7 +8626,7 @@ let pjson = {
 																																					},
 																																					"class": "d-flex flex-column pt-0"
 																																				},
-																																				"compDomClasses": "col d-flex flex-column pt-0 pb-0"
+																																				"compDomClasses": "col d-flex flex-column pt-0 pb-0 newDropBorder"
 																																			},
 																																			"S": {
 																																				"xs-xl": {
@@ -8710,7 +8710,7 @@ let pjson = {
 																															},
 																															"O": {
 																																"cType": "slot",
-																																"compDomClasses": "row"
+																																"compDomClasses": "row newDropBorder"
 																															}
 																														},
 																														{
@@ -8861,7 +8861,7 @@ let pjson = {
 																																							},
 																																							"O": {
 																																								"cType": "slot",
-																																								"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--enclosed v-text-field--outlined v-text-field--rounded"
+																																								"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined newDropBorder"
 																																							}
 																																						}
 																																					],
@@ -8890,7 +8890,7 @@ let pjson = {
 																																					},
 																																					"class": "d-flex col-3 pt-0"
 																																				},
-																																				"compDomClasses": "col d-flex col-3 pt-0 pb-0"
+																																				"compDomClasses": "col d-flex col-3 pt-0 pb-0 newDropBorder"
 																																			},
 																																			"S": {
 																																				"xs-xl": {
@@ -8992,7 +8992,7 @@ let pjson = {
 																																							},
 																																							"O": {
 																																								"cType": "slot",
-																																								"compDomClasses": "v-inline-date-picker-div-class"
+																																								"compDomClasses": "v-inline-date-picker-div-class newDropBorder"
 																																							}
 																																						}
 																																					],
@@ -9021,7 +9021,7 @@ let pjson = {
 																																					},
 																																					"class": "d-flex pt-0 col-3"
 																																				},
-																																				"compDomClasses": "col d-flex pt-0 col-3 pb-0"
+																																				"compDomClasses": "col d-flex pt-0 col-3 pb-0 newDropBorder"
 																																			},
 																																			"S": {
 																																				"xs-xl": {
@@ -9105,7 +9105,7 @@ let pjson = {
 																															},
 																															"O": {
 																																"cType": "slot",
-																																"compDomClasses": "row"
+																																"compDomClasses": "row newDropBorder"
 																															}
 																														}
 																													],
@@ -9156,7 +9156,7 @@ let pjson = {
 																											},
 																											"O": {
 																												"cType": "slot",
-																												"compDomClasses": "container container container--fluid"
+																												"compDomClasses": "container container--fluid newDropBorder"
 																											}
 																										}
 																									],
@@ -9168,7 +9168,7 @@ let pjson = {
 																							},
 																							"O": {
 																								"cType": "slot",
-																								"compDomClasses": "v-window-item"
+																								"compDomClasses": "v-window-item v-window-item--active undefined newDropBorder"
 																							},
 																							"S": {
 																								"xs-xl": {
@@ -9242,7 +9242,7 @@ let pjson = {
 																											},
 																											"O": {
 																												"cType": "child",
-																												"compDomClasses": "q-label "
+																												"compDomClasses": "q-label newDropBorder"
 																											},
 																											"S": {
 																												"xs-xl": {
@@ -9296,7 +9296,7 @@ let pjson = {
 																							},
 																							"O": {
 																								"cType": "slot",
-																								"compDomClasses": "v-tab"
+																								"compDomClasses": "v-tab newDropBorder"
 																							}
 																						},
 																						{
@@ -9519,7 +9519,7 @@ let pjson = {
 																																							},
 																																							"O": {
 																																								"cType": "slot",
-																																								"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete"
+																																								"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
 																																							}
 																																						}
 																																					],
@@ -9862,7 +9862,7 @@ let pjson = {
 																																							},
 																																							"O": {
 																																								"cType": "slot",
-																																								"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete"
+																																								"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
 																																							}
 																																						}
 																																					],
@@ -10093,7 +10093,7 @@ let pjson = {
 																																							},
 																																							"O": {
 																																								"cType": "slot",
-																																								"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete"
+																																								"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
 																																							}
 																																						}
 																																					],
@@ -10324,7 +10324,7 @@ let pjson = {
 																																							},
 																																							"O": {
 																																								"cType": "slot",
-																																								"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete"
+																																								"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
 																																							}
 																																						}
 																																					],
@@ -10548,7 +10548,7 @@ let pjson = {
 																																							},
 																																							"O": {
 																																								"cType": "slot",
-																																								"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--enclosed v-text-field--outlined v-text-field--rounded"
+																																								"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined"
 																																							}
 																																						}
 																																					],
@@ -10840,7 +10840,7 @@ let pjson = {
 																																							},
 																																							"O": {
 																																								"cType": "slot",
-																																								"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--enclosed v-text-field--outlined v-text-field--rounded"
+																																								"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined"
 																																							}
 																																						}
 																																					],
@@ -11065,7 +11065,7 @@ let pjson = {
 																																							},
 																																							"O": {
 																																								"cType": "slot",
-																																								"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete"
+																																								"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
 																																							}
 																																						}
 																																					],
@@ -11647,7 +11647,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-tabs theme--light"
+																				"compDomClasses": "v-tabs theme--light newDropBorder"
 																			}
 																		}
 																	],
@@ -11679,7 +11679,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 flex-column"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 flex-column pb-0"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 flex-column pb-0 newDropBorder"
 															},
 															"S": {
 																"xs-xl": {
@@ -11709,7 +11709,7 @@ let pjson = {
 											},
 											"O": {
 												"cType": "slot",
-												"compDomClasses": "row"
+												"compDomClasses": "row newDropBorder"
 											},
 											"S": {
 												"xs-xl": {
@@ -11748,7 +11748,7 @@ let pjson = {
 									},
 									"class": "pt-0 pb-0 pl-3 pr-3"
 								},
-								"compDomClasses": "v-card v-sheet theme--light elevation-0 white pt-0 pb-0 pl-3 pr-3"
+								"compDomClasses": "v-card v-sheet theme--light elevation-0 white pt-0 pb-0 pl-3 pr-3 newDropBorder"
 							}
 						}
 					],
@@ -11771,7 +11771,7 @@ let pjson = {
 					},
 					"class": "pl-0 pt-0 pr-0 pb-0"
 				},
-				"compDomClasses": "container container--fluid pl-0 pt-0 pr-0 pb-0 container container--fluid"
+				"compDomClasses": "container container--fluid pl-0 pt-0 pr-0 pb-0 newDropBorder"
 			},
 			"S": {
 				"xs-xl": {
@@ -11867,7 +11867,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": ""
+				"compDomClasses": "newDropBorder"
 			}
 		},
 		{
@@ -11916,7 +11916,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": ""
+				"compDomClasses": "newDropBorder"
 			}
 		}
 	],

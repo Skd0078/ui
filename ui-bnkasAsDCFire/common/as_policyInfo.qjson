@@ -101,6 +101,11 @@ let pjson = {
 									"H": "'100%'",
 									"T": "prop",
 									"HL": "QS"
+								},
+								"height": {
+									"H": "450",
+									"T": "prop",
+									"HL": "QS"
 								}
 							},
 							"E": {},
@@ -368,7 +373,7 @@ let pjson = {
 																					"T": "prop"
 																				},
 																				"willAttach": {
-																					"H": "false",
+																					"H": "true",
 																					"T": "prop",
 																					"HL": "QS"
 																				},
@@ -1046,6 +1051,11 @@ let pjson = {
 									"H": "╬'100%'╩╩",
 									"T": "prop",
 									"HL": "QS"
+								},
+								"height": {
+									"H": "╬450╩╩",
+									"T": "prop",
+									"HL": "QS"
 								}
 							},
 							"E": {},
@@ -1319,7 +1329,7 @@ let pjson = {
 																					"T": "prop"
 																				},
 																				"willAttach": {
-																					"H": "╬false╩╩",
+																					"H": "╬true╩╩",
 																					"T": "prop",
 																					"HL": "QS"
 																				},
