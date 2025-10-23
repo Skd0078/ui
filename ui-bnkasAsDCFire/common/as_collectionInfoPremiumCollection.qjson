@@ -146,6 +146,12 @@ let pjson = {
 					"C": true,
 					"EV": true,
 					"HL": "TS"
+				},
+				"getCollectionInfo": {
+					"H": "\r\n\r\nquick.return({\r\n\r\n})",
+					"C": true,
+					"EV": true,
+					"HL": "TS"
 				}
 			},
 			"C": {},
@@ -1487,7 +1493,7 @@ let pjson = {
 																											},
 																											"E": {
 																												"change": {
-																													"H": "debugger;\r\nlet control = components.vauto_receiptType.qValue;\r\ncontrol = (control.text).toLowerCase();\r\n//installmentTermList\r\nlet receiptAmount;\r\nlet termList = quick.store.get('$installmentTermList');\r\nfor (let i = 0; i < termList.length; i++) {\r\n    if ((termList[i].paymentMethodType).toLowerCase() == control) {\r\n        if((termList[i].valueExtcode).toLowerCase() == (components.vauto_installmentCount.qValue.text).toLowerCase()){\r\n            receiptAmount = termList[i].premiumInfoGrossPremium; //'Tahsil Edilecek Tutar'\r\n        break;\r\n        }\r\n    }\r\n};\r\nquick.store.set('$receiptAmount', receiptAmount);\r\ncomponents.txt_receiptAmount.qValue = receiptAmount;",
+																													"H": "debugger;\r\nlet control = components.vauto_receiptType.qValue;\r\ncontrol = (control.text).toLowerCase();\r\n//installmentTermList\r\nlet receiptAmount;\r\nlet termList = quick.store.get('$installmentTermList');\r\nfor (let i = 0; i < termList.length; i++) {\r\n    if ((termList[i].paymentMethodType).toLowerCase() == control) {\r\n        if ((termList[i].valueExtcode).toLowerCase() == (components.vauto_installmentCount.qValue.text).toLowerCase()) {\r\n            receiptAmount = termList[i].premiumInfoGrossPremium; //'Tahsil Edilecek Tutar'\r\n            break;\r\n        }\r\n    }\r\n};\r\nquick.store.set('$installmentCountItem', components.vauto_installmentCount.qValue.text);\r\nquick.store.set('$receiptAmount', receiptAmount);\r\ncomponents.txt_receiptAmount.qValue = receiptAmount;",
 																													"HL": "TS"
 																												}
 																											},
@@ -2919,6 +2925,12 @@ let pjson = {
 					"C": true,
 					"EV": true,
 					"HL": "JS"
+				},
+				"getCollectionInfo": {
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nquick.return({});\r\n",
+					"C": true,
+					"EV": true,
+					"HL": "JS"
 				}
 			},
 			"C": {},
@@ -4267,7 +4279,7 @@ let pjson = {
 																											},
 																											"E": {
 																												"change": {
-																													"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nvar control = components.vauto_receiptType.qValue;\r\ncontrol = (control.text).toLowerCase();\r\n//installmentTermList\r\nvar receiptAmount;\r\nvar termList = quick.store.get('$installmentTermList');\r\nfor (var i = 0; i < termList.length; i++) {\r\n    if ((termList[i].paymentMethodType).toLowerCase() == control) {\r\n        if ((termList[i].valueExtcode).toLowerCase() == (components.vauto_installmentCount.qValue.text).toLowerCase()) {\r\n            receiptAmount = termList[i].premiumInfoGrossPremium; //'Tahsil Edilecek Tutar'\r\n            break;\r\n        }\r\n    }\r\n}\r\n;\r\nquick.store.set('$receiptAmount', receiptAmount);\r\ncomponents.txt_receiptAmount.qValue = receiptAmount;\r\n",
+																													"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nvar control = components.vauto_receiptType.qValue;\r\ncontrol = (control.text).toLowerCase();\r\n//installmentTermList\r\nvar receiptAmount;\r\nvar termList = quick.store.get('$installmentTermList');\r\nfor (var i = 0; i < termList.length; i++) {\r\n    if ((termList[i].paymentMethodType).toLowerCase() == control) {\r\n        if ((termList[i].valueExtcode).toLowerCase() == (components.vauto_installmentCount.qValue.text).toLowerCase()) {\r\n            receiptAmount = termList[i].premiumInfoGrossPremium; //'Tahsil Edilecek Tutar'\r\n            break;\r\n        }\r\n    }\r\n}\r\n;\r\nquick.store.set('$installmentCountItem', components.vauto_installmentCount.qValue.text);\r\nquick.store.set('$receiptAmount', receiptAmount);\r\ncomponents.txt_receiptAmount.qValue = receiptAmount;\r\n",
 																													"HL": "JS"
 																												}
 																											},

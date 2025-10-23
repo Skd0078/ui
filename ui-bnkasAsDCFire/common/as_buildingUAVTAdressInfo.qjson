@@ -105,7 +105,7 @@ let pjson = {
 					"HL": "TS"
 				},
 				"validateComponents": {
-					"H": "debugger;\r\nlet validationErrors = [];\r\n\r\nlet txt_adressNumber = quick.Quick.validate(\"txt_adressNumber\", false, false);\r\nlet txt_storeyNo = quick.Quick.validate(\"vauto_storey\", false, false);\r\nlet txt_city = components.txt_city.qValue;\r\n\r\n//Şehir yoksa uavt sorgulaması yapılmamış demektir.\r\nif (!txt_adressNumber || !components.txt_city.qValue) validationErrors.push(\"UAVT adres numarası sorgulanması gerekmektedir.\");\r\nif (!txt_storeyNo) validationErrors.push(\"Kat Bilgisi boş olamaz.\");\r\n\r\nquick.parent.props.validationErrors = validationErrors;",
+					"H": "let validationErrors = [];\r\n\r\nlet txt_adressNumber = quick.Quick.validate(\"txt_adressNumber\", false, false);\r\nlet txt_storeyNo = quick.Quick.validate(\"vauto_storey\", false, false);\r\nlet txt_city = components.txt_city.qValue;\r\n\r\n//Şehir yoksa uavt sorgulaması yapılmamış demektir.\r\nif (!txt_adressNumber || !components.txt_city.qValue) validationErrors.push(\"UAVT adres numarası sorgulanması gerekmektedir.\");\r\nif (!txt_storeyNo) validationErrors.push(\"Kat Bilgisi boş olamaz.\");\r\n\r\nquick.parent.props.validationErrors = validationErrors;",
 					"C": true,
 					"EV": true,
 					"HL": "TS"
@@ -6255,7 +6255,7 @@ let pjson = {
 					"HL": "JS"
 				},
 				"validateComponents": {
-					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nvar validationErrors = [];\r\nvar txt_adressNumber = quick.Quick.validate(\"txt_adressNumber\", false, false);\r\nvar txt_storeyNo = quick.Quick.validate(\"vauto_storey\", false, false);\r\nvar txt_city = components.txt_city.qValue;\r\n//Şehir yoksa uavt sorgulaması yapılmamış demektir.\r\nif (!txt_adressNumber || !components.txt_city.qValue)\r\n    validationErrors.push(\"UAVT adres numarası sorgulanması gerekmektedir.\");\r\nif (!txt_storeyNo)\r\n    validationErrors.push(\"Kat Bilgisi boş olamaz.\");\r\nquick.parent.props.validationErrors = validationErrors;\r\n",
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nvar validationErrors = [];\r\nvar txt_adressNumber = quick.Quick.validate(\"txt_adressNumber\", false, false);\r\nvar txt_storeyNo = quick.Quick.validate(\"vauto_storey\", false, false);\r\nvar txt_city = components.txt_city.qValue;\r\n//Şehir yoksa uavt sorgulaması yapılmamış demektir.\r\nif (!txt_adressNumber || !components.txt_city.qValue)\r\n    validationErrors.push(\"UAVT adres numarası sorgulanması gerekmektedir.\");\r\nif (!txt_storeyNo)\r\n    validationErrors.push(\"Kat Bilgisi boş olamaz.\");\r\nquick.parent.props.validationErrors = validationErrors;\r\n",
 					"C": true,
 					"EV": true,
 					"HL": "JS"

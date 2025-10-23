@@ -39,7 +39,7 @@ let pjson = {
 					"HL": "TS"
 				},
 				"validateComponents": {
-					"H": "debugger;\r\nlet validationErrors = []\r\nlet vauto_insuredStatus = quick.Quick.validate(\"vauto_insuredStatus\", false, false);\r\n\r\nif (!vauto_insuredStatus) validationErrors.push(\"Sigorta Sıfatı boş olamaz\");\r\n\r\nquick.parent.props.validationErrors = validationErrors;",
+					"H": "let validationErrors = []\r\nlet vauto_insuredStatus = quick.Quick.validate(\"vauto_insuredStatus\", false, false);\r\n\r\nif (!vauto_insuredStatus) validationErrors.push(\"Sigorta Sıfatı boş olamaz\");\r\n\r\nquick.parent.props.validationErrors = validationErrors;",
 					"C": true,
 					"EV": true,
 					"HL": "TS"
@@ -825,7 +825,7 @@ let pjson = {
 					"HL": "JS"
 				},
 				"validateComponents": {
-					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nvar validationErrors = [];\r\nvar vauto_insuredStatus = quick.Quick.validate(\"vauto_insuredStatus\", false, false);\r\nif (!vauto_insuredStatus)\r\n    validationErrors.push(\"Sigorta Sıfatı boş olamaz\");\r\nquick.parent.props.validationErrors = validationErrors;\r\n",
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nvar validationErrors = [];\r\nvar vauto_insuredStatus = quick.Quick.validate(\"vauto_insuredStatus\", false, false);\r\nif (!vauto_insuredStatus)\r\n    validationErrors.push(\"Sigorta Sıfatı boş olamaz\");\r\nquick.parent.props.validationErrors = validationErrors;\r\n",
 					"C": true,
 					"EV": true,
 					"HL": "JS"

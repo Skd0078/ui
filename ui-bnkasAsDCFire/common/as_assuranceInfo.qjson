@@ -95,7 +95,7 @@ let pjson = {
 					"HL": "TS"
 				},
 				"validateComponents": {
-					"H": "debugger;\r\nlet validationErrors = []\r\nlet isBranchCodeValid = quick.Quick.validate(\"vauto_branchCode\", false, false);\r\nlet isRedirectorValid = quick.Quick.validate(\"vauto_redirector\", false, false);\r\nlet isAssuranceTypeValid = quick.Quick.validate(\"txt_assuranceType\", false, false);\r\n\r\nif (!isBranchCodeValid) validationErrors.push(\"Şube Kodu boş olamaz\");\r\nif (!isRedirectorValid) validationErrors.push(\"Yönlendiren boş olamaz\");\r\nif (!isAssuranceTypeValid) validationErrors.push(\"Sigorta Türü boş olamaz\");\r\n\r\nquick.parent.props.validationErrors = validationErrors;",
+					"H": "let validationErrors = []\r\nlet isBranchCodeValid = quick.Quick.validate(\"vauto_branchCode\", false, false);\r\nlet isRedirectorValid = quick.Quick.validate(\"vauto_redirector\", false, false);\r\nlet isAssuranceTypeValid = quick.Quick.validate(\"txt_assuranceType\", false, false);\r\n\r\nif (!isBranchCodeValid) validationErrors.push(\"Şube Kodu boş olamaz\");\r\nif (!isRedirectorValid) validationErrors.push(\"Yönlendiren boş olamaz\");\r\nif (!isAssuranceTypeValid) validationErrors.push(\"Sigorta Türü boş olamaz\");\r\n\r\nquick.parent.props.validationErrors = validationErrors;",
 					"C": true,
 					"EV": true,
 					"HL": "TS"
@@ -1763,7 +1763,7 @@ let pjson = {
 					"HL": "JS"
 				},
 				"validateComponents": {
-					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nvar validationErrors = [];\r\nvar isBranchCodeValid = quick.Quick.validate(\"vauto_branchCode\", false, false);\r\nvar isRedirectorValid = quick.Quick.validate(\"vauto_redirector\", false, false);\r\nvar isAssuranceTypeValid = quick.Quick.validate(\"txt_assuranceType\", false, false);\r\nif (!isBranchCodeValid)\r\n    validationErrors.push(\"Şube Kodu boş olamaz\");\r\nif (!isRedirectorValid)\r\n    validationErrors.push(\"Yönlendiren boş olamaz\");\r\nif (!isAssuranceTypeValid)\r\n    validationErrors.push(\"Sigorta Türü boş olamaz\");\r\nquick.parent.props.validationErrors = validationErrors;\r\n",
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nvar validationErrors = [];\r\nvar isBranchCodeValid = quick.Quick.validate(\"vauto_branchCode\", false, false);\r\nvar isRedirectorValid = quick.Quick.validate(\"vauto_redirector\", false, false);\r\nvar isAssuranceTypeValid = quick.Quick.validate(\"txt_assuranceType\", false, false);\r\nif (!isBranchCodeValid)\r\n    validationErrors.push(\"Şube Kodu boş olamaz\");\r\nif (!isRedirectorValid)\r\n    validationErrors.push(\"Yönlendiren boş olamaz\");\r\nif (!isAssuranceTypeValid)\r\n    validationErrors.push(\"Sigorta Türü boş olamaz\");\r\nquick.parent.props.validationErrors = validationErrors;\r\n",
 					"C": true,
 					"EV": true,
 					"HL": "JS"
@@ -2207,7 +2207,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--enclosed v-text-field--outlined v-text-field--rounded newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -2435,7 +2435,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -2646,7 +2646,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
 																			}
 																		}
 																	],
