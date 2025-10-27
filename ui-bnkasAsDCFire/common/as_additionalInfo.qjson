@@ -587,7 +587,7 @@ let pjson = {
 																					"T": "prop"
 																				},
 																				"disabled": {
-																					"H": "false",
+																					"H": "true",
 																					"T": "prop",
 																					"HL": "QS"
 																				}
@@ -2880,7 +2880,7 @@ let pjson = {
 															},
 															"O": {
 																"cType": "slot",
-																"compDomClasses": "v-input v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
+																"compDomClasses": "v-input v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
 															}
 														}
 													],
@@ -3072,7 +3072,7 @@ let pjson = {
 																					"T": "prop"
 																				},
 																				"disabled": {
-																					"H": "╬false╩╩",
+																					"H": "╬true╩╩",
 																					"T": "prop",
 																					"HL": "QS"
 																				}
@@ -3090,7 +3090,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input theme--light v-input--selection-controls v-input--checkbox undefined mt-1"
+																				"compDomClasses": "v-input v-input--is-disabled theme--light v-input--selection-controls v-input--checkbox undefined mt-1"
 																			}
 																		}
 																	],
