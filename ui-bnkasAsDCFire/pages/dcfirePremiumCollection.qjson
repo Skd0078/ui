@@ -14,7 +14,7 @@ let pjson = {
 			},
 			"E": {
 				"PostRender": {
-					"H": "// debugger;\r\ncomponents.as_collectionInfoPremiumCollection.consumerCode = 'TANE.BANKASUR';\r\ncomponents.as_collectionInfoPremiumCollection.screenName = 'DCFIRE';\r\n\r\ncomponents.as_policyInfoPremiumCollection.consumerCode = 'TANE.BANKASUR';\r\ncomponents.as_policyInfoPremiumCollection.screenName = 'DCFIRE';\r\n\r\nquick.MM.trigger('setFirstPageDatas');",
+					"H": "// debugger;\r\ncomponents.as_collectionInfoPremiumCollection.consumerCode = 'TANE.BAHOME';\r\ncomponents.as_collectionInfoPremiumCollection.screenName = 'DCFIRE';\r\n\r\ncomponents.as_policyInfoPremiumCollection.consumerCode = 'TANE.BAHOME';\r\ncomponents.as_policyInfoPremiumCollection.screenName = 'DCFIRE';\r\n\r\nquick.MM.trigger('setFirstPageDatas');",
 					"TO": 1,
 					"HL": "TS"
 				},
@@ -277,7 +277,7 @@ let pjson = {
 																	"HL": "QS"
 																},
 																"consumerCode": {
-																	"H": "'TANE.BANKASUR'",
+																	"H": "'TANE.BAHOME'",
 																	"T": "prop",
 																	"HL": "QS"
 																},
@@ -710,7 +710,7 @@ let pjson = {
 																	"HL": "QS"
 																},
 																"consumerCode": {
-																	"H": "'TANE.BANKASUR'",
+																	"H": "'TANE.BAHOME'",
 																	"T": "prop",
 																	"HL": "QS"
 																},
@@ -1543,7 +1543,7 @@ let pjson = {
 			},
 			"E": {
 				"PostRender": {
-					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n; // debugger;\r\ncomponents.as_collectionInfoPremiumCollection.consumerCode = 'TANE.BANKASUR';\r\ncomponents.as_collectionInfoPremiumCollection.screenName = 'DCFIRE';\r\ncomponents.as_policyInfoPremiumCollection.consumerCode = 'TANE.BANKASUR';\r\ncomponents.as_policyInfoPremiumCollection.screenName = 'DCFIRE';\r\nquick.MM.trigger('setFirstPageDatas');\r\n",
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n; // debugger;\r\ncomponents.as_collectionInfoPremiumCollection.consumerCode = 'TANE.BAHOME';\r\ncomponents.as_collectionInfoPremiumCollection.screenName = 'DCFIRE';\r\ncomponents.as_policyInfoPremiumCollection.consumerCode = 'TANE.BAHOME';\r\ncomponents.as_policyInfoPremiumCollection.screenName = 'DCFIRE';\r\nquick.MM.trigger('setFirstPageDatas');\r\n",
 					"TO": 1,
 					"HL": "JS"
 				},
@@ -1810,7 +1810,7 @@ let pjson = {
 																	"HL": "QS"
 																},
 																"consumerCode": {
-																	"H": "╬'TANE.BANKASUR'╩╩",
+																	"H": "╬'TANE.BAHOME'╩╩",
 																	"T": "prop",
 																	"HL": "QS"
 																},
@@ -2253,7 +2253,7 @@ let pjson = {
 																	"HL": "QS"
 																},
 																"consumerCode": {
-																	"H": "╬'TANE.BANKASUR'╩╩",
+																	"H": "╬'TANE.BAHOME'╩╩",
 																	"T": "prop",
 																	"HL": "QS"
 																},
