@@ -23,18 +23,8 @@ let pjson = {
 					"C": true,
 					"HL": "TS"
 				},
-				"sendPolicyEmail": {
-					"H": "debugger;\r\ncomponents.as_loadingCustomComp.open();\r\n//Poliçeyi E-Posta İle Gönder\r\nlet proposalData = quick.store.get('$createProposalResp');\r\n\r\nlet requestData = {\r\n    \"policyNo\": proposalData?.proposalNumber,\r\n    \"renewalNo\": proposalData?.revisionNumber,\r\n    \"sendPolicyPDF\": 1,\r\n    \"sendInformationFormPDF\": 0,\r\n    \"sendGeneralConditionsPDF\": 0,\r\n    \"email\": quick.store.get('$customerInfo').communicationInfo.emailAddresses[0].address,\r\n    \"policyDescription\": quick.store.get('$policyType')\r\n}\r\nquick.MM.trigger('setConsumerAndScreenInfo'); //consumerCode ve screenName setlendi.\r\nlet serviceRequest: IRequest = {\r\n    url: '/api/wrapperclient/sendPolicyEmail',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n}\r\nquick.Request.async(serviceRequest)?.then((resp) => {\r\n    components.as_loadingCustomComp.close();\r\n    if (resp?.data?.emailSent) {\r\n        let successMessage = (quick.store.get('$customerInfo').communicationInfo.emailAddresses[0].address) + ' e-posta adresine gönderim sağlanmıştır.'; //(customerContext?.customerEmail ?? '')\r\n        (<any>components.as_alertSuccess).setLabelText({ labelData: { name: 'lbl_400_1', text: successMessage } });\r\n        components.as_alertSuccess.open();\r\n    }\r\n})\r\n    .catch((err) => {\r\n        quick.EM.trace('hata aldı')\r\n        components.as_loadingCustomComp.close();\r\n        let errorMessage = err?.response?.data?.responseMessage ?? 'Bir hata oluştu.';\r\n        (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n        components.as_alertCustomComp.open();\r\n    });",
-					"C": true,
-					"HL": "TS"
-				},
 				"setConsumerAndScreenInfo": {
 					"H": "// debugger;\r\nlet consumer = 'TANE.BADCFIRE';\r\nlet screen = 'DCFIRE';\r\nquick.store.set('$customConsumerCode', consumer);\r\nquick.store.set('$customScreenName', screen);",
-					"C": true,
-					"HL": "TS"
-				},
-				"printDocument": {
-					"H": "debugger;\r\nlet getAssuranceOwnerInfo = quick.store.get('$getAssuranceOwnerInfo');\r\nlet branchCode = getAssuranceOwnerInfo.branchCode;\r\nlet branchName = getAssuranceOwnerInfo.branchName;\r\nlet name = getAssuranceOwnerInfo.name;\r\nlet surname = getAssuranceOwnerInfo.surname;\r\nlet phoneNumber = getAssuranceOwnerInfo.phoneList.phoneNumber.phoneNumber;\r\nlet faxNumber = phoneNumber;\r\nlet address = getAssuranceOwnerInfo.addressList.address.line;\r\n\r\nlet requestData = {\r\n  \"firmType\": \"AS\",\r\n  \"documentType\": \"info\",\r\n  \"documentFormat\": \"pdf\",\r\n  \"insuranceType\": \"DCFIRE\",\r\n  \"packageCode\": \"919\",\r\n  \"userInfo\": {\r\n    \"userId\": (<any>quick.containerServices).getUserContext().userid,\r\n    \"branch\": (<any>quick.containerServices).getUserContext().branchCode,\r\n    \"name\": (<any>quick.containerServices).getUserContext().name,\r\n    \"surname\": (<any>quick.containerServices).getUserContext().surname\r\n  },\r\n  \"branchInfo\": {\r\n    \"code\": branchCode,\r\n    \"address\": address,\r\n    \"name\": branchName,\r\n    \"phoneNumber\": phoneNumber,\r\n    \"faxNumber\": faxNumber,\r\n    \"contactName\": name + surname\r\n  },\r\n  \"insurerInfo\": {\r\n    \"customerNumber\": quick.store.get('$customerInfo').customerNumber,\r\n  }\r\n}\r\nquick.store.set('$createDocFromTemplateRequest', requestData);\r\nquick.MM.trigger('setDatasConsumerAndScreenInfo');\r\nlet serviceRequest: IRequest = {\r\n  url: '/api/wrapperclient/createDocumentFromTemplate',\r\n  http: 'POST',\r\n  data: requestData,\r\n  onFail: 'empty',\r\n  onSuccess: 'empty',\r\n  responseField: 'empty',\r\n  blockRender: false,\r\n}\r\nquick.Request.async(serviceRequest)?.then((resp) => {\r\n  (components.as_loadingCustomComp).close();\r\n  if (resp?.data) {\r\n    components.as_loadingCustomComp.close();\r\n    quick.store.get('$bnkas_utils').print('name.pdf', resp?.data?.createDocumentFromTemplateDTO?.content, '');\r\n    quick.store.set('$content', resp?.data?.createDocumentFromTemplateDTO?.content);\r\n  }\r\n})\r\n  .catch((err) => {\r\n    (components.as_loadingCustomComp).close();\r\n    let errorMessage = err?.response?.data?.responseMessage ?? 'Bir hata oluştu.';\r\n    (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n  });",
 					"C": true,
 					"HL": "TS"
 				},
@@ -47,6 +37,11 @@ let pjson = {
 					"H": "debugger;\r\nlet dcfireTableItems = quick.store.get(\"$dcfireTableItems\");\r\nlet items = [];\r\ncomponents.containerAmountInfo.visible = false;\r\ncomponents.rowUpdateProposal.visible = false;\r\ndebugger;\r\ndcfireTableItems?.coverDetailList?.forEach(coverDetail => {\r\n    let headerItem = {\r\n        \"header\": coverDetail.coverName,\r\n        \"amount\": null\r\n    };\r\n    items.push(headerItem);\r\n    if (coverDetail.childCoverDetailList && coverDetail.childCoverDetailList.length > 0) {\r\n        coverDetail.childCoverDetailList.forEach(childCover => {\r\n            let childItem = {\r\n                \"name\": childCover.coverName,\r\n                \"amount\": quick.Quick.toMoney(childCover.coverInsuranceAmount, 'tr-TR', { minimumFractionDigits: 2 })\r\n            };\r\n            items.push(childItem)\r\n        });\r\n    } else {\r\n        headerItem.amount = quick.Quick.toMoney(coverDetail.coverInsuranceAmount, 'tr-TR', { minimumFractionDigits: 2 })\r\n    }\r\n});\r\n\r\ncomponents.dt_assuranceList.items = items;\r\nquick.Quick.updateComponent(components.dt_assuranceList);\r\n\r\n",
 					"C": true,
 					"EV": true,
+					"HL": "TS"
+				},
+				"getDocumentPDF": {
+					"H": "debugger;\r\ndeclare let mode;\r\nlet requestData;\r\nlet proposalNo = (quick.store.get('$createProposalResp'))?.proposalNumber;\r\nlet proposalVersionNo = quick.store.get('$revisionNo');\r\nlet proposalVehicle = \"61348614\";\r\nif (mode == \"print\") {\r\n  requestData = {\r\n    \"searchType\": 2, //1=Yazdır, 2=EPosta\r\n    \"proposalVersionNumber\": proposalVersionNo,\r\n    \"proposalNumber\": proposalNo,\r\n    \"documentTypeId\": proposalVehicle,\r\n    \"sendEmail\": false\r\n  }\r\n}\r\nelse if (mode == \"sendToEmail\") {\r\n  requestData = {\r\n    \"searchType\": 2, //1=Yazdır, 2=EPosta\r\n    \"proposalVersionNumber\": proposalVersionNo,\r\n    \"proposalNumber\": proposalNo,\r\n    \"documentTypeId\": proposalVehicle,\r\n    \"emailAddress\": (quick.store.get('$customerInfo'))?.communicationInfo?.emailAddresses[0]?.address,\r\n    \"sendEmail\": true\r\n  }\r\n}\r\n\r\nquick.store.set('$createDocFromTemplateRequest', requestData);\r\nquick.MM.trigger('setConsumerAndScreenInfo');\r\nlet serviceRequest: IRequest = {\r\n  url: '/api/wrapperclient/getDocumentPDF',\r\n  http: 'POST',\r\n  data: requestData,\r\n  onFail: 'empty',\r\n  onSuccess: 'empty',\r\n  responseField: 'empty',\r\n  blockRender: false,\r\n}\r\nquick.Request.async(serviceRequest)?.then((resp) => {\r\n  (components.as_loadingCustomComp).close();\r\n  if (mode == \"print\") {\r\n    if (resp?.data?.documentPDFDataList[0]) {\r\n      quick.store.get('$bnkas_utils').print('name.pdf', resp?.data?.documentPDFDataList[0]?.documentBinaryData, '');\r\n      quick.store.set('$content', resp?.data?.documentPDFDataList[0].documentBinaryData);\r\n    }\r\n    else {\r\n      let errorMessage = \"İş'te Kobi teklifi için doküman bulunamadı.\";\r\n      (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n      components.as_alertCustomComp.open();\r\n    }\r\n  }\r\n  else if (mode == \"sendToEmail\") {\r\n    let successMessage = ((quick.store.get('$customerInfo'))?.communicationInfo?.emailAddresses[0]?.address) + ' e-posta adresine gönderim sağlanmıştır.'; //(customerContext?.customerEmail ?? '')\r\n    (<any>components.as_alertSuccess).setLabelText({ labelData: { name: 'lbl_400_1', text: successMessage } });\r\n    components.as_alertSuccess.open();\r\n  }\r\n})\r\n  .catch((err) => {\r\n    (components.as_loadingCustomComp).close();\r\n    let errorMessage = err?.response?.data?.responseMessage ?? 'Bir hata oluştu.';\r\n    (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n  });",
+					"C": true,
 					"HL": "TS"
 				}
 			},
@@ -2587,7 +2582,7 @@ let pjson = {
 															},
 															"E": {
 																"click": {
-																	"H": "// debugger;\r\ncomponents.as_loadingCustomComp.open();\r\nquick.MM.trigger('printDocument');",
+																	"H": "// debugger;\r\ncomponents.as_loadingCustomComp.open();\r\nquick.MM.trigger('getDocumentPDF', [{ mode: \"print\" }]);",
 																	"P": "mouseEvent:unknown | undefined",
 																	"HL": "TS"
 																}
@@ -2782,7 +2777,7 @@ let pjson = {
 															},
 															"E": {
 																"click": {
-																	"H": "debugger;\r\nquick.MM.trigger('sendPolicyEmail');",
+																	"H": "debugger;\r\ncomponents.as_loadingCustomComp.open();\r\nquick.MM.trigger('getDocumentPDF', [{ mode: \"sendToEmail\" }]);",
 																	"P": "mouseEvent:unknown | undefined",
 																	"HL": "TS"
 																}
@@ -3712,18 +3707,8 @@ let pjson = {
 					"C": true,
 					"HL": "JS"
 				},
-				"sendPolicyEmail": {
-					"H": "var _a;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\ncomponents.as_loadingCustomComp.open();\r\n//Poliçeyi E-Posta İle Gönder\r\nvar proposalData = quick.store.get('$createProposalResp');\r\nvar requestData = {\r\n    \"policyNo\": proposalData === null || proposalData === void 0 ? void 0 : proposalData.proposalNumber,\r\n    \"renewalNo\": proposalData === null || proposalData === void 0 ? void 0 : proposalData.revisionNumber,\r\n    \"sendPolicyPDF\": 1,\r\n    \"sendInformationFormPDF\": 0,\r\n    \"sendGeneralConditionsPDF\": 0,\r\n    \"email\": quick.store.get('$customerInfo').communicationInfo.emailAddresses[0].address,\r\n    \"policyDescription\": quick.store.get('$policyType')\r\n};\r\nquick.MM.trigger('setConsumerAndScreenInfo'); //consumerCode ve screenName setlendi.\r\nvar serviceRequest = {\r\n    url: '/api/wrapperclient/sendPolicyEmail',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n};\r\n(_a = quick.Request.async(serviceRequest)) === null || _a === void 0 ? void 0 : _a.then(function (resp) {\r\n    var _a;\r\n    components.as_loadingCustomComp.close();\r\n    if ((_a = resp === null || resp === void 0 ? void 0 : resp.data) === null || _a === void 0 ? void 0 : _a.emailSent) {\r\n        var successMessage = (quick.store.get('$customerInfo').communicationInfo.emailAddresses[0].address) + ' e-posta adresine gönderim sağlanmıştır.'; //(customerContext?.customerEmail ?? '')\r\n        components.as_alertSuccess.setLabelText({ labelData: { name: 'lbl_400_1', text: successMessage } });\r\n        components.as_alertSuccess.open();\r\n    }\r\n}).catch(function (err) {\r\n    var _a, _b, _c;\r\n    quick.EM.trace('hata aldı');\r\n    components.as_loadingCustomComp.close();\r\n    var errorMessage = (_c = (_b = (_a = err === null || err === void 0 ? void 0 : err.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.responseMessage) !== null && _c !== void 0 ? _c : 'Bir hata oluştu.';\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n});\r\n",
-					"C": true,
-					"HL": "JS"
-				},
 				"setConsumerAndScreenInfo": {
 					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n; // debugger;\r\nvar consumer = 'TANE.BADCFIRE';\r\nvar screen = 'DCFIRE';\r\nquick.store.set('$customConsumerCode', consumer);\r\nquick.store.set('$customScreenName', screen);\r\n",
-					"C": true,
-					"HL": "JS"
-				},
-				"printDocument": {
-					"H": "var _a;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nvar getAssuranceOwnerInfo = quick.store.get('$getAssuranceOwnerInfo');\r\nvar branchCode = getAssuranceOwnerInfo.branchCode;\r\nvar branchName = getAssuranceOwnerInfo.branchName;\r\nvar name = getAssuranceOwnerInfo.name;\r\nvar surname = getAssuranceOwnerInfo.surname;\r\nvar phoneNumber = getAssuranceOwnerInfo.phoneList.phoneNumber.phoneNumber;\r\nvar faxNumber = phoneNumber;\r\nvar address = getAssuranceOwnerInfo.addressList.address.line;\r\nvar requestData = {\r\n    \"firmType\": \"AS\",\r\n    \"documentType\": \"info\",\r\n    \"documentFormat\": \"pdf\",\r\n    \"insuranceType\": \"DCFIRE\",\r\n    \"packageCode\": \"919\",\r\n    \"userInfo\": {\r\n        \"userId\": quick.containerServices.getUserContext().userid,\r\n        \"branch\": quick.containerServices.getUserContext().branchCode,\r\n        \"name\": quick.containerServices.getUserContext().name,\r\n        \"surname\": quick.containerServices.getUserContext().surname\r\n    },\r\n    \"branchInfo\": {\r\n        \"code\": branchCode,\r\n        \"address\": address,\r\n        \"name\": branchName,\r\n        \"phoneNumber\": phoneNumber,\r\n        \"faxNumber\": faxNumber,\r\n        \"contactName\": name + surname\r\n    },\r\n    \"insurerInfo\": {\r\n        \"customerNumber\": quick.store.get('$customerInfo').customerNumber,\r\n    }\r\n};\r\nquick.store.set('$createDocFromTemplateRequest', requestData);\r\nquick.MM.trigger('setDatasConsumerAndScreenInfo');\r\nvar serviceRequest = {\r\n    url: '/api/wrapperclient/createDocumentFromTemplate',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n};\r\n(_a = quick.Request.async(serviceRequest)) === null || _a === void 0 ? void 0 : _a.then(function (resp) {\r\n    var _a, _b, _c, _d;\r\n    (components.as_loadingCustomComp).close();\r\n    if (resp === null || resp === void 0 ? void 0 : resp.data) {\r\n        components.as_loadingCustomComp.close();\r\n        quick.store.get('$bnkas_utils').print('name.pdf', (_b = (_a = resp === null || resp === void 0 ? void 0 : resp.data) === null || _a === void 0 ? void 0 : _a.createDocumentFromTemplateDTO) === null || _b === void 0 ? void 0 : _b.content, '');\r\n        quick.store.set('$content', (_d = (_c = resp === null || resp === void 0 ? void 0 : resp.data) === null || _c === void 0 ? void 0 : _c.createDocumentFromTemplateDTO) === null || _d === void 0 ? void 0 : _d.content);\r\n    }\r\n}).catch(function (err) {\r\n    var _a, _b, _c;\r\n    (components.as_loadingCustomComp).close();\r\n    var errorMessage = (_c = (_b = (_a = err === null || err === void 0 ? void 0 : err.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.responseMessage) !== null && _c !== void 0 ? _c : 'Bir hata oluştu.';\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n});\r\n",
 					"C": true,
 					"HL": "JS"
 				},
@@ -3736,6 +3721,11 @@ let pjson = {
 					"H": "var _a;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nvar dcfireTableItems = quick.store.get(\"$dcfireTableItems\");\r\nvar items = [];\r\ncomponents.containerAmountInfo.visible = false;\r\ncomponents.rowUpdateProposal.visible = false;\r\ndebugger;\r\n(_a = dcfireTableItems === null || dcfireTableItems === void 0 ? void 0 : dcfireTableItems.coverDetailList) === null || _a === void 0 ? void 0 : _a.forEach(function (coverDetail) {\r\n    var headerItem = {\r\n        \"header\": coverDetail.coverName,\r\n        \"amount\": null\r\n    };\r\n    items.push(headerItem);\r\n    if (coverDetail.childCoverDetailList && coverDetail.childCoverDetailList.length > 0) {\r\n        coverDetail.childCoverDetailList.forEach(function (childCover) {\r\n            var childItem = {\r\n                \"name\": childCover.coverName,\r\n                \"amount\": quick.Quick.toMoney(childCover.coverInsuranceAmount, 'tr-TR', { minimumFractionDigits: 2 })\r\n            };\r\n            items.push(childItem);\r\n        });\r\n    }\r\n    else {\r\n        headerItem.amount = quick.Quick.toMoney(coverDetail.coverInsuranceAmount, 'tr-TR', { minimumFractionDigits: 2 });\r\n    }\r\n});\r\ncomponents.dt_assuranceList.items = items;\r\nquick.Quick.updateComponent(components.dt_assuranceList);\r\n",
 					"C": true,
 					"EV": true,
+					"HL": "JS"
+				},
+				"getDocumentPDF": {
+					"H": "var _a, _b, _c, _d, _e;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nvar requestData;\r\nvar proposalNo = (_a = (quick.store.get('$createProposalResp'))) === null || _a === void 0 ? void 0 : _a.proposalNumber;\r\nvar proposalVersionNo = quick.store.get('$revisionNo');\r\nvar proposalVehicle = \"61348614\";\r\nif (mode == \"print\") {\r\n    requestData = {\r\n        \"searchType\": 2,\r\n        \"proposalVersionNumber\": proposalVersionNo,\r\n        \"proposalNumber\": proposalNo,\r\n        \"documentTypeId\": proposalVehicle,\r\n        \"sendEmail\": false\r\n    };\r\n}\r\nelse if (mode == \"sendToEmail\") {\r\n    requestData = {\r\n        \"searchType\": 2,\r\n        \"proposalVersionNumber\": proposalVersionNo,\r\n        \"proposalNumber\": proposalNo,\r\n        \"documentTypeId\": proposalVehicle,\r\n        \"emailAddress\": (_d = (_c = (_b = (quick.store.get('$customerInfo'))) === null || _b === void 0 ? void 0 : _b.communicationInfo) === null || _c === void 0 ? void 0 : _c.emailAddresses[0]) === null || _d === void 0 ? void 0 : _d.address,\r\n        \"sendEmail\": true\r\n    };\r\n}\r\nquick.store.set('$createDocFromTemplateRequest', requestData);\r\nquick.MM.trigger('setConsumerAndScreenInfo');\r\nvar serviceRequest = {\r\n    url: '/api/wrapperclient/getDocumentPDF',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n};\r\n(_e = quick.Request.async(serviceRequest)) === null || _e === void 0 ? void 0 : _e.then(function (resp) {\r\n    var _a, _b, _c, _d, _e, _f, _g;\r\n    (components.as_loadingCustomComp).close();\r\n    if (mode == \"print\") {\r\n        if ((_a = resp === null || resp === void 0 ? void 0 : resp.data) === null || _a === void 0 ? void 0 : _a.documentPDFDataList[0]) {\r\n            quick.store.get('$bnkas_utils').print('name.pdf', (_c = (_b = resp === null || resp === void 0 ? void 0 : resp.data) === null || _b === void 0 ? void 0 : _b.documentPDFDataList[0]) === null || _c === void 0 ? void 0 : _c.documentBinaryData, '');\r\n            quick.store.set('$content', (_d = resp === null || resp === void 0 ? void 0 : resp.data) === null || _d === void 0 ? void 0 : _d.documentPDFDataList[0].documentBinaryData);\r\n        }\r\n        else {\r\n            var errorMessage = \"İş'te Kobi teklifi için doküman bulunamadı.\";\r\n            components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n            components.as_alertCustomComp.open();\r\n        }\r\n    }\r\n    else if (mode == \"sendToEmail\") {\r\n        var successMessage = ((_g = (_f = (_e = (quick.store.get('$customerInfo'))) === null || _e === void 0 ? void 0 : _e.communicationInfo) === null || _f === void 0 ? void 0 : _f.emailAddresses[0]) === null || _g === void 0 ? void 0 : _g.address) + ' e-posta adresine gönderim sağlanmıştır.'; //(customerContext?.customerEmail ?? '')\r\n        components.as_alertSuccess.setLabelText({ labelData: { name: 'lbl_400_1', text: successMessage } });\r\n        components.as_alertSuccess.open();\r\n    }\r\n}).catch(function (err) {\r\n    var _a, _b, _c;\r\n    (components.as_loadingCustomComp).close();\r\n    var errorMessage = (_c = (_b = (_a = err === null || err === void 0 ? void 0 : err.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.responseMessage) !== null && _c !== void 0 ? _c : 'Bir hata oluştu.';\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n});\r\n",
+					"C": true,
 					"HL": "JS"
 				}
 			},
@@ -6306,7 +6296,7 @@ let pjson = {
 															},
 															"E": {
 																"click": {
-																	"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\ncomponents.as_loadingCustomComp.open();\r\nquick.MM.trigger('printDocument');\r\n",
+																	"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\ncomponents.as_loadingCustomComp.open();\r\nquick.MM.trigger('getDocumentPDF', [{ mode: \"print\" }]);\r\n",
 																	"P": "mouseEvent:unknown | undefined",
 																	"HL": "JS"
 																}
@@ -6503,7 +6493,7 @@ let pjson = {
 															},
 															"E": {
 																"click": {
-																	"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\ndebugger;\r\nquick.MM.trigger('sendPolicyEmail');\r\n",
+																	"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\ndebugger;\r\ncomponents.as_loadingCustomComp.open();\r\nquick.MM.trigger('getDocumentPDF', [{ mode: \"sendToEmail\" }]);\r\n",
 																	"P": "mouseEvent:unknown | undefined",
 																	"HL": "JS"
 																}
@@ -7266,7 +7256,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": "newDropBorder"
+				"compDomClasses": ""
 			}
 		},
 		{
@@ -7341,7 +7331,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": "newDropBorder"
+				"compDomClasses": ""
 			}
 		},
 		{
