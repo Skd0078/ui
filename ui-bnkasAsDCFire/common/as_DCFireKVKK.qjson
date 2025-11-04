@@ -43,15 +43,20 @@ let pjson = {
 					"C": true,
 					"HL": "TS"
 				},
-				"saveInsuredContact": {
-					"H": "debugger;\r\n(components.as_loadingCustomComp).open();\r\n\r\n\r\nlet contactInfo = quick.store.get(\"$getAssuranceOwnerInfo\");\r\nquick.store.set('$assuranceOwnerInsuredInfoSet', contactInfo);\r\nlet requestData = {\r\n    \"policyType\": \"DCFIRE\",\r\n    \"contactRole\": contactInfo.contactRole,\r\n    \"contactInfo\": {\r\n        \"customerInfoType\": contactInfo.customerInfoType,//\"INDIVIDUAL\" ---- //\"CORPARATE\" \r\n        \"insuranceFirmType\": \"AS\",\r\n        ...contactInfo,\r\n        \"relationshipInfo\": \"\",\r\n        \"contactRole\": contactInfo.contactRole,\r\n    }\r\n}\r\nquick.MM.trigger('setDatasConsumerAndScreenInfo');\r\nlet serviceRequest: IRequest = {\r\n    url: '/api/wrapperclient/saveInsuranceContact',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n}\r\nquick.Request.async(serviceRequest)?.then((resp) => {\r\n    (components.as_loadingCustomComp).close();\r\n    if (resp?.data) {\r\n        quick.store.set(\"$saveInsuredContactResp\", resp.data); //sigorta ettiren ve sigortalı farklı ise\r\n        quick.parent.events.getCoverDetails();\r\n    }\r\n\r\n})\r\n    .catch((err) => {\r\n        (components.as_loadingCustomComp).close();\r\n        let errorMessage = err?.response?.data?.responseMessage ?? 'Bir hata oluştu.';\r\n        (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n        components.as_alertCustomComp.open();\r\n    });",
-					"C": true,
-					"HL": "TS"
-				},
 				"openKVKK": {
 					"H": "components.dialogSelectionPrinterOrDigitalApproval.open();",
 					"C": true,
 					"EV": true,
+					"HL": "TS"
+				},
+				"saveInsurerContact": {
+					"H": "debugger;\r\n(components.as_loadingCustomComp).open();\r\n\r\n\r\nlet contactInfo = quick.store.get(\"$getAssuranceOwnerInfo\");\r\nquick.store.set('$assuranceOwnerInsurerInfoSet', contactInfo);\r\nlet insuredControl = quick.store.get(\"$getInsuredInfo\");\r\n\r\nlet requestData = {\r\n    \"policyType\": \"DCFIRE\",\r\n    \"contactRole\": contactInfo.contactRole,\r\n    \"contactInfo\": {\r\n        \"customerInfoType\": contactInfo.customerInfoType,//\"INDIVIDUAL\" ---- //\"CORPARATE\" \r\n        \"insuranceFirmType\": \"AS\",\r\n        ...contactInfo,\r\n        \"relationshipInfo\": \"\",\r\n        \"contactRole\": contactInfo.contactRole,\r\n    }\r\n}\r\nquick.MM.trigger('setDatasConsumerAndScreenInfo');\r\nlet serviceRequest: IRequest = {\r\n    url: '/api/wrapperclient/saveInsuranceContact',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n}\r\nquick.Request.async(serviceRequest)?.then((resp) => {\r\n    (components.as_loadingCustomComp).close();\r\n    if (resp?.data) {\r\n        quick.store.set(\"$saveInsurerContactResp\", resp.data);\r\n        quick.store.set(\"$saveInsuredContactResp\", resp.data);\r\n        if (insuredControl) {\r\n            quick.MM.trigger('saveInsuredContact');\r\n        } else {\r\n            quick.parent.events.getCoverDetails();\r\n        }\r\n    }\r\n\r\n})\r\n    .catch((err) => {\r\n        (components.as_loadingCustomComp).close();\r\n        let errorMessage = err?.response?.data?.responseMessage ?? 'Bir hata oluştu.';\r\n        (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n        components.as_alertCustomComp.open();\r\n    });",
+					"C": true,
+					"HL": "TS"
+				},
+				"saveInsuredContact": {
+					"H": "debugger;\r\n(components.as_loadingCustomComp).open();\r\n\r\n\r\nlet contactInfo = quick.store.get(\"$getInsuredInfo\");\r\nquick.store.set('$assuranceOwnerInsuredInfoSet', contactInfo);\r\nlet requestData = {\r\n    \"policyType\": \"DCFIRE\",\r\n    \"contactRole\": contactInfo.contactRole,\r\n    \"contactInfo\": {\r\n        \"customerInfoType\": contactInfo.customerInfoType,//\"INDIVIDUAL\" ---- //\"CORPARATE\" \r\n        \"insuranceFirmType\": \"AS\",\r\n        ...contactInfo,\r\n        \"relationshipInfo\": \"\",\r\n        \"contactRole\": contactInfo.contactRole,\r\n    }\r\n}\r\nquick.MM.trigger('setDatasConsumerAndScreenInfo');\r\nlet serviceRequest: IRequest = {\r\n    url: '/api/wrapperclient/saveInsuranceContact',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n}\r\nquick.Request.async(serviceRequest)?.then((resp) => {\r\n    (components.as_loadingCustomComp).close();\r\n    if (resp?.data) {\r\n        quick.store.set(\"$saveInsuredContactResp\", resp.data);\r\n        quick.parent.events.getCoverDetails();\r\n    }\r\n\r\n})\r\n    .catch((err) => {\r\n        (components.as_loadingCustomComp).close();\r\n        let errorMessage = err?.response?.data?.responseMessage ?? 'Bir hata oluştu.';\r\n        (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n        components.as_alertCustomComp.open();\r\n    });",
+					"C": true,
 					"HL": "TS"
 				}
 			},
@@ -379,7 +384,7 @@ let pjson = {
 					"HL": "TS"
 				},
 				"btn2ClickEvent": {
-					"H": "// debugger;\r\ncomponents.dialogScanForm.close();\r\nquick.MM.trigger('saveInsuredContact');",
+					"H": "// debugger;\r\ncomponents.dialogScanForm.close();\r\nquick.MM.trigger('saveInsurerContact');",
 					"C": true,
 					"HL": "TS"
 				}
@@ -630,7 +635,7 @@ let pjson = {
 			},
 			"E": {
 				"btn1ClickEvent": {
-					"H": "debugger;\r\ncomponents.infoFormAlert.close();\r\nquick.MM.trigger('saveInsuredContact');",
+					"H": "debugger;\r\ncomponents.infoFormAlert.close();\r\nquick.MM.trigger('saveInsurerContact');",
 					"C": true,
 					"HL": "TS"
 				},
@@ -932,15 +937,20 @@ let pjson = {
 					"C": true,
 					"HL": "JS"
 				},
-				"saveInsuredContact": {
-					"H": "var __assign = (this && this.__assign) || function () {\r\n    __assign = Object.assign || function(t) {\r\n        for (var s, i = 1, n = arguments.length; i < n; i++) {\r\n            s = arguments[i];\r\n            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))\r\n                t[p] = s[p];\r\n        }\r\n        return t;\r\n    };\r\n    return __assign.apply(this, arguments);\r\n};\r\nvar _a;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\n(components.as_loadingCustomComp).open();\r\nvar contactInfo = quick.store.get(\"$getAssuranceOwnerInfo\");\r\nquick.store.set('$assuranceOwnerInsuredInfoSet', contactInfo);\r\nvar requestData = {\r\n    \"policyType\": \"DCFIRE\",\r\n    \"contactRole\": contactInfo.contactRole,\r\n    \"contactInfo\": __assign(__assign({ \"customerInfoType\": contactInfo.customerInfoType, \"insuranceFirmType\": \"AS\" }, contactInfo), { \"relationshipInfo\": \"\", \"contactRole\": contactInfo.contactRole })\r\n};\r\nquick.MM.trigger('setDatasConsumerAndScreenInfo');\r\nvar serviceRequest = {\r\n    url: '/api/wrapperclient/saveInsuranceContact',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n};\r\n(_a = quick.Request.async(serviceRequest)) === null || _a === void 0 ? void 0 : _a.then(function (resp) {\r\n    (components.as_loadingCustomComp).close();\r\n    if (resp === null || resp === void 0 ? void 0 : resp.data) {\r\n        quick.store.set(\"$saveInsuredContactResp\", resp.data); //sigorta ettiren ve sigortalı farklı ise\r\n        quick.parent.events.getCoverDetails();\r\n    }\r\n}).catch(function (err) {\r\n    var _a, _b, _c;\r\n    (components.as_loadingCustomComp).close();\r\n    var errorMessage = (_c = (_b = (_a = err === null || err === void 0 ? void 0 : err.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.responseMessage) !== null && _c !== void 0 ? _c : 'Bir hata oluştu.';\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n});\r\n",
-					"C": true,
-					"HL": "JS"
-				},
 				"openKVKK": {
 					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ncomponents.dialogSelectionPrinterOrDigitalApproval.open();\r\n",
 					"C": true,
 					"EV": true,
+					"HL": "JS"
+				},
+				"saveInsurerContact": {
+					"H": "var __assign = (this && this.__assign) || function () {\r\n    __assign = Object.assign || function(t) {\r\n        for (var s, i = 1, n = arguments.length; i < n; i++) {\r\n            s = arguments[i];\r\n            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))\r\n                t[p] = s[p];\r\n        }\r\n        return t;\r\n    };\r\n    return __assign.apply(this, arguments);\r\n};\r\nvar _a;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\n(components.as_loadingCustomComp).open();\r\nvar contactInfo = quick.store.get(\"$getAssuranceOwnerInfo\");\r\nquick.store.set('$assuranceOwnerInsurerInfoSet', contactInfo);\r\nvar insuredControl = quick.store.get(\"$getInsuredInfo\");\r\nvar requestData = {\r\n    \"policyType\": \"DCFIRE\",\r\n    \"contactRole\": contactInfo.contactRole,\r\n    \"contactInfo\": __assign(__assign({ \"customerInfoType\": contactInfo.customerInfoType, \"insuranceFirmType\": \"AS\" }, contactInfo), { \"relationshipInfo\": \"\", \"contactRole\": contactInfo.contactRole })\r\n};\r\nquick.MM.trigger('setDatasConsumerAndScreenInfo');\r\nvar serviceRequest = {\r\n    url: '/api/wrapperclient/saveInsuranceContact',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n};\r\n(_a = quick.Request.async(serviceRequest)) === null || _a === void 0 ? void 0 : _a.then(function (resp) {\r\n    (components.as_loadingCustomComp).close();\r\n    if (resp === null || resp === void 0 ? void 0 : resp.data) {\r\n        quick.store.set(\"$saveInsurerContactResp\", resp.data);\r\n        quick.store.set(\"$saveInsuredContactResp\", resp.data);\r\n        if (insuredControl) {\r\n            quick.MM.trigger('saveInsuredContact');\r\n        }\r\n        else {\r\n            quick.parent.events.getCoverDetails();\r\n        }\r\n    }\r\n}).catch(function (err) {\r\n    var _a, _b, _c;\r\n    (components.as_loadingCustomComp).close();\r\n    var errorMessage = (_c = (_b = (_a = err === null || err === void 0 ? void 0 : err.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.responseMessage) !== null && _c !== void 0 ? _c : 'Bir hata oluştu.';\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n});\r\n",
+					"C": true,
+					"HL": "JS"
+				},
+				"saveInsuredContact": {
+					"H": "var __assign = (this && this.__assign) || function () {\r\n    __assign = Object.assign || function(t) {\r\n        for (var s, i = 1, n = arguments.length; i < n; i++) {\r\n            s = arguments[i];\r\n            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))\r\n                t[p] = s[p];\r\n        }\r\n        return t;\r\n    };\r\n    return __assign.apply(this, arguments);\r\n};\r\nvar _a;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\n(components.as_loadingCustomComp).open();\r\nvar contactInfo = quick.store.get(\"$getInsuredInfo\");\r\nquick.store.set('$assuranceOwnerInsuredInfoSet', contactInfo);\r\nvar requestData = {\r\n    \"policyType\": \"DCFIRE\",\r\n    \"contactRole\": contactInfo.contactRole,\r\n    \"contactInfo\": __assign(__assign({ \"customerInfoType\": contactInfo.customerInfoType, \"insuranceFirmType\": \"AS\" }, contactInfo), { \"relationshipInfo\": \"\", \"contactRole\": contactInfo.contactRole })\r\n};\r\nquick.MM.trigger('setDatasConsumerAndScreenInfo');\r\nvar serviceRequest = {\r\n    url: '/api/wrapperclient/saveInsuranceContact',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n};\r\n(_a = quick.Request.async(serviceRequest)) === null || _a === void 0 ? void 0 : _a.then(function (resp) {\r\n    (components.as_loadingCustomComp).close();\r\n    if (resp === null || resp === void 0 ? void 0 : resp.data) {\r\n        quick.store.set(\"$saveInsuredContactResp\", resp.data);\r\n        quick.parent.events.getCoverDetails();\r\n    }\r\n}).catch(function (err) {\r\n    var _a, _b, _c;\r\n    (components.as_loadingCustomComp).close();\r\n    var errorMessage = (_c = (_b = (_a = err === null || err === void 0 ? void 0 : err.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.responseMessage) !== null && _c !== void 0 ? _c : 'Bir hata oluştu.';\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n});\r\n",
+					"C": true,
 					"HL": "JS"
 				}
 			},
@@ -1275,7 +1285,7 @@ let pjson = {
 					"HL": "JS"
 				},
 				"btn2ClickEvent": {
-					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n; // debugger;\r\ncomponents.dialogScanForm.close();\r\nquick.MM.trigger('saveInsuredContact');\r\n",
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n; // debugger;\r\ncomponents.dialogScanForm.close();\r\nquick.MM.trigger('saveInsurerContact');\r\n",
 					"C": true,
 					"HL": "JS"
 				}
@@ -1531,7 +1541,7 @@ let pjson = {
 			},
 			"E": {
 				"btn1ClickEvent": {
-					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\ncomponents.infoFormAlert.close();\r\nquick.MM.trigger('saveInsuredContact');\r\n",
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\ncomponents.infoFormAlert.close();\r\nquick.MM.trigger('saveInsurerContact');\r\n",
 					"C": true,
 					"HL": "JS"
 				},
