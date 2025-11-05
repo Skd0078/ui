@@ -24,7 +24,7 @@ let pjson = {
 					"HL": "TS"
 				},
 				"setConsumerAndScreenInfo": {
-					"H": "// debugger;\r\nlet consumer = 'TANE.BADCFIRE';\r\nlet screen = 'DCFIRE';\r\nquick.store.set('$customConsumerCode', consumer);\r\nquick.store.set('$customScreenName', screen);",
+					"H": "// debugger;\r\nlet consumer = 'TANE.BAHOME';\r\nlet screen = 'DCFIRE';\r\nquick.store.set('$customConsumerCode', consumer);\r\nquick.store.set('$customScreenName', screen);",
 					"C": true,
 					"HL": "TS"
 				},
@@ -3708,7 +3708,7 @@ let pjson = {
 					"HL": "JS"
 				},
 				"setConsumerAndScreenInfo": {
-					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n; // debugger;\r\nvar consumer = 'TANE.BADCFIRE';\r\nvar screen = 'DCFIRE';\r\nquick.store.set('$customConsumerCode', consumer);\r\nquick.store.set('$customScreenName', screen);\r\n",
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n; // debugger;\r\nvar consumer = 'TANE.BAHOME';\r\nvar screen = 'DCFIRE';\r\nquick.store.set('$customConsumerCode', consumer);\r\nquick.store.set('$customScreenName', screen);\r\n",
 					"C": true,
 					"HL": "JS"
 				},
@@ -7256,7 +7256,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": ""
+				"compDomClasses": "newDropBorder"
 			}
 		},
 		{
@@ -7331,7 +7331,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": ""
+				"compDomClasses": "newDropBorder"
 			}
 		},
 		{

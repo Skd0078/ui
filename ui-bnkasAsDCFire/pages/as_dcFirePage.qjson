@@ -228,7 +228,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"consumerCode": {
-					"H": "'TANE.BANKASUR'",
+					"H": "'TANE.BAHOME'",
 					"T": "prop",
 					"HL": "QS"
 				},
@@ -949,7 +949,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"consumerCode": {
-					"H": "╬'TANE.BANKASUR'╩╩",
+					"H": "╬'TANE.BAHOME'╩╩",
 					"T": "prop",
 					"HL": "QS"
 				},
