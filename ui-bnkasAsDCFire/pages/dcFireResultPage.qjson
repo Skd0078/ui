@@ -77,6 +77,11 @@ let pjson = {
 					"H": "// debugger;\r\ncomponents.as_loadingCustomComp.close();\r\ndeclare let error;\r\nlet errorMessage = error?.response?.data?.responseMessage ?? 'Bir hata oluştu.';\r\n(<any>components.as_alertCustomComp).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\ncomponents.as_alertCustomComp.open();",
 					"C": true,
 					"HL": "TS"
+				},
+				"getDocumentPDF": {
+					"H": "debugger;\r\nlet requestData = {\r\n    \"searchType\": \"1\",\r\n    \"policyNumber\": components.txt_policyNo.qValue,\r\n    \"renewalNumber\": quick.store.get('$renewalNumber'),\r\n    \"endorsementNumber\": \"00\",\r\n    \"documentTypeId\": \"61348611\",\r\n    \"sendEmail\": false\r\n}\r\nquick.MM.trigger('setConsumerAndScreenInfo');\r\nlet serviceRequest: IRequest = {\r\n    url: '/api/wrapperclient/getDocumentPDF',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n}\r\nquick.Request.async(serviceRequest)?.then((resp) => {\r\n    components.as_loadingCustomComp.close();\r\n    if (resp?.data?.getDocumentResponseDTO?.documentInfo) {\r\n        let serviceResponse = resp?.data?.getDocumentResponseDTO?.documentInfo;\r\n        quick.store.get('$bnkas_utils').print(serviceResponse?.name, serviceResponse?.content, '');\r\n    }\r\n})\r\n    .catch((err) => {\r\n        components.as_loadingCustomComp.close();\r\n        let errorMessage = err?.response?.data?.responseMessage ?? 'Bir hata oluştu.';\r\n        (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n        components.as_alertCustomComp.open();\r\n    });",
+					"C": true,
+					"HL": "TS"
 				}
 			},
 			"C": {},
@@ -2340,7 +2345,7 @@ let pjson = {
 																															},
 																															"E": {
 																																"click": {
-																																	"H": "quick.MM.trigger('getDocument', [{ documentType: \"DOC_INFO_FORM\" }]);",
+																																	"H": "quick.MM.trigger('getDocumentPDF');",
 																																	"P": "mouseEvent:unknown | undefined",
 																																	"HL": "TS"
 																																}
@@ -4077,6 +4082,11 @@ let pjson = {
 				},
 				"retrieveContractFail": {
 					"H": "var _a, _b, _c;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n; // debugger;\r\ncomponents.as_loadingCustomComp.close();\r\nvar errorMessage = (_c = (_b = (_a = error === null || error === void 0 ? void 0 : error.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.responseMessage) !== null && _c !== void 0 ? _c : 'Bir hata oluştu.';\r\ncomponents.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\ncomponents.as_alertCustomComp.open();\r\n",
+					"C": true,
+					"HL": "JS"
+				},
+				"getDocumentPDF": {
+					"H": "var _a;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nvar requestData = {\r\n    \"searchType\": \"1\",\r\n    \"policyNumber\": components.txt_policyNo.qValue,\r\n    \"renewalNumber\": quick.store.get('$renewalNumber'),\r\n    \"endorsementNumber\": \"00\",\r\n    \"documentTypeId\": \"61348611\",\r\n    \"sendEmail\": false\r\n};\r\nquick.MM.trigger('setConsumerAndScreenInfo');\r\nvar serviceRequest = {\r\n    url: '/api/wrapperclient/getDocumentPDF',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n};\r\n(_a = quick.Request.async(serviceRequest)) === null || _a === void 0 ? void 0 : _a.then(function (resp) {\r\n    var _a, _b, _c, _d;\r\n    components.as_loadingCustomComp.close();\r\n    if ((_b = (_a = resp === null || resp === void 0 ? void 0 : resp.data) === null || _a === void 0 ? void 0 : _a.getDocumentResponseDTO) === null || _b === void 0 ? void 0 : _b.documentInfo) {\r\n        var serviceResponse = (_d = (_c = resp === null || resp === void 0 ? void 0 : resp.data) === null || _c === void 0 ? void 0 : _c.getDocumentResponseDTO) === null || _d === void 0 ? void 0 : _d.documentInfo;\r\n        quick.store.get('$bnkas_utils').print(serviceResponse === null || serviceResponse === void 0 ? void 0 : serviceResponse.name, serviceResponse === null || serviceResponse === void 0 ? void 0 : serviceResponse.content, '');\r\n    }\r\n}).catch(function (err) {\r\n    var _a, _b, _c;\r\n    components.as_loadingCustomComp.close();\r\n    var errorMessage = (_c = (_b = (_a = err === null || err === void 0 ? void 0 : err.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.responseMessage) !== null && _c !== void 0 ? _c : 'Bir hata oluştu.';\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n});\r\n",
 					"C": true,
 					"HL": "JS"
 				}
@@ -6359,7 +6369,7 @@ let pjson = {
 																															},
 																															"E": {
 																																"click": {
-																																	"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\nquick.MM.trigger('getDocument', [{ documentType: \"DOC_INFO_FORM\" }]);\r\n",
+																																	"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\nquick.MM.trigger('getDocumentPDF');\r\n",
 																																	"P": "mouseEvent:unknown | undefined",
 																																	"HL": "JS"
 																																}
