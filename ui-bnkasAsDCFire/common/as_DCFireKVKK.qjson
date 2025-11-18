@@ -39,7 +39,7 @@ let pjson = {
 					"HL": "TS"
 				},
 				"setDatasConsumerAndScreenInfo": {
-					"H": "// debugger;\r\nquick.store.set('$customConsumerCode', \"TANE.BAHOME\");\r\nquick.store.set('$customScreenName', \"DCFIRE\");",
+					"H": "// debugger;\r\nquick.store.set('$customConsumerCode', \"TANE.BADCFIRE\");\r\nquick.store.set('$customScreenName', \"DCFIRE\");",
 					"C": true,
 					"HL": "TS"
 				},
@@ -933,7 +933,7 @@ let pjson = {
 					"HL": "JS"
 				},
 				"setDatasConsumerAndScreenInfo": {
-					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n; // debugger;\r\nquick.store.set('$customConsumerCode', \"TANE.BAHOME\");\r\nquick.store.set('$customScreenName', \"DCFIRE\");\r\n",
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n; // debugger;\r\nquick.store.set('$customConsumerCode', \"TANE.BADCFIRE\");\r\nquick.store.set('$customScreenName', \"DCFIRE\");\r\n",
 					"C": true,
 					"HL": "JS"
 				},
