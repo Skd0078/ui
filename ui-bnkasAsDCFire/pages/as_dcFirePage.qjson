@@ -238,7 +238,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"consumerCode": {
-					"H": "'TANE.BADCFIRE'",
+					"H": "'TANE.BAHOME'",
 					"T": "prop",
 					"HL": "QS"
 				},
@@ -969,7 +969,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"consumerCode": {
-					"H": "╬'TANE.BADCFIRE'╩╩",
+					"H": "╬'TANE.BAHOME'╩╩",
 					"T": "prop",
 					"HL": "QS"
 				},
@@ -1011,7 +1011,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": ""
+				"compDomClasses": "newDropBorder"
 			}
 		},
 		{
@@ -1066,7 +1066,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": "newDropBorder"
+				"compDomClasses": ""
 			}
 		},
 		{
@@ -1125,7 +1125,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": "newDropBorder"
+				"compDomClasses": ""
 			}
 		},
 		{
@@ -1174,7 +1174,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": "newDropBorder"
+				"compDomClasses": ""
 			}
 		},
 		{
@@ -1229,7 +1229,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": "newDropBorder"
+				"compDomClasses": ""
 			}
 		},
 		{
@@ -1289,7 +1289,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": "newDropBorder"
+				"compDomClasses": ""
 			}
 		},
 		{
@@ -1364,7 +1364,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": "newDropBorder"
+				"compDomClasses": ""
 			}
 		},
 		{
