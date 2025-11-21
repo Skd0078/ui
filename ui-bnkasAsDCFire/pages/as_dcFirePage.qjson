@@ -27,6 +27,11 @@ let pjson = {
 					"H": "quick.MM.trigger('setUtils');",
 					"TO": 1,
 					"HL": "TS"
+				},
+				"validateAllComponents": {
+					"H": "debugger;\r\nlet errorMessage;\r\n\r\ncomponents.as_assuranceInfo.validateComponents();\r\ncomponents.as_buildingInfo.validateComponents();\r\ncomponents.as_buildingUAVTAdressInfo.validateComponents();\r\ncomponents.as_insuredStatus.validateComponents();\r\ncomponents.as_assuranceOwnerInfo.componentStatusFirst();\r\n\r\nif ((<any>components.as_assuranceInfo).props?.validationErrors?.length) {\r\n    errorMessage = (<any>components.as_assuranceInfo).props?.validationErrors.join('\\n');\r\n    (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n} else if ((<any>components.as_buildingInfo).props?.validationErrors?.length) {\r\n    errorMessage = (<any>components.as_buildingInfo).props?.validationErrors.join('\\n');\r\n    (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n} else if ((<any>components.as_buildingUAVTAdressInfo).props?.validationErrors?.length) {\r\n    errorMessage = (<any>components.as_buildingUAVTAdressInfo).props?.validationErrors.join('\\n');\r\n    (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n} else if ((<any>components.as_insuredStatus).props?.validationErrors?.length) {\r\n    errorMessage = (<any>components.as_insuredStatus).props?.validationErrors.join('\\n');\r\n    (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n}\r\nelse {\r\n    let result = quick.Quick.validateAll(false, true);\r\n    if (result) {\r\n        //Store setlemeleri için\r\n        components.as_assuranceInfo.getAssuranceCompInfo();\r\n        components.as_assuranceOwnerInfo.getAssuranceOwnerInfo();\r\n        components.as_assuranceOwnerInfo.getInsuredInfo();\r\n        components.as_assuranceOwnerInfo.getOtherInsuredInfo();\r\n        //KVKK\r\n        components.as_DCFireKVKK.openKVKK();\r\n    }\r\n    else {\r\n        (<any>components.as_alertCustomComp).setLabelText({ labelData: { name: 'lbl_700_1', text: 'Lütfen zorunlu alanları doldurunuz.' } });\r\n        components.as_alertCustomComp.open();\r\n    }\r\n}",
+					"C": true,
+					"HL": "TS"
 				}
 			},
 			"C": {},
@@ -62,7 +67,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"consumerCode": {
-					"H": "'TANE.BADCFIRE'",
+					"H": "'TANE.BAHOME'",
 					"T": "prop",
 					"HL": "QS"
 				}
@@ -119,7 +124,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"consumerCode": {
-					"H": "'TANE.BADCFIRE'",
+					"H": "'TANE.BAHOME'",
 					"T": "prop",
 					"HL": "QS"
 				},
@@ -181,7 +186,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"consumerCode": {
-					"H": "'TANE.BADCFIRE'",
+					"H": "'TANE.BAHOME'",
 					"T": "prop",
 					"HL": "QS"
 				},
@@ -348,7 +353,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"consumerCode": {
-					"H": "'TANE.BADCFIRE'",
+					"H": "'TANE.BAHOME'",
 					"T": "prop",
 					"HL": "QS"
 				},
@@ -454,7 +459,7 @@ let pjson = {
 			},
 			"E": {
 				"validateAllComponents": {
-					"H": "debugger;\r\n\r\nlet errorMessage;\r\n\r\ncomponents.as_assuranceInfo.validateComponents();\r\ncomponents.as_buildingInfo.validateComponents();\r\ncomponents.as_buildingUAVTAdressInfo.validateComponents();\r\ncomponents.as_insuredStatus.validateComponents();\r\nif ((<any>components.as_assuranceInfo).props?.validationErrors?.length) {\r\n    errorMessage = (<any>components.as_assuranceInfo).props?.validationErrors.join('\\n');\r\n    (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n} else if ((<any>components.as_buildingInfo).props?.validationErrors?.length) {\r\n    errorMessage = (<any>components.as_buildingInfo).props?.validationErrors.join('\\n');\r\n    (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n} else if ((<any>components.as_buildingUAVTAdressInfo).props?.validationErrors?.length) {\r\n    errorMessage = (<any>components.as_buildingUAVTAdressInfo).props?.validationErrors.join('\\n');\r\n    (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n} else if ((<any>components.as_insuredStatus).props?.validationErrors?.length) {\r\n    errorMessage = (<any>components.as_insuredStatus).props?.validationErrors.join('\\n');\r\n    (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n} else {\r\n    //Store setlemeleri için\r\n    components.as_assuranceInfo.getAssuranceCompInfo();\r\n    components.as_assuranceOwnerInfo.getAssuranceOwnerInfo();\r\n    components.as_assuranceOwnerInfo.getInsuredInfo();\r\n    components.as_assuranceOwnerInfo.getOtherInsuredInfo();\r\n    //KVKK\r\n    components.as_DCFireKVKK.openKVKK();\r\n}\r\n",
+					"H": "quick.MM.trigger('validateAllComponents');",
 					"C": true,
 					"HL": "TS"
 				}
@@ -751,6 +756,11 @@ let pjson = {
 					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nquick.MM.trigger('setUtils');\r\n",
 					"TO": 1,
 					"HL": "JS"
+				},
+				"validateAllComponents": {
+					"H": "var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nvar errorMessage;\r\ncomponents.as_assuranceInfo.validateComponents();\r\ncomponents.as_buildingInfo.validateComponents();\r\ncomponents.as_buildingUAVTAdressInfo.validateComponents();\r\ncomponents.as_insuredStatus.validateComponents();\r\ncomponents.as_assuranceOwnerInfo.componentStatusFirst();\r\nif ((_b = (_a = components.as_assuranceInfo.props) === null || _a === void 0 ? void 0 : _a.validationErrors) === null || _b === void 0 ? void 0 : _b.length) {\r\n    errorMessage = (_c = components.as_assuranceInfo.props) === null || _c === void 0 ? void 0 : _c.validationErrors.join('\\n');\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n}\r\nelse if ((_e = (_d = components.as_buildingInfo.props) === null || _d === void 0 ? void 0 : _d.validationErrors) === null || _e === void 0 ? void 0 : _e.length) {\r\n    errorMessage = (_f = components.as_buildingInfo.props) === null || _f === void 0 ? void 0 : _f.validationErrors.join('\\n');\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n}\r\nelse if ((_h = (_g = components.as_buildingUAVTAdressInfo.props) === null || _g === void 0 ? void 0 : _g.validationErrors) === null || _h === void 0 ? void 0 : _h.length) {\r\n    errorMessage = (_j = components.as_buildingUAVTAdressInfo.props) === null || _j === void 0 ? void 0 : _j.validationErrors.join('\\n');\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n}\r\nelse if ((_l = (_k = components.as_insuredStatus.props) === null || _k === void 0 ? void 0 : _k.validationErrors) === null || _l === void 0 ? void 0 : _l.length) {\r\n    errorMessage = (_m = components.as_insuredStatus.props) === null || _m === void 0 ? void 0 : _m.validationErrors.join('\\n');\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n}\r\nelse {\r\n    var result = quick.Quick.validateAll(false, true);\r\n    if (result) {\r\n        //Store setlemeleri için\r\n        components.as_assuranceInfo.getAssuranceCompInfo();\r\n        components.as_assuranceOwnerInfo.getAssuranceOwnerInfo();\r\n        components.as_assuranceOwnerInfo.getInsuredInfo();\r\n        components.as_assuranceOwnerInfo.getOtherInsuredInfo();\r\n        //KVKK\r\n        components.as_DCFireKVKK.openKVKK();\r\n    }\r\n    else {\r\n        components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: 'Lütfen zorunlu alanları doldurunuz.' } });\r\n        components.as_alertCustomComp.open();\r\n    }\r\n}\r\n",
+					"C": true,
+					"HL": "JS"
 				}
 			},
 			"C": {},
@@ -759,7 +769,7 @@ let pjson = {
 			},
 			"O": {
 				"cType": "child",
-				"compDomClasses": "newDropBorder"
+				"compDomClasses": ""
 			},
 			"S": {
 				"xs-xl": {
@@ -787,7 +797,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"consumerCode": {
-					"H": "╬'TANE.BADCFIRE'╩╩",
+					"H": "╬'TANE.BAHOME'╩╩",
 					"T": "prop",
 					"HL": "QS"
 				}
@@ -816,7 +826,7 @@ let pjson = {
 							},
 							"O": {
 								"cType": "child",
-								"compDomClasses": "editor-ghost-comp"
+								"compDomClasses": ""
 							}
 						}
 					],
@@ -829,7 +839,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": "newDropBorder"
+				"compDomClasses": ""
 			}
 		},
 		{
@@ -846,7 +856,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"consumerCode": {
-					"H": "╬'TANE.BADCFIRE'╩╩",
+					"H": "╬'TANE.BAHOME'╩╩",
 					"T": "prop",
 					"HL": "QS"
 				},
@@ -875,7 +885,7 @@ let pjson = {
 							},
 							"O": {
 								"cType": "child",
-								"compDomClasses": "editor-ghost-comp"
+								"compDomClasses": ""
 							}
 						}
 					],
@@ -888,7 +898,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": "newDropBorder"
+				"compDomClasses": ""
 			}
 		},
 		{
@@ -910,7 +920,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"consumerCode": {
-					"H": "╬'TANE.BADCFIRE'╩╩",
+					"H": "╬'TANE.BAHOME'╩╩",
 					"T": "prop",
 					"HL": "QS"
 				},
@@ -939,7 +949,7 @@ let pjson = {
 							},
 							"O": {
 								"cType": "child",
-								"compDomClasses": "editor-ghost-comp"
+								"compDomClasses": ""
 							}
 						}
 					],
@@ -952,7 +962,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": "newDropBorder"
+				"compDomClasses": ""
 			}
 		},
 		{
@@ -998,7 +1008,7 @@ let pjson = {
 							},
 							"O": {
 								"cType": "child",
-								"compDomClasses": "editor-ghost-comp"
+								"compDomClasses": ""
 							}
 						}
 					],
@@ -1053,7 +1063,7 @@ let pjson = {
 							},
 							"O": {
 								"cType": "child",
-								"compDomClasses": "editor-ghost-comp"
+								"compDomClasses": ""
 							}
 						}
 					],
@@ -1083,7 +1093,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"consumerCode": {
-					"H": "╬'TANE.BADCFIRE'╩╩",
+					"H": "╬'TANE.BAHOME'╩╩",
 					"T": "prop",
 					"HL": "QS"
 				},
@@ -1112,7 +1122,7 @@ let pjson = {
 							},
 							"O": {
 								"cType": "child",
-								"compDomClasses": "editor-ghost-comp"
+								"compDomClasses": ""
 							}
 						}
 					],
@@ -1161,7 +1171,7 @@ let pjson = {
 							},
 							"O": {
 								"cType": "child",
-								"compDomClasses": "editor-ghost-comp"
+								"compDomClasses": ""
 							}
 						}
 					],
@@ -1193,7 +1203,7 @@ let pjson = {
 			},
 			"E": {
 				"validateAllComponents": {
-					"H": "var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nvar errorMessage;\r\ncomponents.as_assuranceInfo.validateComponents();\r\ncomponents.as_buildingInfo.validateComponents();\r\ncomponents.as_buildingUAVTAdressInfo.validateComponents();\r\ncomponents.as_insuredStatus.validateComponents();\r\nif ((_b = (_a = components.as_assuranceInfo.props) === null || _a === void 0 ? void 0 : _a.validationErrors) === null || _b === void 0 ? void 0 : _b.length) {\r\n    errorMessage = (_c = components.as_assuranceInfo.props) === null || _c === void 0 ? void 0 : _c.validationErrors.join('\\n');\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n}\r\nelse if ((_e = (_d = components.as_buildingInfo.props) === null || _d === void 0 ? void 0 : _d.validationErrors) === null || _e === void 0 ? void 0 : _e.length) {\r\n    errorMessage = (_f = components.as_buildingInfo.props) === null || _f === void 0 ? void 0 : _f.validationErrors.join('\\n');\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n}\r\nelse if ((_h = (_g = components.as_buildingUAVTAdressInfo.props) === null || _g === void 0 ? void 0 : _g.validationErrors) === null || _h === void 0 ? void 0 : _h.length) {\r\n    errorMessage = (_j = components.as_buildingUAVTAdressInfo.props) === null || _j === void 0 ? void 0 : _j.validationErrors.join('\\n');\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n}\r\nelse if ((_l = (_k = components.as_insuredStatus.props) === null || _k === void 0 ? void 0 : _k.validationErrors) === null || _l === void 0 ? void 0 : _l.length) {\r\n    errorMessage = (_m = components.as_insuredStatus.props) === null || _m === void 0 ? void 0 : _m.validationErrors.join('\\n');\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n}\r\nelse {\r\n    //Store setlemeleri için\r\n    components.as_assuranceInfo.getAssuranceCompInfo();\r\n    components.as_assuranceOwnerInfo.getAssuranceOwnerInfo();\r\n    components.as_assuranceOwnerInfo.getInsuredInfo();\r\n    components.as_assuranceOwnerInfo.getOtherInsuredInfo();\r\n    //KVKK\r\n    components.as_DCFireKVKK.openKVKK();\r\n}\r\n",
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nquick.MM.trigger('validateAllComponents');\r\n",
 					"C": true,
 					"HL": "JS"
 				}
@@ -1216,7 +1226,7 @@ let pjson = {
 							},
 							"O": {
 								"cType": "child",
-								"compDomClasses": "editor-ghost-comp"
+								"compDomClasses": ""
 							}
 						}
 					],
@@ -1276,7 +1286,7 @@ let pjson = {
 							},
 							"O": {
 								"cType": "child",
-								"compDomClasses": "editor-ghost-comp"
+								"compDomClasses": ""
 							}
 						}
 					],
@@ -1351,7 +1361,7 @@ let pjson = {
 							},
 							"O": {
 								"cType": "child",
-								"compDomClasses": "editor-ghost-comp"
+								"compDomClasses": ""
 							}
 						}
 					],
@@ -1400,7 +1410,7 @@ let pjson = {
 							},
 							"O": {
 								"cType": "child",
-								"compDomClasses": "editor-ghost-comp"
+								"compDomClasses": ""
 							}
 						}
 					],
@@ -1455,7 +1465,7 @@ let pjson = {
 							},
 							"O": {
 								"cType": "child",
-								"compDomClasses": "editor-ghost-comp"
+								"compDomClasses": ""
 							}
 						}
 					],
