@@ -34,7 +34,7 @@ let pjson = {
 					"HL": "TS"
 				},
 				"retrieveReferenceDataList": {
-					"H": "declare let categoryPath;\r\nlet qID;\r\n\r\nsetTimeout(() => {\r\n\r\n  (<any>components.as_loadingCustomComp).open();\r\n}, 1);\r\n\r\nlet requestData = {\r\n  \"criteriaList\":\r\n    [\r\n      {\r\n        \"categoryPath\": categoryPath, //\"COUNTRY(TR)/CITY(34)/DISTRICT\",\"COUNTRY(TR)/CITY\", \"COUNTRY\" , \"MUS_CLSDR\"\r\n        \"language\": \"tr\",\r\n        \"orderInfo\": {\r\n          \"directionType\": \"ASC\",\r\n          \"orderByColumn\": \"RD_CODE\"\r\n        }\r\n      }\r\n    ]\r\n}\r\n\r\n//consumerCode ve screenName setlendi.\r\nquick.MM.trigger('setConsumerAndScreenInfo');\r\n\r\nlet serviceRequest: IRequest = {\r\n  url: '/api/uiclient/retrieveReferenceDataList',\r\n  http: 'POST',\r\n  data: requestData,\r\n  onFail: 'empty',\r\n  onSuccess: 'empty',\r\n  responseField: 'empty',\r\n  blockRender: false,\r\n}\r\nquick.Request.async(serviceRequest)?.then((resp) => {\r\n  quick.EM.trace(resp?.data);\r\n  if (resp?.data?.retrieveReferenceDataResponseList) {\r\n    let addressInfo = quick.store.get('adressInfo');\r\n    let retrieveRefData = resp.data.retrieveReferenceDataResponseList[0].referenceDataList[0].categoryCode;\r\n    let countSuccess;\r\n\r\n    if (retrieveRefData == 'COUNTRY') {\r\n      components.vauto_country.items = resp.data.retrieveReferenceDataResponseList[0].referenceDataList.map((item) => ({\r\n        name: item.name,\r\n        code: item.code\r\n      }))\r\n\r\n      components.vauto_country2.items = resp.data.retrieveReferenceDataResponseList[0].referenceDataList.map((item) => ({\r\n        name: item.name,\r\n        code: item.code\r\n      }))\r\n\r\n      components.vauto_country2.qValue = 'TR'\r\n      quick.store.set('country', components.vauto_country.items);\r\n\r\n      countSuccess = quick.store.get('retrieveReferenceDataListSuccessFlag');\r\n      if (countSuccess <= 4) {\r\n        countSuccess++;\r\n        quick.store.set('retrieveReferenceDataListSuccessFlag', countSuccess);\r\n\r\n        if (countSuccess == 4) {\r\n          (<any>components.as_loadingCustomComp).close();\r\n          quick.MM.trigger('retrieveConfigParamConsumerCode');\r\n        }\r\n      }\r\n\r\n    }\r\n\r\n    if (retrieveRefData == 'MUS_CLSDR') {\r\n      components.vauto_employmentStatus.items = resp.data.retrieveReferenceDataResponseList[0].referenceDataList.map((item) => ({\r\n        name: item.name,\r\n        code: item.code\r\n      }))\r\n\r\n      components.vauto_employmentStatus2.items = resp.data.retrieveReferenceDataResponseList[0].referenceDataList.map((item) => ({\r\n        name: item.name,\r\n        code: item.code\r\n      }))\r\n\r\n      quick.store.set('employmentStatus', components.vauto_employmentStatus.items);\r\n\r\n      countSuccess = quick.store.get('retrieveReferenceDataListSuccessFlag');\r\n      if (countSuccess <= 4) {\r\n        countSuccess++;\r\n        quick.store.set('retrieveReferenceDataListSuccessFlag', countSuccess);\r\n\r\n        if (countSuccess == 4) {\r\n          (<any>components.as_loadingCustomComp).close();\r\n          quick.MM.trigger('retrieveConfigParamConsumerCode');\r\n        }\r\n      }\r\n    }\r\n\r\n    if (retrieveRefData == 'MUS_TELTP') {\r\n      components.vauto_phoneType.items = resp.data.retrieveReferenceDataResponseList[0].referenceDataList.map((item) => ({\r\n        name: item.name,\r\n        code: item.code\r\n      }))\r\n\r\n      components.vauto_phoneType2.items = resp.data.retrieveReferenceDataResponseList[0].referenceDataList.map((item) => ({\r\n        name: item.name,\r\n        code: item.code\r\n      }))\r\n\r\n      quick.store.set('phoneType', components.vauto_phoneType.items);\r\n\r\n      countSuccess = quick.store.get('retrieveReferenceDataListSuccessFlag');\r\n      if (countSuccess <= 4) {\r\n        countSuccess++;\r\n        quick.store.set('retrieveReferenceDataListSuccessFlag', countSuccess);\r\n\r\n        if (countSuccess == 4) {\r\n          (<any>components.as_loadingCustomComp).close();\r\n          quick.MM.trigger('retrieveConfigParamConsumerCode');\r\n        }\r\n      }\r\n    }\r\n\r\n\r\n    if (retrieveRefData == 'MUS_ADRTP') {\r\n      components.vauto_adressType.items = resp.data.retrieveReferenceDataResponseList[0].referenceDataList.map((item) => ({\r\n        name: item.name,\r\n        code: item.code\r\n      }))\r\n\r\n      components.vauto_adressType2.items = resp.data.retrieveReferenceDataResponseList[0].referenceDataList.map((item) => ({\r\n        name: item.name,\r\n        code: item.code\r\n      }))\r\n\r\n      quick.store.set('adressType', components.vauto_adressType.items);\r\n\r\n      countSuccess = quick.store.get('retrieveReferenceDataListSuccessFlag');\r\n      if (countSuccess <= 4) {\r\n        countSuccess++;\r\n        quick.store.set('retrieveReferenceDataListSuccessFlag', countSuccess);\r\n\r\n        if (countSuccess == 4) {\r\n          (<any>components.as_loadingCustomComp).close();\r\n          quick.MM.trigger('retrieveConfigParamConsumerCode');\r\n        }\r\n      }\r\n    }\r\n\r\n    if (retrieveRefData == 'CITY') {\r\n      (<any>components.as_loadingCustomComp).close();\r\n\r\n      components.vauto_city.items = resp.data.retrieveReferenceDataResponseList[0].referenceDataList.map((item) => ({\r\n        name: item.name,\r\n        code: item.code\r\n      }))\r\n\r\n      components.vauto_city2.items = resp.data.retrieveReferenceDataResponseList[0].referenceDataList.map((item) => ({\r\n        name: item.name,\r\n        code: item.code\r\n      }))\r\n\r\n      quick.store.set('city', components.vauto_city.items);\r\n\r\n      if (quick.store.get('flagSuccess')) {\r\n        components.vauto_city.qValue = components.vauto_city.items.filter(item => item.code === addressInfo.city.parameter.code)[0]\r\n        quick.MM.trigger('retrieveReferenceDataList', [{ categoryPath: 'COUNTRY(TR)/' + 'CITY(' + addressInfo.city.parameter.code + ')/DISTRICT' }]);\r\n      }\r\n\r\n      if (quick.store.get('flagSuccess2')) {\r\n        components.vauto_city2.qValue = components.vauto_city2.items.filter(item => item.code === addressInfo.city.parameter.code)[0]\r\n        quick.MM.trigger('retrieveReferenceDataList', [{ categoryPath: 'COUNTRY(TR)/' + 'CITY(' + addressInfo.city.parameter.code + ')/DISTRICT' }]);\r\n      }\r\n\r\n      if (quick.store.get('flagSuccess3')) {\r\n        components[\"vauto_city3_\" + qID].qValue = components.vauto_city.items.filter(item => item.code === addressInfo.city.parameter.code)[0]\r\n        quick.MM.trigger('retrieveReferenceDataList', [{ categoryPath: 'COUNTRY(TR)/' + 'CITY(' + addressInfo.city.parameter.code + ')/DISTRICT', qID }]);\r\n      }\r\n    }\r\n\r\n    if (retrieveRefData == 'DISTRICT') {\r\n      (<any>components.as_loadingCustomComp).close();\r\n      quick.store.set('district', components.vauto_district.items);\r\n\r\n      if (addressInfo.district.parameter.code && (quick.store.get('flagSuccess'))) {\r\n        quick.store.set('flagSuccess', false);\r\n        components.vauto_district.items = resp.data.retrieveReferenceDataResponseList[0].referenceDataList.map((item) => ({\r\n          name: item.name,\r\n          code: item.code\r\n        }))\r\n\r\n        components.vauto_district.qValue = components.vauto_district.items.filter(item => item.code === addressInfo.district.parameter.code)[0]\r\n      }\r\n\r\n      if (addressInfo.district.parameter.code && (quick.store.get('flagSuccess2'))) {\r\n        quick.store.set('flagSuccess2', false);\r\n        components.vauto_district2.items = resp.data.retrieveReferenceDataResponseList[0].referenceDataList.map((item) => ({\r\n          name: item.name,\r\n          code: item.code\r\n        }))\r\n\r\n        components.vauto_district2.qValue = components.vauto_district2.items.filter(item => item.code === addressInfo.district.parameter.code)[0]\r\n      }\r\n\r\n      if (addressInfo.district.parameter.code && (quick.store.get('flagSuccess3'))) {\r\n        quick.store.set('flagSuccess3', false);\r\n        components[\"vauto_district3_\" + qID].items = resp.data.retrieveReferenceDataResponseList[0].referenceDataList.map((item) => ({\r\n          name: item.name,\r\n          code: item.code\r\n        }))\r\n\r\n        components[\"vauto_district3_\" + qID].qValue = components[\"vauto_district3_\" + qID].items.filter(item => item.code === addressInfo.district.parameter.code)[0]\r\n      }\r\n    }\r\n  }\r\n})\r\n  .catch((err) => {\r\n    (<any>components.as_loadingCustomComp).close();\r\n    let errorMessage = err?.response?.data?.responseMessage ?? 'Bir hata oluştu.';\r\n    (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n\r\n  });",
+					"H": "declare let categoryPath;\r\nlet qID;\r\nsetTimeout(() => {\r\n\r\n  (<any>components.as_loadingCustomComp).open();\r\n},\r\n  1);\r\n\r\nlet requestData = {\r\n  \"criteriaList\": [\r\n    {\r\n      \"categoryPath\": categoryPath, //\"COUNTRY(TR)/CITY(34)/DISTRICT\",\"COUNTRY(TR)/CITY\", \"COUNTRY\" , \"MUS_CLSDR\"\r\n      \"language\": \"tr\",\r\n      \"orderInfo\": {\r\n        \"directionType\": \"ASC\",\r\n        \"orderByColumn\": \"RD_CODE\"\r\n      }\r\n    }\r\n  ]\r\n}\r\nquick.MM.trigger('setConsumerAndScreenInfo'); //consumerCode ve screenName setlendi.\r\nlet serviceRequest: IRequest = {\r\n  url: '/api/uiclient/retrieveReferenceDataList',\r\n  http: 'POST',\r\n  data: requestData,\r\n  onFail: 'empty',\r\n  onSuccess: 'empty',\r\n  responseField: 'empty',\r\n  blockRender: false,\r\n}\r\nquick.Request.async(serviceRequest)?.then((resp) => {\r\n  if (resp?.data?.retrieveReferenceDataResponseList) {\r\n    let addressInfo = quick.store.get('adressInfo');\r\n    let retrieveRefData = resp?.data?.retrieveReferenceDataResponseList[\r\n      0\r\n    ]?.referenceDataList[\r\n      0\r\n    ]?.categoryCode;\r\n    let countSuccess;\r\n\r\n    if (retrieveRefData == 'COUNTRY') {\r\n      components.vauto_country.items = resp?.data?.retrieveReferenceDataResponseList[\r\n        0\r\n      ]?.referenceDataList.map((item) => ({\r\n        name: item?.name,\r\n        code: item?.code\r\n      }))\r\n\r\n      components.vauto_country2.items = resp?.data?.retrieveReferenceDataResponseList[\r\n        0\r\n      ]?.referenceDataList.map((item) => ({\r\n        name: item?.name,\r\n        code: item?.code\r\n      }))\r\n\r\n      components.vauto_country2.qValue = {\r\n        code: 'TR', category: \"COUNTRY\"\r\n      }; //'TR'\r\n      quick.store.set('$country', components.vauto_country.items);\r\n\r\n      countSuccess = quick.store.get('retrieveReferenceDataListSuccessFlag');\r\n      if (countSuccess <= 4) {\r\n        countSuccess++;\r\n        quick.store.set('retrieveReferenceDataListSuccessFlag', countSuccess);\r\n\r\n        if (countSuccess == 4) {\r\n          (<any>components.as_loadingCustomComp).close();\r\n          quick.MM.trigger('retrieveConfigParamConsumerCode');\r\n        }\r\n      }\r\n    }\r\n\r\n    if (retrieveRefData == 'MUS_CLSDR') {\r\n      components.vauto_employmentStatus.items = resp?.data?.retrieveReferenceDataResponseList[\r\n        0\r\n      ]?.referenceDataList.map((item) => ({\r\n        name: item.name,\r\n        code: item.code\r\n      }))\r\n\r\n      components.vauto_employmentStatus2.items = resp?.data?.retrieveReferenceDataResponseList[\r\n        0\r\n      ]?.referenceDataList.map((item) => ({\r\n        name: item.name,\r\n        code: item.code\r\n      }))\r\n\r\n      quick.store.set('$employmentStatus', components.vauto_employmentStatus.items);\r\n\r\n      countSuccess = quick.store.get('retrieveReferenceDataListSuccessFlag');\r\n      if (countSuccess <= 4) {\r\n        countSuccess++;\r\n        quick.store.set('retrieveReferenceDataListSuccessFlag', countSuccess);\r\n\r\n        if (countSuccess == 4) {\r\n          (<any>components.as_loadingCustomComp).close();\r\n          quick.MM.trigger('retrieveConfigParamConsumerCode');\r\n        }\r\n      }\r\n    }\r\n\r\n    if (retrieveRefData == 'MUS_TELTP') {\r\n      components.vauto_phoneType.items = resp?.data?.retrieveReferenceDataResponseList[\r\n        0\r\n      ]?.referenceDataList.map((item) => ({\r\n        name: item?.name,\r\n        code: item?.code\r\n      }))\r\n\r\n      components.vauto_phoneType2.items = resp?.data?.retrieveReferenceDataResponseList[\r\n        0\r\n      ]?.referenceDataList.map((item) => ({\r\n        name: item?.name,\r\n        code: item?.code\r\n      }))\r\n      quick.store.set('$phoneType', components.vauto_phoneType.items);\r\n\r\n      countSuccess = quick.store.get('retrieveReferenceDataListSuccessFlag');\r\n      if (countSuccess <= 4) {\r\n        countSuccess++;\r\n        quick.store.set('retrieveReferenceDataListSuccessFlag', countSuccess);\r\n\r\n        if (countSuccess == 4) {\r\n          (<any>components.as_loadingCustomComp).close();\r\n          quick.MM.trigger('retrieveConfigParamConsumerCode');\r\n        }\r\n      }\r\n    }\r\n\r\n    if (retrieveRefData == 'MUS_ADRTP') {\r\n      components.vauto_adressType.items = resp?.data?.retrieveReferenceDataResponseList[\r\n        0\r\n      ]?.referenceDataList.map((item) => ({\r\n        name: item.name,\r\n        code: item.code\r\n      }))\r\n\r\n      components.vauto_adressType2.items = resp?.data?.retrieveReferenceDataResponseList[\r\n        0\r\n      ]?.referenceDataList.map((item) => ({\r\n        name: item.name,\r\n        code: item.code\r\n      }))\r\n\r\n      quick.store.set('$adressType', components.vauto_adressType.items);\r\n      countSuccess = quick.store.get('retrieveReferenceDataListSuccessFlag');\r\n      if (countSuccess <= 4) {\r\n        countSuccess++;\r\n        quick.store.set('retrieveReferenceDataListSuccessFlag', countSuccess);\r\n\r\n        if (countSuccess == 4) {\r\n          (<any>components.as_loadingCustomComp).close();\r\n          quick.MM.trigger('retrieveConfigParamConsumerCode');\r\n        }\r\n      }\r\n    }\r\n\r\n    if (retrieveRefData == 'CITY') {\r\n      (<any>components.as_loadingCustomComp).close();\r\n      components.vauto_city.items = resp?.data?.retrieveReferenceDataResponseList[\r\n        0\r\n      ]?.referenceDataList.map((item) => ({\r\n        name: item?.name,\r\n        code: item?.code\r\n      }))\r\n\r\n      components.vauto_city2.items = resp?.data?.retrieveReferenceDataResponseList[\r\n        0\r\n      ]?.referenceDataList.map((item) => ({\r\n        name: item?.name,\r\n        code: item?.code\r\n      }))\r\n\r\n      quick.store.set('$city', components.vauto_city.items);\r\n      if (quick.store.get('flagSuccess')) {\r\n        components.vauto_city.qValue = components.vauto_city.items.filter(item => item?.code === addressInfo?.city?.parameter?.code)[\r\n          0\r\n        ]\r\n        quick.MM.trigger('retrieveReferenceDataList',\r\n          [\r\n            {\r\n              categoryPath: 'COUNTRY(TR)/' + 'CITY(' + addressInfo?.city?.parameter?.code + ')/DISTRICT'\r\n            }\r\n          ]);\r\n      }\r\n\r\n      if (quick.store.get('flagSuccess2')) {\r\n        components.vauto_city2.qValue = components.vauto_city2.items.filter(item => item?.code === addressInfo?.city?.parameter?.code)[\r\n          0\r\n        ]\r\n        quick.MM.trigger('retrieveReferenceDataList',\r\n          [\r\n            {\r\n              categoryPath: 'COUNTRY(TR)/' + 'CITY(' + addressInfo?.city?.parameter?.code + ')/DISTRICT'\r\n            }\r\n          ]);\r\n      }\r\n\r\n      if (quick.store.get('flagSuccess3')) {\r\n        components[\r\n          \"vauto_city3_\" + qID\r\n        ].qValue = components.vauto_city.items.filter(item => item?.code === addressInfo?.city?.parameter?.code)[\r\n          0\r\n          ]\r\n        quick.MM.trigger('retrieveReferenceDataList',\r\n          [\r\n            {\r\n              categoryPath: 'COUNTRY(TR)/' + 'CITY(' + addressInfo?.city?.parameter?.code + ')/DISTRICT', qID\r\n            }\r\n          ]);\r\n      }\r\n    }\r\n\r\n    if (retrieveRefData == 'DISTRICT') {\r\n      (<any>components.as_loadingCustomComp).close();\r\n      quick.store.set('$district', components.vauto_district.items);\r\n\r\n      if (addressInfo?.district?.parameter?.code && (quick.store.get('flagSuccess'))) {\r\n        quick.store.set('flagSuccess', false);\r\n        components.vauto_district.items = resp?.data?.retrieveReferenceDataResponseList[\r\n          0\r\n        ]?.referenceDataList.map((item) => ({\r\n          name: item?.name,\r\n          code: item?.code\r\n        }))\r\n\r\n        components.vauto_district.qValue = components.vauto_district.items.filter(item => item?.code === addressInfo?.district?.parameter?.code)[\r\n          0\r\n        ]\r\n      }\r\n      else {\r\n        components.vauto_district.items = resp?.data?.retrieveReferenceDataResponseList[\r\n          0\r\n        ]?.referenceDataList.map((item) => ({\r\n          name: item?.name,\r\n          code: item?.code\r\n        }));\r\n      }\r\n\r\n      if (addressInfo?.district?.parameter?.code && (quick.store.get('flagSuccess2'))) {\r\n        quick.store.set('flagSuccess2', false);\r\n        components.vauto_district2.items = resp?.data?.retrieveReferenceDataResponseList[\r\n          0\r\n        ]?.referenceDataList.map((item) => ({\r\n          name: item.name,\r\n          code: item.code\r\n        }))\r\n\r\n        components.vauto_district2.qValue = components.vauto_district2.items.filter(item => item?.code === addressInfo?.district?.parameter?.code)[\r\n          0\r\n        ]\r\n      }\r\n\r\n      if (addressInfo?.district?.parameter?.code && (quick.store.get('flagSuccess3'))) {\r\n        quick.store.set('flagSuccess3', false);\r\n        components[\r\n          \"vauto_district3_\" + qID\r\n        ].items = resp?.data?.retrieveReferenceDataResponseList[\r\n          0\r\n        ]?.referenceDataList.map((item) => ({\r\n          name: item?.name,\r\n          code: item?.code\r\n        }))\r\n\r\n        components[\r\n          \"vauto_district3_\" + qID\r\n        ].qValue = components[\r\n          \"vauto_district3_\" + qID\r\n        ].items.filter(item => item?.code === addressInfo?.district?.parameter?.code)[\r\n          0\r\n          ]\r\n      }\r\n    }\r\n  }\r\n})\r\n  .catch((err) => {\r\n    (<any>components.as_loadingCustomComp).close();\r\n    let errorMessage = err?.response?.data?.responseMessage ?? 'Bir hata oluştu.';\r\n    (components.as_alertCustomComp as any).setLabelText({\r\n      labelData: {\r\n        name: 'lbl_700_1', text: errorMessage\r\n      }\r\n    });\r\n    components.as_alertCustomComp.open();\r\n  });",
 					"C": true,
 					"HL": "TS"
 				},
@@ -18925,7 +18925,7 @@ let pjson = {
 					"HL": "JS"
 				},
 				"retrieveReferenceDataList": {
-					"H": "var _a;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nvar qID;\r\nsetTimeout(function () {\r\n    components.as_loadingCustomComp.open();\r\n}, 1);\r\nvar requestData = {\r\n    \"criteriaList\": [\r\n        {\r\n            \"categoryPath\": categoryPath,\r\n            \"language\": \"tr\",\r\n            \"orderInfo\": {\r\n                \"directionType\": \"ASC\",\r\n                \"orderByColumn\": \"RD_CODE\"\r\n            }\r\n        }\r\n    ]\r\n};\r\n//consumerCode ve screenName setlendi.\r\nquick.MM.trigger('setConsumerAndScreenInfo');\r\nvar serviceRequest = {\r\n    url: '/api/uiclient/retrieveReferenceDataList',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n};\r\n(_a = quick.Request.async(serviceRequest)) === null || _a === void 0 ? void 0 : _a.then(function (resp) {\r\n    var _a;\r\n    quick.EM.trace(resp === null || resp === void 0 ? void 0 : resp.data);\r\n    if ((_a = resp === null || resp === void 0 ? void 0 : resp.data) === null || _a === void 0 ? void 0 : _a.retrieveReferenceDataResponseList) {\r\n        var addressInfo_1 = quick.store.get('adressInfo');\r\n        var retrieveRefData = resp.data.retrieveReferenceDataResponseList[0].referenceDataList[0].categoryCode;\r\n        var countSuccess = void 0;\r\n        if (retrieveRefData == 'COUNTRY') {\r\n            components.vauto_country.items = resp.data.retrieveReferenceDataResponseList[0].referenceDataList.map(function (item) { return ({\r\n                name: item.name,\r\n                code: item.code\r\n            }); });\r\n            components.vauto_country2.items = resp.data.retrieveReferenceDataResponseList[0].referenceDataList.map(function (item) { return ({\r\n                name: item.name,\r\n                code: item.code\r\n            }); });\r\n            components.vauto_country2.qValue = 'TR';\r\n            quick.store.set('country', components.vauto_country.items);\r\n            countSuccess = quick.store.get('retrieveReferenceDataListSuccessFlag');\r\n            if (countSuccess <= 4) {\r\n                countSuccess++;\r\n                quick.store.set('retrieveReferenceDataListSuccessFlag', countSuccess);\r\n                if (countSuccess == 4) {\r\n                    components.as_loadingCustomComp.close();\r\n                    quick.MM.trigger('retrieveConfigParamConsumerCode');\r\n                }\r\n            }\r\n        }\r\n        if (retrieveRefData == 'MUS_CLSDR') {\r\n            components.vauto_employmentStatus.items = resp.data.retrieveReferenceDataResponseList[0].referenceDataList.map(function (item) { return ({\r\n                name: item.name,\r\n                code: item.code\r\n            }); });\r\n            components.vauto_employmentStatus2.items = resp.data.retrieveReferenceDataResponseList[0].referenceDataList.map(function (item) { return ({\r\n                name: item.name,\r\n                code: item.code\r\n            }); });\r\n            quick.store.set('employmentStatus', components.vauto_employmentStatus.items);\r\n            countSuccess = quick.store.get('retrieveReferenceDataListSuccessFlag');\r\n            if (countSuccess <= 4) {\r\n                countSuccess++;\r\n                quick.store.set('retrieveReferenceDataListSuccessFlag', countSuccess);\r\n                if (countSuccess == 4) {\r\n                    components.as_loadingCustomComp.close();\r\n                    quick.MM.trigger('retrieveConfigParamConsumerCode');\r\n                }\r\n            }\r\n        }\r\n        if (retrieveRefData == 'MUS_TELTP') {\r\n            components.vauto_phoneType.items = resp.data.retrieveReferenceDataResponseList[0].referenceDataList.map(function (item) { return ({\r\n                name: item.name,\r\n                code: item.code\r\n            }); });\r\n            components.vauto_phoneType2.items = resp.data.retrieveReferenceDataResponseList[0].referenceDataList.map(function (item) { return ({\r\n                name: item.name,\r\n                code: item.code\r\n            }); });\r\n            quick.store.set('phoneType', components.vauto_phoneType.items);\r\n            countSuccess = quick.store.get('retrieveReferenceDataListSuccessFlag');\r\n            if (countSuccess <= 4) {\r\n                countSuccess++;\r\n                quick.store.set('retrieveReferenceDataListSuccessFlag', countSuccess);\r\n                if (countSuccess == 4) {\r\n                    components.as_loadingCustomComp.close();\r\n                    quick.MM.trigger('retrieveConfigParamConsumerCode');\r\n                }\r\n            }\r\n        }\r\n        if (retrieveRefData == 'MUS_ADRTP') {\r\n            components.vauto_adressType.items = resp.data.retrieveReferenceDataResponseList[0].referenceDataList.map(function (item) { return ({\r\n                name: item.name,\r\n                code: item.code\r\n            }); });\r\n            components.vauto_adressType2.items = resp.data.retrieveReferenceDataResponseList[0].referenceDataList.map(function (item) { return ({\r\n                name: item.name,\r\n                code: item.code\r\n            }); });\r\n            quick.store.set('adressType', components.vauto_adressType.items);\r\n            countSuccess = quick.store.get('retrieveReferenceDataListSuccessFlag');\r\n            if (countSuccess <= 4) {\r\n                countSuccess++;\r\n                quick.store.set('retrieveReferenceDataListSuccessFlag', countSuccess);\r\n                if (countSuccess == 4) {\r\n                    components.as_loadingCustomComp.close();\r\n                    quick.MM.trigger('retrieveConfigParamConsumerCode');\r\n                }\r\n            }\r\n        }\r\n        if (retrieveRefData == 'CITY') {\r\n            components.as_loadingCustomComp.close();\r\n            components.vauto_city.items = resp.data.retrieveReferenceDataResponseList[0].referenceDataList.map(function (item) { return ({\r\n                name: item.name,\r\n                code: item.code\r\n            }); });\r\n            components.vauto_city2.items = resp.data.retrieveReferenceDataResponseList[0].referenceDataList.map(function (item) { return ({\r\n                name: item.name,\r\n                code: item.code\r\n            }); });\r\n            quick.store.set('city', components.vauto_city.items);\r\n            if (quick.store.get('flagSuccess')) {\r\n                components.vauto_city.qValue = components.vauto_city.items.filter(function (item) { return item.code === addressInfo_1.city.parameter.code; })[0];\r\n                quick.MM.trigger('retrieveReferenceDataList', [{ categoryPath: 'COUNTRY(TR)/' + 'CITY(' + addressInfo_1.city.parameter.code + ')/DISTRICT' }]);\r\n            }\r\n            if (quick.store.get('flagSuccess2')) {\r\n                components.vauto_city2.qValue = components.vauto_city2.items.filter(function (item) { return item.code === addressInfo_1.city.parameter.code; })[0];\r\n                quick.MM.trigger('retrieveReferenceDataList', [{ categoryPath: 'COUNTRY(TR)/' + 'CITY(' + addressInfo_1.city.parameter.code + ')/DISTRICT' }]);\r\n            }\r\n            if (quick.store.get('flagSuccess3')) {\r\n                components[\"vauto_city3_\" + qID].qValue = components.vauto_city.items.filter(function (item) { return item.code === addressInfo_1.city.parameter.code; })[0];\r\n                quick.MM.trigger('retrieveReferenceDataList', [{ categoryPath: 'COUNTRY(TR)/' + 'CITY(' + addressInfo_1.city.parameter.code + ')/DISTRICT', qID: qID }]);\r\n            }\r\n        }\r\n        if (retrieveRefData == 'DISTRICT') {\r\n            components.as_loadingCustomComp.close();\r\n            quick.store.set('district', components.vauto_district.items);\r\n            if (addressInfo_1.district.parameter.code && (quick.store.get('flagSuccess'))) {\r\n                quick.store.set('flagSuccess', false);\r\n                components.vauto_district.items = resp.data.retrieveReferenceDataResponseList[0].referenceDataList.map(function (item) { return ({\r\n                    name: item.name,\r\n                    code: item.code\r\n                }); });\r\n                components.vauto_district.qValue = components.vauto_district.items.filter(function (item) { return item.code === addressInfo_1.district.parameter.code; })[0];\r\n            }\r\n            if (addressInfo_1.district.parameter.code && (quick.store.get('flagSuccess2'))) {\r\n                quick.store.set('flagSuccess2', false);\r\n                components.vauto_district2.items = resp.data.retrieveReferenceDataResponseList[0].referenceDataList.map(function (item) { return ({\r\n                    name: item.name,\r\n                    code: item.code\r\n                }); });\r\n                components.vauto_district2.qValue = components.vauto_district2.items.filter(function (item) { return item.code === addressInfo_1.district.parameter.code; })[0];\r\n            }\r\n            if (addressInfo_1.district.parameter.code && (quick.store.get('flagSuccess3'))) {\r\n                quick.store.set('flagSuccess3', false);\r\n                components[\"vauto_district3_\" + qID].items = resp.data.retrieveReferenceDataResponseList[0].referenceDataList.map(function (item) { return ({\r\n                    name: item.name,\r\n                    code: item.code\r\n                }); });\r\n                components[\"vauto_district3_\" + qID].qValue = components[\"vauto_district3_\" + qID].items.filter(function (item) { return item.code === addressInfo_1.district.parameter.code; })[0];\r\n            }\r\n        }\r\n    }\r\n}).catch(function (err) {\r\n    var _a, _b, _c;\r\n    components.as_loadingCustomComp.close();\r\n    var errorMessage = (_c = (_b = (_a = err === null || err === void 0 ? void 0 : err.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.responseMessage) !== null && _c !== void 0 ? _c : 'Bir hata oluştu.';\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n});\r\n",
+					"H": "var _a;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nvar qID;\r\nsetTimeout(function () {\r\n    components.as_loadingCustomComp.open();\r\n}, 1);\r\nvar requestData = {\r\n    \"criteriaList\": [\r\n        {\r\n            \"categoryPath\": categoryPath,\r\n            \"language\": \"tr\",\r\n            \"orderInfo\": {\r\n                \"directionType\": \"ASC\",\r\n                \"orderByColumn\": \"RD_CODE\"\r\n            }\r\n        }\r\n    ]\r\n};\r\nquick.MM.trigger('setConsumerAndScreenInfo'); //consumerCode ve screenName setlendi.\r\nvar serviceRequest = {\r\n    url: '/api/uiclient/retrieveReferenceDataList',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n};\r\n(_a = quick.Request.async(serviceRequest)) === null || _a === void 0 ? void 0 : _a.then(function (resp) {\r\n    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19;\r\n    if ((_a = resp === null || resp === void 0 ? void 0 : resp.data) === null || _a === void 0 ? void 0 : _a.retrieveReferenceDataResponseList) {\r\n        var addressInfo_1 = quick.store.get('adressInfo');\r\n        var retrieveRefData = (_d = (_c = (_b = resp === null || resp === void 0 ? void 0 : resp.data) === null || _b === void 0 ? void 0 : _b.retrieveReferenceDataResponseList[0]) === null || _c === void 0 ? void 0 : _c.referenceDataList[0]) === null || _d === void 0 ? void 0 : _d.categoryCode;\r\n        var countSuccess = void 0;\r\n        if (retrieveRefData == 'COUNTRY') {\r\n            components.vauto_country.items = (_f = (_e = resp === null || resp === void 0 ? void 0 : resp.data) === null || _e === void 0 ? void 0 : _e.retrieveReferenceDataResponseList[0]) === null || _f === void 0 ? void 0 : _f.referenceDataList.map(function (item) { return ({\r\n                name: item === null || item === void 0 ? void 0 : item.name,\r\n                code: item === null || item === void 0 ? void 0 : item.code\r\n            }); });\r\n            components.vauto_country2.items = (_h = (_g = resp === null || resp === void 0 ? void 0 : resp.data) === null || _g === void 0 ? void 0 : _g.retrieveReferenceDataResponseList[0]) === null || _h === void 0 ? void 0 : _h.referenceDataList.map(function (item) { return ({\r\n                name: item === null || item === void 0 ? void 0 : item.name,\r\n                code: item === null || item === void 0 ? void 0 : item.code\r\n            }); });\r\n            components.vauto_country2.qValue = {\r\n                code: 'TR', category: \"COUNTRY\"\r\n            }; //'TR'\r\n            quick.store.set('$country', components.vauto_country.items);\r\n            countSuccess = quick.store.get('retrieveReferenceDataListSuccessFlag');\r\n            if (countSuccess <= 4) {\r\n                countSuccess++;\r\n                quick.store.set('retrieveReferenceDataListSuccessFlag', countSuccess);\r\n                if (countSuccess == 4) {\r\n                    components.as_loadingCustomComp.close();\r\n                    quick.MM.trigger('retrieveConfigParamConsumerCode');\r\n                }\r\n            }\r\n        }\r\n        if (retrieveRefData == 'MUS_CLSDR') {\r\n            components.vauto_employmentStatus.items = (_k = (_j = resp === null || resp === void 0 ? void 0 : resp.data) === null || _j === void 0 ? void 0 : _j.retrieveReferenceDataResponseList[0]) === null || _k === void 0 ? void 0 : _k.referenceDataList.map(function (item) { return ({\r\n                name: item.name,\r\n                code: item.code\r\n            }); });\r\n            components.vauto_employmentStatus2.items = (_m = (_l = resp === null || resp === void 0 ? void 0 : resp.data) === null || _l === void 0 ? void 0 : _l.retrieveReferenceDataResponseList[0]) === null || _m === void 0 ? void 0 : _m.referenceDataList.map(function (item) { return ({\r\n                name: item.name,\r\n                code: item.code\r\n            }); });\r\n            quick.store.set('$employmentStatus', components.vauto_employmentStatus.items);\r\n            countSuccess = quick.store.get('retrieveReferenceDataListSuccessFlag');\r\n            if (countSuccess <= 4) {\r\n                countSuccess++;\r\n                quick.store.set('retrieveReferenceDataListSuccessFlag', countSuccess);\r\n                if (countSuccess == 4) {\r\n                    components.as_loadingCustomComp.close();\r\n                    quick.MM.trigger('retrieveConfigParamConsumerCode');\r\n                }\r\n            }\r\n        }\r\n        if (retrieveRefData == 'MUS_TELTP') {\r\n            components.vauto_phoneType.items = (_p = (_o = resp === null || resp === void 0 ? void 0 : resp.data) === null || _o === void 0 ? void 0 : _o.retrieveReferenceDataResponseList[0]) === null || _p === void 0 ? void 0 : _p.referenceDataList.map(function (item) { return ({\r\n                name: item === null || item === void 0 ? void 0 : item.name,\r\n                code: item === null || item === void 0 ? void 0 : item.code\r\n            }); });\r\n            components.vauto_phoneType2.items = (_r = (_q = resp === null || resp === void 0 ? void 0 : resp.data) === null || _q === void 0 ? void 0 : _q.retrieveReferenceDataResponseList[0]) === null || _r === void 0 ? void 0 : _r.referenceDataList.map(function (item) { return ({\r\n                name: item === null || item === void 0 ? void 0 : item.name,\r\n                code: item === null || item === void 0 ? void 0 : item.code\r\n            }); });\r\n            quick.store.set('$phoneType', components.vauto_phoneType.items);\r\n            countSuccess = quick.store.get('retrieveReferenceDataListSuccessFlag');\r\n            if (countSuccess <= 4) {\r\n                countSuccess++;\r\n                quick.store.set('retrieveReferenceDataListSuccessFlag', countSuccess);\r\n                if (countSuccess == 4) {\r\n                    components.as_loadingCustomComp.close();\r\n                    quick.MM.trigger('retrieveConfigParamConsumerCode');\r\n                }\r\n            }\r\n        }\r\n        if (retrieveRefData == 'MUS_ADRTP') {\r\n            components.vauto_adressType.items = (_t = (_s = resp === null || resp === void 0 ? void 0 : resp.data) === null || _s === void 0 ? void 0 : _s.retrieveReferenceDataResponseList[0]) === null || _t === void 0 ? void 0 : _t.referenceDataList.map(function (item) { return ({\r\n                name: item.name,\r\n                code: item.code\r\n            }); });\r\n            components.vauto_adressType2.items = (_v = (_u = resp === null || resp === void 0 ? void 0 : resp.data) === null || _u === void 0 ? void 0 : _u.retrieveReferenceDataResponseList[0]) === null || _v === void 0 ? void 0 : _v.referenceDataList.map(function (item) { return ({\r\n                name: item.name,\r\n                code: item.code\r\n            }); });\r\n            quick.store.set('$adressType', components.vauto_adressType.items);\r\n            countSuccess = quick.store.get('retrieveReferenceDataListSuccessFlag');\r\n            if (countSuccess <= 4) {\r\n                countSuccess++;\r\n                quick.store.set('retrieveReferenceDataListSuccessFlag', countSuccess);\r\n                if (countSuccess == 4) {\r\n                    components.as_loadingCustomComp.close();\r\n                    quick.MM.trigger('retrieveConfigParamConsumerCode');\r\n                }\r\n            }\r\n        }\r\n        if (retrieveRefData == 'CITY') {\r\n            components.as_loadingCustomComp.close();\r\n            components.vauto_city.items = (_x = (_w = resp === null || resp === void 0 ? void 0 : resp.data) === null || _w === void 0 ? void 0 : _w.retrieveReferenceDataResponseList[0]) === null || _x === void 0 ? void 0 : _x.referenceDataList.map(function (item) { return ({\r\n                name: item === null || item === void 0 ? void 0 : item.name,\r\n                code: item === null || item === void 0 ? void 0 : item.code\r\n            }); });\r\n            components.vauto_city2.items = (_z = (_y = resp === null || resp === void 0 ? void 0 : resp.data) === null || _y === void 0 ? void 0 : _y.retrieveReferenceDataResponseList[0]) === null || _z === void 0 ? void 0 : _z.referenceDataList.map(function (item) { return ({\r\n                name: item === null || item === void 0 ? void 0 : item.name,\r\n                code: item === null || item === void 0 ? void 0 : item.code\r\n            }); });\r\n            quick.store.set('$city', components.vauto_city.items);\r\n            if (quick.store.get('flagSuccess')) {\r\n                components.vauto_city.qValue = components.vauto_city.items.filter(function (item) { var _a, _b; return (item === null || item === void 0 ? void 0 : item.code) === ((_b = (_a = addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.city) === null || _a === void 0 ? void 0 : _a.parameter) === null || _b === void 0 ? void 0 : _b.code); })[0];\r\n                quick.MM.trigger('retrieveReferenceDataList', [\r\n                    {\r\n                        categoryPath: 'COUNTRY(TR)/' + 'CITY(' + ((_1 = (_0 = addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.city) === null || _0 === void 0 ? void 0 : _0.parameter) === null || _1 === void 0 ? void 0 : _1.code) + ')/DISTRICT'\r\n                    }\r\n                ]);\r\n            }\r\n            if (quick.store.get('flagSuccess2')) {\r\n                components.vauto_city2.qValue = components.vauto_city2.items.filter(function (item) { var _a, _b; return (item === null || item === void 0 ? void 0 : item.code) === ((_b = (_a = addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.city) === null || _a === void 0 ? void 0 : _a.parameter) === null || _b === void 0 ? void 0 : _b.code); })[0];\r\n                quick.MM.trigger('retrieveReferenceDataList', [\r\n                    {\r\n                        categoryPath: 'COUNTRY(TR)/' + 'CITY(' + ((_3 = (_2 = addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.city) === null || _2 === void 0 ? void 0 : _2.parameter) === null || _3 === void 0 ? void 0 : _3.code) + ')/DISTRICT'\r\n                    }\r\n                ]);\r\n            }\r\n            if (quick.store.get('flagSuccess3')) {\r\n                components[\"vauto_city3_\" + qID].qValue = components.vauto_city.items.filter(function (item) { var _a, _b; return (item === null || item === void 0 ? void 0 : item.code) === ((_b = (_a = addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.city) === null || _a === void 0 ? void 0 : _a.parameter) === null || _b === void 0 ? void 0 : _b.code); })[0];\r\n                quick.MM.trigger('retrieveReferenceDataList', [\r\n                    {\r\n                        categoryPath: 'COUNTRY(TR)/' + 'CITY(' + ((_5 = (_4 = addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.city) === null || _4 === void 0 ? void 0 : _4.parameter) === null || _5 === void 0 ? void 0 : _5.code) + ')/DISTRICT',\r\n                        qID: qID\r\n                    }\r\n                ]);\r\n            }\r\n        }\r\n        if (retrieveRefData == 'DISTRICT') {\r\n            components.as_loadingCustomComp.close();\r\n            quick.store.set('$district', components.vauto_district.items);\r\n            if (((_7 = (_6 = addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.district) === null || _6 === void 0 ? void 0 : _6.parameter) === null || _7 === void 0 ? void 0 : _7.code) && (quick.store.get('flagSuccess'))) {\r\n                quick.store.set('flagSuccess', false);\r\n                components.vauto_district.items = (_9 = (_8 = resp === null || resp === void 0 ? void 0 : resp.data) === null || _8 === void 0 ? void 0 : _8.retrieveReferenceDataResponseList[0]) === null || _9 === void 0 ? void 0 : _9.referenceDataList.map(function (item) { return ({\r\n                    name: item === null || item === void 0 ? void 0 : item.name,\r\n                    code: item === null || item === void 0 ? void 0 : item.code\r\n                }); });\r\n                components.vauto_district.qValue = components.vauto_district.items.filter(function (item) { var _a, _b; return (item === null || item === void 0 ? void 0 : item.code) === ((_b = (_a = addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.district) === null || _a === void 0 ? void 0 : _a.parameter) === null || _b === void 0 ? void 0 : _b.code); })[0];\r\n            }\r\n            else {\r\n                components.vauto_district.items = (_11 = (_10 = resp === null || resp === void 0 ? void 0 : resp.data) === null || _10 === void 0 ? void 0 : _10.retrieveReferenceDataResponseList[0]) === null || _11 === void 0 ? void 0 : _11.referenceDataList.map(function (item) { return ({\r\n                    name: item === null || item === void 0 ? void 0 : item.name,\r\n                    code: item === null || item === void 0 ? void 0 : item.code\r\n                }); });\r\n            }\r\n            if (((_13 = (_12 = addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.district) === null || _12 === void 0 ? void 0 : _12.parameter) === null || _13 === void 0 ? void 0 : _13.code) && (quick.store.get('flagSuccess2'))) {\r\n                quick.store.set('flagSuccess2', false);\r\n                components.vauto_district2.items = (_15 = (_14 = resp === null || resp === void 0 ? void 0 : resp.data) === null || _14 === void 0 ? void 0 : _14.retrieveReferenceDataResponseList[0]) === null || _15 === void 0 ? void 0 : _15.referenceDataList.map(function (item) { return ({\r\n                    name: item.name,\r\n                    code: item.code\r\n                }); });\r\n                components.vauto_district2.qValue = components.vauto_district2.items.filter(function (item) { var _a, _b; return (item === null || item === void 0 ? void 0 : item.code) === ((_b = (_a = addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.district) === null || _a === void 0 ? void 0 : _a.parameter) === null || _b === void 0 ? void 0 : _b.code); })[0];\r\n            }\r\n            if (((_17 = (_16 = addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.district) === null || _16 === void 0 ? void 0 : _16.parameter) === null || _17 === void 0 ? void 0 : _17.code) && (quick.store.get('flagSuccess3'))) {\r\n                quick.store.set('flagSuccess3', false);\r\n                components[\"vauto_district3_\" + qID].items = (_19 = (_18 = resp === null || resp === void 0 ? void 0 : resp.data) === null || _18 === void 0 ? void 0 : _18.retrieveReferenceDataResponseList[0]) === null || _19 === void 0 ? void 0 : _19.referenceDataList.map(function (item) { return ({\r\n                    name: item === null || item === void 0 ? void 0 : item.name,\r\n                    code: item === null || item === void 0 ? void 0 : item.code\r\n                }); });\r\n                components[\"vauto_district3_\" + qID].qValue = components[\"vauto_district3_\" + qID].items.filter(function (item) { var _a, _b; return (item === null || item === void 0 ? void 0 : item.code) === ((_b = (_a = addressInfo_1 === null || addressInfo_1 === void 0 ? void 0 : addressInfo_1.district) === null || _a === void 0 ? void 0 : _a.parameter) === null || _b === void 0 ? void 0 : _b.code); })[0];\r\n            }\r\n        }\r\n    }\r\n}).catch(function (err) {\r\n    var _a, _b, _c;\r\n    components.as_loadingCustomComp.close();\r\n    var errorMessage = (_c = (_b = (_a = err === null || err === void 0 ? void 0 : err.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.responseMessage) !== null && _c !== void 0 ? _c : 'Bir hata oluştu.';\r\n    components.as_alertCustomComp.setLabelText({\r\n        labelData: {\r\n            name: 'lbl_700_1', text: errorMessage\r\n        }\r\n    });\r\n    components.as_alertCustomComp.open();\r\n});\r\n",
 					"C": true,
 					"HL": "JS"
 				},
@@ -19579,7 +19579,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined"
+																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -19767,7 +19767,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0"
+																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0 newDropBorder"
 																			}
 																		}
 																	],
@@ -19955,7 +19955,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined"
+																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -20145,7 +20145,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined"
+																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -20383,7 +20383,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined"
+																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -20572,7 +20572,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined"
+																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -20761,7 +20761,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined"
+																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -20950,7 +20950,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined"
+																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -21218,7 +21218,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -21435,7 +21435,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--prefix v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded pt-0 undefined"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--prefix v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded pt-0 undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -21644,7 +21644,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0 newDropBorder"
 																			}
 																		}
 																	],
@@ -21865,7 +21865,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -22088,7 +22088,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -22333,7 +22333,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0"
+																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0 newDropBorder"
 																			}
 																		}
 																	],
@@ -22551,7 +22551,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -22746,7 +22746,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0 newDropBorder"
 																			}
 																		}
 																	],
@@ -23018,7 +23018,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -23241,7 +23241,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -23459,7 +23459,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
 																			}
 																		}
 																	],
@@ -23670,7 +23670,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0 newDropBorder"
 																			}
 																		}
 																	],
@@ -24321,7 +24321,7 @@ let pjson = {
 																																							},
 																																							"O": {
 																																								"cType": "slot",
-																																								"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
+																																								"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
 																																							}
 																																						}
 																																					],
@@ -24530,7 +24530,7 @@ let pjson = {
 																																							},
 																																							"O": {
 																																								"cType": "slot",
-																																								"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined"
+																																								"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined newDropBorder"
 																																							}
 																																						}
 																																					],
@@ -26270,7 +26270,7 @@ let pjson = {
 																																	},
 																																	"class": "ml-5 text-h6"
 																																},
-																																"compDomClasses": "q-label  ml-5 text-h6"
+																																"compDomClasses": "q-label ml-5 text-h6 newDropBorder"
 																															}
 																														}
 																													],
@@ -26302,7 +26302,7 @@ let pjson = {
 																													},
 																													"class": "d-flex flex-column pb-3 pt-3 pl-3 pr-3"
 																												},
-																												"compDomClasses": "col d-flex flex-column pb-3 pt-3 pl-3 pr-3 pb-0"
+																												"compDomClasses": "col d-flex flex-column pb-3 pt-3 pl-3 pr-3 pb-0 newDropBorder"
 																											}
 																										}
 																									],
@@ -26314,7 +26314,7 @@ let pjson = {
 																							},
 																							"O": {
 																								"cType": "slot",
-																								"compDomClasses": "row"
+																								"compDomClasses": "row newDropBorder"
 																							}
 																						}
 																					],
@@ -26332,7 +26332,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-card v-card--flat v-sheet theme--dark rounded-b-0 primary"
+																				"compDomClasses": "v-card v-card--flat v-sheet theme--dark rounded-b-0 primary newDropBorder"
 																			}
 																		}
 																	],
@@ -28949,7 +28949,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
 																			}
 																		}
 																	],
@@ -29161,7 +29161,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--prefix v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded pt-0 undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--prefix v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded pt-0 undefined"
 																			}
 																		}
 																	],
@@ -29360,7 +29360,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0 newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0"
 																			}
 																		}
 																	],
@@ -29577,7 +29577,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
 																			}
 																		}
 																	],
@@ -29795,7 +29795,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
 																			}
 																		}
 																	],
@@ -30036,7 +30036,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0 newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0"
 																			}
 																		}
 																	],
@@ -30254,7 +30254,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
 																			}
 																		}
 																	],
@@ -30444,7 +30444,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0 newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0"
 																			}
 																		}
 																	],
@@ -30712,7 +30712,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
 																			}
 																		}
 																	],
@@ -30744,7 +30744,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 col-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -30930,7 +30930,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
 																			}
 																		}
 																	],
@@ -30962,7 +30962,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 col-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -31143,7 +31143,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
 																			}
 																		}
 																	],
@@ -31175,7 +31175,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 col-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -31349,7 +31349,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0 newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded undefined pt-0"
 																			}
 																		}
 																	],
@@ -31381,7 +31381,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 pl-3 col-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 pl-3 col-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -31411,7 +31411,7 @@ let pjson = {
 											},
 											"O": {
 												"cType": "slot",
-												"compDomClasses": "row newDropBorder"
+												"compDomClasses": "row"
 											},
 											"S": {
 												"xs-xl": {
@@ -31604,7 +31604,7 @@ let pjson = {
 																					},
 																					"class": "mt-0"
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-input--selection-controls v-input--checkbox mt-0 newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-input--selection-controls v-input--checkbox mt-0"
 																			}
 																		},
 																		{
@@ -31696,7 +31696,7 @@ let pjson = {
 																							},
 																							"O": {
 																								"cType": "slot",
-																								"compDomClasses": "v-icon notranslate v-icon--link mdi mdi-plus theme--light newDropBorder"
+																								"compDomClasses": "v-icon notranslate v-icon--link mdi mdi-plus theme--light"
 																							}
 																						}
 																					],
@@ -31755,7 +31755,7 @@ let pjson = {
 																					},
 																					"class": "ml-5 mt-1"
 																				},
-																				"compDomClasses": "tooltip-force ml-5 mt-1 newDropBorder"
+																				"compDomClasses": "tooltip-force ml-5 mt-1"
 																			}
 																		}
 																	],
@@ -31787,7 +31787,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pt-3 pr-3 pb-3 col-4 pl-3"
 																},
-																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 col-4 pl-3 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pt-3 pr-3 pb-3 col-4 pl-3 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -31817,7 +31817,7 @@ let pjson = {
 											},
 											"O": {
 												"cType": "slot",
-												"compDomClasses": "row newDropBorder"
+												"compDomClasses": "row"
 											},
 											"S": {
 												"xs-xl": {
@@ -31856,7 +31856,7 @@ let pjson = {
 									},
 									"class": "pb-0 pt-0 pl-3 pr-3"
 								},
-								"compDomClasses": "v-card v-sheet theme--light elevation-0 white pb-0 pt-0 pl-3 pr-3 newDropBorder"
+								"compDomClasses": "v-card v-sheet theme--light elevation-0 white pb-0 pt-0 pl-3 pr-3"
 							}
 						}
 					],
@@ -32183,7 +32183,7 @@ let pjson = {
 																					},
 																					"class": ""
 																				},
-																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
+																				"compDomClasses": "v-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined"
 																			}
 																		}
 																	],
@@ -32223,7 +32223,7 @@ let pjson = {
 																	},
 																	"class": "d-flex pl-3 pt-3 pr-3 pb-3 justify-center flex-row align-start col-4"
 																},
-																"compDomClasses": "col d-flex pl-3 pt-3 pr-3 pb-3 justify-center flex-row align-start col-4 pb-0 newDropBorder"
+																"compDomClasses": "col d-flex pl-3 pt-3 pr-3 pb-3 justify-center flex-row align-start col-4 pb-0"
 															},
 															"S": {
 																"xs-xl": {
@@ -32242,7 +32242,7 @@ let pjson = {
 											},
 											"O": {
 												"cType": "slot",
-												"compDomClasses": "row newDropBorder"
+												"compDomClasses": "row"
 											},
 											"S": {
 												"xs-xl": {
@@ -32281,7 +32281,7 @@ let pjson = {
 									},
 									"class": "pb-0 pt-0 pl-3 pr-3"
 								},
-								"compDomClasses": "v-card v-sheet theme--light elevation-0 white pb-0 pt-0 pl-3 pr-3 newDropBorder"
+								"compDomClasses": "v-card v-sheet theme--light elevation-0 white pb-0 pt-0 pl-3 pr-3"
 							}
 						}
 					],
@@ -32304,7 +32304,7 @@ let pjson = {
 					},
 					"class": "pl-0 pt-0 pr-0 pb-0"
 				},
-				"compDomClasses": "container container--fluid pl-0 pt-0 pr-0 pb-0 newDropBorder"
+				"compDomClasses": "container container--fluid pl-0 pt-0 pr-0 pb-0 container container--fluid"
 			},
 			"S": {
 				"xs-xl": {
@@ -32425,7 +32425,7 @@ let pjson = {
 																	},
 																	"class": "ml-5 text-h6"
 																},
-																"compDomClasses": "q-label ml-5 text-h6 newDropBorder"
+																"compDomClasses": "q-label  ml-5 text-h6"
 															}
 														}
 													],
@@ -32437,7 +32437,7 @@ let pjson = {
 											},
 											"O": {
 												"cType": "child",
-												"compDomClasses": "v-expansion-panel-header primary newDropBorder"
+												"compDomClasses": "v-expansion-panel-header primary"
 											}
 										},
 										{
@@ -37858,7 +37858,7 @@ let pjson = {
 							},
 							"O": {
 								"cType": "slot",
-								"compDomClasses": "v-expansion-panel newDropBorder"
+								"compDomClasses": "v-expansion-panel"
 							}
 						}
 					],
@@ -37870,7 +37870,7 @@ let pjson = {
 			},
 			"O": {
 				"cType": "slot",
-				"compDomClasses": "v-item-group theme--light v-expansion-panels newDropBorder"
+				"compDomClasses": "v-item-group theme--light v-expansion-panels"
 			}
 		},
 		{
@@ -37950,7 +37950,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": "newDropBorder"
+				"compDomClasses": ""
 			}
 		},
 		{
@@ -37999,7 +37999,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": "newDropBorder"
+				"compDomClasses": ""
 			}
 		}
 	],
