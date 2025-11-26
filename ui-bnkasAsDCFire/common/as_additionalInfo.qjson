@@ -492,7 +492,7 @@ let pjson = {
 																	"HL": "QS"
 																},
 																"headers": {
-																	"H": "[{ text = 'Sigorta Konusu', align= 'start', sortable= false, value= 'text'},\n{ text = 'Sigorta Bedeli', value= 'aggregatedLimitAmount', sortable = false, align= 'center', width='250px' },\n{ value = 'rowDisabled', text = '' },\n{ value = 'selected', text = '' }]",
+																	"H": "[{ text = 'Sigorta Konusu', align= 'start', sortable= false, value= 'text'},\n{ text = '' , value = 'rowDisabled', width='1px' },\n{ text = '' , value = 'selected', width='1px' },\n{ text = 'Sigorta Bedeli', value= 'aggregatedLimitAmount', sortable = false, align= 'center', width='250px' }]",
 																	"T": "prop",
 																	"HL": "QS"
 																},
@@ -556,7 +556,13 @@ let pjson = {
 																	"HL": "QS"
 																}
 															},
-															"E": {},
+															"E": {
+																"item-selected": {
+																	"H": "debugger;\r\n(<any>rowObj).item.txtDisabled = (<any>rowObj).value;\r\n//quick.Quick.updateComponent(components.dt_assuranceList);",
+																	"P": "rowObj:IVDataTableItemSelect",
+																	"HL": "TS"
+																}
+															},
 															"C": {
 																"item.selected": {
 																	"c": [],
@@ -2929,7 +2935,7 @@ let pjson = {
 																	"HL": "QS"
 																},
 																"headers": {
-																	"H": "╬[]╠{}╠=╣text╩╠'Sigorta Konusu'╩╩╠=╣align╩╠'start'╩╩╠=╣sortable╩╠false╩╩╠=╣value╩╠'text'╩╩╩╠{}╠=╣text╩╠'Sigorta Bedeli'╩╩╠=╣value╩╠'aggregatedLimitAmount'╩╩╠=╣sortable╩╠false╩╩╠=╣align╩╠'center'╩╩╠=╣width╩╠'250px'╩╩╩╠{}╠=╣value╩╠'rowDisabled'╩╩╠=╣text╩╠''╩╩╩╠{}╠=╣value╩╠'selected'╩╩╠=╣text╩╠''╩╩╩╩╩",
+																	"H": "╬[]╠{}╠=╣text╩╠'Sigorta Konusu'╩╩╠=╣align╩╠'start'╩╩╠=╣sortable╩╠false╩╩╠=╣value╩╠'text'╩╩╩╠{}╠=╣text╩╠''╩╩╠=╣value╩╠'rowDisabled'╩╩╠=╣width╩╠'1px'╩╩╩╠{}╠=╣text╩╠''╩╩╠=╣value╩╠'selected'╩╩╠=╣width╩╠'1px'╩╩╩╠{}╠=╣text╩╠'Sigorta Bedeli'╩╩╠=╣value╩╠'aggregatedLimitAmount'╩╩╠=╣sortable╩╠false╩╩╠=╣align╩╠'center'╩╩╠=╣width╩╠'250px'╩╩╩╩╩",
 																	"T": "prop",
 																	"HL": "QS"
 																},
@@ -2993,7 +2999,13 @@ let pjson = {
 																	"HL": "QS"
 																}
 															},
-															"E": {},
+															"E": {
+																"item-selected": {
+																	"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\ndebugger;\r\nrowObj.item.txtDisabled = rowObj.value;\r\n",
+																	"P": "rowObj:IVDataTableItemSelect",
+																	"HL": "JS"
+																}
+															},
 															"C": {
 																"item.selected": {
 																	"c": [],
