@@ -1021,7 +1021,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": "newDropBorder"
+				"compDomClasses": ""
 			}
 		},
 		{
@@ -1184,7 +1184,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": ""
+				"compDomClasses": "newDropBorder"
 			}
 		},
 		{

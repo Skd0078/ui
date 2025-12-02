@@ -19,12 +19,18 @@ let pjson = {
 					"HL": "TS"
 				},
 				"retrieveReferenceData": {
-					"H": "debugger;\r\ndeclare let referanceName, firmType, isDaskRenew;\r\n//(components.as_loadingCustomComp as any).open();\r\n\r\nlet requestData = {\r\n    \"referenceName\": referanceName,\r\n    \"firmType\": firmType,\r\n    \"isDaskRenew\": isDaskRenew \r\n}\r\n\r\nquick.MM.trigger('setConsumerAndScreenInfo');\r\n\r\nlet serviceRequest: IRequest = {\r\n    url: '/api/wrapperclient/retrieveReferenceData',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n}\r\nquick.Request.async(serviceRequest)?.then((resp) => {\r\n    quick.EM.trace(resp?.data);\r\n    (components.as_loadingCustomComp as any).close();\r\n\r\n    if (resp?.data?.referenceDataTypeList) {\r\n        if (referanceName == 'REF_FIELD_OF_ACTIVITY') {\r\n            components.vauto_fieldOfActivity.items = resp?.data?.referenceDataTypeList.map((item) => ({\r\n                name: item.description,\r\n                code: item.referenceDataType.code\r\n            }))\r\n        }\r\n    }\r\n})\r\n    .catch((err) => {\r\n        (components.as_loadingCustomComp as any).close();\r\n        if (components.as_alertCustomComp.qValue == true) {\r\n            components.as_alertCustomComp.close();\r\n        }\r\n        let errorMessage = err?.response?.data?.responseMessage ?? 'Bir hata oluştu.';\r\n        (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n        components.as_alertCustomComp.open();\r\n    });",
+					"H": "declare let referanceName, firmType, isDaskRenew;\r\n\r\nlet requestData = {\r\n    \"referenceName\": referanceName,\r\n    \"firmType\": firmType,\r\n    \"isDaskRenew\": isDaskRenew \r\n}\r\n\r\nquick.MM.trigger('setConsumerAndScreenInfo');\r\n\r\nlet serviceRequest: IRequest = {\r\n    url: '/api/wrapperclient/retrieveReferenceData',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n}\r\nquick.Request.async(serviceRequest)?.then((resp) => {\r\n    quick.EM.trace(resp?.data);\r\n    (components.as_loadingCustomComp as any).close();\r\n\r\n    if (resp?.data?.referenceDataTypeList) {\r\n        if (referanceName == 'REF_FIELD_OF_ACTIVITY') {\r\n            components.vauto_fieldOfActivity.items = resp?.data?.referenceDataTypeList.map((item) => ({\r\n                name: item.description,\r\n                code: item.referenceDataType.code\r\n            }))\r\n        }\r\n    }\r\n})\r\n    .catch((err) => {\r\n        (components.as_loadingCustomComp as any).close();\r\n        if (components.as_alertCustomComp.qValue == true) {\r\n            components.as_alertCustomComp.close();\r\n        }\r\n        let errorMessage = err?.response?.data?.responseMessage ?? 'Bir hata oluştu.';\r\n        (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n        components.as_alertCustomComp.open();\r\n    });",
 					"C": true,
 					"HL": "TS"
 				},
 				"EndRender": {
 					"H": "quick.MM.trigger('retrieveReferenceData', [{ referanceName: 'REF_FIELD_OF_ACTIVITY', firmType: 'AS', isDaskRenew: 'false' }]);\r\n",
+					"HL": "TS"
+				},
+				"enableComponents": {
+					"H": "debugger;\r\n\r\ncomponents.vauto_fieldOfActivity.disabled = false;\r\n\r\nresetComponent(\"Reklam Panosu\");\r\nresetComponent(\"Bina-Kanopi\");\r\nresetComponent(\"Bina\");\r\nresetComponent(\"Nakit Para ve Kıymetli Evrak\");\r\nresetComponent(\"Dekorasyon\");\r\nresetComponent(\"Demirbaş\");\r\nresetComponent(\"Yakıt Emtiası\");\r\nresetComponent(\"Elektronik Cihaz\");\r\nresetComponent(\"Market Emtiası\");\r\nresetComponent(\"Emtia\");\r\nresetComponent(\"Cam Kırılması\");\r\nresetComponent(\"Cam\");\r\nresetComponent(\"Makine-Tesisat\");\r\n\r\ncomponents.cbox_liability.qValue = false;\r\ncomponents.cbox_liability.disabled = true;\r\n\r\ncomponents.cbox_personalAccident.qValue = false;\r\ncomponents.cbox_personalAccident.disabled = true;\r\n\r\ncomponents.txt_numberOfSubcontractorEmployees.disabled = true;\r\ncomponents.txt_totalAnnualGrossLaborWages.disabled = true;\r\ncomponents.txt_totalAnnualGrossLaborWagesOfTheSubcontractor.disabled = true;\r\ncomponents.txt_totalAnnualTurnover.disabled = true;\r\ncomponents.txt_totalNumberOfEmployees.disabled = true;\r\n\r\ncomponents.txt_numberOfSubcontractorEmployees.qValue = null;\r\ncomponents.txt_totalAnnualGrossLaborWages.qValue = null;\r\ncomponents.txt_totalAnnualGrossLaborWagesOfTheSubcontractor.qValue = null;\r\ncomponents.txt_totalAnnualTurnover.qValue = null;\r\ncomponents.txt_totalNumberOfEmployees.qValue = null;\r\n\r\ncomponents.txt_numberOfEmployees.disabled = true;\r\ncomponents.txt_numberOfStudents.disabled = true;\r\ncomponents.txt_bedCapacity.disabled = true;\r\n\r\ncomponents.txt_numberOfEmployees.qValue = null;\r\ncomponents.txt_numberOfStudents.qValue = null;\r\ncomponents.txt_bedCapacity.qValue = null;\r\n\r\nfunction resetComponent(rowName) {\r\n    (<any>components[\"cbox_Selected_q_\" + rowName]).disabled = true;\r\n    (<any>components[\"cbox_Selected_q_\" + rowName]).qValue = false;\r\n    (<any>components[\"txt_amount_q_\" + rowName]).qValue = null;\r\n    (<any>components[\"txt_amount_q_\" + rowName]).suffix = null;\r\n    (<any>components[\"txt_amount_q_\" + rowName]).disabled = true;\r\n}\r\n",
+					"C": true,
+					"EV": true,
 					"HL": "TS"
 				},
 				"getAdditionalInfo": {
@@ -365,7 +371,7 @@ let pjson = {
 																	"HL": "QS"
 																},
 																"disabled": {
-																	"H": "false",
+																	"H": "true",
 																	"T": "prop",
 																	"HL": "QS"
 																},
@@ -382,7 +388,7 @@ let pjson = {
 															},
 															"E": {
 																"change": {
-																	"H": "debugger;\r\n\r\nfor (let item in components.dt_assuranceList.items) {\r\n    resetComponent(item);\r\n}\r\n\r\nlet request = {\r\n    \"businessActivityType\": components.vauto_fieldOfActivity.qValue\r\n}\r\n\r\nquick.MM.trigger('setConsumerAndScreenInfo');\r\nlet serviceRequest: IRequest = {\r\n    url: '/api/wrapperclient/getAdditionalInsuredObjectInfo',\r\n    http: 'POST',\r\n    data: request,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n}\r\n\r\nquick.Request.async(serviceRequest)?.then((resp) => {\r\n    quick.EM.trace(resp?.data);\r\n    components.as_loadingCustomComp.close();\r\n    fillTable(resp?.data);\r\n\r\n})\r\n    .catch((err) => {\r\n        components.as_loadingCustomComp.close();\r\n        let errorMessage = err?.response?.data?.responseMessage ?? 'Bir hata oluştu.';\r\n        (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n        components.as_alertCustomComp.open();\r\n    });\r\n\r\n\r\nfunction fillTable(data) {\r\n\r\n    quick.store.set(\"bedCapacitySelection\", data.bedCapacitySelection);\r\n    quick.store.set(\"numberOfStudentsSelection\", data.numberOfStudentsSelection);\r\n    components.cbox_liability.disabled = !data.liabilitySelection;\r\n    components.cbox_personalAccident.disabled = !data.personalAccidentSelection;\r\n\r\n    enableDisableTableRow(\"Reklam Panosu\", data.billboardTotemSelection);\r\n    enableDisableTableRow(\"Bina-Kanopi\", data.buildingCanoSelection);\r\n    enableDisableTableRow(\"Bina\", data.buildingSelection);\r\n    enableDisableTableRow(\"Nakit Para ve Kıymetli Evrak\", data.cashNegotiableSecuritiesSelection);\r\n    enableDisableTableRow(\"Dekorasyon\", data.decorationSelection);\r\n    enableDisableTableRow(\"Demirbaş\", data.fixturesSelection);\r\n    enableDisableTableRow(\"Yakıt Emtiası\", data.fuelStocksSelection);\r\n    enableDisableTableRow(\"Elektronik Cihaz\", data.electronicEquipmentSelection);\r\n    enableDisableTableRow(\"Market Emtiası\", data.stockMarketSelection);\r\n    enableDisableTableRow(\"Emtia\", data.stocksSelection);\r\n    enableDisableTableRow(\"Cam Kırılması\", data.glassBreakageSelection);\r\n    enableDisableTableRow(\"Cam\", data.glassFireSelection);\r\n    enableDisableTableRow(\"Makine-Tesisat\", data.machinerySelection);\r\n\r\n    //Zorunlu alanlar\r\n    let isBuildingOwner = quick.store.get(\"$isBuildingOwner\");\r\n\r\n    enableDisableTableRow(\"Reklam Panosu\", data.billboardTotemSelection);\r\n    findItem(\"Reklam Panosu\")\r\n    findItem(\"Reklam Panosu\").selected = true;\r\n\r\n    if (isBuildingOwner) {\r\n        enableDisableTableRow(\"Cam Kırılması\", data.glassBreakageSelection);\r\n        findItem(\"Cam Kırılması\").selected = true;\r\n\r\n        if (components.vauto_fieldOfActivity.qValue == \"1001\") {\r\n            enableDisableTableRow(\"Bina-Kanopi\", data.buildingCanoSelection);\r\n            findItem(\"Bina Kanopi\").selected = true;\r\n        }\r\n        else {\r\n            enableDisableTableRow(\"Bina\", data.buildingSelection);\r\n            findItem(\"Bina\").selected = true;\r\n        }\r\n    }\r\n    else {\r\n        enableDisableTableRow(\"Cam\", data.glassFireSelection);\r\n        findItem(\"Cam\").selected = true;\r\n    }\r\n\r\n}\r\n\r\nfunction enableDisableTableRow(rowName, isEnabled) {\r\n    let item = findItem(rowName);\r\n    if (isEnabled) {\r\n        item.disabled = false;\r\n    } else {\r\n        item.disabled = true;\r\n        item.selected = false;\r\n        item.txtDisabled = true;\r\n    }\r\n}\r\n\r\nfunction resetComponent(rowId) {\r\n    let item = components.dt_assuranceList.items[rowId];\r\n    item.selected = false;\r\n    item.txtDisabled = true;\r\n}\r\n\r\nfunction findItem(rowName) {\r\n    let item = null;\r\n    for (let i = 0; i < components.dt_assuranceList.items.length; i++) {\r\n        if (components.dt_assuranceList.items[i].text == rowName) {\r\n            item = components.dt_assuranceList.items[i];\r\n        }\r\n    }\r\n    return item;\r\n}",
+																	"H": "debugger;\r\ncomponents.as_loadingCustomComp.open();\r\nlet items = components.dt_assuranceList.items;\r\nfor (let i = 0; i < items.length; i++) {\r\n    resetComponent(items[i].text);\r\n}\r\n\r\nlet request = {\r\n    \"businessActivityType\": components.vauto_fieldOfActivity.qValue\r\n}\r\n\r\nquick.MM.trigger('setConsumerAndScreenInfo');\r\nlet serviceRequest: IRequest = {\r\n    url: '/api/wrapperclient/getAdditionalInsuredObjectInfo',\r\n    http: 'POST',\r\n    data: request,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n}\r\n\r\nquick.Request.async(serviceRequest)?.then((resp) => {\r\n    quick.EM.trace(resp?.data);\r\n    components.as_loadingCustomComp.close();\r\n    fillTable(resp?.data);\r\n\r\n})\r\n    .catch((err) => {\r\n        components.as_loadingCustomComp.close();\r\n        let errorMessage = err?.response?.data?.responseMessage ?? 'Bir hata oluştu.';\r\n        (components.as_alertCustomComp as any).setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n        components.as_alertCustomComp.open();\r\n    });\r\n\r\n\r\nfunction fillTable(data) {\r\n\r\n    quick.store.set(\"bedCapacitySelection\", data.bedCapacitySelection);\r\n    quick.store.set(\"numberOfStudentsSelection\", data.numberOfStudentsSelection);\r\n    components.cbox_liability.disabled = !data.liabilitySelection;\r\n    components.cbox_personalAccident.disabled = !data.personalAccidentSelection;\r\n\r\n    enableDisableTableRow(\"Reklam Panosu\", data.billboardTotemSelection);\r\n    enableDisableTableRow(\"Bina-Kanopi\", data.buildingCanoSelection);\r\n    enableDisableTableRow(\"Bina\", data.buildingSelection);\r\n    enableDisableTableRow(\"Nakit Para ve Kıymetli Evrak\", data.cashNegotiableSecuritiesSelection);\r\n    enableDisableTableRow(\"Dekorasyon\", data.decorationSelection);\r\n    enableDisableTableRow(\"Demirbaş\", data.fixturesSelection);\r\n    enableDisableTableRow(\"Yakıt Emtiası\", data.fuelStocksSelection);\r\n    enableDisableTableRow(\"Elektronik Cihaz\", data.electronicEquipmentSelection);\r\n    enableDisableTableRow(\"Market Emtiası\", data.stockMarketSelection);\r\n    enableDisableTableRow(\"Emtia\", data.stocksSelection);\r\n    enableDisableTableRow(\"Cam Kırılması\", data.glassBreakageSelection);\r\n    enableDisableTableRow(\"Cam\", data.glassFireSelection);\r\n    enableDisableTableRow(\"Makine-Tesisat\", data.machinerySelection);\r\n\r\n    //Zorunlu alanlar\r\n    let isBuildingOwner = quick.store.get(\"$isBuildingOwner\");\r\n\r\n    enableDisableTableRow(\"Reklam Panosu\", data.billboardTotemSelection);\r\n    selectComponent(\"Reklam Panosu\");\r\n\r\n    if (isBuildingOwner) {\r\n        enableDisableTableRow(\"Cam Kırılması\", data.glassBreakageSelection);\r\n        selectComponent(\"Cam Kırılması\");\r\n\r\n        if (components.vauto_fieldOfActivity.qValue == \"1001\") {\r\n            enableDisableTableRow(\"Bina-Kanopi\", data.buildingCanoSelection);\r\n            selectComponent(\"Bina-Kanopi\");\r\n        }\r\n        else {\r\n            enableDisableTableRow(\"Bina\", data.buildingSelection);\r\n            selectComponent(\"Bina\");\r\n        }\r\n    }\r\n    else {\r\n        enableDisableTableRow(\"Cam\", data.glassFireSelection);\r\n        selectComponent(\"Cam\");\r\n    }\r\n\r\n}\r\n\r\nfunction enableDisableTableRow(rowName, isEnabled) {\r\n    let item = findItem(rowName);\r\n    if (isEnabled) {\r\n        item.cboxDisabled = false;\r\n    } else {\r\n        item.cboxValue = true;\r\n        item.cboxDisabled = true;\r\n        item.txtDisabled = true;\r\n        item.aggregatedLimitAmount = undefined;\r\n        item.suffix = undefined;\r\n    }\r\n}\r\n\r\nfunction resetComponent(rowName) {\r\n    let item = findItem(rowName);\r\n    item.cboxDisabled = true;\r\n    item.cboxValue = false;\r\n    item.txtDisabled = true;\r\n    item.aggregatedLimitAmount = undefined;\r\n    item.suffix = undefined;\r\n}\r\n\r\nfunction findItem(rowName) {\r\n    let items = components.dt_assuranceList.items;\r\n    let item = undefined;\r\n    for (let i = 0; i < items.length; i++) {\r\n        if (items[i].text == rowName) {\r\n            item = items[i];\r\n        }\r\n    }\r\n    return item;\r\n}\r\n\r\nfunction selectComponent(rowName) {\r\n    let item = findItem(rowName);\r\n    item.cboxValue = true;\r\n    if (!item.cboxDisabled) {\r\n        item.aggregatedLimitAmount = 0;\r\n        item.suffix = \"TRY\";\r\n        item.txtDisabled = false;\r\n    } else {\r\n        item.aggregatedLimitAmount = undefined;\r\n        item.suffix = undefined;\r\n        item.txtDisabled = true;\r\n    }\r\n}",
 																	"HL": "TS"
 																}
 															},
@@ -492,7 +498,7 @@ let pjson = {
 																	"HL": "QS"
 																},
 																"headers": {
-																	"H": "[{ text = 'Sigorta Konusu', align= 'start', sortable= false, value= 'text'},\n{ text = '' , value = 'rowDisabled', width='1px' },\n{ text = '' , value = 'selected', width='1px' },\n{ text = 'Sigorta Bedeli', value= 'aggregatedLimitAmount', sortable = false, align= 'center', width='250px' }]",
+																	"H": "[{ text = 'Seçim', value= 'selected', sortable = false, width='5px' },\n{ text = 'Sigorta Konusu', align= 'start', sortable= false, value= 'text'},\n{ text = 'Sigorta Bedeli', value= 'aggregatedLimitAmount', sortable = false, align= 'center', width='250px' }]",
 																	"T": "prop",
 																	"HL": "QS"
 																},
@@ -517,7 +523,7 @@ let pjson = {
 																	"HL": "QS"
 																},
 																"showSelect": {
-																	"H": "true",
+																	"H": "false",
 																	"T": "prop",
 																	"HL": "QS"
 																},
@@ -532,7 +538,7 @@ let pjson = {
 																	"HL": "QS"
 																},
 																"items": {
-																	"H": "[{text = 'Bina', txtDisabled = true, selection = true, selected = true},\r\n{text = 'Bina-Kanopi', txtDisabled = true},\r\n{text = 'Dekorasyon', txtDisabled = true},\r\n{text = 'Demirbaş', txtDisabled = true},\r\n{text = 'Makine-Tesisat', txtDisabled = true},\r\n{text = 'Elektronik Cihaz', txtDisabled = true},\r\n{text = 'Emtia', txtDisabled = true},\r\n{text = 'Yakıt Emtiası', txtDisabled = true},\r\n{text = 'Market Emtiası', txtDisabled = true},\r\n{text = 'Nakit Para ve Kıymetli Evrak', txtDisabled = true},\r\n{text = 'Reklam Panosu', txtDisabled = true},\r\n{text = 'Cam', txtDisabled = true},\r\n{text = 'Cam Kırılması', txtDisabled = true}]",
+																	"H": "[{text = 'Bina', txtDisabled = true, aggregatedLimitAmount = '', suffix = '', cboxValue = false, cboxDisabled = true},\r\n{text = 'Bina-Kanopi', txtDisabled = true, aggregatedLimitAmount = '', suffix = '', cboxValue = false, cboxDisabled = true},\r\n{text = 'Dekorasyon', txtDisabled = true, aggregatedLimitAmount = '', suffix = '', cboxValue = false, cboxDisabled = true},\r\n{text = 'Demirbaş', txtDisabled = true, aggregatedLimitAmount = '', suffix = '', cboxValue = false, cboxDisabled = true},\r\n{text = 'Makine-Tesisat', txtDisabled = true, aggregatedLimitAmount = '', suffix = '', cboxValue = false, cboxDisabled = true},\r\n{text = 'Elektronik Cihaz', txtDisabled = true, aggregatedLimitAmount = '', suffix = '', cboxValue = false, cboxDisabled = true},\r\n{text = 'Emtia', txtDisabled = true, aggregatedLimitAmount = '', suffix = '', cboxValue = false, cboxDisabled = true},\r\n{text = 'Yakıt Emtiası', txtDisabled = true, aggregatedLimitAmount = '', suffix = '', cboxValue = false, cboxDisabled = true},\r\n{text = 'Market Emtiası', txtDisabled = true, aggregatedLimitAmount = '', suffix = '', cboxValue = false, cboxDisabled = true},\r\n{text = 'Nakit Para ve Kıymetli Evrak', txtDisabled = true, aggregatedLimitAmount = '', suffix = '', cboxValue = false, cboxDisabled = true},\r\n{text = 'Reklam Panosu', txtDisabled = true, aggregatedLimitAmount = '', suffix = '', cboxValue = false, cboxDisabled = true},\r\n{text = 'Cam', txtDisabled = true, aggregatedLimitAmount = '', suffix = '', cboxValue = false, cboxDisabled = true},\r\n{text = 'Cam Kırılması', txtDisabled = true, aggregatedLimitAmount = '', suffix = '', cboxValue = false, cboxDisabled = true}]",
 																	"T": "prop",
 																	"HL": "QS"
 																},
@@ -556,16 +562,57 @@ let pjson = {
 																	"HL": "QS"
 																}
 															},
-															"E": {
-																"item-selected": {
-																	"H": "debugger;\r\n(<any>rowObj).item.txtDisabled = (<any>rowObj).value;\r\n//quick.Quick.updateComponent(components.dt_assuranceList);",
-																	"P": "rowObj:IVDataTableItemSelect",
-																	"HL": "TS"
-																}
-															},
+															"E": {},
 															"C": {
 																"item.selected": {
-																	"c": [],
+																	"c": [
+																		{
+																			"T": "VCheckbox",
+																			"P": {
+																				"ID": {
+																					"H": "cbox_Selected",
+																					"T": "prop",
+																					"HL": "QS"
+																				},
+																				"color": {
+																					"H": "'primary'",
+																					"T": "prop"
+																				},
+																				"hideDetails": {
+																					"H": "false",
+																					"T": "prop"
+																				},
+																				"visible": {
+																					"H": "true",
+																					"T": "prop"
+																				},
+																				"disabled": {
+																					"H": "item.cboxDisabled",
+																					"T": "prop",
+																					"HL": "QS"
+																				},
+																				"qValue": {
+																					"H": "item.cboxValue",
+																					"T": "prop",
+																					"HL": "QS"
+																				}
+																			},
+																			"E": {
+																				"change": {
+																					"H": "debugger;\r\nlet item;\r\nitem.cboxValue = checked;\r\n//If selected and not disabled\r\nif (item.cboxValue && !item.cboxDisabled) {\r\n    item.aggregatedLimitAmount = 0;\r\n    item.suffix = \"TRY\";\r\n    item.txtDisabled = false;\r\n} else {\r\n    item.aggregatedLimitAmount = undefined;\r\n    item.suffix = undefined;\r\n    item.txtDisabled = true;\r\n}\r\nquick.Quick.updateComponent(components.dt_assuranceList);",
+																					"P": "checked:unknown | undefined",
+																					"HL": "TS"
+																				}
+																			},
+																			"C": {},
+																			"_Editor": {
+																				"eID": "EdtrComp_107"
+																			},
+																			"O": {
+																				"cType": "slot"
+																			}
+																		}
+																	],
 																	"cType": "scopedSlot"
 																},
 																"item.aggregatedLimitAmount": {
@@ -614,6 +661,16 @@ let pjson = {
 																				},
 																				"disabled": {
 																					"H": "item.txtDisabled",
+																					"T": "prop",
+																					"HL": "QS"
+																				},
+																				"suffix": {
+																					"H": "item.suffix",
+																					"T": "prop",
+																					"HL": "QS"
+																				},
+																				"qValue": {
+																					"H": "item.aggregatedLimitAmount",
 																					"T": "prop",
 																					"HL": "QS"
 																				}
@@ -2452,12 +2509,18 @@ let pjson = {
 					"HL": "JS"
 				},
 				"retrieveReferenceData": {
-					"H": "var _a;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\n//(components.as_loadingCustomComp as any).open();\r\nvar requestData = {\r\n    \"referenceName\": referanceName,\r\n    \"firmType\": firmType,\r\n    \"isDaskRenew\": isDaskRenew\r\n};\r\nquick.MM.trigger('setConsumerAndScreenInfo');\r\nvar serviceRequest = {\r\n    url: '/api/wrapperclient/retrieveReferenceData',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n};\r\n(_a = quick.Request.async(serviceRequest)) === null || _a === void 0 ? void 0 : _a.then(function (resp) {\r\n    var _a, _b;\r\n    quick.EM.trace(resp === null || resp === void 0 ? void 0 : resp.data);\r\n    components.as_loadingCustomComp.close();\r\n    if ((_a = resp === null || resp === void 0 ? void 0 : resp.data) === null || _a === void 0 ? void 0 : _a.referenceDataTypeList) {\r\n        if (referanceName == 'REF_FIELD_OF_ACTIVITY') {\r\n            components.vauto_fieldOfActivity.items = (_b = resp === null || resp === void 0 ? void 0 : resp.data) === null || _b === void 0 ? void 0 : _b.referenceDataTypeList.map(function (item) { return ({\r\n                name: item.description,\r\n                code: item.referenceDataType.code\r\n            }); });\r\n        }\r\n    }\r\n}).catch(function (err) {\r\n    var _a, _b, _c;\r\n    components.as_loadingCustomComp.close();\r\n    if (components.as_alertCustomComp.qValue == true) {\r\n        components.as_alertCustomComp.close();\r\n    }\r\n    var errorMessage = (_c = (_b = (_a = err === null || err === void 0 ? void 0 : err.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.responseMessage) !== null && _c !== void 0 ? _c : 'Bir hata oluştu.';\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n});\r\n",
+					"H": "var _a;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nvar requestData = {\r\n    \"referenceName\": referanceName,\r\n    \"firmType\": firmType,\r\n    \"isDaskRenew\": isDaskRenew\r\n};\r\nquick.MM.trigger('setConsumerAndScreenInfo');\r\nvar serviceRequest = {\r\n    url: '/api/wrapperclient/retrieveReferenceData',\r\n    http: 'POST',\r\n    data: requestData,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n};\r\n(_a = quick.Request.async(serviceRequest)) === null || _a === void 0 ? void 0 : _a.then(function (resp) {\r\n    var _a, _b;\r\n    quick.EM.trace(resp === null || resp === void 0 ? void 0 : resp.data);\r\n    components.as_loadingCustomComp.close();\r\n    if ((_a = resp === null || resp === void 0 ? void 0 : resp.data) === null || _a === void 0 ? void 0 : _a.referenceDataTypeList) {\r\n        if (referanceName == 'REF_FIELD_OF_ACTIVITY') {\r\n            components.vauto_fieldOfActivity.items = (_b = resp === null || resp === void 0 ? void 0 : resp.data) === null || _b === void 0 ? void 0 : _b.referenceDataTypeList.map(function (item) { return ({\r\n                name: item.description,\r\n                code: item.referenceDataType.code\r\n            }); });\r\n        }\r\n    }\r\n}).catch(function (err) {\r\n    var _a, _b, _c;\r\n    components.as_loadingCustomComp.close();\r\n    if (components.as_alertCustomComp.qValue == true) {\r\n        components.as_alertCustomComp.close();\r\n    }\r\n    var errorMessage = (_c = (_b = (_a = err === null || err === void 0 ? void 0 : err.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.responseMessage) !== null && _c !== void 0 ? _c : 'Bir hata oluştu.';\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n});\r\n",
 					"C": true,
 					"HL": "JS"
 				},
 				"EndRender": {
 					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nquick.MM.trigger('retrieveReferenceData', [{ referanceName: 'REF_FIELD_OF_ACTIVITY', firmType: 'AS', isDaskRenew: 'false' }]);\r\n",
+					"HL": "JS"
+				},
+				"enableComponents": {
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\ncomponents.vauto_fieldOfActivity.disabled = false;\r\nresetComponent(\"Reklam Panosu\");\r\nresetComponent(\"Bina-Kanopi\");\r\nresetComponent(\"Bina\");\r\nresetComponent(\"Nakit Para ve Kıymetli Evrak\");\r\nresetComponent(\"Dekorasyon\");\r\nresetComponent(\"Demirbaş\");\r\nresetComponent(\"Yakıt Emtiası\");\r\nresetComponent(\"Elektronik Cihaz\");\r\nresetComponent(\"Market Emtiası\");\r\nresetComponent(\"Emtia\");\r\nresetComponent(\"Cam Kırılması\");\r\nresetComponent(\"Cam\");\r\nresetComponent(\"Makine-Tesisat\");\r\ncomponents.cbox_liability.qValue = false;\r\ncomponents.cbox_liability.disabled = true;\r\ncomponents.cbox_personalAccident.qValue = false;\r\ncomponents.cbox_personalAccident.disabled = true;\r\ncomponents.txt_numberOfSubcontractorEmployees.disabled = true;\r\ncomponents.txt_totalAnnualGrossLaborWages.disabled = true;\r\ncomponents.txt_totalAnnualGrossLaborWagesOfTheSubcontractor.disabled = true;\r\ncomponents.txt_totalAnnualTurnover.disabled = true;\r\ncomponents.txt_totalNumberOfEmployees.disabled = true;\r\ncomponents.txt_numberOfSubcontractorEmployees.qValue = null;\r\ncomponents.txt_totalAnnualGrossLaborWages.qValue = null;\r\ncomponents.txt_totalAnnualGrossLaborWagesOfTheSubcontractor.qValue = null;\r\ncomponents.txt_totalAnnualTurnover.qValue = null;\r\ncomponents.txt_totalNumberOfEmployees.qValue = null;\r\ncomponents.txt_numberOfEmployees.disabled = true;\r\ncomponents.txt_numberOfStudents.disabled = true;\r\ncomponents.txt_bedCapacity.disabled = true;\r\ncomponents.txt_numberOfEmployees.qValue = null;\r\ncomponents.txt_numberOfStudents.qValue = null;\r\ncomponents.txt_bedCapacity.qValue = null;\r\nfunction resetComponent(rowName) {\r\n    components[\"cbox_Selected_q_\" + rowName].disabled = true;\r\n    components[\"cbox_Selected_q_\" + rowName].qValue = false;\r\n    components[\"txt_amount_q_\" + rowName].qValue = null;\r\n    components[\"txt_amount_q_\" + rowName].suffix = null;\r\n    components[\"txt_amount_q_\" + rowName].disabled = true;\r\n}\r\n",
+					"C": true,
+					"EV": true,
 					"HL": "JS"
 				},
 				"getAdditionalInfo": {
@@ -2805,7 +2868,7 @@ let pjson = {
 																	"HL": "QS"
 																},
 																"disabled": {
-																	"H": "╬false╩╩",
+																	"H": "╬true╩╩",
 																	"T": "prop",
 																	"HL": "QS"
 																},
@@ -2822,7 +2885,7 @@ let pjson = {
 															},
 															"E": {
 																"change": {
-																	"H": "var _a;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\nfor (var item in components.dt_assuranceList.items) {\r\n    resetComponent(item);\r\n}\r\nvar request = {\r\n    \"businessActivityType\": components.vauto_fieldOfActivity.qValue\r\n};\r\nquick.MM.trigger('setConsumerAndScreenInfo');\r\nvar serviceRequest = {\r\n    url: '/api/wrapperclient/getAdditionalInsuredObjectInfo',\r\n    http: 'POST',\r\n    data: request,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n};\r\n(_a = quick.Request.async(serviceRequest)) === null || _a === void 0 ? void 0 : _a.then(function (resp) {\r\n    quick.EM.trace(resp === null || resp === void 0 ? void 0 : resp.data);\r\n    components.as_loadingCustomComp.close();\r\n    fillTable(resp === null || resp === void 0 ? void 0 : resp.data);\r\n}).catch(function (err) {\r\n    var _a, _b, _c;\r\n    components.as_loadingCustomComp.close();\r\n    var errorMessage = (_c = (_b = (_a = err === null || err === void 0 ? void 0 : err.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.responseMessage) !== null && _c !== void 0 ? _c : 'Bir hata oluştu.';\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n});\r\nfunction fillTable(data) {\r\n    quick.store.set(\"bedCapacitySelection\", data.bedCapacitySelection);\r\n    quick.store.set(\"numberOfStudentsSelection\", data.numberOfStudentsSelection);\r\n    components.cbox_liability.disabled = !data.liabilitySelection;\r\n    components.cbox_personalAccident.disabled = !data.personalAccidentSelection;\r\n    enableDisableTableRow(\"Reklam Panosu\", data.billboardTotemSelection);\r\n    enableDisableTableRow(\"Bina-Kanopi\", data.buildingCanoSelection);\r\n    enableDisableTableRow(\"Bina\", data.buildingSelection);\r\n    enableDisableTableRow(\"Nakit Para ve Kıymetli Evrak\", data.cashNegotiableSecuritiesSelection);\r\n    enableDisableTableRow(\"Dekorasyon\", data.decorationSelection);\r\n    enableDisableTableRow(\"Demirbaş\", data.fixturesSelection);\r\n    enableDisableTableRow(\"Yakıt Emtiası\", data.fuelStocksSelection);\r\n    enableDisableTableRow(\"Elektronik Cihaz\", data.electronicEquipmentSelection);\r\n    enableDisableTableRow(\"Market Emtiası\", data.stockMarketSelection);\r\n    enableDisableTableRow(\"Emtia\", data.stocksSelection);\r\n    enableDisableTableRow(\"Cam Kırılması\", data.glassBreakageSelection);\r\n    enableDisableTableRow(\"Cam\", data.glassFireSelection);\r\n    enableDisableTableRow(\"Makine-Tesisat\", data.machinerySelection);\r\n    //Zorunlu alanlar\r\n    var isBuildingOwner = quick.store.get(\"$isBuildingOwner\");\r\n    enableDisableTableRow(\"Reklam Panosu\", data.billboardTotemSelection);\r\n    findItem(\"Reklam Panosu\");\r\n    findItem(\"Reklam Panosu\").selected = true;\r\n    if (isBuildingOwner) {\r\n        enableDisableTableRow(\"Cam Kırılması\", data.glassBreakageSelection);\r\n        findItem(\"Cam Kırılması\").selected = true;\r\n        if (components.vauto_fieldOfActivity.qValue == \"1001\") {\r\n            enableDisableTableRow(\"Bina-Kanopi\", data.buildingCanoSelection);\r\n            findItem(\"Bina Kanopi\").selected = true;\r\n        }\r\n        else {\r\n            enableDisableTableRow(\"Bina\", data.buildingSelection);\r\n            findItem(\"Bina\").selected = true;\r\n        }\r\n    }\r\n    else {\r\n        enableDisableTableRow(\"Cam\", data.glassFireSelection);\r\n        findItem(\"Cam\").selected = true;\r\n    }\r\n}\r\nfunction enableDisableTableRow(rowName, isEnabled) {\r\n    var item = findItem(rowName);\r\n    if (isEnabled) {\r\n        item.disabled = false;\r\n    }\r\n    else {\r\n        item.disabled = true;\r\n        item.selected = false;\r\n        item.txtDisabled = true;\r\n    }\r\n}\r\nfunction resetComponent(rowId) {\r\n    var item = components.dt_assuranceList.items[rowId];\r\n    item.selected = false;\r\n    item.txtDisabled = true;\r\n}\r\nfunction findItem(rowName) {\r\n    var item = null;\r\n    for (var i = 0; i < components.dt_assuranceList.items.length; i++) {\r\n        if (components.dt_assuranceList.items[i].text == rowName) {\r\n            item = components.dt_assuranceList.items[i];\r\n        }\r\n    }\r\n    return item;\r\n}\r\n",
+																	"H": "var _a;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\ncomponents.as_loadingCustomComp.open();\r\nvar items = components.dt_assuranceList.items;\r\nfor (var i = 0; i < items.length; i++) {\r\n    resetComponent(items[i].text);\r\n}\r\nvar request = {\r\n    \"businessActivityType\": components.vauto_fieldOfActivity.qValue\r\n};\r\nquick.MM.trigger('setConsumerAndScreenInfo');\r\nvar serviceRequest = {\r\n    url: '/api/wrapperclient/getAdditionalInsuredObjectInfo',\r\n    http: 'POST',\r\n    data: request,\r\n    onFail: 'empty',\r\n    onSuccess: 'empty',\r\n    responseField: 'empty',\r\n    blockRender: false,\r\n};\r\n(_a = quick.Request.async(serviceRequest)) === null || _a === void 0 ? void 0 : _a.then(function (resp) {\r\n    quick.EM.trace(resp === null || resp === void 0 ? void 0 : resp.data);\r\n    components.as_loadingCustomComp.close();\r\n    fillTable(resp === null || resp === void 0 ? void 0 : resp.data);\r\n}).catch(function (err) {\r\n    var _a, _b, _c;\r\n    components.as_loadingCustomComp.close();\r\n    var errorMessage = (_c = (_b = (_a = err === null || err === void 0 ? void 0 : err.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.responseMessage) !== null && _c !== void 0 ? _c : 'Bir hata oluştu.';\r\n    components.as_alertCustomComp.setLabelText({ labelData: { name: 'lbl_700_1', text: errorMessage } });\r\n    components.as_alertCustomComp.open();\r\n});\r\nfunction fillTable(data) {\r\n    quick.store.set(\"bedCapacitySelection\", data.bedCapacitySelection);\r\n    quick.store.set(\"numberOfStudentsSelection\", data.numberOfStudentsSelection);\r\n    components.cbox_liability.disabled = !data.liabilitySelection;\r\n    components.cbox_personalAccident.disabled = !data.personalAccidentSelection;\r\n    enableDisableTableRow(\"Reklam Panosu\", data.billboardTotemSelection);\r\n    enableDisableTableRow(\"Bina-Kanopi\", data.buildingCanoSelection);\r\n    enableDisableTableRow(\"Bina\", data.buildingSelection);\r\n    enableDisableTableRow(\"Nakit Para ve Kıymetli Evrak\", data.cashNegotiableSecuritiesSelection);\r\n    enableDisableTableRow(\"Dekorasyon\", data.decorationSelection);\r\n    enableDisableTableRow(\"Demirbaş\", data.fixturesSelection);\r\n    enableDisableTableRow(\"Yakıt Emtiası\", data.fuelStocksSelection);\r\n    enableDisableTableRow(\"Elektronik Cihaz\", data.electronicEquipmentSelection);\r\n    enableDisableTableRow(\"Market Emtiası\", data.stockMarketSelection);\r\n    enableDisableTableRow(\"Emtia\", data.stocksSelection);\r\n    enableDisableTableRow(\"Cam Kırılması\", data.glassBreakageSelection);\r\n    enableDisableTableRow(\"Cam\", data.glassFireSelection);\r\n    enableDisableTableRow(\"Makine-Tesisat\", data.machinerySelection);\r\n    //Zorunlu alanlar\r\n    var isBuildingOwner = quick.store.get(\"$isBuildingOwner\");\r\n    enableDisableTableRow(\"Reklam Panosu\", data.billboardTotemSelection);\r\n    selectComponent(\"Reklam Panosu\");\r\n    if (isBuildingOwner) {\r\n        enableDisableTableRow(\"Cam Kırılması\", data.glassBreakageSelection);\r\n        selectComponent(\"Cam Kırılması\");\r\n        if (components.vauto_fieldOfActivity.qValue == \"1001\") {\r\n            enableDisableTableRow(\"Bina-Kanopi\", data.buildingCanoSelection);\r\n            selectComponent(\"Bina-Kanopi\");\r\n        }\r\n        else {\r\n            enableDisableTableRow(\"Bina\", data.buildingSelection);\r\n            selectComponent(\"Bina\");\r\n        }\r\n    }\r\n    else {\r\n        enableDisableTableRow(\"Cam\", data.glassFireSelection);\r\n        selectComponent(\"Cam\");\r\n    }\r\n}\r\nfunction enableDisableTableRow(rowName, isEnabled) {\r\n    var item = findItem(rowName);\r\n    if (isEnabled) {\r\n        item.cboxDisabled = false;\r\n    }\r\n    else {\r\n        item.cboxValue = true;\r\n        item.cboxDisabled = true;\r\n        item.txtDisabled = true;\r\n        item.aggregatedLimitAmount = undefined;\r\n        item.suffix = undefined;\r\n    }\r\n}\r\nfunction resetComponent(rowName) {\r\n    var item = findItem(rowName);\r\n    item.cboxDisabled = true;\r\n    item.cboxValue = false;\r\n    item.txtDisabled = true;\r\n    item.aggregatedLimitAmount = undefined;\r\n    item.suffix = undefined;\r\n}\r\nfunction findItem(rowName) {\r\n    var items = components.dt_assuranceList.items;\r\n    var item = undefined;\r\n    for (var i = 0; i < items.length; i++) {\r\n        if (items[i].text == rowName) {\r\n            item = items[i];\r\n        }\r\n    }\r\n    return item;\r\n}\r\nfunction selectComponent(rowName) {\r\n    var item = findItem(rowName);\r\n    item.cboxValue = true;\r\n    if (!item.cboxDisabled) {\r\n        item.aggregatedLimitAmount = 0;\r\n        item.suffix = \"TRY\";\r\n        item.txtDisabled = false;\r\n    }\r\n    else {\r\n        item.aggregatedLimitAmount = undefined;\r\n        item.suffix = undefined;\r\n        item.txtDisabled = true;\r\n    }\r\n}\r\n",
 																	"HL": "JS"
 																}
 															},
@@ -2832,7 +2895,7 @@ let pjson = {
 															},
 															"O": {
 																"cType": "slot",
-																"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
+																"compDomClasses": "v-input v-input--is-disabled v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-text-field--rounded v-select v-autocomplete undefined newDropBorder"
 															}
 														}
 													],
@@ -2935,7 +2998,7 @@ let pjson = {
 																	"HL": "QS"
 																},
 																"headers": {
-																	"H": "╬[]╠{}╠=╣text╩╠'Sigorta Konusu'╩╩╠=╣align╩╠'start'╩╩╠=╣sortable╩╠false╩╩╠=╣value╩╠'text'╩╩╩╠{}╠=╣text╩╠''╩╩╠=╣value╩╠'rowDisabled'╩╩╠=╣width╩╠'1px'╩╩╩╠{}╠=╣text╩╠''╩╩╠=╣value╩╠'selected'╩╩╠=╣width╩╠'1px'╩╩╩╠{}╠=╣text╩╠'Sigorta Bedeli'╩╩╠=╣value╩╠'aggregatedLimitAmount'╩╩╠=╣sortable╩╠false╩╩╠=╣align╩╠'center'╩╩╠=╣width╩╠'250px'╩╩╩╩╩",
+																	"H": "╬[]╠{}╠=╣text╩╠'Seçim'╩╩╠=╣value╩╠'selected'╩╩╠=╣sortable╩╠false╩╩╠=╣width╩╠'5px'╩╩╩╠{}╠=╣text╩╠'Sigorta Konusu'╩╩╠=╣align╩╠'start'╩╩╠=╣sortable╩╠false╩╩╠=╣value╩╠'text'╩╩╩╠{}╠=╣text╩╠'Sigorta Bedeli'╩╩╠=╣value╩╠'aggregatedLimitAmount'╩╩╠=╣sortable╩╠false╩╩╠=╣align╩╠'center'╩╩╠=╣width╩╠'250px'╩╩╩╩╩",
 																	"T": "prop",
 																	"HL": "QS"
 																},
@@ -2960,7 +3023,7 @@ let pjson = {
 																	"HL": "QS"
 																},
 																"showSelect": {
-																	"H": "╬true╩╩",
+																	"H": "╬false╩╩",
 																	"T": "prop",
 																	"HL": "QS"
 																},
@@ -2975,7 +3038,7 @@ let pjson = {
 																	"HL": "QS"
 																},
 																"items": {
-																	"H": "╬[]╠{}╠=╣text╩╠'Bina'╩╩╠=╣txtDisabled╩╠true╩╩╠=╣selection╩╠true╩╩╠=╣selected╩╠true╩╩╩╠{}╠=╣text╩╠'Bina-Kanopi'╩╩╠=╣txtDisabled╩╠true╩╩╩╠{}╠=╣text╩╠'Dekorasyon'╩╩╠=╣txtDisabled╩╠true╩╩╩╠{}╠=╣text╩╠'Demirbaş'╩╩╠=╣txtDisabled╩╠true╩╩╩╠{}╠=╣text╩╠'Makine-Tesisat'╩╩╠=╣txtDisabled╩╠true╩╩╩╠{}╠=╣text╩╠'Elektronik Cihaz'╩╩╠=╣txtDisabled╩╠true╩╩╩╠{}╠=╣text╩╠'Emtia'╩╩╠=╣txtDisabled╩╠true╩╩╩╠{}╠=╣text╩╠'Yakıt Emtiası'╩╩╠=╣txtDisabled╩╠true╩╩╩╠{}╠=╣text╩╠'Market Emtiası'╩╩╠=╣txtDisabled╩╠true╩╩╩╠{}╠=╣text╩╠'Nakit Para ve Kıymetli Evrak'╩╩╠=╣txtDisabled╩╠true╩╩╩╠{}╠=╣text╩╠'Reklam Panosu'╩╩╠=╣txtDisabled╩╠true╩╩╩╠{}╠=╣text╩╠'Cam'╩╩╠=╣txtDisabled╩╠true╩╩╩╠{}╠=╣text╩╠'Cam Kırılması'╩╩╠=╣txtDisabled╩╠true╩╩╩╩╩",
+																	"H": "╬[]╠{}╠=╣text╩╠'Bina'╩╩╠=╣txtDisabled╩╠true╩╩╠=╣aggregatedLimitAmount╩╠''╩╩╠=╣suffix╩╠''╩╩╠=╣cboxValue╩╠false╩╩╠=╣cboxDisabled╩╠true╩╩╩╠{}╠=╣text╩╠'Bina-Kanopi'╩╩╠=╣txtDisabled╩╠true╩╩╠=╣aggregatedLimitAmount╩╠''╩╩╠=╣suffix╩╠''╩╩╠=╣cboxValue╩╠false╩╩╠=╣cboxDisabled╩╠true╩╩╩╠{}╠=╣text╩╠'Dekorasyon'╩╩╠=╣txtDisabled╩╠true╩╩╠=╣aggregatedLimitAmount╩╠''╩╩╠=╣suffix╩╠''╩╩╠=╣cboxValue╩╠false╩╩╠=╣cboxDisabled╩╠true╩╩╩╠{}╠=╣text╩╠'Demirbaş'╩╩╠=╣txtDisabled╩╠true╩╩╠=╣aggregatedLimitAmount╩╠''╩╩╠=╣suffix╩╠''╩╩╠=╣cboxValue╩╠false╩╩╠=╣cboxDisabled╩╠true╩╩╩╠{}╠=╣text╩╠'Makine-Tesisat'╩╩╠=╣txtDisabled╩╠true╩╩╠=╣aggregatedLimitAmount╩╠''╩╩╠=╣suffix╩╠''╩╩╠=╣cboxValue╩╠false╩╩╠=╣cboxDisabled╩╠true╩╩╩╠{}╠=╣text╩╠'Elektronik Cihaz'╩╩╠=╣txtDisabled╩╠true╩╩╠=╣aggregatedLimitAmount╩╠''╩╩╠=╣suffix╩╠''╩╩╠=╣cboxValue╩╠false╩╩╠=╣cboxDisabled╩╠true╩╩╩╠{}╠=╣text╩╠'Emtia'╩╩╠=╣txtDisabled╩╠true╩╩╠=╣aggregatedLimitAmount╩╠''╩╩╠=╣suffix╩╠''╩╩╠=╣cboxValue╩╠false╩╩╠=╣cboxDisabled╩╠true╩╩╩╠{}╠=╣text╩╠'Yakıt Emtiası'╩╩╠=╣txtDisabled╩╠true╩╩╠=╣aggregatedLimitAmount╩╠''╩╩╠=╣suffix╩╠''╩╩╠=╣cboxValue╩╠false╩╩╠=╣cboxDisabled╩╠true╩╩╩╠{}╠=╣text╩╠'Market Emtiası'╩╩╠=╣txtDisabled╩╠true╩╩╠=╣aggregatedLimitAmount╩╠''╩╩╠=╣suffix╩╠''╩╩╠=╣cboxValue╩╠false╩╩╠=╣cboxDisabled╩╠true╩╩╩╠{}╠=╣text╩╠'Nakit Para ve Kıymetli Evrak'╩╩╠=╣txtDisabled╩╠true╩╩╠=╣aggregatedLimitAmount╩╠''╩╩╠=╣suffix╩╠''╩╩╠=╣cboxValue╩╠false╩╩╠=╣cboxDisabled╩╠true╩╩╩╠{}╠=╣text╩╠'Reklam Panosu'╩╩╠=╣txtDisabled╩╠true╩╩╠=╣aggregatedLimitAmount╩╠''╩╩╠=╣suffix╩╠''╩╩╠=╣cboxValue╩╠false╩╩╠=╣cboxDisabled╩╠true╩╩╩╠{}╠=╣text╩╠'Cam'╩╩╠=╣txtDisabled╩╠true╩╩╠=╣aggregatedLimitAmount╩╠''╩╩╠=╣suffix╩╠''╩╩╠=╣cboxValue╩╠false╩╩╠=╣cboxDisabled╩╠true╩╩╩╠{}╠=╣text╩╠'Cam Kırılması'╩╩╠=╣txtDisabled╩╠true╩╩╠=╣aggregatedLimitAmount╩╠''╩╩╠=╣suffix╩╠''╩╩╠=╣cboxValue╩╠false╩╩╠=╣cboxDisabled╩╠true╩╩╩╩╩",
 																	"T": "prop",
 																	"HL": "QS"
 																},
@@ -2999,16 +3062,58 @@ let pjson = {
 																	"HL": "QS"
 																}
 															},
-															"E": {
-																"item-selected": {
-																	"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\ndebugger;\r\nrowObj.item.txtDisabled = rowObj.value;\r\n",
-																	"P": "rowObj:IVDataTableItemSelect",
-																	"HL": "JS"
-																}
-															},
+															"E": {},
 															"C": {
 																"item.selected": {
-																	"c": [],
+																	"c": [
+																		{
+																			"T": "VCheckbox",
+																			"P": {
+																				"ID": {
+																					"H": "cbox_Selected_q_Cam Kırılması",
+																					"T": "prop",
+																					"HL": "QS"
+																				},
+																				"color": {
+																					"H": "╬'primary'╩╩",
+																					"T": "prop"
+																				},
+																				"hideDetails": {
+																					"H": "╬false╩╩",
+																					"T": "prop"
+																				},
+																				"visible": {
+																					"H": "╬true╩╩",
+																					"T": "prop"
+																				},
+																				"disabled": {
+																					"H": "╬.╣item╩╠cboxDisabled╩╩╩",
+																					"T": "prop",
+																					"HL": "QS"
+																				},
+																				"qValue": {
+																					"H": "╬.╣item╩╠cboxValue╩╩╩",
+																					"T": "prop",
+																					"HL": "QS"
+																				}
+																			},
+																			"E": {
+																				"change": {
+																					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\ndebugger;\r\nvar item;\r\nitem.cboxValue = checked;\r\n//If selected and not disabled\r\nif (item.cboxValue && !item.cboxDisabled) {\r\n    item.aggregatedLimitAmount = 0;\r\n    item.suffix = \"TRY\";\r\n    item.txtDisabled = false;\r\n}\r\nelse {\r\n    item.aggregatedLimitAmount = undefined;\r\n    item.suffix = undefined;\r\n    item.txtDisabled = true;\r\n}\r\nquick.Quick.updateComponent(components.dt_assuranceList);\r\n",
+																					"P": "checked:unknown | undefined",
+																					"HL": "JS"
+																				}
+																			},
+																			"C": {},
+																			"_Editor": {
+																				"eID": "EdtrComp_107"
+																			},
+																			"O": {
+																				"cType": "slot",
+																				"compDomClasses": "v-input v-input--is-disabled theme--light v-input--selection-controls v-input--checkbox undefined mt-1"
+																			}
+																		}
+																	],
 																	"cType": "scopedSlot"
 																},
 																"item.aggregatedLimitAmount": {
@@ -3057,6 +3162,16 @@ let pjson = {
 																				},
 																				"disabled": {
 																					"H": "╬.╣item╩╠txtDisabled╩╩╩",
+																					"T": "prop",
+																					"HL": "QS"
+																				},
+																				"suffix": {
+																					"H": "╬.╣item╩╠suffix╩╩╩",
+																					"T": "prop",
+																					"HL": "QS"
+																				},
+																				"qValue": {
+																					"H": "╬.╣item╩╠aggregatedLimitAmount╩╩╩",
 																					"T": "prop",
 																					"HL": "QS"
 																				}
