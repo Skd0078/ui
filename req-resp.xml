@@ -1,0 +1,1015 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+  <soapenv:Header>
+    <ns3:basicSoapHeaderIVOinList xmlns:ns2="http://www.idit.co.il/schemas/all/interfaces" xmlns:ns3="http://www.idit.co.il/schemas/all/interfaces-root">
+      <ns3:basicSoapHeaderIVO/>
+    </ns3:basicSoapHeaderIVOinList>
+    <as:consumerContext xmlns:as="http://as.com/Technical/EA/Header/Schema/V1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="as:IntWebAppContextType">
+      <lang>tr</lang>
+      <consumerCode>isbank</consumerCode>
+      <channelCode>branch</channelCode>
+      <userName>ASOSSUBEBANKA</userName>
+      <messageId>be0f767e-1ec7-4fc7-b491-73615b8e9bc7</messageId>
+      <messageGroupId>20aaf509-1411-4d01-93c6-1ea22dca6a1b</messageGroupId>
+      <clientRequestTimestamp>2025-12-03 17:22:39.157</clientRequestTimestamp>
+      <organizationUnitCode>114299</organizationUnitCode>
+      <sessionId>2533717223990344967212</sessionId>
+      <ipAddress>10.87.5.240</ipAddress>
+      <serverInstanceId>appint</serverInstanceId>
+    </as:consumerContext>
+    <wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
+      <wsse:UsernameToken>
+        <wsse:Username>ISBANK_USER</wsse:Username>
+        <wsse:Password>ISBANK_USER_321</wsse:Password>
+      </wsse:UsernameToken>
+    </wsse:Security>
+  </soapenv:Header>
+  <soapenv:Body>
+    <ns3:bancCommonUpdateProposalRequestANDLIVOinList xmlns:ns2="http://www.idit.co.il/schemas/all/interfaces" xmlns:ns3="http://www.idit.co.il/schemas/all/interfaces-root">
+      <ns3:bancCommonUpdateProposalRequestANDLIVO main="true" system_id="2000000">
+        <policyKey>
+          <proposalNumber>0763749989</proposalNumber>
+          <revisionNumber>00</revisionNumber>
+        </policyKey>
+        <simplePolicyModel>
+          <assetsList>
+            <assets>
+              <assetDigitalFire>
+                <additionalInfo>
+                  <additionalInfoLiability/>
+                  <additionalInfoPersonalAccident/>
+                </additionalInfo>
+                <apartmentFloorNumberVORef extCode="17000004"/>
+                <buildingConstructionYear>2019</buildingConstructionYear>
+                <businessActivityTypeVORef extCode="1077"/>
+                <constructionTypeVORef extCode="61348460"/>
+                <grossArea>121.0</grossArea>
+                <insuredObjectInfo>
+                  <billboardTotemSumInsured>30000.0</billboardTotemSumInsured>
+                  <fixturesSumInsured>40000.0</fixturesSumInsured>
+                  <glassFireSumInsured>20000.0</glassFireSumInsured>
+                </insuredObjectInfo>
+                <isResidenceEmpty>false</isResidenceEmpty>
+                <policyHolderRoleDcfVORef extCode="2000001"/>
+                <pvSolarSystem>false</pvSolarSystem>
+                <riskAddressInfo>
+                  <cityCode>34</cityCode>
+                  <countyCode>1166</countyCode>
+                  <districtCode>40189</districtCode>
+                  <streetCode>280634</streetCode>
+                  <uavtAddressCode>1200749032</uavtAddressCode>
+                  <villageCode>16620</villageCode>
+                </riskAddressInfo>
+                <totalFloorCountVORef extCode="09"/>
+              </assetDigitalFire>
+            </assets>
+          </assetsList>
+          <paymentTermsList>
+            <paymentTerms>
+              <collectionMethodVORef id="0" extCode="4">Sanal POS</collectionMethodVORef>
+              <numOfInstallment>1</numOfInstallment>
+              <paymentsTermsVORef id="2000085" extCode="2000085">1 Taksit</paymentsTermsVORef>
+            </paymentTerms>
+          </paymentTermsList>
+          <policyContactsList>
+            <policyContacts>
+              <externalContactNumber>400239187</externalContactNumber>
+              <policyContactRoleVORef id="0" extCode="6"/>
+            </policyContacts>
+            <policyContacts>
+              <externalContactNumber>400244186</externalContactNumber>
+              <policyContactRoleVORef id="0" extCode="1"/>
+            </policyContacts>
+          </policyContactsList>
+          <policyHeader>
+            <agencyCode>114205</agencyCode>
+            <policyCurrencyVORef id="0" extCode="TRY"/>
+            <policyEndDate>2026-12-03T00:00:00.000+03:00</policyEndDate>
+            <policyStartDate>2025-12-03T00:00:00.000+03:00</policyStartDate>
+            <policyTypeVORef extCode="743"/>
+            <productTypeVORef extCode="17000001"/>
+            <salesChannelVORef id="0" extCode="2000001"/>
+          </policyHeader>
+        </simplePolicyModel>
+      </ns3:bancCommonUpdateProposalRequestANDLIVO>
+    </ns3:bancCommonUpdateProposalRequestANDLIVOinList>
+  </soapenv:Body>
+</soapenv:Envelope>
+
+<?xml version="1.0" encoding="UTF-8"?>
+<env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
+  <env:Header>
+    <as:consumerContext xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:as="http://as.com/Technical/EA/Header/Schema/V1" xsi:type="as:IntWebAppContextType">
+      <lang>tr</lang>
+      <consumerCode>isbank</consumerCode>
+      <channelCode>branch</channelCode>
+      <userName>ASOSSUBEBANKA</userName>
+      <messageId>be0f767e-1ec7-4fc7-b491-73615b8e9bc7</messageId>
+      <messageGroupId>20aaf509-1411-4d01-93c6-1ea22dca6a1b</messageGroupId>
+      <clientRequestTimestamp>2025-12-03 17:22:39.157</clientRequestTimestamp>
+      <organizationUnitCode>114299</organizationUnitCode>
+      <sessionId>2533717223990344967212</sessionId>
+      <ipAddress>10.87.5.240</ipAddress>
+      <serverInstanceId>appint</serverInstanceId>
+    </as:consumerContext>
+  </env:Header>
+  <env:Body>
+    <interfaces-root:bancCommonUpdateProposalResponseANDLIVOoutList xmlns:queue="http://www.idit.co.il/schemas/all/queue" xmlns:policy="http://www.idit.co.il/schemas/all/policy" xmlns:interfaces="http://www.idit.co.il/schemas/all/interfaces" xmlns:contact="http://www.idit.co.il/schemas/all/contact" xmlns:interfaces-root="http://www.idit.co.il/schemas/all/interfaces-root">
+      <interfaces:bancCommonUpdateProposalResponseANDLIVOList>
+        <bancCommonUpdateProposalResponseANDLIVO main="true" system_id="2000000">
+          <policyKey>
+            <revisionNumber>01</revisionNumber>
+            <proposalNumber>0763749989</proposalNumber>
+            <additionalInfo>
+              <insuranceAmount>738000.00</insuranceAmount>
+              <policyEndDate>2026-12-03T00:00:00</policyEndDate>
+              <policyStartDate>2025-12-03T00:00:00</policyStartDate>
+              <insuranceAmountSystem>738000.00</insuranceAmountSystem>
+            </additionalInfo>
+            <renewalNumber>0</renewalNumber>
+          </policyKey>
+          <coverIVOList>
+            <coverIVO>
+              <coverInsuranceAmountSystem>90000.00</coverInsuranceAmountSystem>
+              <aggregatedLimitAmountSystem>0.00</aggregatedLimitAmountSystem>
+              <coverExtCodeVORef extCode="61349399" id="61349399">Yangın, Yıldırım, İnfilak</coverExtCodeVORef>
+              <perClaimantAmount>0.00</perClaimantAmount>
+              <coverInsuranceAmount>90000.00</coverInsuranceAmount>
+              <coverType>1</coverType>
+              <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+              <aggregatedLimitAmount>0.00</aggregatedLimitAmount>
+              <productLineTypeVORef id="61349298">Yangın, Yıldırım, İnfilak</productLineTypeVORef>
+              <childCoverVOList>
+                <childCoverVO>
+                  <coverInsuranceAmountSystem>40000.00</coverInsuranceAmountSystem>
+                  <aggregatedLimitAmountSystem>0.00</aggregatedLimitAmountSystem>
+                  <coverExtCodeVORef extCode="61349405" id="61349405">Yangın, Yıldırım, İnfilak - Demirbaşlar</coverExtCodeVORef>
+                  <perClaimantAmount>0.00</perClaimantAmount>
+                  <coverInsuranceAmount>40000.00</coverInsuranceAmount>
+                  <coverType>1</coverType>
+                  <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+                  <aggregatedLimitAmount>0.00</aggregatedLimitAmount>
+                  <productLineTypeVORef id="61349304">Yangın, Yıldırım, İnfilak - Demirbaşlar</productLineTypeVORef>
+                  <productLineOptionVORef id="62022842">Yangın, Yıldırım, İnfilak - Demirbaşlar</productLineOptionVORef>
+                </childCoverVO>
+                <childCoverVO>
+                  <coverInsuranceAmountSystem>30000.00</coverInsuranceAmountSystem>
+                  <aggregatedLimitAmountSystem>0.00</aggregatedLimitAmountSystem>
+                  <coverExtCodeVORef extCode="61349410" id="61349410">Yangın, Yıldırım, İnfilak - Billboard / Totem</coverExtCodeVORef>
+                  <perClaimantAmount>0.00</perClaimantAmount>
+                  <coverInsuranceAmount>30000.00</coverInsuranceAmount>
+                  <coverType>1</coverType>
+                  <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+                  <aggregatedLimitAmount>0.00</aggregatedLimitAmount>
+                  <productLineTypeVORef id="61349309">Yangın, Yıldırım, İnfilak - Billboard / Totem</productLineTypeVORef>
+                  <productLineOptionVORef id="62022847">Yangın, Yıldırım, İnfilak - Billboard / Totem</productLineOptionVORef>
+                </childCoverVO>
+                <childCoverVO>
+                  <coverInsuranceAmountSystem>20000.00</coverInsuranceAmountSystem>
+                  <aggregatedLimitAmountSystem>0.00</aggregatedLimitAmountSystem>
+                  <coverExtCodeVORef extCode="61349777" id="61349777">Yangın, Yıldırım, İnfilak - Cam</coverExtCodeVORef>
+                  <perClaimantAmount>0.00</perClaimantAmount>
+                  <coverInsuranceAmount>20000.00</coverInsuranceAmount>
+                  <coverType>1</coverType>
+                  <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+                  <aggregatedLimitAmount>0.00</aggregatedLimitAmount>
+                  <productLineTypeVORef id="61349639">Yangın, Yıldırım, İnfilak - Cam</productLineTypeVORef>
+                  <productLineOptionVORef id="62022850">Yangın, Yıldırım, İnfilak - Cam</productLineOptionVORef>
+                </childCoverVO>
+              </childCoverVOList>
+              <productLineOptionVORef id="62022838">Yangın, Yıldırım, İnfilak</productLineOptionVORef>
+            </coverIVO>
+            <coverIVO>
+              <coverInsuranceAmountSystem>70000.00</coverInsuranceAmountSystem>
+              <aggregatedLimitAmountSystem>0.00</aggregatedLimitAmountSystem>
+              <coverExtCodeVORef extCode="61349413" id="61349413">Hırsızlık - Muhteviyat</coverExtCodeVORef>
+              <perClaimantAmount>0.00</perClaimantAmount>
+              <coverInsuranceAmount>70000.00</coverInsuranceAmount>
+              <coverType>1</coverType>
+              <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+              <aggregatedLimitAmount>0.00</aggregatedLimitAmount>
+              <productLineTypeVORef id="61349312">Hırsızlık - Muhteviyat</productLineTypeVORef>
+              <childCoverVOList>
+                <childCoverVO>
+                  <coverInsuranceAmountSystem>40000.00</coverInsuranceAmountSystem>
+                  <aggregatedLimitAmountSystem>0.00</aggregatedLimitAmountSystem>
+                  <coverExtCodeVORef extCode="61349414" id="61349414">Hırsızlık - Demirbaşlar</coverExtCodeVORef>
+                  <perClaimantAmount>0.00</perClaimantAmount>
+                  <coverInsuranceAmount>40000.00</coverInsuranceAmount>
+                  <coverType>1</coverType>
+                  <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+                  <aggregatedLimitAmount>0.00</aggregatedLimitAmount>
+                  <productLineTypeVORef id="61349313">Hırsızlık - Demirbaşlar</productLineTypeVORef>
+                  <productLineOptionVORef id="62022852">Hırsızlık - Demirbaşlar</productLineOptionVORef>
+                </childCoverVO>
+                <childCoverVO>
+                  <coverInsuranceAmountSystem>30000.00</coverInsuranceAmountSystem>
+                  <aggregatedLimitAmountSystem>0.00</aggregatedLimitAmountSystem>
+                  <coverExtCodeVORef extCode="61349419" id="61349419">Hırsızlık - Billboard / Totem</coverExtCodeVORef>
+                  <perClaimantAmount>0.00</perClaimantAmount>
+                  <coverInsuranceAmount>30000.00</coverInsuranceAmount>
+                  <coverType>1</coverType>
+                  <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+                  <aggregatedLimitAmount>0.00</aggregatedLimitAmount>
+                  <productLineTypeVORef id="61349318">Hırsızlık - Billboard / Totem</productLineTypeVORef>
+                  <productLineOptionVORef id="62022857">Hırsızlık - Billboard / Totem</productLineOptionVORef>
+                </childCoverVO>
+              </childCoverVOList>
+              <productLineOptionVORef id="62022851">Hırsızlık - Muhteviyat</productLineOptionVORef>
+            </coverIVO>
+            <coverIVO>
+              <coverInsuranceAmountSystem>90000.00</coverInsuranceAmountSystem>
+              <aggregatedLimitAmountSystem>0.00</aggregatedLimitAmountSystem>
+              <coverExtCodeVORef extCode="61349421" id="61349421">Sel Su Baskını</coverExtCodeVORef>
+              <perClaimantAmount>0.00</perClaimantAmount>
+              <coverInsuranceAmount>90000.00</coverInsuranceAmount>
+              <coverType>2</coverType>
+              <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+              <aggregatedLimitAmount>0.00</aggregatedLimitAmount>
+              <productLineTypeVORef id="61349320">Sel Su Baskını</productLineTypeVORef>
+              <childCoverVOList>
+                <childCoverVO>
+                  <coverInsuranceAmountSystem>90000.00</coverInsuranceAmountSystem>
+                  <aggregatedLimitAmountSystem>0.00</aggregatedLimitAmountSystem>
+                  <coverExtCodeVORef extCode="62000037" id="62000037">Sel Su Baskını - Muhteviyat</coverExtCodeVORef>
+                  <perClaimantAmount>0.00</perClaimantAmount>
+                  <coverInsuranceAmount>90000.00</coverInsuranceAmount>
+                  <coverType>2</coverType>
+                  <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+                  <aggregatedLimitAmount>0.00</aggregatedLimitAmount>
+                  <productLineTypeVORef id="62000037">Sel Su Baskını - Muhteviyat</productLineTypeVORef>
+                  <productLineOptionVORef id="62022862">Sel Su Baskını - Muhteviyat</productLineOptionVORef>
+                </childCoverVO>
+              </childCoverVOList>
+              <productLineOptionVORef id="62022860">Sel Su Baskını</productLineOptionVORef>
+            </coverIVO>
+            <coverIVO>
+              <coverInsuranceAmountSystem>90000.00</coverInsuranceAmountSystem>
+              <aggregatedLimitAmountSystem>0.00</aggregatedLimitAmountSystem>
+              <coverExtCodeVORef extCode="61349422" id="61349422">Dahili Su</coverExtCodeVORef>
+              <perClaimantAmount>0.00</perClaimantAmount>
+              <coverInsuranceAmount>90000.00</coverInsuranceAmount>
+              <coverType>2</coverType>
+              <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+              <aggregatedLimitAmount>0.00</aggregatedLimitAmount>
+              <productLineTypeVORef id="61349321">Dahili Su</productLineTypeVORef>
+              <productLineOptionVORef id="62022863">Dahili Su</productLineOptionVORef>
+            </coverIVO>
+            <coverIVO>
+              <coverInsuranceAmountSystem>90000.00</coverInsuranceAmountSystem>
+              <aggregatedLimitAmountSystem>0.00</aggregatedLimitAmountSystem>
+              <coverExtCodeVORef extCode="61349423" id="61349423">Fırtına</coverExtCodeVORef>
+              <perClaimantAmount>0.00</perClaimantAmount>
+              <coverInsuranceAmount>90000.00</coverInsuranceAmount>
+              <coverType>2</coverType>
+              <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+              <aggregatedLimitAmount>0.00</aggregatedLimitAmount>
+              <productLineTypeVORef id="61349322">Fırtına</productLineTypeVORef>
+              <childCoverVOList>
+                <childCoverVO>
+                  <coverInsuranceAmountSystem>90000.00</coverInsuranceAmountSystem>
+                  <aggregatedLimitAmountSystem>0.00</aggregatedLimitAmountSystem>
+                  <coverExtCodeVORef extCode="62000039" id="62000039">Fırtına - Muhteviyat</coverExtCodeVORef>
+                  <perClaimantAmount>0.00</perClaimantAmount>
+                  <coverInsuranceAmount>90000.00</coverInsuranceAmount>
+                  <coverType>2</coverType>
+                  <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+                  <aggregatedLimitAmount>0.00</aggregatedLimitAmount>
+                  <productLineTypeVORef id="62000039">Fırtına - Muhteviyat</productLineTypeVORef>
+                  <productLineOptionVORef id="62022866">Fırtına - Muhteviyat</productLineOptionVORef>
+                </childCoverVO>
+              </childCoverVOList>
+              <productLineOptionVORef id="62022864">Fırtına</productLineOptionVORef>
+            </coverIVO>
+            <coverIVO>
+              <coverInsuranceAmountSystem>90000.00</coverInsuranceAmountSystem>
+              <aggregatedLimitAmountSystem>0.00</aggregatedLimitAmountSystem>
+              <coverExtCodeVORef extCode="61349424" id="61349424">Yer Kayması</coverExtCodeVORef>
+              <perClaimantAmount>0.00</perClaimantAmount>
+              <coverInsuranceAmount>90000.00</coverInsuranceAmount>
+              <coverType>2</coverType>
+              <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+              <aggregatedLimitAmount>0.00</aggregatedLimitAmount>
+              <productLineTypeVORef id="61349323">Yer Kayması</productLineTypeVORef>
+              <childCoverVOList>
+                <childCoverVO>
+                  <coverInsuranceAmountSystem>90000.00</coverInsuranceAmountSystem>
+                  <aggregatedLimitAmountSystem>0.00</aggregatedLimitAmountSystem>
+                  <coverExtCodeVORef extCode="62000041" id="62000041">Yer Kayması - Muhteviyat</coverExtCodeVORef>
+                  <perClaimantAmount>0.00</perClaimantAmount>
+                  <coverInsuranceAmount>90000.00</coverInsuranceAmount>
+                  <coverType>2</coverType>
+                  <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+                  <aggregatedLimitAmount>0.00</aggregatedLimitAmount>
+                  <productLineTypeVORef id="62000041">Yer Kayması - Muhteviyat</productLineTypeVORef>
+                  <productLineOptionVORef id="62022869">Yer Kayması - Muhteviyat</productLineOptionVORef>
+                </childCoverVO>
+              </childCoverVOList>
+              <productLineOptionVORef id="62022867">Yer Kayması</productLineOptionVORef>
+            </coverIVO>
+            <coverIVO>
+              <coverInsuranceAmountSystem>90000.00</coverInsuranceAmountSystem>
+              <aggregatedLimitAmountSystem>0.00</aggregatedLimitAmountSystem>
+              <coverExtCodeVORef extCode="61349425" id="61349425">Duman</coverExtCodeVORef>
+              <perClaimantAmount>0.00</perClaimantAmount>
+              <coverInsuranceAmount>90000.00</coverInsuranceAmount>
+              <coverType>1</coverType>
+              <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+              <aggregatedLimitAmount>0.00</aggregatedLimitAmount>
+              <productLineTypeVORef id="61349324">Duman</productLineTypeVORef>
+              <productLineOptionVORef id="62022870">Duman</productLineOptionVORef>
+            </coverIVO>
+            <coverIVO>
+              <coverInsuranceAmountSystem>90000.00</coverInsuranceAmountSystem>
+              <aggregatedLimitAmountSystem>0.00</aggregatedLimitAmountSystem>
+              <coverExtCodeVORef extCode="61349426" id="61349426">Kar Ağırlığı</coverExtCodeVORef>
+              <perClaimantAmount>0.00</perClaimantAmount>
+              <coverInsuranceAmount>90000.00</coverInsuranceAmount>
+              <coverType>2</coverType>
+              <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+              <aggregatedLimitAmount>0.00</aggregatedLimitAmount>
+              <productLineTypeVORef id="61349325">Kar Ağırlığı</productLineTypeVORef>
+              <productLineOptionVORef id="62022871">Kar Ağırlığı</productLineOptionVORef>
+            </coverIVO>
+            <coverIVO>
+              <coverInsuranceAmountSystem>90000.00</coverInsuranceAmountSystem>
+              <aggregatedLimitAmountSystem>0.00</aggregatedLimitAmountSystem>
+              <coverExtCodeVORef extCode="61349427" id="61349427">Kara Taşıtları Çarpması</coverExtCodeVORef>
+              <perClaimantAmount>0.00</perClaimantAmount>
+              <coverInsuranceAmount>90000.00</coverInsuranceAmount>
+              <coverType>1</coverType>
+              <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+              <aggregatedLimitAmount>0.00</aggregatedLimitAmount>
+              <productLineTypeVORef id="61349326">Kara Taşıtları Çarpması</productLineTypeVORef>
+              <productLineOptionVORef id="62022872">Kara Taşıtları Çarpması</productLineOptionVORef>
+            </coverIVO>
+            <coverIVO>
+              <coverInsuranceAmountSystem>90000.00</coverInsuranceAmountSystem>
+              <aggregatedLimitAmountSystem>0.00</aggregatedLimitAmountSystem>
+              <coverExtCodeVORef extCode="61349428" id="61349428">Hava Taşıtları Çarpması</coverExtCodeVORef>
+              <perClaimantAmount>0.00</perClaimantAmount>
+              <coverInsuranceAmount>90000.00</coverInsuranceAmount>
+              <coverType>1</coverType>
+              <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+              <aggregatedLimitAmount>0.00</aggregatedLimitAmount>
+              <productLineTypeVORef id="61349327">Hava Taşıtları Çarpması</productLineTypeVORef>
+              <productLineOptionVORef id="62022873">Hava Taşıtları Çarpması</productLineOptionVORef>
+            </coverIVO>
+            <coverIVO>
+              <coverInsuranceAmountSystem>90000.00</coverInsuranceAmountSystem>
+              <aggregatedLimitAmountSystem>0.00</aggregatedLimitAmountSystem>
+              <coverExtCodeVORef extCode="61349431" id="61349431">Deprem ve Yanardağ Püskürmesi - Muhteviyat</coverExtCodeVORef>
+              <perClaimantAmount>0.00</perClaimantAmount>
+              <coverInsuranceAmount>90000.00</coverInsuranceAmount>
+              <coverType>2</coverType>
+              <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+              <aggregatedLimitAmount>0.00</aggregatedLimitAmount>
+              <productLineTypeVORef id="61349331">Deprem ve Yanardağ Püskürmesi - Muhteviyat</productLineTypeVORef>
+              <productLineOptionVORef id="62022874">Deprem ve Yanardağ Püskürmesi - Muhteviyat</productLineOptionVORef>
+            </coverIVO>
+            <coverIVO>
+              <coverInsuranceAmountSystem>90000.00</coverInsuranceAmountSystem>
+              <aggregatedLimitAmountSystem>0.00</aggregatedLimitAmountSystem>
+              <coverExtCodeVORef extCode="61349432" id="61349432">GLKHHKNH - Terör</coverExtCodeVORef>
+              <perClaimantAmount>0.00</perClaimantAmount>
+              <coverInsuranceAmount>90000.00</coverInsuranceAmount>
+              <coverType>1</coverType>
+              <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+              <aggregatedLimitAmount>0.00</aggregatedLimitAmount>
+              <productLineTypeVORef id="61349332">GLKHHKNH - Terör</productLineTypeVORef>
+              <productLineOptionVORef id="62022875">GLKHHKNH - Terör</productLineOptionVORef>
+            </coverIVO>
+            <coverIVO>
+              <coverInsuranceAmountSystem>9000.00</coverInsuranceAmountSystem>
+              <aggregatedLimitAmountSystem>9000.00</aggregatedLimitAmountSystem>
+              <coverExtCodeVORef extCode="61349433" id="61349433">Dolu</coverExtCodeVORef>
+              <perClaimantAmount>0.00</perClaimantAmount>
+              <coverInsuranceAmount>9000.00</coverInsuranceAmount>
+              <coverType>2</coverType>
+              <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+              <aggregatedLimitAmount>9000.00</aggregatedLimitAmount>
+              <productLineTypeVORef id="61349333">Dolu</productLineTypeVORef>
+              <childCoverVOList>
+                <childCoverVO>
+                  <coverInsuranceAmountSystem>9000.00</coverInsuranceAmountSystem>
+                  <aggregatedLimitAmountSystem>9000.00</aggregatedLimitAmountSystem>
+                  <coverExtCodeVORef extCode="62000043" id="62000043">Dolu - Muhteviyat</coverExtCodeVORef>
+                  <perClaimantAmount>0.00</perClaimantAmount>
+                  <coverInsuranceAmount>9000.00</coverInsuranceAmount>
+                  <coverType>2</coverType>
+                  <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+                  <aggregatedLimitAmount>9000.00</aggregatedLimitAmount>
+                  <productLineTypeVORef id="62000043">Dolu - Muhteviyat</productLineTypeVORef>
+                  <productLineOptionVORef id="62022878">Dolu - Muhteviyat</productLineOptionVORef>
+                </childCoverVO>
+              </childCoverVOList>
+              <productLineOptionVORef id="62022876">Dolu</productLineOptionVORef>
+            </coverIVO>
+            <coverIVO>
+              <coverInsuranceAmountSystem>6800.00</coverInsuranceAmountSystem>
+              <aggregatedLimitAmountSystem>6800.00</aggregatedLimitAmountSystem>
+              <coverExtCodeVORef extCode="61349446" id="61349446">Komşuluk Sorumluluk</coverExtCodeVORef>
+              <perClaimantAmount>0.00</perClaimantAmount>
+              <coverInsuranceAmount>6800.00</coverInsuranceAmount>
+              <coverType>2</coverType>
+              <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+              <aggregatedLimitAmount>6800.00</aggregatedLimitAmount>
+              <productLineTypeVORef id="61349346">Komşuluk Sorumluluk</productLineTypeVORef>
+              <childCoverVOList>
+                <childCoverVO>
+                  <coverInsuranceAmountSystem>6800.00</coverInsuranceAmountSystem>
+                  <aggregatedLimitAmountSystem>6800.00</aggregatedLimitAmountSystem>
+                  <coverExtCodeVORef extCode="61349447" id="61349447">Yangın, İnfilak</coverExtCodeVORef>
+                  <perClaimantAmount>0.00</perClaimantAmount>
+                  <coverInsuranceAmount>6800.00</coverInsuranceAmount>
+                  <coverType>1</coverType>
+                  <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+                  <aggregatedLimitAmount>6800.00</aggregatedLimitAmount>
+                  <productLineTypeVORef id="61349347">Yangın, İnfilak</productLineTypeVORef>
+                  <productLineOptionVORef id="62022885">Yangın, İnfilak</productLineOptionVORef>
+                </childCoverVO>
+                <childCoverVO>
+                  <coverInsuranceAmountSystem>6800.00</coverInsuranceAmountSystem>
+                  <aggregatedLimitAmountSystem>6800.00</aggregatedLimitAmountSystem>
+                  <coverExtCodeVORef extCode="61349448" id="61349448">Dahili Su - Sorumluluk</coverExtCodeVORef>
+                  <perClaimantAmount>0.00</perClaimantAmount>
+                  <coverInsuranceAmount>6800.00</coverInsuranceAmount>
+                  <coverType>1</coverType>
+                  <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+                  <aggregatedLimitAmount>6800.00</aggregatedLimitAmount>
+                  <productLineTypeVORef id="61349348">Dahili Su - Sorumluluk</productLineTypeVORef>
+                  <productLineOptionVORef id="62022886">Dahili Su - Sorumluluk</productLineOptionVORef>
+                </childCoverVO>
+                <childCoverVO>
+                  <coverInsuranceAmountSystem>6800.00</coverInsuranceAmountSystem>
+                  <aggregatedLimitAmountSystem>6800.00</aggregatedLimitAmountSystem>
+                  <coverExtCodeVORef extCode="61349451" id="61349451">Duman - Sorumluluk</coverExtCodeVORef>
+                  <perClaimantAmount>0.00</perClaimantAmount>
+                  <coverInsuranceAmount>6800.00</coverInsuranceAmount>
+                  <coverType>1</coverType>
+                  <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+                  <aggregatedLimitAmount>6800.00</aggregatedLimitAmount>
+                  <productLineTypeVORef id="61349351">Duman - Sorumluluk</productLineTypeVORef>
+                  <productLineOptionVORef id="62022888">Duman - Sorumluluk</productLineOptionVORef>
+                </childCoverVO>
+                <childCoverVO>
+                  <coverInsuranceAmountSystem>6800.00</coverInsuranceAmountSystem>
+                  <aggregatedLimitAmountSystem>6800.00</aggregatedLimitAmountSystem>
+                  <coverExtCodeVORef extCode="61349449" id="61349449">GLKHHKNH - Terör - Sorumluluk</coverExtCodeVORef>
+                  <perClaimantAmount>0.00</perClaimantAmount>
+                  <coverInsuranceAmount>6800.00</coverInsuranceAmount>
+                  <coverType>1</coverType>
+                  <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+                  <aggregatedLimitAmount>6800.00</aggregatedLimitAmount>
+                  <productLineTypeVORef id="61349349">GLKHHKNH - Terör - Sorumluluk</productLineTypeVORef>
+                  <productLineOptionVORef id="62022887">GLKHHKNH - Terör - Sorumluluk</productLineOptionVORef>
+                </childCoverVO>
+              </childCoverVOList>
+              <productLineOptionVORef id="62022884">Komşuluk Sorumluluk</productLineOptionVORef>
+            </coverIVO>
+            <coverIVO>
+              <coverInsuranceAmountSystem>6800.00</coverInsuranceAmountSystem>
+              <aggregatedLimitAmountSystem>6800.00</aggregatedLimitAmountSystem>
+              <coverExtCodeVORef extCode="61349752" id="61349752">Kiracılık/Malik Sorumluluk</coverExtCodeVORef>
+              <perClaimantAmount>0.00</perClaimantAmount>
+              <coverInsuranceAmount>6800.00</coverInsuranceAmount>
+              <coverType>2</coverType>
+              <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+              <aggregatedLimitAmount>6800.00</aggregatedLimitAmount>
+              <productLineTypeVORef id="61349614">Kiracılık/Malik Sorumluluk</productLineTypeVORef>
+              <childCoverVOList>
+                <childCoverVO>
+                  <coverInsuranceAmountSystem>6800.00</coverInsuranceAmountSystem>
+                  <aggregatedLimitAmountSystem>6800.00</aggregatedLimitAmountSystem>
+                  <coverExtCodeVORef extCode="61349753" id="61349753">Yangın, İnfilak</coverExtCodeVORef>
+                  <perClaimantAmount>0.00</perClaimantAmount>
+                  <coverInsuranceAmount>6800.00</coverInsuranceAmount>
+                  <coverType>1</coverType>
+                  <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+                  <aggregatedLimitAmount>6800.00</aggregatedLimitAmount>
+                  <productLineTypeVORef id="61349615">Yangın, İnfilak</productLineTypeVORef>
+                  <productLineOptionVORef id="62022977">Yangın, İnfilak</productLineOptionVORef>
+                </childCoverVO>
+                <childCoverVO>
+                  <coverInsuranceAmountSystem>6800.00</coverInsuranceAmountSystem>
+                  <aggregatedLimitAmountSystem>6800.00</aggregatedLimitAmountSystem>
+                  <coverExtCodeVORef extCode="61349754" id="61349754">Dahili Su - Sorumluluk</coverExtCodeVORef>
+                  <perClaimantAmount>0.00</perClaimantAmount>
+                  <coverInsuranceAmount>6800.00</coverInsuranceAmount>
+                  <coverType>1</coverType>
+                  <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+                  <aggregatedLimitAmount>6800.00</aggregatedLimitAmount>
+                  <productLineTypeVORef id="61349616">Dahili Su - Sorumluluk</productLineTypeVORef>
+                  <productLineOptionVORef id="62022978">Dahili Su - Sorumluluk</productLineOptionVORef>
+                </childCoverVO>
+                <childCoverVO>
+                  <coverInsuranceAmountSystem>6800.00</coverInsuranceAmountSystem>
+                  <aggregatedLimitAmountSystem>6800.00</aggregatedLimitAmountSystem>
+                  <coverExtCodeVORef extCode="61349756" id="61349756">Duman - Sorumluluk</coverExtCodeVORef>
+                  <perClaimantAmount>0.00</perClaimantAmount>
+                  <coverInsuranceAmount>6800.00</coverInsuranceAmount>
+                  <coverType>1</coverType>
+                  <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+                  <aggregatedLimitAmount>6800.00</aggregatedLimitAmount>
+                  <productLineTypeVORef id="61349618">Duman - Sorumluluk</productLineTypeVORef>
+                  <productLineOptionVORef id="62022980">Duman - Sorumluluk</productLineOptionVORef>
+                </childCoverVO>
+                <childCoverVO>
+                  <coverInsuranceAmountSystem>6800.00</coverInsuranceAmountSystem>
+                  <aggregatedLimitAmountSystem>6800.00</aggregatedLimitAmountSystem>
+                  <coverExtCodeVORef extCode="61349755" id="61349755">GLKHHKNH - Terör - Sorumluluk</coverExtCodeVORef>
+                  <perClaimantAmount>0.00</perClaimantAmount>
+                  <coverInsuranceAmount>6800.00</coverInsuranceAmount>
+                  <coverType>1</coverType>
+                  <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+                  <aggregatedLimitAmount>6800.00</aggregatedLimitAmount>
+                  <productLineTypeVORef id="61349617">GLKHHKNH - Terör - Sorumluluk</productLineTypeVORef>
+                  <productLineOptionVORef id="62022979">GLKHHKNH - Terör - Sorumluluk</productLineOptionVORef>
+                </childCoverVO>
+              </childCoverVOList>
+              <productLineOptionVORef id="62022976">Kiracılık/Malik Sorumluluk</productLineOptionVORef>
+            </coverIVO>
+            <coverIVO>
+              <coverInsuranceAmountSystem>3600.00</coverInsuranceAmountSystem>
+              <aggregatedLimitAmountSystem>3600.00</aggregatedLimitAmountSystem>
+              <coverExtCodeVORef extCode="61349436" id="61349436">Enkaz Kaldırma Masrafları</coverExtCodeVORef>
+              <perClaimantAmount>0.00</perClaimantAmount>
+              <coverInsuranceAmount>3600.00</coverInsuranceAmount>
+              <coverType>2</coverType>
+              <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+              <aggregatedLimitAmount>3600.00</aggregatedLimitAmount>
+              <productLineTypeVORef id="61349336">Enkaz Kaldırma Masrafları</productLineTypeVORef>
+              <childCoverVOList>
+                <childCoverVO>
+                  <coverInsuranceAmountSystem>3600.00</coverInsuranceAmountSystem>
+                  <aggregatedLimitAmountSystem>3600.00</aggregatedLimitAmountSystem>
+                  <coverExtCodeVORef extCode="61349438" id="61349438">Enkaz Kaldırma Masrafları - Muhteviyat</coverExtCodeVORef>
+                  <perClaimantAmount>0.00</perClaimantAmount>
+                  <coverInsuranceAmount>3600.00</coverInsuranceAmount>
+                  <coverType>1</coverType>
+                  <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+                  <aggregatedLimitAmount>3600.00</aggregatedLimitAmount>
+                  <productLineTypeVORef id="61349338">Enkaz Kaldırma Masrafları - Muhteviyat</productLineTypeVORef>
+                  <productLineOptionVORef id="62022881">Enkaz Kaldırma Masrafları - Muhteviyat</productLineOptionVORef>
+                </childCoverVO>
+              </childCoverVOList>
+              <productLineOptionVORef id="62022879">Enkaz Kaldırma Masrafları</productLineOptionVORef>
+            </coverIVO>
+            <coverIVO>
+              <coverInsuranceAmountSystem>4500.00</coverInsuranceAmountSystem>
+              <aggregatedLimitAmountSystem>4500.00</aggregatedLimitAmountSystem>
+              <coverExtCodeVORef extCode="61349453" id="61349453">Alternatif İşyeri Değişikliği Masrafları</coverExtCodeVORef>
+              <perClaimantAmount>0.00</perClaimantAmount>
+              <coverInsuranceAmount>4500.00</coverInsuranceAmount>
+              <coverType>2</coverType>
+              <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+              <aggregatedLimitAmount>4500.00</aggregatedLimitAmount>
+              <productLineTypeVORef id="61349353">Alternatif İşyeri Değişikliği Masrafları</productLineTypeVORef>
+              <productLineOptionVORef id="62022889">Alternatif İşyeri Değişikliği Masrafları</productLineOptionVORef>
+            </coverIVO>
+            <coverIVO>
+              <coverInsuranceAmountSystem>4500.00</coverInsuranceAmountSystem>
+              <aggregatedLimitAmountSystem>4500.00</aggregatedLimitAmountSystem>
+              <coverExtCodeVORef extCode="61349455" id="61349455">Kira Kaybı</coverExtCodeVORef>
+              <perClaimantAmount>0.00</perClaimantAmount>
+              <coverInsuranceAmount>4500.00</coverInsuranceAmount>
+              <coverType>2</coverType>
+              <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+              <aggregatedLimitAmount>4500.00</aggregatedLimitAmount>
+              <productLineTypeVORef id="61349355">Kira Kaybı</productLineTypeVORef>
+              <productLineOptionVORef id="62022891">Kira Kaybı</productLineOptionVORef>
+            </coverIVO>
+            <coverIVO>
+              <coverInsuranceAmountSystem>4500.00</coverInsuranceAmountSystem>
+              <aggregatedLimitAmountSystem>4500.00</aggregatedLimitAmountSystem>
+              <coverExtCodeVORef extCode="61349456" id="61349456">İş Durması</coverExtCodeVORef>
+              <perClaimantAmount>0.00</perClaimantAmount>
+              <coverInsuranceAmount>4500.00</coverInsuranceAmount>
+              <coverType>2</coverType>
+              <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+              <aggregatedLimitAmount>4500.00</aggregatedLimitAmount>
+              <productLineTypeVORef id="61349356">İş Durması</productLineTypeVORef>
+              <productLineOptionVORef id="62022892">İş Durması</productLineOptionVORef>
+            </coverIVO>
+            <coverIVO>
+              <coverInsuranceAmountSystem>4500.00</coverInsuranceAmountSystem>
+              <aggregatedLimitAmountSystem>4500.00</aggregatedLimitAmountSystem>
+              <coverExtCodeVORef extCode="61349457" id="61349457">Çalışanlara Ait Özel Eşyalar</coverExtCodeVORef>
+              <perClaimantAmount>0.00</perClaimantAmount>
+              <coverInsuranceAmount>4500.00</coverInsuranceAmount>
+              <coverType>2</coverType>
+              <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+              <aggregatedLimitAmount>4500.00</aggregatedLimitAmount>
+              <productLineTypeVORef id="61349357">Çalışanlara Ait Özel Eşyalar</productLineTypeVORef>
+              <productLineOptionVORef id="62022893">Çalışanlara Ait Özel Eşyalar</productLineOptionVORef>
+            </coverIVO>
+            <coverIVO>
+              <coverInsuranceAmountSystem>0.00</coverInsuranceAmountSystem>
+              <aggregatedLimitAmountSystem>0.00</aggregatedLimitAmountSystem>
+              <coverExtCodeVORef extCode="61349458" id="61349458">Anadolu Hizmet - İşyeri</coverExtCodeVORef>
+              <perClaimantAmount>0.00</perClaimantAmount>
+              <coverInsuranceAmount>0.00</coverInsuranceAmount>
+              <coverType>2</coverType>
+              <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+              <aggregatedLimitAmount>0.00</aggregatedLimitAmount>
+              <productLineTypeVORef id="61349358">Anadolu Hizmet - İşyeri</productLineTypeVORef>
+              <productLineOptionVORef id="62022894">Anadolu Hizmet - İşyeri</productLineOptionVORef>
+            </coverIVO>
+            <coverIVO>
+              <coverInsuranceAmountSystem>0.00</coverInsuranceAmountSystem>
+              <aggregatedLimitAmountSystem>0.00</aggregatedLimitAmountSystem>
+              <coverExtCodeVORef extCode="61349459" id="61349459">Anadolu Acil Sağlık Hizmetleri</coverExtCodeVORef>
+              <perClaimantAmount>0.00</perClaimantAmount>
+              <coverInsuranceAmount>0.00</coverInsuranceAmount>
+              <coverType>2</coverType>
+              <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+              <aggregatedLimitAmount>0.00</aggregatedLimitAmount>
+              <productLineTypeVORef id="61349359">Anadolu Acil Sağlık Hizmetleri</productLineTypeVORef>
+              <productLineOptionVORef id="62022895">Anadolu Acil Sağlık Hizmetleri</productLineOptionVORef>
+            </coverIVO>
+            <coverIVO>
+              <coverInsuranceAmountSystem>50000.00</coverInsuranceAmountSystem>
+              <aggregatedLimitAmountSystem>0.00</aggregatedLimitAmountSystem>
+              <coverExtCodeVORef extCode="61349462" id="61349462">Cam Kırılması</coverExtCodeVORef>
+              <perClaimantAmount>0.00</perClaimantAmount>
+              <coverInsuranceAmount>50000.00</coverInsuranceAmount>
+              <coverType>2</coverType>
+              <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+              <aggregatedLimitAmount>0.00</aggregatedLimitAmount>
+              <productLineTypeVORef id="61349362">Cam Kırılması</productLineTypeVORef>
+              <productLineOptionVORef id="62022898">Cam Kırılması</productLineOptionVORef>
+            </coverIVO>
+            <coverIVO>
+              <coverInsuranceAmountSystem>40000.00</coverInsuranceAmountSystem>
+              <aggregatedLimitAmountSystem>40000.00</aggregatedLimitAmountSystem>
+              <coverExtCodeVORef extCode="61349463" id="61349463">Hukuksal Koruma</coverExtCodeVORef>
+              <perClaimantAmount>0.00</perClaimantAmount>
+              <coverInsuranceAmount>40000.00</coverInsuranceAmount>
+              <coverType>2</coverType>
+              <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+              <aggregatedLimitAmount>40000.00</aggregatedLimitAmount>
+              <productLineTypeVORef id="61349363">Hukuksal Koruma</productLineTypeVORef>
+              <productLineOptionVORef id="62022899">Hukuksal Koruma</productLineOptionVORef>
+            </coverIVO>
+            <coverIVO>
+              <coverInsuranceAmountSystem>0.00</coverInsuranceAmountSystem>
+              <aggregatedLimitAmountSystem>0.00</aggregatedLimitAmountSystem>
+              <coverExtCodeVORef extCode="61349486" id="61349486">Primsiz Teminatlar</coverExtCodeVORef>
+              <perClaimantAmount>0.00</perClaimantAmount>
+              <coverInsuranceAmount>0.00</coverInsuranceAmount>
+              <coverType>1</coverType>
+              <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+              <aggregatedLimitAmount>0.00</aggregatedLimitAmount>
+              <productLineTypeVORef id="61349386">Primsiz Teminatlar</productLineTypeVORef>
+              <childCoverVOList>
+                <childCoverVO>
+                  <coverInsuranceAmountSystem>9000.00</coverInsuranceAmountSystem>
+                  <aggregatedLimitAmountSystem>9000.00</aggregatedLimitAmountSystem>
+                  <coverExtCodeVORef extCode="61349487" id="61349487">İzolasyon Eksikliği</coverExtCodeVORef>
+                  <perClaimantAmount>0.00</perClaimantAmount>
+                  <coverInsuranceAmount>9000.00</coverInsuranceAmount>
+                  <coverType>1</coverType>
+                  <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+                  <aggregatedLimitAmount>9000.00</aggregatedLimitAmount>
+                  <productLineTypeVORef id="61349387">İzolasyon Eksikliği</productLineTypeVORef>
+                  <productLineOptionVORef id="62022942">İzolasyon Eksikliği</productLineOptionVORef>
+                </childCoverVO>
+                <childCoverVO>
+                  <coverInsuranceAmountSystem>90000.00</coverInsuranceAmountSystem>
+                  <aggregatedLimitAmountSystem>90000.00</aggregatedLimitAmountSystem>
+                  <coverExtCodeVORef extCode="61349488" id="61349488">Sprinkler Sızıntısı</coverExtCodeVORef>
+                  <perClaimantAmount>0.00</perClaimantAmount>
+                  <coverInsuranceAmount>90000.00</coverInsuranceAmount>
+                  <coverType>1</coverType>
+                  <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+                  <aggregatedLimitAmount>90000.00</aggregatedLimitAmount>
+                  <productLineTypeVORef id="61349388">Sprinkler Sızıntısı</productLineTypeVORef>
+                  <productLineOptionVORef id="62022943">Sprinkler Sızıntısı</productLineOptionVORef>
+                </childCoverVO>
+                <childCoverVO>
+                  <coverInsuranceAmountSystem>4000.00</coverInsuranceAmountSystem>
+                  <aggregatedLimitAmountSystem>4000.00</aggregatedLimitAmountSystem>
+                  <coverExtCodeVORef extCode="61349680" id="61349680">Geçici Adres Nakli</coverExtCodeVORef>
+                  <perClaimantAmount>0.00</perClaimantAmount>
+                  <coverInsuranceAmount>4000.00</coverInsuranceAmount>
+                  <coverType>1</coverType>
+                  <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+                  <aggregatedLimitAmount>4000.00</aggregatedLimitAmount>
+                  <productLineTypeVORef id="61349541">Geçici Adres Nakli</productLineTypeVORef>
+                  <productLineOptionVORef id="62022944">Geçici Adres Nakli</productLineOptionVORef>
+                </childCoverVO>
+                <childCoverVO>
+                  <coverInsuranceAmountSystem>9000.00</coverInsuranceAmountSystem>
+                  <aggregatedLimitAmountSystem>9000.00</aggregatedLimitAmountSystem>
+                  <coverExtCodeVORef extCode="61349681" id="61349681">Emanete Bırakılan Muhteviyat</coverExtCodeVORef>
+                  <perClaimantAmount>0.00</perClaimantAmount>
+                  <coverInsuranceAmount>9000.00</coverInsuranceAmount>
+                  <coverType>1</coverType>
+                  <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+                  <aggregatedLimitAmount>9000.00</aggregatedLimitAmount>
+                  <productLineTypeVORef id="61349542">Emanete Bırakılan Muhteviyat</productLineTypeVORef>
+                  <productLineOptionVORef id="62022945">Emanete Bırakılan Muhteviyat</productLineOptionVORef>
+                </childCoverVO>
+                <childCoverVO>
+                  <coverInsuranceAmountSystem>2000.00</coverInsuranceAmountSystem>
+                  <aggregatedLimitAmountSystem>2000.00</aggregatedLimitAmountSystem>
+                  <coverExtCodeVORef extCode="61349683" id="61349683">Elektrik Hasarları</coverExtCodeVORef>
+                  <perClaimantAmount>0.00</perClaimantAmount>
+                  <coverInsuranceAmount>2000.00</coverInsuranceAmount>
+                  <coverType>1</coverType>
+                  <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+                  <aggregatedLimitAmount>2000.00</aggregatedLimitAmount>
+                  <productLineTypeVORef id="61349544">Elektrik Hasarları</productLineTypeVORef>
+                  <productLineOptionVORef id="62022947">Elektrik Hasarları</productLineOptionVORef>
+                </childCoverVO>
+                <childCoverVO>
+                  <coverInsuranceAmountSystem>4500.00</coverInsuranceAmountSystem>
+                  <aggregatedLimitAmountSystem>4500.00</aggregatedLimitAmountSystem>
+                  <coverExtCodeVORef extCode="61349684" id="61349684">Yakıt Sızması Teminatı</coverExtCodeVORef>
+                  <perClaimantAmount>0.00</perClaimantAmount>
+                  <coverInsuranceAmount>4500.00</coverInsuranceAmount>
+                  <coverType>1</coverType>
+                  <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+                  <aggregatedLimitAmount>4500.00</aggregatedLimitAmount>
+                  <productLineTypeVORef id="61349545">Yakıt Sızması Teminatı</productLineTypeVORef>
+                  <productLineOptionVORef id="62022948">Yakıt Sızması Teminatı</productLineOptionVORef>
+                </childCoverVO>
+                <childCoverVO>
+                  <coverInsuranceAmountSystem>4500.00</coverInsuranceAmountSystem>
+                  <aggregatedLimitAmountSystem>4500.00</aggregatedLimitAmountSystem>
+                  <coverExtCodeVORef extCode="61349703" id="61349703">Peyzaj</coverExtCodeVORef>
+                  <perClaimantAmount>0.00</perClaimantAmount>
+                  <coverInsuranceAmount>4500.00</coverInsuranceAmount>
+                  <coverType>1</coverType>
+                  <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+                  <aggregatedLimitAmount>4500.00</aggregatedLimitAmount>
+                  <productLineTypeVORef id="61349564">Peyzaj</productLineTypeVORef>
+                  <productLineOptionVORef id="62022961">Peyzaj</productLineOptionVORef>
+                </childCoverVO>
+                <childCoverVO>
+                  <coverInsuranceAmountSystem>9000.00</coverInsuranceAmountSystem>
+                  <aggregatedLimitAmountSystem>9000.00</aggregatedLimitAmountSystem>
+                  <coverExtCodeVORef extCode="61349704" id="61349704">Bina Sabit Tesisat Hırsızlık</coverExtCodeVORef>
+                  <perClaimantAmount>0.00</perClaimantAmount>
+                  <coverInsuranceAmount>9000.00</coverInsuranceAmount>
+                  <coverType>1</coverType>
+                  <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+                  <aggregatedLimitAmount>9000.00</aggregatedLimitAmount>
+                  <productLineTypeVORef id="61349565">Bina Sabit Tesisat Hırsızlık</productLineTypeVORef>
+                  <productLineOptionVORef id="62022962">Bina Sabit Tesisat Hırsızlık</productLineOptionVORef>
+                </childCoverVO>
+                <childCoverVO>
+                  <coverInsuranceAmountSystem>4500.00</coverInsuranceAmountSystem>
+                  <aggregatedLimitAmountSystem>4500.00</aggregatedLimitAmountSystem>
+                  <coverExtCodeVORef extCode="61349711" id="61349711">Alçı Tavan Düşmesi</coverExtCodeVORef>
+                  <perClaimantAmount>0.00</perClaimantAmount>
+                  <coverInsuranceAmount>4500.00</coverInsuranceAmount>
+                  <coverType>1</coverType>
+                  <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+                  <aggregatedLimitAmount>4500.00</aggregatedLimitAmount>
+                  <productLineTypeVORef id="61349572">Alçı Tavan Düşmesi</productLineTypeVORef>
+                  <productLineOptionVORef id="62022969">Alçı Tavan Düşmesi</productLineOptionVORef>
+                </childCoverVO>
+                <childCoverVO>
+                  <coverInsuranceAmountSystem>1800.00</coverInsuranceAmountSystem>
+                  <aggregatedLimitAmountSystem>1800.00</aggregatedLimitAmountSystem>
+                  <coverExtCodeVORef extCode="61349713" id="61349713">Forklift Çarpması</coverExtCodeVORef>
+                  <perClaimantAmount>0.00</perClaimantAmount>
+                  <coverInsuranceAmount>1800.00</coverInsuranceAmount>
+                  <coverType>1</coverType>
+                  <perClaimantAmountSystem>0.00</perClaimantAmountSystem>
+                  <aggregatedLimitAmount>1800.00</aggregatedLimitAmount>
+                  <productLineTypeVORef id="61349574">Forklift Çarpması</productLineTypeVORef>
+                  <productLineOptionVORef id="62022971">Forklift Çarpması</productLineOptionVORef>
+                </childCoverVO>
+              </childCoverVOList>
+              <productLineOptionVORef id="62022941">Primsiz Teminatlar</productLineOptionVORef>
+            </coverIVO>
+          </coverIVOList>
+          <policySummary>
+            <netPremiumSystem>2834.80</netPremiumSystem>
+            <grossPremiumSystem>3000.00</grossPremiumSystem>
+            <commissionFeeSystem>566.97</commissionFeeSystem>
+            <paymentPlan>
+              <totalInstallmentsAmounts>3000.00</totalInstallmentsAmounts>
+              <currencyRateTypeVORef extCode="CBSR" id="1000001">Central Bank Selling Rate - CBSR</currencyRateTypeVORef>
+              <installmentsList>
+                <installments>
+                  <installmentAmountSystem>3000.00</installmentAmountSystem>
+                  <installmentAmount>3000.00</installmentAmount>
+                  <installmentBalanceSystem>3000.00</installmentBalanceSystem>
+                  <dueDate>2025-12-03T00:00:00</dueDate>
+                  <installmentCreditDebitVORef extCode="1" id="1">Alacak</installmentCreditDebitVORef>
+                  <installmentNumber>1</installmentNumber>
+                  <installmentBalance>3000.00</installmentBalance>
+                  <paidInstallmentAmount>0.00</paidInstallmentAmount>
+                  <installmentStatusVORef extCode="6" id="6">Hazır</installmentStatusVORef>
+                  <paidInstallmentAmountSystem>0.00</paidInstallmentAmountSystem>
+                  <payerExtNum>400239187</payerExtNum>
+                  <isPayerInsured>true</isPayerInsured>
+                </installments>
+              </installmentsList>
+              <paymentTermsLstList>
+                <paymentTermsLst>
+                  <paymentsTermsVORef extCode="2000093" id="2000093">4 Taksit</paymentsTermsVORef>
+                  <collectionMethodVORef extCode="1" id="1">Nakit</collectionMethodVORef>
+                  <numOfInstallment>4</numOfInstallment>
+                </paymentTermsLst>
+                <paymentTermsLst>
+                  <paymentsTermsVORef extCode="2000094" id="2000094">2 Taksit</paymentsTermsVORef>
+                  <collectionMethodVORef extCode="1" id="1">Nakit</collectionMethodVORef>
+                  <numOfInstallment>2</numOfInstallment>
+                </paymentTermsLst>
+                <paymentTermsLst>
+                  <paymentsTermsVORef extCode="2000095" id="2000095">%25 Peşin + 5 Taksit</paymentsTermsVORef>
+                  <collectionMethodVORef extCode="1" id="1">Nakit</collectionMethodVORef>
+                  <numOfInstallment>5</numOfInstallment>
+                </paymentTermsLst>
+                <paymentTermsLst>
+                  <paymentsTermsVORef extCode="2000097" id="2000097">1 Taksit</paymentsTermsVORef>
+                  <collectionMethodVORef extCode="1" id="1">Nakit</collectionMethodVORef>
+                  <numOfInstallment>1</numOfInstallment>
+                </paymentTermsLst>
+                <paymentTermsLst>
+                  <paymentsTermsVORef extCode="2000098" id="2000098">3 Taksit</paymentsTermsVORef>
+                  <collectionMethodVORef extCode="1" id="1">Nakit</collectionMethodVORef>
+                  <numOfInstallment>3</numOfInstallment>
+                </paymentTermsLst>
+                <paymentTermsLst>
+                  <paymentsTermsVORef extCode="2000420" id="2000420">%25 Peşin + 6 Taksit</paymentsTermsVORef>
+                  <collectionMethodVORef extCode="1" id="1">Nakit</collectionMethodVORef>
+                  <numOfInstallment>6</numOfInstallment>
+                </paymentTermsLst>
+                <paymentTermsLst>
+                  <paymentsTermsVORef extCode="2000425" id="2000425">7 Taksit</paymentsTermsVORef>
+                  <collectionMethodVORef extCode="1" id="1">Nakit</collectionMethodVORef>
+                  <numOfInstallment>7</numOfInstallment>
+                </paymentTermsLst>
+                <paymentTermsLst>
+                  <paymentsTermsVORef extCode="2000426" id="2000426">6 Taksit</paymentsTermsVORef>
+                  <collectionMethodVORef extCode="1" id="1">Nakit</collectionMethodVORef>
+                  <numOfInstallment>6</numOfInstallment>
+                </paymentTermsLst>
+                <paymentTermsLst>
+                  <paymentsTermsVORef extCode="1000024" id="1000024">7 Taksit</paymentsTermsVORef>
+                  <collectionMethodVORef extCode="2" id="2">Otomatik Ödeme</collectionMethodVORef>
+                  <numOfInstallment>7</numOfInstallment>
+                </paymentTermsLst>
+                <paymentTermsLst>
+                  <paymentsTermsVORef extCode="1000026" id="1000026">6 Taksit</paymentsTermsVORef>
+                  <collectionMethodVORef extCode="2" id="2">Otomatik Ödeme</collectionMethodVORef>
+                  <numOfInstallment>6</numOfInstallment>
+                </paymentTermsLst>
+                <paymentTermsLst>
+                  <paymentsTermsVORef extCode="2000086" id="2000086">4 Taksit</paymentsTermsVORef>
+                  <collectionMethodVORef extCode="2" id="2">Otomatik Ödeme</collectionMethodVORef>
+                  <numOfInstallment>4</numOfInstallment>
+                </paymentTermsLst>
+                <paymentTermsLst>
+                  <paymentsTermsVORef extCode="2000087" id="2000087">5 Taksit</paymentsTermsVORef>
+                  <collectionMethodVORef extCode="2" id="2">Otomatik Ödeme</collectionMethodVORef>
+                  <numOfInstallment>5</numOfInstallment>
+                </paymentTermsLst>
+                <paymentTermsLst>
+                  <paymentsTermsVORef extCode="2000088" id="2000088">%25 Peşin + 5 Taksit</paymentsTermsVORef>
+                  <collectionMethodVORef extCode="2" id="2">Otomatik Ödeme</collectionMethodVORef>
+                  <numOfInstallment>5</numOfInstallment>
+                </paymentTermsLst>
+                <paymentTermsLst>
+                  <paymentsTermsVORef extCode="2000090" id="2000090">3 Taksit</paymentsTermsVORef>
+                  <collectionMethodVORef extCode="2" id="2">Otomatik Ödeme</collectionMethodVORef>
+                  <numOfInstallment>3</numOfInstallment>
+                </paymentTermsLst>
+                <paymentTermsLst>
+                  <paymentsTermsVORef extCode="2000091" id="2000091">1 Taksit</paymentsTermsVORef>
+                  <collectionMethodVORef extCode="2" id="2">Otomatik Ödeme</collectionMethodVORef>
+                  <numOfInstallment>1</numOfInstallment>
+                </paymentTermsLst>
+                <paymentTermsLst>
+                  <paymentsTermsVORef extCode="2000092" id="2000092">2 Taksit</paymentsTermsVORef>
+                  <collectionMethodVORef extCode="2" id="2">Otomatik Ödeme</collectionMethodVORef>
+                  <numOfInstallment>2</numOfInstallment>
+                </paymentTermsLst>
+                <paymentTermsLst>
+                  <paymentsTermsVORef extCode="2000419" id="2000419">%25 Peşin + 6 Taksit</paymentsTermsVORef>
+                  <collectionMethodVORef extCode="2" id="2">Otomatik Ödeme</collectionMethodVORef>
+                  <numOfInstallment>6</numOfInstallment>
+                </paymentTermsLst>
+                <paymentTermsLst>
+                  <paymentsTermsVORef extCode="2000389" id="2000389">SanalPos Peşin (1 Taksit)</paymentsTermsVORef>
+                  <collectionMethodVORef extCode="4" id="4">Sanal POS</collectionMethodVORef>
+                  <numOfInstallment>1</numOfInstallment>
+                </paymentTermsLst>
+                <paymentTermsLst>
+                  <paymentsTermsVORef extCode="2000390" id="2000390">Sanal POS Blokeli 2 Taksit</paymentsTermsVORef>
+                  <collectionMethodVORef extCode="4" id="4">Sanal POS</collectionMethodVORef>
+                  <numOfInstallment>2</numOfInstallment>
+                </paymentTermsLst>
+                <paymentTermsLst>
+                  <paymentsTermsVORef extCode="2000391" id="2000391">Sanal POS Blokeli 3 Taksit</paymentsTermsVORef>
+                  <collectionMethodVORef extCode="4" id="4">Sanal POS</collectionMethodVORef>
+                  <numOfInstallment>3</numOfInstallment>
+                </paymentTermsLst>
+                <paymentTermsLst>
+                  <paymentsTermsVORef extCode="2000392" id="2000392">Sanal POS Blokeli 4 Taksit</paymentsTermsVORef>
+                  <collectionMethodVORef extCode="4" id="4">Sanal POS</collectionMethodVORef>
+                  <numOfInstallment>4</numOfInstallment>
+                </paymentTermsLst>
+                <paymentTermsLst>
+                  <paymentsTermsVORef extCode="2000393" id="2000393">Sanal POS Blokeli 5 Taksit</paymentsTermsVORef>
+                  <collectionMethodVORef extCode="4" id="4">Sanal POS</collectionMethodVORef>
+                  <numOfInstallment>5</numOfInstallment>
+                </paymentTermsLst>
+                <paymentTermsLst>
+                  <paymentsTermsVORef extCode="2000394" id="2000394">Sanal POS Blokeli 6 Taksit</paymentsTermsVORef>
+                  <collectionMethodVORef extCode="4" id="4">Sanal POS</collectionMethodVORef>
+                  <numOfInstallment>6</numOfInstallment>
+                </paymentTermsLst>
+                <paymentTermsLst>
+                  <paymentsTermsVORef extCode="2000395" id="2000395">Sanal POS Blokeli 7 Taksit</paymentsTermsVORef>
+                  <collectionMethodVORef extCode="4" id="4">Sanal POS</collectionMethodVORef>
+                  <numOfInstallment>7</numOfInstallment>
+                </paymentTermsLst>
+                <paymentTermsLst>
+                  <paymentsTermsVORef extCode="2000396" id="2000396">Sanal POS Blokeli 8 Taksit</paymentsTermsVORef>
+                  <collectionMethodVORef extCode="4" id="4">Sanal POS</collectionMethodVORef>
+                  <numOfInstallment>8</numOfInstallment>
+                </paymentTermsLst>
+                <paymentTermsLst>
+                  <paymentsTermsVORef extCode="2000397" id="2000397">Sanal POS Blokeli 9 Taksit</paymentsTermsVORef>
+                  <collectionMethodVORef extCode="4" id="4">Sanal POS</collectionMethodVORef>
+                  <numOfInstallment>9</numOfInstallment>
+                </paymentTermsLst>
+                <paymentTermsLst>
+                  <paymentsTermsVORef extCode="20000000" id="20000000">Sanal POS Blokeli 10 Taksit</paymentsTermsVORef>
+                  <collectionMethodVORef extCode="4" id="4">Sanal POS</collectionMethodVORef>
+                  <numOfInstallment>10</numOfInstallment>
+                </paymentTermsLst>
+                <paymentTermsLst>
+                  <paymentsTermsVORef extCode="2000063" id="2000063">5 Taksit</paymentsTermsVORef>
+                  <collectionMethodVORef extCode="1" id="1">Nakit</collectionMethodVORef>
+                  <numOfInstallment>5</numOfInstallment>
+                </paymentTermsLst>
+                <paymentTermsLst>
+                  <paymentsTermsVORef extCode="2000064" id="2000064">7 Taksit</paymentsTermsVORef>
+                  <collectionMethodVORef extCode="2000002" id="2000002">Mail order</collectionMethodVORef>
+                  <numOfInstallment>7</numOfInstallment>
+                </paymentTermsLst>
+                <paymentTermsLst>
+                  <paymentsTermsVORef extCode="2000065" id="2000065">3 Taksit</paymentsTermsVORef>
+                  <collectionMethodVORef extCode="2000002" id="2000002">Mail order</collectionMethodVORef>
+                  <numOfInstallment>3</numOfInstallment>
+                </paymentTermsLst>
+                <paymentTermsLst>
+                  <paymentsTermsVORef extCode="2000066" id="2000066">2 Taksit</paymentsTermsVORef>
+                  <collectionMethodVORef extCode="2000002" id="2000002">Mail order</collectionMethodVORef>
+                  <numOfInstallment>2</numOfInstallment>
+                </paymentTermsLst>
+                <paymentTermsLst>
+                  <paymentsTermsVORef extCode="2000067" id="2000067">6 Taksit</paymentsTermsVORef>
+                  <collectionMethodVORef extCode="2000002" id="2000002">Mail order</collectionMethodVORef>
+                  <numOfInstallment>6</numOfInstallment>
+                </paymentTermsLst>
+                <paymentTermsLst>
+                  <paymentsTermsVORef extCode="2000068" id="2000068">%25 Peşin + 5 Taksit</paymentsTermsVORef>
+                  <collectionMethodVORef extCode="2000002" id="2000002">Mail order</collectionMethodVORef>
+                  <numOfInstallment>5</numOfInstallment>
+                </paymentTermsLst>
+                <paymentTermsLst>
+                  <paymentsTermsVORef extCode="2000069" id="2000069">1 Taksit</paymentsTermsVORef>
+                  <collectionMethodVORef extCode="2000002" id="2000002">Mail order</collectionMethodVORef>
+                  <numOfInstallment>1</numOfInstallment>
+                </paymentTermsLst>
+                <paymentTermsLst>
+                  <paymentsTermsVORef extCode="2000070" id="2000070">4 Taksit</paymentsTermsVORef>
+                  <collectionMethodVORef extCode="2000002" id="2000002">Mail order</collectionMethodVORef>
+                  <numOfInstallment>4</numOfInstallment>
+                </paymentTermsLst>
+                <paymentTermsLst>
+                  <paymentsTermsVORef extCode="2000075" id="2000075">5 Taksit</paymentsTermsVORef>
+                  <collectionMethodVORef extCode="2000002" id="2000002">Mail order</collectionMethodVORef>
+                  <numOfInstallment>5</numOfInstallment>
+                </paymentTermsLst>
+                <paymentTermsLst>
+                  <paymentsTermsVORef extCode="2000418" id="2000418">%25 Peşin + 6 Taksit</paymentsTermsVORef>
+                  <collectionMethodVORef extCode="2000002" id="2000002">Mail order</collectionMethodVORef>
+                  <numOfInstallment>6</numOfInstallment>
+                </paymentTermsLst>
+              </paymentTermsLstList>
+              <policyCurrencyVORef extCode="TRY" id="152">Türk Lirası</policyCurrencyVORef>
+              <payerExtNum>400239187</payerExtNum>
+              <paymentTerms>
+                <paymentsTermsVORef extCode="2000085" id="2000085">1 Taksit</paymentsTermsVORef>
+                <collectionMethodVORef extCode="4" id="4">Sanal POS</collectionMethodVORef>
+              </paymentTerms>
+            </paymentPlan>
+            <commissionFee>566.97</commissionFee>
+            <netPremium>2834.80</netPremium>
+            <grossPremium>3000.00</grossPremium>
+            <reservePolicyNumber>1622901125/00/00</reservePolicyNumber>
+          </policySummary>
+        </bancCommonUpdateProposalResponseANDLIVO>
+      </interfaces:bancCommonUpdateProposalResponseANDLIVOList>
+    </interfaces-root:bancCommonUpdateProposalResponseANDLIVOoutList>
+  </env:Body>
+</env:Envelope>
