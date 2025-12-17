@@ -955,7 +955,7 @@ let pjson = {
 															},
 															"E": {
 																"click": {
-																	"H": "// debugger;\r\nquick.store.set('$backBtnTrue', true);\r\nquick.Quick.go(\"/static/ui-bnkasAsDCFire/pages/as_dcFirePage.qjson\"); //Prim Hesaplama",
+																	"H": "quick.store.set('$backBtnTrue', true);\r\n\r\n//Tekliften poliçelendirme ile aynı mantıkla ekran doldurulmalı.\r\nlet proposal = quick.store.get(\"$getPolicyInfoDCFireOld\");\r\nlet createProposalResp = quick.store.get('$createProposalResp');\r\nproposal.revisionNo = createProposalResp?.revisionNumber;\r\nquick.store.set(\"$getPolicyInfoDCFire\", proposal);\r\n\r\nquick.Quick.go(\"/static/ui-bnkasAsDCFire/pages/as_dcFirePage.qjson\"); ",
 																	"P": "mouseEvent:unknown | undefined",
 																	"HL": "TS"
 																}
@@ -2503,7 +2503,7 @@ let pjson = {
 															},
 															"E": {
 																"click": {
-																	"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\nquick.store.set('$backBtnTrue', true);\r\nquick.Quick.go(\"/static/ui-bnkasAsDCFire/pages/as_dcFirePage.qjson\"); //Prim Hesaplama\r\n",
+																	"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\nquick.store.set('$backBtnTrue', true);\r\n//Tekliften poliçelendirme ile aynı mantıkla ekran doldurulmalı.\r\nvar proposal = quick.store.get(\"$getPolicyInfoDCFireOld\");\r\nvar createProposalResp = quick.store.get('$createProposalResp');\r\nproposal.revisionNo = createProposalResp === null || createProposalResp === void 0 ? void 0 : createProposalResp.revisionNumber;\r\nquick.store.set(\"$getPolicyInfoDCFire\", proposal);\r\nquick.Quick.go(\"/static/ui-bnkasAsDCFire/pages/as_dcFirePage.qjson\");\r\n",
 																	"P": "mouseEvent:unknown | undefined",
 																	"HL": "JS"
 																}
