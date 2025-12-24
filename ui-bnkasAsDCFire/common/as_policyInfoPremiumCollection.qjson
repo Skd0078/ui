@@ -19,7 +19,7 @@ let pjson = {
 			},
 			"E": {
 				"setData": {
-					"H": "// debugger;\r\ndeclare let data;\r\ncomponents.txt_assuranceType.qValue = data?.assuranceType ?? components.txt_assuranceType.qValue;\r\ncomponents.txt_policyNo.qValue = data?.policyNo ?? components.txt_policyNo.qValue;",
+					"H": "// debugger;\r\ndeclare let data;\r\ncomponents.txt_assuranceType.qValue = data?.assuranceType ?? components.txt_assuranceType.qValue;\r\ncomponents.txt_policyNo.qValue = data?.policyNo ?? components.txt_policyNo.qValue;\r\ncomponents.txt_offerNo.qValue = data?.proposalNo ?? components.txt_offerNo.qValue; ",
 					"C": true,
 					"EV": true,
 					"HL": "TS"
@@ -1417,7 +1417,7 @@ let pjson = {
 			},
 			"E": {
 				"setData": {
-					"H": "var _a, _b;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n; // debugger;\r\ncomponents.txt_assuranceType.qValue = (_a = data === null || data === void 0 ? void 0 : data.assuranceType) !== null && _a !== void 0 ? _a : components.txt_assuranceType.qValue;\r\ncomponents.txt_policyNo.qValue = (_b = data === null || data === void 0 ? void 0 : data.policyNo) !== null && _b !== void 0 ? _b : components.txt_policyNo.qValue;\r\n",
+					"H": "var _a, _b, _c;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n; // debugger;\r\ncomponents.txt_assuranceType.qValue = (_a = data === null || data === void 0 ? void 0 : data.assuranceType) !== null && _a !== void 0 ? _a : components.txt_assuranceType.qValue;\r\ncomponents.txt_policyNo.qValue = (_b = data === null || data === void 0 ? void 0 : data.policyNo) !== null && _b !== void 0 ? _b : components.txt_policyNo.qValue;\r\ncomponents.txt_offerNo.qValue = (_c = data === null || data === void 0 ? void 0 : data.proposalNo) !== null && _c !== void 0 ? _c : components.txt_offerNo.qValue;\r\n",
 					"C": true,
 					"EV": true,
 					"HL": "JS"

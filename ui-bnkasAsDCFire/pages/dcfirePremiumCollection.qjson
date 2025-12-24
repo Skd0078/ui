@@ -289,7 +289,7 @@ let pjson = {
 															},
 															"E": {
 																"onLoad": {
-																	"H": "debugger;\r\n// Poliçe Bilgileri Onload\r\nlet assurance;\r\nlet policy;\r\n\r\nif (quick.store.get(\"$getAssuranceCompInfo\")) {\r\n    assurance = quick.store.get(\"$getAssuranceCompInfo\").assuranceType;\r\n}\r\n\r\nif (quick.store.get('$reservePolicyNumber')) {\r\n    policy = quick.store.get('$reservePolicyNumber').reservePolicyNumber;\r\n}\r\n\r\nlet premiumCollectionItems = {\r\n    assuranceType: assurance,\r\n    policyNo: policy,\r\n};\r\n(<any>components.as_policyInfoPremiumCollection).setData({ data: premiumCollectionItems });",
+																	"H": "debugger;\r\n// Poliçe Bilgileri Onload\r\nlet assurance;\r\nlet policy;\r\n\r\nif (quick.store.get(\"$getAssuranceCompInfo\")) {\r\n    assurance = quick.store.get(\"$getAssuranceCompInfo\").assuranceType;\r\n}\r\n\r\nif (quick.store.get('$reservePolicyNumber')) {\r\n    policy = quick.store.get('$reservePolicyNumber').reservePolicyNumber;\r\n}\r\n\r\nlet createProposalResp = quick.store.get('$createProposalResp');\r\n\r\nlet premiumCollectionItems = {\r\n    assuranceType: assurance,\r\n    policyNo: policy,\r\n    proposalNo: createProposalResp?.proposalNumber\r\n};\r\n(<any>components.as_policyInfoPremiumCollection).setData({ data: premiumCollectionItems });",
 																	"HL": "TS"
 																}
 															},
@@ -955,7 +955,7 @@ let pjson = {
 															},
 															"E": {
 																"click": {
-																	"H": "quick.store.set('$backBtnTrue', true);\r\n\r\n//Tekliften poliçelendirme ile aynı mantıkla ekran doldurulmalı.\r\nlet dcfireRequest = quick.store.get(\"$dcfireRequest\");\r\nlet createProposalResp = quick.store.get('$createProposalResp');\r\ndcfireRequest.policyInfo.proposalNo = createProposalResp.proposalNumber;\r\ndcfireRequest.policyInfo.revisionNo = createProposalResp.revisionNumber;\r\nquick.store.set(\"$getPolicyInfoDCFire\", dcfireRequest);\r\n\r\nquick.Quick.go(\"/static/ui-bnkasAsDCFire/pages/as_dcFirePage.qjson\"); ",
+																	"H": "quick.store.set('$backBtnTrue', true);\r\n\r\n//Tekliften poliçelendirme ile aynı mantıkla ekran doldurulmalı.\r\nlet dcfireRequest = quick.store.get(\"$dcfireRequest\");\r\nlet createProposalResp = quick.store.get('$createProposalResp');\r\ndcfireRequest.policyInfo.proposalNo = createProposalResp.proposalNumber;\r\ndcfireRequest.policyInfo.revisionNo = createProposalResp.revisionNumber;\r\nquick.store.set(\"$getPolicyInfoDCFire\", dcfireRequest.policyInfo);\r\n\r\nquick.Quick.go(\"/static/ui-bnkasAsDCFire/pages/as_dcFirePage.qjson\"); ",
 																	"P": "mouseEvent:unknown | undefined",
 																	"HL": "TS"
 																}
@@ -1149,7 +1149,7 @@ let pjson = {
 															},
 															"E": {
 																"click": {
-																	"H": "debugger;\r\n//Devam Et butonu\r\ncomponents.as_loadingCustomComp.open();\r\nquick.MM.trigger('continuePayment');\r\n",
+																	"H": "let isDigital;\r\nlet digitalApproveSubText = isDigital ? \"dijital onaya gönderilecek\" : \"otomatik yazdırılacak\";\r\n\r\nlet paymentMethod = \"\";\r\nlet control = (components.as_collectionInfoPremiumCollection.getSelectedReceiptType().text).toLowerCase();\r\n\r\nif (control.includes('kredi')) { //Kredi\r\n    paymentMethod = components.as_collectionInfoPremiumCollection.getSelectedAccountItem().code.cardNo + \" nolu kredi kartından\";\r\n} else if (control.includes('cari')) { //Hesaptan\r\n    paymentMethod = components.as_collectionInfoPremiumCollection.getSelectedAccountItem().code.number.branchCode + \" - \" + components.as_collectionInfoPremiumCollection.getSelectedAccountItem().code.number.number + \" nolu hesaptan\";\r\n}\r\n\r\nlet paymentAmount;\r\nlet text = \"İşleme devam etmeniz durumunda öncelikle zorunlu belgeler \" + digitalApproveSubText +\r\n    \", ardından tahsilat gerçekleşecek ve dekont otomatik olarak yazdırılacaktır. \" +\r\n    \"Lütfen yazıcıya dekont yerleştiriniz. \" + paymentMethod + \" \" + paymentAmount +\r\n    \" tutarındaki poliçe primi tahsil edilecektir. Devam etmek istiyor musunuz?\";\r\n\r\n(components.as_alertConfirmation as any).setLabelText({ labelData: { name: 'lbl_700_1', text: text } });\r\ncomponents.as_alertConfirmation.open();",
 																	"P": "mouseEvent:unknown | undefined",
 																	"HL": "TS"
 																}
@@ -1474,6 +1474,99 @@ let pjson = {
 			},
 			"_Editor": {
 				"eID": "EdtrComp_20"
+			},
+			"O": {
+				"cType": "child",
+				"dynProps": true
+			}
+		},
+		{
+			"T": "CustomComponent",
+			"P": {
+				"ID": {
+					"H": "as_alertConfirmation",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"QJsonPath": {
+					"H": "'/static/ui-bnkasAsDCFire/common/as_alertCustomComp.qjson'",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"alertType": {
+					"H": "'info'",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"lbl_700_1_visible": {
+					"H": "true",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"lbl_btn_1": {
+					"H": "'Onayla'",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"lbl_700_1": {
+					"H": "true",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"doubleBtn": {
+					"H": "true",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"lbl_btn_2": {
+					"H": "'Vazgeç'",
+					"T": "prop",
+					"HL": "QS"
+				}
+			},
+			"E": {
+				"clickOutsideEvent": {
+					"H": "components.as_alertConfirmation.close();",
+					"C": true,
+					"HL": "TS"
+				},
+				"btn1ClickEvent": {
+					"H": "debugger;\r\n//Devam Et butonu\r\ncomponents.as_loadingCustomComp.open();\r\nquick.MM.trigger('continuePayment');\r\ncomponents.as_alertConfirmation.close();",
+					"C": true,
+					"HL": "TS"
+				},
+				"btn2ClickEvent": {
+					"H": "components.as_alertConfirmation.close();",
+					"C": true,
+					"HL": "TS"
+				}
+			},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "Ghost",
+							"P": {
+								"ID": {
+									"H": "EdtrComp_5",
+									"T": "prop"
+								}
+							},
+							"E": {},
+							"C": {},
+							"_Editor": {
+								"eID": "EdtrComp_5"
+							},
+							"O": {
+								"cType": "child"
+							}
+						}
+					],
+					"cType": "child"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_3"
 			},
 			"O": {
 				"cType": "child",
@@ -1822,7 +1915,7 @@ let pjson = {
 															},
 															"E": {
 																"onLoad": {
-																	"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\n// Poliçe Bilgileri Onload\r\nvar assurance;\r\nvar policy;\r\nif (quick.store.get(\"$getAssuranceCompInfo\")) {\r\n    assurance = quick.store.get(\"$getAssuranceCompInfo\").assuranceType;\r\n}\r\nif (quick.store.get('$reservePolicyNumber')) {\r\n    policy = quick.store.get('$reservePolicyNumber').reservePolicyNumber;\r\n}\r\nvar premiumCollectionItems = {\r\n    assuranceType: assurance,\r\n    policyNo: policy,\r\n};\r\ncomponents.as_policyInfoPremiumCollection.setData({ data: premiumCollectionItems });\r\n",
+																	"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\n// Poliçe Bilgileri Onload\r\nvar assurance;\r\nvar policy;\r\nif (quick.store.get(\"$getAssuranceCompInfo\")) {\r\n    assurance = quick.store.get(\"$getAssuranceCompInfo\").assuranceType;\r\n}\r\nif (quick.store.get('$reservePolicyNumber')) {\r\n    policy = quick.store.get('$reservePolicyNumber').reservePolicyNumber;\r\n}\r\nvar createProposalResp = quick.store.get('$createProposalResp');\r\nvar premiumCollectionItems = {\r\n    assuranceType: assurance,\r\n    policyNo: policy,\r\n    proposalNo: createProposalResp === null || createProposalResp === void 0 ? void 0 : createProposalResp.proposalNumber\r\n};\r\ncomponents.as_policyInfoPremiumCollection.setData({ data: premiumCollectionItems });\r\n",
 																	"HL": "JS"
 																}
 															},
@@ -2305,7 +2398,7 @@ let pjson = {
 															"O": {
 																"cType": "child",
 																"dynProps": true,
-																"compDomClasses": ""
+																"compDomClasses": "newDropBorder"
 															}
 														}
 													],
@@ -2503,7 +2596,7 @@ let pjson = {
 															},
 															"E": {
 																"click": {
-																	"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\nquick.store.set('$backBtnTrue', true);\r\n//Tekliften poliçelendirme ile aynı mantıkla ekran doldurulmalı.\r\nvar dcfireRequest = quick.store.get(\"$dcfireRequest\");\r\nvar createProposalResp = quick.store.get('$createProposalResp');\r\ndcfireRequest.policyInfo.proposalNo = createProposalResp.proposalNumber;\r\ndcfireRequest.policyInfo.revisionNo = createProposalResp.revisionNumber;\r\nquick.store.set(\"$getPolicyInfoDCFire\", dcfireRequest);\r\nquick.Quick.go(\"/static/ui-bnkasAsDCFire/pages/as_dcFirePage.qjson\");\r\n",
+																	"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\nquick.store.set('$backBtnTrue', true);\r\n//Tekliften poliçelendirme ile aynı mantıkla ekran doldurulmalı.\r\nvar dcfireRequest = quick.store.get(\"$dcfireRequest\");\r\nvar createProposalResp = quick.store.get('$createProposalResp');\r\ndcfireRequest.policyInfo.proposalNo = createProposalResp.proposalNumber;\r\ndcfireRequest.policyInfo.revisionNo = createProposalResp.revisionNumber;\r\nquick.store.set(\"$getPolicyInfoDCFire\", dcfireRequest.policyInfo);\r\nquick.Quick.go(\"/static/ui-bnkasAsDCFire/pages/as_dcFirePage.qjson\");\r\n",
 																	"P": "mouseEvent:unknown | undefined",
 																	"HL": "JS"
 																}
@@ -2699,7 +2792,7 @@ let pjson = {
 															},
 															"E": {
 																"click": {
-																	"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\ndebugger;\r\n//Devam Et butonu\r\ncomponents.as_loadingCustomComp.open();\r\nquick.MM.trigger('continuePayment');\r\n",
+																	"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\nvar isDigital;\r\nvar digitalApproveSubText = isDigital ? \"dijital onaya gönderilecek\" : \"otomatik yazdırılacak\";\r\nvar paymentMethod = \"\";\r\nvar control = (components.as_collectionInfoPremiumCollection.getSelectedReceiptType().text).toLowerCase();\r\nif (control.includes('kredi')) { //Kredi\r\n    paymentMethod = components.as_collectionInfoPremiumCollection.getSelectedAccountItem().code.cardNo + \" nolu kredi kartından\";\r\n}\r\nelse if (control.includes('cari')) { //Hesaptan\r\n    paymentMethod = components.as_collectionInfoPremiumCollection.getSelectedAccountItem().code.number.branchCode + \" - \" + components.as_collectionInfoPremiumCollection.getSelectedAccountItem().code.number.number + \" nolu hesaptan\";\r\n}\r\nvar paymentAmount;\r\nvar text = \"İşleme devam etmeniz durumunda öncelikle zorunlu belgeler \" + digitalApproveSubText +\r\n    \", ardından tahsilat gerçekleşecek ve dekont otomatik olarak yazdırılacaktır. \" +\r\n    \"Lütfen yazıcıya dekont yerleştiriniz. \" + paymentMethod + \" \" + paymentAmount +\r\n    \" tutarındaki poliçe primi tahsil edilecektir. Devam etmek istiyor musunuz?\";\r\ncomponents.as_alertConfirmation.setLabelText({ labelData: { name: 'lbl_700_1', text: text } });\r\ncomponents.as_alertConfirmation.open();\r\n",
 																	"P": "mouseEvent:unknown | undefined",
 																	"HL": "JS"
 																}
@@ -3030,6 +3123,101 @@ let pjson = {
 			},
 			"_Editor": {
 				"eID": "EdtrComp_20"
+			},
+			"O": {
+				"cType": "child",
+				"dynProps": true,
+				"compDomClasses": ""
+			}
+		},
+		{
+			"T": "CustomComponent",
+			"P": {
+				"ID": {
+					"H": "as_alertConfirmation",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"QJsonPath": {
+					"H": "╬'/static/ui-bnkasAsDCFire/common/as_alertCustomComp.qjson'╩╩",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"alertType": {
+					"H": "╬'info'╩╩",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"lbl_700_1_visible": {
+					"H": "╬true╩╩",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"lbl_btn_1": {
+					"H": "╬'Onayla'╩╩",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"lbl_700_1": {
+					"H": "╬true╩╩",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"doubleBtn": {
+					"H": "╬true╩╩",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"lbl_btn_2": {
+					"H": "╬'Vazgeç'╩╩",
+					"T": "prop",
+					"HL": "QS"
+				}
+			},
+			"E": {
+				"clickOutsideEvent": {
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ncomponents.as_alertConfirmation.close();\r\n",
+					"C": true,
+					"HL": "JS"
+				},
+				"btn1ClickEvent": {
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ndebugger;\r\n//Devam Et butonu\r\ncomponents.as_loadingCustomComp.open();\r\nquick.MM.trigger('continuePayment');\r\ncomponents.as_alertConfirmation.close();\r\n",
+					"C": true,
+					"HL": "JS"
+				},
+				"btn2ClickEvent": {
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ncomponents.as_alertConfirmation.close();\r\n",
+					"C": true,
+					"HL": "JS"
+				}
+			},
+			"C": {
+				"default": {
+					"c": [
+						{
+							"T": "Ghost",
+							"P": {
+								"ID": {
+									"H": "EdtrComp_5",
+									"T": "prop"
+								}
+							},
+							"E": {},
+							"C": {},
+							"_Editor": {
+								"eID": "EdtrComp_5"
+							},
+							"O": {
+								"cType": "child",
+								"compDomClasses": "editor-ghost-comp"
+							}
+						}
+					],
+					"cType": "child"
+				}
+			},
+			"_Editor": {
+				"eID": "EdtrComp_3"
 			},
 			"O": {
 				"cType": "child",
